@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Money gets you in the poll</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F6F0;--ink:#16211C;--muted:#5C6962;--line:#D9DDD3;--up:#1E8A5A;--dn:#C0392B;--sec:#1F5FA8;--b10:#D98E04;--acc:#2A9D78;--b12:#C2453B;--ind:#6B6F76;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10171A;--ink:#E9EEE9;--muted:#9AA7A0;--line:#2A3631;--up:#3FBF86;--dn:#EF6B5B;--sec:#5B9BE6;--b10:#F0B03A;--acc:#4CC9A0;--b12:#EF7A6F;--ind:#9AA0A8}}
+:root[data-theme="dark"]{--bg:#10171A;--ink:#E9EEE9;--muted:#9AA7A0;--line:#2A3631;--up:#3FBF86;--dn:#EF6B5B;--sec:#5B9BE6;--b10:#F0B03A;--acc:#4CC9A0;--b12:#EF7A6F;--ind:#9AA0A8}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Source Serif 4",Georgia,serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:20}
+.hero{background:#0E3B2C;color:#F2F5EC;padding:72px 22px 64px;background-image:repeating-linear-gradient(90deg,transparent 0 79px,rgba(255,255,255,.07) 79px 81px)}
+.hero div,main,.bar>div,footer{max-width:900px;margin:0 auto}
+h1{font:700 clamp(44px,9vw,92px)/.95 "Barlow Condensed","Arial Narrow",sans-serif;margin:0 0 22px;letter-spacing:-.01em;max-width:11em}
+.hero p{font-size:20px;max-width:34em;margin:0;color:#D5E0D6}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px}
+.bar>div{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:system-ui,sans-serif;font-size:14px}
+.chip{border:1.5px solid var(--c,var(--ink));background:transparent;color:var(--ink);border-radius:99px;padding:5px 12px;cursor:pointer;font:inherit}
+.chip[aria-pressed=true]{background:var(--c);color:#fff}
+.chip:focus-visible,input:focus-visible,th button:focus-visible{outline:3px solid var(--b10);outline-offset:2px}
+#chips{display:flex;flex-wrap:wrap;gap:8px;flex:1 1 0;min-width:0}
+#q{flex:0 0 170px;font:inherit;padding:6px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+@media (max-width:480px){#q{flex-basis:120px}}
+main{padding:0 18px}
+section{padding:56px 0 8px}
+h2{font:700 clamp(30px,5vw,46px)/1.02 "Barlow Condensed","Arial Narrow",sans-serif;margin:0 0 10px;max-width:16em}
+section>p{color:var(--muted);margin:0 0 18px;max-width:36em}
+svg{width:100%;height:auto;display:block;overflow:visible}
+svg text{font-family:system-ui,sans-serif;fill:var(--ink)}
+.ax{font-size:11px;fill:var(--muted)!important}.nm{font-size:12px}.lb{font-size:12px;font-weight:600}.gl{stroke:var(--line);stroke-width:1}
+[data-i]{cursor:pointer;transition:opacity .15s}
+.key{display:flex;gap:18px;font:13px system-ui,sans-serif;color:var(--muted);margin-bottom:8px;flex-wrap:wrap}
+.key i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px;font:14px system-ui,sans-serif}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--line)}
+th button{all:unset;cursor:pointer;font-weight:600}
+th[aria-sort]{color:var(--b10)}
+td.n{font-variant-numeric:tabular-nums}
+.rg{position:relative;height:10px;background:var(--line);border-radius:5px;min-width:200px}
+.rg b{position:absolute;top:0;height:10px;border-radius:5px;background:var(--c)}
+.cr{border-bottom:1px solid var(--line);font:13px/1.5 system-ui,sans-serif;color:var(--muted)}.cr div{max-width:900px;margin:0 auto;padding:10px 18px}.cr p{margin:2px 0}.cr a{color:var(--ink)}
+.tg{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font:13px system-ui,sans-serif;color:var(--muted);margin-bottom:8px}.tg label{color:var(--ink);font-weight:600;cursor:pointer}
+.st td:first-child{font-weight:600;white-space:nowrap}.st .gh td{background:var(--line);font-weight:700;font-family:"Barlow Condensed",sans-serif;font-size:17px;white-space:normal}
+.lim{font:15px/1.5 system-ui,sans-serif;padding-left:20px;max-width:46em}.lim li{margin-bottom:8px}
+#tip{position:fixed;display:none;pointer-events:none;z-index:30;background:var(--ink);color:var(--bg);padding:8px 11px;border-radius:6px;font:13px/1.4 system-ui,sans-serif}
+footer{padding:48px 18px 56px;color:var(--muted);font:14px/1.5 system-ui,sans-serif}
+</style>
+</head>
+<body>
+<aside class="cr"><div>
+<p><b>MakeoverMonday 2026 Week 38</b></p>
+<p>This exercise is part of the “MakeoverMonday project”: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">makeovermonday.vercel.app</a></p>
+<p>The article source: <a href="https://www.linkedin.com/posts/ryan-sagers_the-athletic-just-dropped-a-super-interesting-share-7506027124345126912-54uU/?utm_source=share&amp;utm_medium=member_ios&amp;rcm=ACoAAATRm80BRDol2MPefSrDOJ6QtDfL0kI_zAs" target="_blank" rel="noopener">LinkedIn post</a></p>
+<p>The data source: <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">MakeoverMonday dataset, CFB roster spending 2026</a></p>
+</div></aside>
+<header class="hero"><div>
+<h1>Money gets you in the poll. It doesn’t decide where you land.</h1>
+<p>We compared estimated 2026 roster budgets for 68 programs with the AP Top 25. All ten of the biggest spenders are ranked. So are Houston, Iowa and Utah, on budgets below the median.</p>
+</div></header>
+<div class="bar"><div><div id="chips" role="group" aria-label="Filter by conference"></div><input id="q" type="search" placeholder="Find a team" aria-label="Find a team"></div></div>
+<main>
+<section><h2>Ranked teams spend about $13M more than everyone else</h2>
+<p>Each dot is a program: further right means a bigger budget, higher up means a better AP rank. Hollow dots are unranked and sit in the band at the bottom.</p>
+<div class="tg"><label><input type="checkbox" id="tr" checked> Show trendline</label><span>Line: least-squares fit among the 25 ranked teams. Shaded band: 95% confidence interval for the line.</span></div>
+<svg id="sc" viewBox="0 0 820 540" role="img" aria-label="Scatter plot of budget against AP rank"></svg></section>
+<section><h2>A $10M bigger budget goes with about five times the odds of being ranked</h2>
+<p>The trendline above only covers teams that made the poll. This curve uses all 68 teams: ranked teams are the dots along the top, unranked teams along the bottom, and the line is the fitted chance of being ranked at each budget. Houston, on about $17M, had a fitted chance of about 8% and made the poll. Florida, on about $36M, had about 70% and didn’t.</p>
+<svg id="pr" viewBox="0 0 820 250" role="img" aria-label="Estimated chance of being ranked by budget"></svg></section>
+<section><h2>Budget and ranking are linked beyond chance, but budget alone says little about any one team</h2>
+<p>These figures use all 68 teams and don’t change with the filters. Negative correlations mean a bigger budget goes with a lower, better rank number.</p>
+<div class="tw"><table class="st"><thead><tr><th>Measure</th><th>Estimate</th><th>95% interval</th><th>In plain terms</th></tr></thead><tbody>
+<tr class="gh"><td colspan="4">Among the 25 ranked teams: AP rank against budget</td></tr>
+<tr><td>Slope</td><td>−0.40 spots per $1M<br>p = 0.0015</td><td>−0.62 to −0.17</td><td>Each extra $10M goes with about 4 spots better (1.7 to 6.2). A rank-shuffling test gives p = 0.002, so this doesn’t rest on normality assumptions.</td></tr>
+<tr><td>R²</td><td>0.36</td><td>–</td><td>Budget accounts for about a third of the differences in rank among ranked teams.</td></tr>
+<tr><td>Spearman ρ</td><td>−0.59<br>p = 0.002</td><td>−0.82 to −0.24 (bootstrap)</td><td>Same direction using ranks only, so it doesn’t depend on a straight-line fit.</td></tr>
+<tr><td>Typical miss</td><td>6.0 spots</td><td>–</td><td>Residual standard deviation. Most ranked teams land within about 12 spots of the line.</td></tr>
+<tr class="gh"><td colspan="4">Across all 68 teams: ranked against unranked</td></tr>
+<tr><td>Difference in mean budget</td><td>$13.1M<br>p &lt; 0.001</td><td>$8.5M to $17.6M (bootstrap)</td><td>Ranked teams average $35.5M and unranked teams $22.4M. Medians are $38M and $22M.</td></tr>
+<tr><td>Mann–Whitney AUC</td><td>0.82<br>p &lt; 0.001</td><td>–</td><td>A random ranked team out-spends a random unranked team 82% of the time.</td></tr>
+<tr><td>Odds ratio per +$10M</td><td>5.5<br>p &lt; 0.001</td><td>2.4 to 12.4</td><td>Fitted chance of being ranked: 13% at $20M, 46% at $30M, 82% at $40M, 96% at $50M.</td></tr>
+<tr><td>Budget quartiles</td><td>14 of 16 vs. 3 of 19</td><td>–</td><td>Ranked teams in the top quartile ($33.5M and up) against the bottom quartile ($20M and under).</td></tr>
+<tr class="gh"><td colspan="4">Does it hold up?</td></tr>
+<tr><td>Drop one team at a time</td><td>ρ from −0.72 to −0.55</td><td>–</td><td>Without Oregon the link strengthens; without Houston it weakens the most.</td></tr>
+<tr><td>Budget ranges, not midpoints</td><td>median ρ −0.58</td><td>−0.64 to −0.53 (5,000 draws)</td><td>Each budget was redrawn at random within its low–high range. The result doesn’t depend on the midpoints.</td></tr>
+<tr><td>Within each conference</td><td>ρ: SEC −0.68, Big Ten −0.13, ACC −0.63, Big 12 −0.80</td><td>–</td><td>Same direction in all four conferences, but each has only 4 to 9 ranked teams and the Big Ten link is weak.</td></tr>
+</tbody></table></div>
+<h3 style="font:700 24px 'Barlow Condensed',sans-serif;margin:28px 0 10px">What these numbers can’t tell you</h3>
+<ul class="lim">
+<li><b>Correlation, not cause.</b> Winning also raises budgets through donations and revenue, and prestige, recruiting and coaching affect both.</li>
+<li><b>The line fits ranked teams only.</b> AP ranks exist for 25 teams, so the slope says nothing about how unranked teams would order, and cutting off at 25 tends to flatten it. The ranked-versus-unranked comparison uses all 68.</li>
+<li><b>Small sample, not fully independent.</b> It is one season. Teams in the same conference, and teams that play each other, aren’t independent, so the p-values and intervals are somewhat optimistic.</li>
+<li><b>Estimated budgets.</b> Random noise in the estimates usually weakens a real relationship. A systematic bias in the estimates wouldn’t show up in the range test.</li>
+<li><b>Not a random sample of programs.</b> These 68 teams are mostly power-conference schools, so the results don’t describe all of college football.</li>
+<li><b>Exploratory.</b> These checks were chosen after looking at the data, with no correction for multiple tests. They all ask the same question and the main p-values are far below 0.05, but treat the exact values loosely.</li>
+</ul></section>
+<section><h2>Georgia, Indiana and BYU ranked far above their budgets. Oregon ranked far below.</h2>
+<p>Each team’s gap is its rank by spending among the 25 ranked teams minus its AP rank, so the average gap is zero. Georgia is the 15th-biggest spender of the 25 and ranks 2nd. Oregon is the 2nd-biggest and ranks 21st.</p>
+<div class="key"><span><i style="background:var(--up)"></i>Ranked higher than spending suggests</span><span><i style="background:var(--dn)"></i>Ranked lower</span></div>
+<svg id="gp" role="img" aria-label="Gap between spend rank and AP rank"></svg></section>
+<section><h2>The SEC spends the most and puts the most teams in the poll</h2>
+<p>Nine of 16 SEC teams are ranked, against 7 of 18 in the Big Ten, and 4 each in the ACC and Big 12. The Big 12 ranks as often as the ACC on about $3M less per team. Solid dots are ranked; the tick marks the conference average.</p>
+<svg id="cf" role="img" aria-label="Budget by conference"></svg></section>
+<section><h2>Budgets are estimates, so small gaps between teams don’t mean much</h2>
+<p>Bars show the low-to-high estimate on a $0–60M scale, with the midpoint marked. Texas and Florida have the widest ranges, at $10M. Click a column to sort.</p>
+<div class="tw"><table><thead><tr id="th"></tr></thead><tbody id="tb"></tbody></table></div></section>
+</main>
+<footer>Source: cfb_roster_budgets_2026.xlsx. Budgets are estimated ranges in millions of dollars; midpoint is the average of low and high. Teams without an AP rank in the file are treated as unranked. A correlation between spending and ranking doesn’t show that spending causes it.</footer>
+<div id="tip"></div>
+<script>
+const R="Ohio State|B10|49|54|6;Oregon|B10|48|54|21;Texas|SEC|45|55|1;LSU|SEC|47|50|7;Texas A&M|SEC|45|50|9;Miami|ACC|44|50|5;Notre Dame|Ind|41|48|3;Ole Miss|SEC|39|45|8;Tennessee|SEC|41|43|15;Alabama|SEC|38|42|10;Texas Tech|B12|38|42|13;USC|B10|37|40|12;Indiana|B10|36|40|4;Michigan|B10|36|40|19;Florida|SEC|31|41|;South Carolina|SEC|32|35|;Auburn|SEC|31|35|;Nebraska|B10|31|35|;Georgia|SEC|31|34|2;Oklahoma|SEC|28|34|24;Clemson|ACC|29|32|;Penn State|B10|29|32|14;Wisconsin|B10|27|31|;Missouri|SEC|27|30|20;UCLA|B10|26|30|;Mississippi State|SEC|25|30|;Virginia Tech|ACC|25|30|;Florida State|ACC|23|30|;Vanderbilt|SEC|25|28|;Georgia Tech|ACC|23|26|;Kentucky|SEC|23|26|;NC State|ACC|22|26|;Arkansas|SEC|22|25|;Louisville|ACC|22|25|23;TCU|B12|22|25|;Maryland|B10|21|25|;Michigan State|B10|21|25|;Northwestern|B10|21|25|;Washington|B10|21|25|;BYU|B12|20|25|11;North Carolina|ACC|20|25|;California|ACC|20|24|;SMU|ACC|21|23|16;Virginia|ACC|20|24|25;Baylor|B12|20|23|;Rutgers|B10|20|23|;Arizona State|B12|19|23|;Illinois|B10|19|23|;Kansas State|B12|19|22|;Minnesota|B10|18|22|;Utah|B12|18|22|17;West Virginia|B12|18|22|;Colorado|B12|18|21|;Syracuse|ACC|17|22|;Iowa|B10|17|21|18;Pitt|ACC|16|20|;Purdue|B10|16|20|;Stanford|ACC|16|20|;Wake Forest|ACC|16|20|;UCF|B12|15|20|;Houston|B12|15|19|22;Oklahoma State|B12|15|19|;Kansas|B12|15|17|;Arizona|B12|13|18|;Cincinnati|B12|14|16|;Iowa State|B12|13|17|;Duke|ACC|12|15|;Boston College|ACC|8|13|";
+const D=R.split(";").map((s,i)=>{const[n,c,l,h,p]=s.split("|");return{n,c,l:+l,h:+h,m:(+l+ +h)/2,r:i+1,ap:p?+p:0,g:null}});
+D.filter(d=>d.ap).forEach((d,k)=>d.g=k+1-d.ap);
+const TR=(()=>{const r=D.filter(d=>d.ap),n=r.length,mx=r.reduce((a,d)=>a+d.m,0)/n,my=r.reduce((a,d)=>a+d.ap,0)/n;let sxx=0,sxy=0;r.forEach(d=>{sxx+=(d.m-mx)**2;sxy+=(d.m-mx)*(d.ap-my)});const b=sxy/sxx,a=my-b*mx,s=Math.sqrt(r.reduce((t,d)=>t+(d.ap-a-b*d.m)**2,0)/(n-2));return{n,mx,sxx,a,b,s}})();
+const CN={SEC:"SEC",B10:"Big Ten",ACC:"ACC",B12:"Big 12",Ind:"Independent"},CV={SEC:"--sec",B10:"--b10",ACC:"--acc",B12:"--b12",Ind:"--ind"},col=c=>`var(${CV[c]})`;
+const S={c:new Set(),q:""},ok=d=>(!S.c.size||S.c.has(d.c))&&(!S.q||d.n.toLowerCase().includes(S.q));
+const dot=(d,x,y,r)=>`<circle data-i="${d.r-1}" cx="${x}" cy="${y}" r="${d.ap?r:r-1.5}" fill="${col(d.c)}" fill-opacity="${d.ap?.9:.12}" stroke="${col(d.c)}" stroke-width="1.5" opacity="${ok(d)?1:.12}"/>`;
+const ticks=(X,y,vs)=>vs.map(v=>`<line class="gl" x1="${X(v)}" x2="${X(v)}" y1="0" y2="${y}"/><text class="ax" x="${X(v)}" y="${y+16}" text-anchor="middle">$${v}M</text>`).join("");
+function scatter(){const W=820,H=540,L=46,T=16,B=40,X=v=>L+(v-8)/46*(W-L-16),Y=v=>T+v/31*(H-T-B),lab=["Oregon","Georgia","Houston","Iowa","Utah","Indiana","BYU","Texas","Florida"];
+let s=ticks(X,H-B,[10,20,30,40,50]);[1,5,10,15,20,25].forEach(v=>s+=`<line class="gl" x1="${L}" x2="${W-16}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${L-8}" y="${Y(v)+4}" text-anchor="end">#${v}</text>`);
+s+=`<line x1="${L}" x2="${W-16}" y1="${Y(26.6)}" y2="${Y(26.6)}" stroke="var(--muted)" stroke-dasharray="4 4"/><text class="ax" x="${L+4}" y="${Y(27.6)}">Unranked</text>`;
+D.forEach((d,i)=>{const y=d.ap?Y(d.ap):Y(28+(i*5%7)/7*2.6);s+=dot(d,X(d.m),y,6.5);if(lab.includes(d.n)){const e=X(d.m)>650;s+=`<text class="lb" x="${X(d.m)+(e?-10:10)}" y="${y+4}" text-anchor="${e?"end":"start"}" opacity="${ok(d)?1:.12}">${d.n}</text>`}});
+if(document.getElementById("tr").checked){const t=2.0687,f=v=>TR.a+TR.b*v,se=v=>TR.s*Math.sqrt(1/TR.n+(v-TR.mx)**2/TR.sxx),xs=[];for(let v=17;v<=51.5;v+=.5)xs.push(v);const up=xs.map(v=>`${X(v)},${Y(f(v)-t*se(v))}`),dn=xs.map(v=>`${X(v)},${Y(f(v)+t*se(v))}`).reverse();
+s+=`<polygon points="${up.concat(dn).join(" ")}" fill="var(--ink)" fill-opacity=".12" pointer-events="none"/><line x1="${X(17)}" y1="${Y(f(17))}" x2="${X(51.5)}" y2="${Y(f(51.5))}" stroke="var(--ink)" stroke-width="2.5" pointer-events="none"/>`}
+s+=`<text class="ax" x="425" y="536" text-anchor="middle" style="font-size:12px">Estimated roster budget, midpoint of the low and high estimates ($M)</text>`;
+s+=`<text class="ax" x="6" y="${Y(13)}" text-anchor="middle" transform="rotate(-90 6 ${Y(13)})" style="font-size:12px">AP rank (1 = best)</text>`;
+document.getElementById("sc").innerHTML=s}
+function gap(){const rk=D.filter(d=>d.ap).sort((a,b)=>b.g-a.g),W=820,rh=21,T=8,L=118,H=T+rk.length*rh+30,x0=L+(W-L-30)*22/38,X=v=>x0+v*(W-L-30)/38;let s="";
+[-20,-10,0,10].forEach(v=>s+=`<line class="gl" x1="${X(v)}" x2="${X(v)}" y1="${T}" y2="${H-26}"/><text class="ax" x="${X(v)}" y="${H-10}" text-anchor="middle">${v>0?"+"+v:v}</text>`);
+rk.forEach((d,j)=>{const y=T+j*rh,x=X(d.g),p=d.g>=0;s+=`<g data-i="${d.r-1}" opacity="${ok(d)?1:.15}"><text class="nm" x="${L-8}" y="${y+14}" text-anchor="end">${d.n} (#${d.ap})</text><rect x="${Math.min(x,x0)}" y="${y+3}" width="${Math.abs(x-x0)}" height="15" fill="${p?"var(--up)":"var(--dn)"}"/><text class="ax" x="${p?x+4:x-4}" y="${y+14}" text-anchor="${p?"start":"end"}">${d.g>0?"+":""}${d.g}</text></g>`});
+const e=document.getElementById("gp");e.setAttribute("viewBox",`0 0 ${W} ${H}`);e.innerHTML=s}
+function conf(){const cs=["SEC","B10","ACC","B12","Ind"],W=820,L=150,rh=84,H=cs.length*rh+30,X=v=>L+(v-8)/46*(W-L-16);let s=ticks(X,cs.length*rh,[10,20,30,40,50]);
+cs.forEach((c,k)=>{const t=D.filter(d=>d.c==c),y0=k*rh+rh/2,av=t.reduce((a,d)=>a+d.m,0)/t.length,rn=t.filter(d=>d.ap).length;
+s+=`<line class="gl" x1="${L}" x2="${W-16}" y1="${y0}" y2="${y0}"/><text class="lb" x="0" y="${y0-6}" style="fill:${col(c)}">${CN[c]}</text><text class="ax" x="0" y="${y0+10}">avg $${av.toFixed(1)}M</text><text class="ax" x="0" y="${y0+24}">${rn} of ${t.length} ranked</text><line x1="${X(av)}" x2="${X(av)}" y1="${y0-30}" y2="${y0+30}" stroke="var(--ink)" stroke-width="2.5"/>`;
+t.forEach(d=>s+=dot(d,X(d.m),y0+((d.r*37)%9-4)*5,6))});
+const e=document.getElementById("cf");e.setAttribute("viewBox",`0 0 ${W} ${H}`);e.innerHTML=s}
+const COLS=[["r","Spend rank",d=>d.r],["n","Team",d=>d.n],["c","Conf.",d=>CN[d.c]],["m","Budget range ($M)",d=>d.m],["m2","Mid",d=>d.m],["ap","AP",d=>d.ap||null],["g","Gap vs. ranked peers",d=>d.g]];
+let so={k:0,dir:1};
+function table(){document.getElementById("th").innerHTML=COLS.map((c,i)=>`<th ${so.k==i?`aria-sort="${so.dir>0?"ascending":"descending"}"`:""}><button data-s="${i}">${c[1]}${so.k==i?(so.dir>0?" ▲":" ▼"):""}</button></th>`).join("");
+const f=COLS[so.k][2],rows=D.filter(ok).sort((a,b)=>{const x=f(a),y=f(b);if(x==null)return 1;if(y==null)return -1;return(x<y?-1:x>y?1:0)*so.dir});
+document.getElementById("tb").innerHTML=rows.map(d=>`<tr data-i="${d.r-1}"><td class="n">${d.r}</td><td>${d.n}</td><td>${CN[d.c]}</td><td><div class="rg" style="--c:${col(d.c)}"><b style="left:${d.l/60*100}%;width:${(d.h-d.l)/60*100}%"></b><span style="position:absolute;left:${d.m/60*100}%;top:-2px;width:2px;height:14px;background:var(--ink)"></span></div></td><td class="n">$${d.l}–${d.h}M</td><td class="n">${d.ap?"#"+d.ap:"–"}</td><td class="n" style="color:${d.g>0?"var(--up)":d.g<0?"var(--dn)":"inherit"}">${d.g==null?"–":(d.g>0?"+":"")+d.g}</td></tr>`).join("")||`<tr><td colspan="7">No teams match. Clear the conference filter or the search.</td></tr>`}
+function prob(){const W=820,H=250,L=46,T=12,B=36,X=v=>L+(v-8)/46*(W-L-16),Y=p=>T+(1-p)*(H-T-B);let s=ticks(X,H-B,[10,20,30,40,50]);
+[0,.5,1].forEach(p=>s+=`<line class="gl" x1="${L}" x2="${W-16}" y1="${Y(p)}" y2="${Y(p)}"/><text class="ax" x="${L-8}" y="${Y(p)+4}" text-anchor="end">${p*100}%</text>`);
+D.forEach((d,i)=>{const j=(i*5%7)*3,y=d.ap?Y(1)+6+j:Y(0)-6-j;s+=dot(d,X(d.m),y,5);if(d.n=="Houston"||d.n=="Florida")s+=`<text class="lb" x="${X(d.m)+9}" y="${y+4}" opacity="${ok(d)?1:.12}">${d.n}</text>`});
+const pts=[];for(let v=8;v<=54;v++)pts.push(`${X(v)},${Y(1/(1+Math.exp(5.277-.17016*v)))}`);
+s+=`<polyline points="${pts.join(" ")}" fill="none" stroke="var(--ink)" stroke-width="2.5" pointer-events="none"/>`;s+=`<text class="ax" x="425" y="248" text-anchor="middle" style="font-size:12px">Estimated roster budget, midpoint of the low and high estimates ($M)</text>`;document.getElementById("pr").innerHTML=s}
+function all(){scatter();prob();gap();conf();table()}
+document.getElementById("tr").onchange=scatter;
+document.getElementById("chips").innerHTML=Object.keys(CN).map(c=>`<button class="chip" data-c="${c}" style="--c:${col(c)}" aria-pressed="false">${CN[c]}</button>`).join("");
+document.getElementById("chips").onclick=e=>{const b=e.target.closest("[data-c]");if(!b)return;const c=b.dataset.c;S.c.has(c)?S.c.delete(c):S.c.add(c);b.setAttribute("aria-pressed",S.c.has(c));all()};
+document.getElementById("q").oninput=e=>{S.q=e.target.value.trim().toLowerCase();all()};
+document.getElementById("th").onclick=e=>{const b=e.target.closest("[data-s]");if(!b)return;const k=+b.dataset.s;so=so.k==k?{k,dir:-so.dir}:{k,dir:1};table()};
+const tip=document.getElementById("tip");
+document.addEventListener("pointermove",e=>{const t=e.target.closest("svg [data-i]");if(!t){tip.style.display="none";return}const d=D[+t.dataset.i];
+tip.innerHTML=`<b>${d.n}</b><br>${CN[d.c]}<br>Budget $${d.l}–${d.h}M<br>Spend rank ${d.r}<br>${d.ap?"AP #"+d.ap:"Unranked"}`;tip.style.display="block";tip.style.left=Math.min(e.clientX+14,innerWidth-tip.offsetWidth-8)+"px";tip.style.top=Math.min(e.clientY+14,innerHeight-tip.offsetHeight-8)+"px"});
+all();
+</script>
+</body>
+</html>
