@@ -59,6 +59,13 @@ h1 em { font-style: normal; color: var(--q4); }
 .stat .v { font-family: var(--f-display); font-weight: 800; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.05; }
 .stat .l { font-size: 14px; color: var(--muted); line-height: 1.35; }
 
+.terms { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 20px; margin: 0; padding: 14px 16px; background: var(--paper); border-radius: 8px; }
+@media (max-width: 860px) { .terms { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .terms { grid-template-columns: 1fr; } }
+.terms dt { font-family: var(--f-data); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--s5); margin-bottom: 2px; }
+.terms dd { margin: 0; font-size: 14.5px; color: var(--ink-2); line-height: 1.45; }
+.terms .wide { grid-column: 1 / -1; }
+.terms .wide dd { font-size: 13.5px; }
 section { display: grid; gap: 18px; min-width: 0; }
 .sh { display: grid; gap: 6px; border-top: 2px solid var(--ink); padding-top: 14px; }
 .sh .tag { font-family: var(--f-data); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--s5); }
@@ -164,21 +171,28 @@ footer p { margin: 0; max-width: 90ch; }
     </div>
     <div class="kicker">Short-term rentals booked via Airbnb, Booking and Expedia · 2025</div>
     <h1>Where Europe's platform nights <em>go</em></h1>
-    <p class="dek">Eurostat's article maps the fourth quarter of 2025, when Andalucía, Canarias and Île-de-France led. The full year of monthly data tells a bigger story: the hot spots move with the seasons, and a quarter's map shows only one of them.</p>
+    <p class="dek">Eurostat's article maps the last three months of 2025 (October to December, or “Q4”), when Andalucía, the Canary Islands and the Paris region (Île-de-France) led. The full year of monthly data tells a bigger story: the hot spots move with the seasons, and a quarter's map shows only one of them.</p>
     <div class="stats" id="stats"></div>
+    <dl class="terms">
+      <div><dt>Platform nights</dt><dd>One guest staying one night in a short-term rental (a holiday flat, house or room, not a hotel) booked through Airbnb, Booking.com or Expedia.</dd></div>
+      <div><dt>Region</dt><dd>Eurostat's standard mid-sized areas, called “NUTS 2” regions: roughly a province or state, such as Andalucía, Lazio or Upper Bavaria. The EU has 242 of them.</dd></div>
+      <div><dt>Q4</dt><dd>The fourth quarter of the year: October, November and December. It is the period the Eurostat article maps.</dd></div>
+      <div><dt>Per resident</dt><dd>Nights divided by the number of people who live in the region, a way to compare a small island with a big city.</dd></div>
+      <div class="wide"><dt>Country codes</dt><dd id="codes"></dd></div>
+    </dl>
   </header>
 
     <section id="map-sec" aria-labelledby="h-map">
     <div class="sh">
       <span class="tag">The article's map, and every other period</span>
       <h2 id="h-map">Q4 put Andalucía on top. Pick another month and the map moves</h2>
-      <p>NUTS 2 regions shaded by nights booked through platforms. It opens on Q4 2025, the period the Eurostat article maps, then plays through 2025 month by month once the map is on screen. Pause it to keep any month still, pick a month or the full year, or switch to nights per resident to see where these stays weigh most on local life.</p>
+      <p>Each EU region is shaded by the nights guests spent in rentals booked through Airbnb, Booking.com and Expedia: darker means more. It opens on October–December 2025, the period the Eurostat article maps, then plays through 2025 month by month once the map is on screen. Pause it to keep any month still, pick a month or the full year, or switch to nights per resident to see where these stays weigh most on local life.</p>
     </div>
     <div class="panel">
       <div class="controls" style="margin-bottom:14px">
         <span class="ctl-label" id="per-l">Period</span>
         <div class="seg" role="group" aria-labelledby="per-l" id="per">
-          <button data-p="q4" class="q4" aria-pressed="true">Q4 (article)</button>
+          <button data-p="q4" class="q4" aria-pressed="true">Oct–Dec (article)</button>
           <button data-p="year" aria-pressed="false">Full year</button>
         </div>
         <label class="ctl-label" for="month">or month</label>
@@ -215,7 +229,7 @@ footer p { margin: 0; max-width: 90ch; }
     <div class="sh">
       <span class="tag">The year in one chart</span>
       <h2 id="h-year">August is four times January</h2>
-      <p>Nights booked through platforms across the EU, by month in 2025. Q4, the period the article maps, is shown in amber.</p>
+      <p>Nights booked through Airbnb, Booking.com and Expedia across the EU, by month in 2025. October to December (Q4), the period the article maps, is shown in amber.</p>
     </div>
     <div class="panel"><div id="monthly"></div><div class="tip" id="tip-m" hidden></div></div>
   </section>
@@ -255,7 +269,7 @@ footer p { margin: 0; max-width: 90ch; }
     <div class="sh">
       <span class="tag">The off-season</span>
       <h2 id="h-off">Who stays busy after summer</h2>
-      <p>Each dot is a region: total nights in 2025 (across, log scale) against the share of them booked in Q4 (up). The dashed line is the EU average of <span id="eu-q4"></span>. Hover or tap a dot for details.</p>
+      <p>Each dot is a region: its total nights in 2025 (across) against the share of them that fell in October–December (up). The across axis is a log scale: each gridline is ten times the one before, so small and huge regions fit on one chart. The dashed line is the EU average of <span id="eu-q4"></span>. Hover or tap a dot for details.</p>
     </div>
     <div class="panel"><div id="scatter"></div><div class="tip" id="tip-x" hidden></div></div>
   </section>
@@ -275,9 +289,9 @@ footer p { margin: 0; max-width: 90ch; }
 
 
   <footer>
-    <p><b>Data.</b> Eurostat, nights spent at short-term rental accommodation booked via collaborative economy platforms (Airbnb, Booking, Expedia Group), monthly 2025, as published in the <a href="https://makeovermonday.vercel.app/dataset/tourism-nights-booked-through-platforms" target="_blank" rel="noopener">MakeoverMonday dataset</a>. Q4 is October to December. The page uses the 27 EU countries' NUTS 2 regions; Iceland, Liechtenstein, Norway and Switzerland are in the file but left out, as in the article's EU figures.</p>
-    <p><b>Gaps.</b> The file has no figures for Utrecht and Zuid-Holland (NL) or for Centro, Área Metropolitana de Lisboa and Alentejo (PT): they are listed under their 2021 boundaries and their 2024 replacements are not in the file. They are shown as “no data”.</p>
-        <p><b>Population and boundaries.</b> Nights per resident uses population on 1 January 2025 from Eurostat (<a href="https://ec.europa.eu/eurostat/databrowser/view/demo_r_pjanaggr3/default/table" target="_blank" rel="noopener">demo_r_pjanaggr3</a>). Region boundaries are Eurostat GISCO NUTS 2024 at 1:20 million (© EuroGeographics for the administrative boundaries). The file's region names were matched to NUTS 2024 codes by name within each country. Outermost regions (Canarias, Açores, Madeira and France's overseas regions) are drawn in insets, not to scale with the mainland.</p>
+    <p><b>Data.</b> Eurostat, nights spent in short-term rentals (holiday flats, houses and rooms, not hotels) booked through Airbnb, Booking.com or Expedia Group, by month in 2025, as published in the <a href="https://makeovermonday.vercel.app/dataset/tourism-nights-booked-through-platforms" target="_blank" rel="noopener">MakeoverMonday dataset</a>. Q4 is October to December. The page uses the 27 EU countries' regions at Eurostat's “NUTS 2” level; Iceland, Liechtenstein, Norway and Switzerland are in the file but left out, as in the article's EU figures.</p>
+    <p><b>Gaps.</b> The file has no figures for Utrecht and Zuid-Holland in the Netherlands, or for Centro, the Lisbon area and Alentejo in Portugal. Their borders were redrawn in 2024; the file lists them under the old borders with no numbers, and the new regions are missing. They are shown as “no data”.</p>
+        <p><b>Population and boundaries.</b> Nights per resident uses each region's population on 1 January 2025 from <a href="https://ec.europa.eu/eurostat/databrowser/view/demo_r_pjanaggr3/default/table" target="_blank" rel="noopener">Eurostat's population table</a>. Region borders are Eurostat's official map of regions (2024 edition, simplified for screen; © EuroGeographics for the administrative boundaries). The file names regions but gives no codes, so each name was matched to Eurostat's region code by name within its country. Islands far from the mainland (Spain's Canary Islands, Portugal's Azores and Madeira, and France's overseas regions in the Caribbean, South America and the Indian Ocean) are drawn in small boxes below the map, not to scale.</p>
 
     <p>Built with AI for MakeoverMonday 2026 Week 41: the data preparation, analysis and page code were produced with Claude.</p>
   </footer>
@@ -300,9 +314,33 @@ const sum = (a) => a.reduce((x, y) => x + y, 0);
 const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const RAMP = ["--s1","--s2","--s3","--s4","--s5","--s6"];
 
+// Plain-English names for regions whose official name is in a local language
+const EN = {"Ionia Nisia":"Ionian Islands","Notio Aigaio":"South Aegean","Voreio Aigaio":"North Aegean","Kriti":"Crete","Attiki":"Attica (Athens)",
+  "Kentriki Makedonia":"Central Macedonia","Anatoliki Makedonia, Thraki":"East Macedonia and Thrace","Dytiki Makedonia":"West Macedonia","Ipeiros":"Epirus",
+  "Thessalia":"Thessaly","Dytiki Elláda":"Western Greece","Sterea Elláda":"Central Greece","Peloponnisos":"Peloponnese",
+  "Jadranska Hrvatska":"Adriatic Croatia","Panonska Hrvatska":"Pannonian Croatia","Sjeverna Hrvatska":"Northern Croatia","Grad Zagreb":"Zagreb",
+  "Pohjois- ja Itä-Suomi":"Northern and Eastern Finland","Etelä-Suomi":"Southern Finland","Länsi-Suomi":"Western Finland","Helsinki-Uusimaa":"Helsinki region",
+  "Kýpros":"Cyprus","Canarias":"Canary Islands","Illes Balears":"Balearic Islands","Cataluña":"Catalonia","Comunitat Valenciana":"Valencia region",
+  "Comunidad de Madrid":"Madrid region","Ile de France":"Paris region (Île-de-France)","Región de Murcia":"Murcia","País Vasco":"Basque Country",
+  "Principado de Asturias":"Asturias","Comunidad Foral de Navarra":"Navarre","Castilla y León":"Castile and León","Castilla-La Mancha":"Castile-La Mancha",
+  "Região Autónoma da Madeira":"Madeira","Região Autónoma dos Açores":"Azores","Corse":"Corsica","Bretagne":"Brittany","Basse-Normandie":"Lower Normandy",
+  "Haute-Normandie":"Upper Normandy","Bourgogne":"Burgundy","Nord-Pas de Calais":"Nord-Pas-de-Calais","Rhône-Alpes":"Rhône-Alpes (Lyon, Alps)",
+  "Lombardia":"Lombardy (Milan)","Lazio":"Lazio (Rome)","Toscana":"Tuscany","Sicilia":"Sicily","Sardegna":"Sardinia","Puglia":"Apulia","Piemonte":"Piedmont",
+  "Campania":"Campania (Naples)","Valle d’Aosta/Vallée d’Aoste":"Aosta Valley","Provincia Autonoma di Bolzano/Bozen":"South Tyrol (Bolzano)",
+  "Provincia Autonoma di Trento":"Trentino","Oberbayern":"Upper Bavaria (Munich)","Schwaben":"Swabia","Wien":"Vienna","Tirol":"Tyrol","Steiermark":"Styria",
+  "Kärnten":"Carinthia","Niederösterreich":"Lower Austria","Oberösterreich":"Upper Austria","Praha":"Prague","Budapest":"Budapest",
+  "Bucureşti-Ilfov":"Bucharest region","Warszawski stołeczny":"Warsaw region","Małopolskie":"Lesser Poland (Kraków)","Pomorskie":"Pomerania (Gdańsk)",
+  "Zachodniopomorskie":"West Pomerania","Dolnośląskie":"Lower Silesia (Wrocław)","Hovedstaden":"Copenhagen region","Yugozapaden":"South-West Bulgaria (Sofia)",
+  "Yugoiztochen":"South-East Bulgaria","Severoiztochen":"North-East Bulgaria","Zahodna Slovenija":"Western Slovenia","Vzhodna Slovenija":"Eastern Slovenia",
+  "Bratislavský kraj":"Bratislava region","Région de Bruxelles-Capitale/Brussels Hoofdstedelijk Gewest":"Brussels","Prov. West-Vlaanderen":"West Flanders",
+  "Eesti":"Estonia","Latvija":"Latvia","Sostinės regionas":"Vilnius region","Malta":"Malta","Algarve":"Algarve","Norte":"Northern Portugal",
+  "Ciudad de Ceuta":"Ceuta","Ciudad de Melilla":"Melilla","Sud-Vest Oltenia":"South-West Oltenia","Mazowiecki regionalny":"Mazovia (outside Warsaw)",
+  "Severozapaden":"North-West Bulgaria","Pest":"Pest (around Budapest)","Mayotte":"Mayotte","Mellersta Norrland":"Central Norrland",
+  "Stockholm":"Stockholm","Sydsverige":"South Sweden","Västsverige":"West Sweden"};
+DATA.regions.forEach((r) => { r.local = r.n; if (EN[r.n] && EN[r.n] !== r.n) r.n = EN[r.n]; });
 const R = DATA.regions.filter((r) => r.t);
 R.forEach((r) => { r.q4 = r.m[9] + r.m[10] + r.m[11]; r.q4s = r.q4 / r.t; r.sum = (r.m[5] + r.m[6] + r.m[7]) / r.t;
-  r.pk = r.m.indexOf(Math.max(...r.m)); r.label = `${r.n} (${r.c})`; if (r.pop) r.per = r.t / r.pop; });
+  r.pk = r.m.indexOf(Math.max(...r.m)); r.label = (r.local !== r.n ? `${r.n} · ${r.local}` : r.n) + ` (${r.c})`; if (r.pop) r.per = r.t / r.pop; });
 const EU = DATA.eu; EU.q4 = EU.m[9] + EU.m[10] + EU.m[11];
 const byT = [...R].sort((a, b) => b.t - a.t), byQ = [...R].sort((a, b) => b.q4 - a.q4);
 byT.forEach((r, i) => (r.rT = i + 1)); byQ.forEach((r, i) => (r.rQ = i + 1));
@@ -314,14 +352,17 @@ function tipAt(tip, box, x, y, html) {
 }
 function hideTip(tip) { tip.hidden = true; }
 
+/* country codes */
+$("#codes").textContent = Object.entries(CN).map(([c, n]) => `${c} ${n}`).join(" · ") + ". Numbers use K for thousand and M for million.";
+
 /* stats */
 (function () {
   const top10 = sum(byT.slice(0, 10).map((r) => r.t));
   $("#stats").innerHTML = [
     [fmtM(EU.t), "nights booked through platforms in EU regions, 2025"],
     [(EU.m[7] / EU.m[0]).toFixed(1) + "×", "August's nights compared with January's"],
-    [pct(EU.q4 / EU.t), "of the year's nights fell in Q4, the article's quarter"],
-    [pct(top10 / EU.t), "went to the 10 busiest of " + R.length + " regions"],
+    [pct(EU.q4 / EU.t), "of the year's nights fell in October–December (Q4), the period the article maps"],
+    [pct(top10 / EU.t), "went to the 10 busiest of the " + R.length + " regions with data"],
   ].map(([v, l]) => `<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
 })();
 
@@ -535,7 +576,7 @@ function hideTip(tip) { tip.hidden = true; }
   render = function () {
     baseRender();
     stamp.text(S.p === "q4" ? "Q4 2025" : S.p === "year" ? "2025" : MONL[+S.p]);
-    stampSub.text(S.p === "q4" ? "Oct–Dec, as in the article" : S.p === "year" ? "Full year" : "2025");
+    stampSub.text(S.p === "q4" ? "October–December, as in the article" : S.p === "year" ? "Full year" : "2025");
     document.querySelectorAll("#strip button").forEach((b) => b.setAttribute("aria-current", String(b.dataset.i === S.p)));
   };
 
@@ -593,13 +634,13 @@ function hideTip(tip) { tip.hidden = true; }
   $("#per-cty").innerHTML = C.map((c) => `<div class="brow"><div class="nm">${CN[c.c]}</div>
     <div class="b"><div style="width:${(c.per / cm) * 82}%;${c.per >= euPer ? "" : "background:var(--s2)"}"></div><span>${c.per.toFixed(2)}</span></div></div>`).join("") +
     `<p class="note" style="margin-top:8px">Darker bars are above the EU average of ${euPer.toFixed(2)}.</p>`;
-  const g = (n) => R.find((r) => r.n === n);
+  const g = (n) => R.find((r) => r.local === n);
   const and = g("Andalucía"), idf = g("Ile de France"), mad = g("Comunidad de Madrid"), ion = P[0];
   const q4p = [...P].sort((a, b) => b.q4 / b.pop - a.q4 / a.pop).slice(0, 3);
   const de = C.find((c) => c.c === "DE"), mt = C[0];
   $("#per-ins").innerHTML = `
     <div class="insight"><b>${ion.n} hosts ${ion.per.toFixed(0)} nights per resident</b>That is ${Math.round(ion.per / euPer)} times the EU average of ${euPer.toFixed(1)}. Next come ${P.slice(1, 4).map((r) => `${r.n} (${r.per.toFixed(0)})`).join(", ")}: islands and coasts with small populations.</div>
-    <div class="insight q4"><b>The article's leaders fall back</b>Andalucía, #1 for nights, is #${rk.get(and.n)} per resident (${and.per.toFixed(1)}). Île-de-France is #${rk.get(idf.n)} (${idf.per.toFixed(1)}) and Madrid #${rk.get(mad.n)} (${mad.per.toFixed(1)}): big totals spread over millions of residents. In Q4 alone the per-resident leaders are ${q4p.map((r) => r.n).join(", ")}.</div>
+    <div class="insight q4"><b>The article's leaders fall back</b>Andalucía, #1 for total nights, is #${rk.get(and.n)} per resident (${and.per.toFixed(1)}). The Paris region is #${rk.get(idf.n)} (${idf.per.toFixed(1)}) and Madrid #${rk.get(mad.n)} (${mad.per.toFixed(1)}): big totals spread over millions of residents. In October–December alone, the per-resident leaders are ${q4p.map((r) => r.n).join(", ")}.</div>
     <div class="insight"><b>${CN[mt.c]} leads the countries at ${mt.per.toFixed(1)} per resident</b>${CN[C[1].c]} (${C[1].per.toFixed(1)}) and ${CN[C[2].c]} (${C[2].per.toFixed(1)}) follow. Germany, fourth for total nights, has just ${de.per.toFixed(2)} per resident.</div>`;
 })();
 </script>
