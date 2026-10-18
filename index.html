@@ -18,7 +18,7 @@ h1{font-size:clamp(30px,5vw,44px);line-height:1.1;margin:0 0 10px;font-weight:70
 header p{color:var(--muted);max-width:38em;margin:0}
 .ctl{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:24px}
 #tags{display:flex;gap:8px;flex-wrap:wrap;flex:1 1 0;min-width:0}
-.chip{font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:99px;padding:4px 12px;cursor:pointer}
+.chip{white-space:nowrap;font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:99px;padding:4px 12px;cursor:pointer}
 .chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 #q{flex:0 0 190px;font:inherit;font-size:14px;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:6px 12px}
 .chip:focus-visible,#q:focus-visible,.c:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
@@ -36,6 +36,31 @@ header p{color:var(--muted);max-width:38em;margin:0}
 .tg span{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 7px}
 .o{font-size:13px;color:var(--acc);font-weight:600}
 .empty{grid-column:1/-1;color:var(--muted)}
+.ctl{margin-bottom:0;border-bottom:0}
+.tlw{display:flex;flex-direction:column;gap:6px;padding:4px 0 14px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.tlr{display:flex;flex-wrap:wrap;align-items:flex-end;gap:6px 10px;min-width:0}
+.tl{display:flex;gap:14px;overflow-x:auto;flex:0 1 auto;max-width:100%;min-width:0;padding:2px 2px 4px;scrollbar-width:thin}
+.yr{display:flex;flex-direction:column;gap:3px;flex:0 0 auto}
+.yl{font:inherit;font-size:12px;font-weight:600;color:var(--muted);background:none;border:0;padding:0 2px;text-align:left;cursor:pointer;align-self:flex-start;border-radius:3px}
+.yl:hover,.yl[aria-pressed=true]{color:var(--ink)}
+.yl[aria-pressed=true]{text-decoration:underline;text-underline-offset:3px}
+.cells{display:flex;gap:3px}
+.mc{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;padding:0;cursor:pointer;font:inherit}
+.mc i{display:block;width:22px;height:22px;border-radius:4px;background:var(--th);border:1.5px solid transparent}
+.mc[data-n="0"] i{background:transparent;border-color:var(--line)}
+.mc[data-l="1"] i{background:color-mix(in srgb,var(--acc) 30%,var(--card))}
+.mc[data-l="2"] i{background:color-mix(in srgb,var(--acc) 58%,var(--card))}
+.mc[data-l="3"] i{background:var(--acc)}
+.mc b{font-size:10.5px;font-weight:400;color:var(--muted);line-height:1}
+.mc[aria-pressed=true] i{border-color:var(--ink)}
+.tl.sel .mc[aria-pressed=false] i{opacity:.35}
+.mc[aria-pressed=true] b{color:var(--ink);font-weight:600}
+.mc:focus-visible,.yl:focus-visible,#clr:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+#clr{font:inherit;font-size:13px;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:99px;padding:3px 11px;cursor:pointer;flex:0 0 auto;margin-bottom:12px}
+#clr[hidden]{display:none}
+.tls{margin:0;font-size:13.5px;color:var(--muted)}
+.tls b{color:var(--ink);font-weight:600}
+@media (max-width:560px){.mc i{width:16px;height:18px}.tl{gap:10px}}
 footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:14px;color:var(--muted)}
 footer a{color:var(--ink)}
 </style>
@@ -47,6 +72,7 @@ footer a{color:var(--ink)}
 <p>Exercises and studies in data visualization, including MakeoverMonday projects and dashboards built in Tableau Public. Each card opens the full piece.</p>
 </header>
 <div class="ctl"><div id="tags" role="group" aria-label="Filter by tag"></div><input id="q" type="search" placeholder="Search the work" aria-label="Search the work"></div>
+<div class="tlw"><div class="tlr"><div class="tl" id="tl" role="group" aria-label="Filter by month: tap a month, then another to choose a range"></div><button id="clr" hidden>Clear dates</button></div><p class="tls" id="tls" aria-live="polite"></p></div>
 <main id="g"></main>
 <footer><a href="https://public.tableau.com/app/profile/leonagata/vizzes" target="_blank" rel="noopener">Tableau Public profile</a><br>MakeoverMonday is a community project: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">makeovermonday.vercel.app</a></footer>
 </div>
@@ -62,14 +88,35 @@ const SH={"2025_12_15_London_Crimes":"MakeoverMonday2025W49LondonCrimes","2025_1
 "2026_09_28_World_Pop,2026_09_14_Man_Killers,2026_09_07_Bears,2026_08_31_Taylor_Swift,2026_08_24_Global_GDP,2026_08_17_GenZ_Betting,2026_08_10_UK_Temp,2026_08_03_Trade,2026_07_27_Squirrels,2026_07_20_Data_Centers,2026_07_13_Parks,2026_07_06_Cyclones,2026_06_29_Space_Launch_Sites,2026_06_22_UFO,2026_06_15_Global_Top_Foreign_Investments,2026_06_08_Coachella,2026_06_01_Arsenal,2026_05_25_GPU_Performance,2026_05_18_UK_Fuel,2026_05_11_Net_Migration,2026_05_04_Taco_San_Diego,2026_04_27_Democracy_Index,2026_04_20_AI_Risk_Rankings,2026_04_13_Big_Tech_Hiring,2026_04_06_Global_Oil,2026_03_30_AI_Workslop,2026_03_23_London_Unemployment,2026_03_16_Fastest_Cars,2026_03_09_Mario_Sales,2026_03_02_Trump_Approval,2026_02_23_Periodic_Table_AI,2026_02_15_Living_Planet_Index,2026_02_09_BigMac_Price,2026_02_02_Gold,2026_01_25_US_Jobs,2026_01_16_Maestra,2026_01_12_Housing_Bubbles,2026_01_05_Tallest_Rollercoasters,2025_12_29_New_Year_Resolutions,2025_12_23_Kevin_Grocery2025,2025_12_15_London_Crimes".split(",").forEach(s=>{const[y,mo,dd,...n]=s.split("_"),mn=MO[+mo-1];P.push({t:TI[s]||n.join(" "),k:s,m:"MakeoverMonday, "+mn+" "+(+dd)+", "+y,d:"",g:["Tableau",mn],u:"https://public.tableau.com/app/profile/leonagata/viz/MM_"+s+"/"+(SH[s]||"MM_"+s),th:"b",i:"thumbs/"+s+".jpg",o:"Opens Tableau Public"})});
 P.sort((a,b)=>b.k.localeCompare(a.k));
 const TH={s:'<svg viewBox="0 0 120 80" fill="currentColor"><g opacity=".85"><circle cx="20" cy="62" r="4"/><circle cx="38" cy="54" r="4"/><circle cx="52" cy="44" r="4"/><circle cx="64" cy="48" r="4"/><circle cx="78" cy="30" r="4"/><circle cx="96" cy="20" r="4"/></g><path d="M12 66L104 14" stroke="currentColor" stroke-width="2" fill="none"/></svg>',b:'<svg viewBox="0 0 120 80" fill="currentColor"><rect x="14" y="40" width="16" height="30" rx="2"/><rect x="38" y="22" width="16" height="48" rx="2"/><rect x="62" y="48" width="16" height="22" rx="2"/><rect x="86" y="12" width="16" height="58" rx="2"/></svg>'};
-const S={t:"All",q:""},T=["All","Tableau","HTML and SVG",...new Set(P.map(p=>p.g[1]))];
+const S={t:"All",q:"",a:null,b:null,pend:false},T=["All","Tableau","HTML and SVG"];
+const MF=["January","February","March","April","May","June","July","August","September","October","November","December"];
+P.forEach(p=>{const[y,m]=p.k.split("_");p.y=+y;p.mo=+m-1;p.ix=p.y*12+p.mo});
+const IX0=Math.min(...P.map(p=>p.ix)),IX1=Math.max(...P.map(p=>p.ix));
+const MS=[];for(let i=IX0;i<=IX1;i++)MS.push({i,y:Math.floor(i/12),m:i%12,n:P.filter(p=>p.ix===i).length});
+const lab=i=>MO[i%12]+" "+Math.floor(i/12);
 const tg=document.getElementById("tags"),g=document.getElementById("g");
 function chips(){tg.innerHTML=T.map(t=>`<button class="chip" data-t="${t}" aria-pressed="${S.t==t}">${t}</button>`).join("")}
-function draw(){const q=S.q,r=P.filter(p=>(S.t=="All"||p.g.includes(S.t))&&(!q||(p.t+" "+p.d+" "+p.m+" "+p.g.join(" ")).toLowerCase().includes(q)));
-g.innerHTML=r.map(p=>`<a class="c" href="${p.u}" target="_blank" rel="noopener">${p.i?`<div class="th"><img src="${p.i}" alt="" loading="lazy"></div>`:TH[p.th]?`<div class="th">${TH[p.th]}</div>`:""}<div class="b"><div class="m">${p.m}</div><h2>${p.t}</h2>${p.d?`<p>${p.d}</p>`:""}<span class="o">${p.o}</span><div class="tg">${p.g.map(x=>`<span>${x}</span>`).join("")}</div></div></a>`).join("")||`<p class="empty">No pieces match. Clear the tag filter or the search.</p>`}
+function draw(){const q=S.q,r=P.filter(p=>(S.t=="All"||p.g.includes(S.t))&&(S.a==null||(p.ix>=S.a&&p.ix<=S.b))&&(!q||(p.t+" "+p.d+" "+p.m+" "+p.g.join(" ")).toLowerCase().includes(q)));status(r.length);
+g.innerHTML=r.map(p=>`<a class="c" href="${p.u}" target="_blank" rel="noopener">${p.i?`<div class="th"><img src="${p.i}" alt="" loading="lazy"></div>`:TH[p.th]?`<div class="th">${TH[p.th]}</div>`:""}<div class="b"><div class="m">${p.m}</div><h2>${p.t}</h2>${p.d?`<p>${p.d}</p>`:""}<span class="o">${p.o}</span><div class="tg"><span>${p.g[0]}</span></div></div></a>`).join("")||`<p class="empty">No pieces match. Clear the dates, the tag filter or the search.</p>`}
 tg.onclick=e=>{const b=e.target.closest("[data-t]");if(!b)return;S.t=b.dataset.t;chips();draw()};
 document.getElementById("q").oninput=e=>{S.q=e.target.value.trim().toLowerCase();draw()};
-chips();draw();
+function tl(){const tlEl=document.getElementById("tl"),ys=[...new Set(MS.map(x=>x.y))];
+tlEl.classList.toggle("sel",S.a!=null);tlEl.innerHTML=ys.map(y=>{const ms=MS.filter(x=>x.y===y),a=ms[0].i,b=ms[ms.length-1].i,whole=S.a===a&&S.b===b&&!S.pend;
+return `<div class="yr"><button class="yl" data-y="${y}" aria-pressed="${whole}" title="Show all of ${y}">${y}</button><div class="cells">${ms.map(x=>{const on=S.a!=null&&x.i>=S.a&&x.i<=S.b,l=x.n===0?0:x.n===1?1:x.n<=3?2:3;
+return `<button class="mc" data-i="${x.i}" data-n="${x.n}" data-l="${l}" aria-pressed="${on}" aria-label="${MF[x.m]} ${x.y}: ${x.n} piece${x.n===1?"":"s"}" title="${MF[x.m]} ${x.y}: ${x.n} piece${x.n===1?"":"s"}"><i></i><b>${MO[x.m][0]}</b></button>`}).join("")}</div></div>`}).join("");
+document.getElementById("clr").hidden=S.a==null}
+function status(n){const el=document.getElementById("tls"),pc=n+" piece"+(n===1?"":"s");
+if(S.a==null){el.innerHTML=`Showing <b>all dates</b> · ${pc}. Tap a month to filter, then another month for a range, or a year.`;return}
+const ya=Math.floor(S.a/12),yb=Math.floor(S.b/12);let t;
+if(S.a===S.b)t=MF[S.a%12]+" "+ya;else if(ya===yb&&!S.pend&&S.a===Math.min(...MS.filter(x=>x.y===ya).map(x=>x.i))&&S.b===Math.max(...MS.filter(x=>x.y===ya).map(x=>x.i)))t="all of "+ya;else if(ya===yb)t=MO[S.a%12]+"–"+MO[S.b%12]+" "+ya;else t=lab(S.a)+" – "+lab(S.b);
+el.innerHTML=`Showing <b>${t}</b> · ${pc}.`+(S.pend?" Tap another month to make a range.":"")}
+document.getElementById("tl").onclick=e=>{const c=e.target.closest(".mc"),y=e.target.closest(".yl");
+if(c){const i=+c.dataset.i;if(S.pend&&S.a!==i){S.a=Math.min(S.a,i);S.b=Math.max(S.b,i);S.pend=false}else if(S.pend&&S.a===i){S.a=S.b=null;S.pend=false}else{S.a=S.b=i;S.pend=true}}
+else if(y){const ms=MS.filter(x=>x.y===+y.dataset.y);const a=ms[0].i,b=ms[ms.length-1].i;if(S.a===a&&S.b===b&&!S.pend){S.a=S.b=null}else{S.a=a;S.b=b}S.pend=false}
+else return;tl();draw()};
+document.getElementById("clr").onclick=()=>{S.a=S.b=null;S.pend=false;tl();draw()};
+chips();tl();draw();
+{const t=document.getElementById("tl");t.scrollLeft=t.scrollWidth}
 </script>
 </body>
 </html>
