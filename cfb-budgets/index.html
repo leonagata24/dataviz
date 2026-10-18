@@ -13,10 +13,10 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Source Serif 4",Georgia,serif}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:20}
-.hero{background:#0E3B2C;color:#F2F5EC;padding:72px 22px 64px;background-image:repeating-linear-gradient(90deg,transparent 0 79px,rgba(255,255,255,.07) 79px 81px)}
+.hero{background:#0E3B2C;color:#F2F5EC;padding:34px 22px 28px;background-image:repeating-linear-gradient(90deg,transparent 0 79px,rgba(255,255,255,.07) 79px 81px)}
 .hero div,main,.bar>div,footer{max-width:900px;margin:0 auto}
-h1{font:700 clamp(44px,9vw,92px)/.95 "Barlow Condensed","Arial Narrow",sans-serif;margin:0 0 22px;letter-spacing:-.01em;max-width:11em}
-.hero p{font-size:20px;max-width:34em;margin:0;color:#D5E0D6}
+h1{font:700 clamp(32px,6.5vw,58px)/1 "Barlow Condensed","Arial Narrow",sans-serif;margin:0 0 12px;letter-spacing:-.01em;max-width:18em}
+.hero p{font-size:17px;max-width:44em;margin:0;color:#D5E0D6}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px}
 .bar>div{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:system-ui,sans-serif;font-size:14px}
 .chip{border:1.5px solid var(--c,var(--ink));background:transparent;color:var(--ink);border-radius:99px;padding:5px 12px;cursor:pointer;font:inherit}
@@ -24,11 +24,11 @@ h1{font:700 clamp(44px,9vw,92px)/.95 "Barlow Condensed","Arial Narrow",sans-seri
 .chip:focus-visible,input:focus-visible,th button:focus-visible{outline:3px solid var(--b10);outline-offset:2px}
 #chips{display:flex;flex-wrap:wrap;gap:8px;flex:1 1 0;min-width:0}
 #q{flex:0 0 170px;font:inherit;padding:6px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
-@media (max-width:480px){#q{flex-basis:120px}}
+@media (max-width:560px){#chips,#q{flex:1 1 100%}}
 main{padding:0 18px}
-section{padding:56px 0 8px}
-h2{font:700 clamp(30px,5vw,46px)/1.02 "Barlow Condensed","Arial Narrow",sans-serif;margin:0 0 10px;max-width:16em}
-section>p{color:var(--muted);margin:0 0 18px;max-width:36em}
+section{padding:34px 0 4px}
+h2{font:700 clamp(26px,4vw,38px)/1.05 "Barlow Condensed","Arial Narrow",sans-serif;margin:0 0 10px;max-width:16em}
+section>p{color:var(--muted);margin:0 0 12px;max-width:36em}
 svg{width:100%;height:auto;display:block;overflow:visible}
 svg text{font-family:system-ui,sans-serif;fill:var(--ink)}
 .ax{font-size:11px;fill:var(--muted)!important}.nm{font-size:12px}.lb{font-size:12px;font-weight:600}.gl{stroke:var(--line);stroke-width:1}
@@ -43,12 +43,12 @@ th[aria-sort]{color:var(--b10)}
 td.n{font-variant-numeric:tabular-nums}
 .rg{position:relative;height:10px;background:var(--line);border-radius:5px;min-width:200px}
 .rg b{position:absolute;top:0;height:10px;border-radius:5px;background:var(--c)}
-.cr{border-bottom:1px solid var(--line);font:13px/1.5 system-ui,sans-serif;color:var(--muted)}.cr div{max-width:900px;margin:0 auto;padding:10px 18px}.cr p{margin:2px 0}.cr a{color:var(--ink)}
+.cr{border-bottom:1px solid var(--line);font:13px/1.5 system-ui,sans-serif;color:var(--muted)}.cr div{max-width:900px;margin:0 auto;padding:7px 18px;display:flex;flex-wrap:wrap;gap:2px 18px}.cr p{margin:0}.cr a{color:var(--ink)}
 .tg{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font:13px system-ui,sans-serif;color:var(--muted);margin-bottom:8px}.tg label{color:var(--ink);font-weight:600;cursor:pointer}
 .st td:first-child{font-weight:600;white-space:nowrap}.st .gh td{background:var(--line);font-weight:700;font-family:"Barlow Condensed",sans-serif;font-size:17px;white-space:normal}
 .lim{font:15px/1.5 system-ui,sans-serif;padding-left:20px;max-width:46em}.lim li{margin-bottom:8px}
 #tip{position:fixed;display:none;pointer-events:none;z-index:30;background:var(--ink);color:var(--bg);padding:8px 11px;border-radius:6px;font:13px/1.4 system-ui,sans-serif}
-footer{padding:48px 18px 56px;color:var(--muted);font:14px/1.5 system-ui,sans-serif}
+footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-serif}
 </style>
 </head>
 <body>
@@ -57,6 +57,7 @@ footer{padding:48px 18px 56px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 <p>This exercise is part of the “MakeoverMonday project”: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">makeovermonday.vercel.app</a></p>
 <p>The article source: <a href="https://www.linkedin.com/posts/ryan-sagers_the-athletic-just-dropped-a-super-interesting-share-7506027124345126912-54uU/?utm_source=share&amp;utm_medium=member_ios&amp;rcm=ACoAAATRm80BRDol2MPefSrDOJ6QtDfL0kI_zAs" target="_blank" rel="noopener">LinkedIn post</a></p>
 <p>The data source: <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">MakeoverMonday dataset, CFB roster spending 2026</a></p>
+<p>Disclaimer: this page was designed using AI (Claude).</p>
 </div></aside>
 <header class="hero"><div>
 <h1>Money gets you in the poll. It doesn’t decide where you land.</h1>

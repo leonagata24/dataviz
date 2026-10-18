@@ -1,13 +1,73 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0; url=./data_viz_studies_github/">
-    <meta name="robots" content="noindex">
-    <title>Redirecting…</title>
-    <script>location.replace('./data_viz_studies_github/');</script>
-  </head>
-  <body>
-    Redirecting to <a href="./data_viz_studies_github/">data_viz_studies_github/</a>.
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>data_viz_studies</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F7F8;--card:#fff;--ink:#15181C;--muted:#5E6670;--line:#DDE1E5;--acc:#1F5FA8;--th:#E8EDF3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101316;--card:#171B1F;--ink:#E8ECEF;--muted:#9AA3AB;--line:#2A3036;--acc:#6FA8E8;--th:#1F262D}}
+:root[data-theme="dark"]{--bg:#101316;--card:#171B1F;--ink:#E8ECEF;--muted:#9AA3AB;--line:#2A3036;--acc:#6FA8E8;--th:#1F262D}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.w{max-width:1040px;margin:0 auto;padding:0 20px}
+header{padding:56px 0 28px}
+h1{font-size:clamp(30px,5vw,44px);line-height:1.1;margin:0 0 10px;font-weight:700;letter-spacing:-.01em}
+header p{color:var(--muted);max-width:38em;margin:0}
+.ctl{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:24px}
+#tags{display:flex;gap:8px;flex-wrap:wrap;flex:1 1 0;min-width:0}
+.chip{font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:99px;padding:4px 12px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#q{flex:0 0 190px;font:inherit;font-size:14px;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:6px 12px}
+.chip:focus-visible,#q:focus-visible,.c:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+#g{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;padding-bottom:40px}
+.c{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;color:inherit;text-decoration:none}
+.c:hover{border-color:var(--acc)}
+.th{aspect-ratio:3/2;background:var(--th);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
+.th img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+.th svg{width:46%;height:auto;color:var(--acc)}
+.b{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.b h2{font-size:18px;line-height:1.25;margin:0}
+.m{font-size:13px;color:var(--muted)}
+.b p{font-size:14.5px;margin:0;color:var(--ink)}
+.tg{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
+.tg span{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 7px}
+.o{font-size:13px;color:var(--acc);font-weight:600}
+.empty{grid-column:1/-1;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:14px;color:var(--muted)}
+footer a{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="w">
+<header>
+<h1>data_viz_studies</h1>
+<p>Exercises and studies in data visualization, including MakeoverMonday projects and dashboards built in Tableau Public. Each card opens the full piece.</p>
+</header>
+<div class="ctl"><div id="tags" role="group" aria-label="Filter by tag"></div><input id="q" type="search" placeholder="Search the work" aria-label="Search the work"></div>
+<main id="g"></main>
+<footer><a href="https://public.tableau.com/app/profile/leonagata/vizzes" target="_blank" rel="noopener">Tableau Public profile</a><br>MakeoverMonday is a community project: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">makeovermonday.vercel.app</a></footer>
+</div>
+<script>
+const P=[
+{t:"College football: roster budgets vs. AP rankings",m:"MakeoverMonday, Sep 21, 2026",k:"2026_09_21",d:"Do bigger roster budgets mean higher rankings? A scatter with a trendline, over- and underperformers, a conference comparison, and a statistics section with its limits.",g:["HTML and SVG","Sep"],u:"cfb-budgets/",th:"s",i:"thumbs/cfb_budgets_scatter.jpg",o:"Opens the interactive page"},
+];
+const PROFILE="https://public.tableau.com/app/profile/leonagata/vizzes",MO=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const TI={"2025_12_23_Kevin_Grocery2025":"Kevin Grocery 2025","2026_09_28_World_Pop":"World Population"};
+const SH={"2025_12_15_London_Crimes":"MakeoverMonday2025W49LondonCrimes","2025_12_23_Kevin_Grocery2025":"HomeAlone___andHitbyInflation","2025_12_29_New_Year_Resolutions":"YouGovPoll2025NewYearWishesbyAgeGroups","2026_01_05_Tallest_Rollercoasters":"WorldsTallestRollercoasters","2026_01_12_Housing_Bubbles":"HousingBubblesRisk","2026_01_16_Maestra":"2026W3WomenConductorsonBroadway","2026_01_25_US_Jobs":"2026W4TopJobsbyUSState","2026_02_02_Gold":"2026W5GoldPriceTrend","2026_02_15_Living_Planet_Index":"LivingPlanetIndex","2026_02_23_Periodic_Table_AI":"PeriodicTableAI","2026_03_02_Trump_Approval":"CNN_Poll_Trump_Approval","2026_03_09_Mario_Sales":"MM_Mighty_Mario","2026_03_16_Fastest_Cars":"FastestCarsintheWorld","2026_03_23_London_Unemployment":"LondonUnemployment","2026_03_30_AI_Workslop":"MM_2026_03_23_AI_Workslop","2026_06_15_Global_Top_Foreign_Investments":"MM_2026_06_15_Global_Investments","2026_06_22_UFO":"MM_2026_06_22_UFO_Sightings","2026_07_13_Parks":"MM_2026_07_13_Parks_Amenities","2026_08_17_GenZ_Betting":"MM_2026_08_17_Betting","2026_09_14_Man_Killers":"MM_2026_09_14_Killers"};
+"2026_09_28_World_Pop,2026_09_14_Man_Killers,2026_09_07_Bears,2026_08_31_Taylor_Swift,2026_08_24_Global_GDP,2026_08_17_GenZ_Betting,2026_08_10_UK_Temp,2026_08_03_Trade,2026_07_27_Squirrels,2026_07_20_Data_Centers,2026_07_13_Parks,2026_07_06_Cyclones,2026_06_29_Space_Launch_Sites,2026_06_22_UFO,2026_06_15_Global_Top_Foreign_Investments,2026_06_08_Coachella,2026_06_01_Arsenal,2026_05_25_GPU_Performance,2026_05_18_UK_Fuel,2026_05_11_Net_Migration,2026_05_04_Taco_San_Diego,2026_04_27_Democracy_Index,2026_04_20_AI_Risk_Rankings,2026_04_13_Big_Tech_Hiring,2026_04_06_Global_Oil,2026_03_30_AI_Workslop,2026_03_23_London_Unemployment,2026_03_16_Fastest_Cars,2026_03_09_Mario_Sales,2026_03_02_Trump_Approval,2026_02_23_Periodic_Table_AI,2026_02_15_Living_Planet_Index,2026_02_09_BigMac_Price,2026_02_02_Gold,2026_01_25_US_Jobs,2026_01_16_Maestra,2026_01_12_Housing_Bubbles,2026_01_05_Tallest_Rollercoasters,2025_12_29_New_Year_Resolutions,2025_12_23_Kevin_Grocery2025,2025_12_15_London_Crimes".split(",").forEach(s=>{const[y,mo,dd,...n]=s.split("_"),mn=MO[+mo-1];P.push({t:TI[s]||n.join(" "),k:s,m:"MakeoverMonday, "+mn+" "+(+dd)+", "+y,d:"",g:["Tableau",mn],u:"https://public.tableau.com/app/profile/leonagata/viz/MM_"+s+"/"+(SH[s]||"MM_"+s),th:"b",i:"thumbs/"+s+".jpg",o:"Opens Tableau Public"})});
+P.sort((a,b)=>b.k.localeCompare(a.k));
+const TH={s:'<svg viewBox="0 0 120 80" fill="currentColor"><g opacity=".85"><circle cx="20" cy="62" r="4"/><circle cx="38" cy="54" r="4"/><circle cx="52" cy="44" r="4"/><circle cx="64" cy="48" r="4"/><circle cx="78" cy="30" r="4"/><circle cx="96" cy="20" r="4"/></g><path d="M12 66L104 14" stroke="currentColor" stroke-width="2" fill="none"/></svg>',b:'<svg viewBox="0 0 120 80" fill="currentColor"><rect x="14" y="40" width="16" height="30" rx="2"/><rect x="38" y="22" width="16" height="48" rx="2"/><rect x="62" y="48" width="16" height="22" rx="2"/><rect x="86" y="12" width="16" height="58" rx="2"/></svg>'};
+const S={t:"All",q:""},T=["All","Tableau","HTML and SVG",...new Set(P.map(p=>p.g[1]))];
+const tg=document.getElementById("tags"),g=document.getElementById("g");
+function chips(){tg.innerHTML=T.map(t=>`<button class="chip" data-t="${t}" aria-pressed="${S.t==t}">${t}</button>`).join("")}
+function draw(){const q=S.q,r=P.filter(p=>(S.t=="All"||p.g.includes(S.t))&&(!q||(p.t+" "+p.d+" "+p.m+" "+p.g.join(" ")).toLowerCase().includes(q)));
+g.innerHTML=r.map(p=>`<a class="c" href="${p.u}" target="_blank" rel="noopener">${p.i?`<div class="th"><img src="${p.i}" alt="" loading="lazy"></div>`:TH[p.th]?`<div class="th">${TH[p.th]}</div>`:""}<div class="b"><div class="m">${p.m}</div><h2>${p.t}</h2>${p.d?`<p>${p.d}</p>`:""}<span class="o">${p.o}</span><div class="tg">${p.g.map(x=>`<span>${x}</span>`).join("")}</div></div></a>`).join("")||`<p class="empty">No pieces match. Clear the tag filter or the search.</p>`}
+tg.onclick=e=>{const b=e.target.closest("[data-t]");if(!b)return;S.t=b.dataset.t;chips();draw()};
+document.getElementById("q").oninput=e=>{S.q=e.target.value.trim().toLowerCase();draw()};
+chips();draw();
+</script>
+</body>
 </html>
