@@ -89,6 +89,8 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
 .bb-mast { display: grid; gap: var(--cds-gap-md); border-bottom: 2px solid var(--color-fg); padding-bottom: var(--cds-pad-lg); }
 .bb-credits { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 12px; color: var(--color-fg-muted); letter-spacing: .02em; border-bottom: 1px solid var(--color-border-line); padding-bottom: 12px; align-items: center; }
 .bb-credits span { display: inline-flex; gap: 6px; align-items: center; }
+.bb-credits .home { color: var(--color-fg); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.bb-credits .home:hover, .bb-credits .home:focus-visible { text-decoration: underline; }
 .bb-credits b { color: var(--color-fg); font-weight: 500; }
 .bb-credits a { color: var(--color-fg); text-underline-offset: 2px; }
 .bb-ai { background: var(--color-fg); color: var(--color-bg); padding: 2px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: .1em; font-size: 11px; }
@@ -172,6 +174,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
 <div class="bb">
   <header class="bb-mast" id="top">
     <div class="bb-credits">
+      <a class="home" href="https://leonagata24.github.io/dataviz/">← Leo’s Data Viz Studies</a>
       <span class="bb-ai">Built with AI</span>
       <span><b>MakeoverMonday 2026 · Week 43</b></span>
       <span>Project: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">MakeoverMonday</a></span>
