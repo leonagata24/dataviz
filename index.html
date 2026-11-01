@@ -3,18 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Leo's Data Viz Studies</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<title>A Pug’s Data Viz Studies</title>
+<link rel="icon" href="pug.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,600,100&family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F6F7F8;--card:#fff;--ink:#15181C;--muted:#5E6670;--line:#DDE1E5;--acc:#1F5FA8;--th:#E8EDF3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101316;--card:#171B1F;--ink:#E8ECEF;--muted:#9AA3AB;--line:#2A3036;--acc:#6FA8E8;--th:#1F262D}}
-:root[data-theme="dark"]{--bg:#101316;--card:#171B1F;--ink:#E8ECEF;--muted:#9AA3AB;--line:#2A3036;--acc:#6FA8E8;--th:#1F262D}
+/* Pug palette: very light fawn ground; cards matted in the quarter's coat colour (Q1 cream fawn, Q2 fawn, Q3 brown, Q4 black mask) */
+:root{--bg:#FBF5EC;--card:#FFFCF7;--ink:#241B16;--muted:#76624E;--line:#EADCC8;--acc:#8A5A36;--th:#F3E7D5;
+--q1:#EAD3AE;--q2:#C99A60;--q3:#7C4F30;--q4:#241B16;--qline:transparent;
+--f-disp:"Fraunces",Georgia,serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17120E;--card:#211A15;--ink:#F3E8D9;--muted:#B9A48D;--line:#3A2F26;--acc:#DDB07A;--th:#2A211B;--q1:#E3C99E;--q2:#C0915A;--q3:#8E5F3C;--q4:#050403;--qline:#4A3C31;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17120E;--card:#211A15;--ink:#F3E8D9;--muted:#B9A48D;--line:#3A2F26;--acc:#DDB07A;--th:#2A211B;--q1:#E3C99E;--q2:#C0915A;--q3:#8E5F3C;--q4:#050403;--qline:#4A3C31;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,sans-serif}
+.q1{--qc:var(--q1)}.q2{--qc:var(--q2)}.q3{--qc:var(--q3)}.q4{--qc:var(--q4)}
+.ttl{display:flex;align-items:center;gap:14px;margin:0 0 10px}
+.ttl img{width:clamp(48px,7vw,64px);height:auto;flex:0 0 auto}
+.tail{display:block;width:150px;height:22px;margin:4px 0 14px;color:var(--q2)}
+.paws{display:flex;gap:10px;color:var(--q2);margin-bottom:12px}
+.paws svg{width:16px;height:16px}
+.paws svg:nth-child(odd){transform:translateY(5px) rotate(-12deg)}.paws svg:nth-child(even){transform:rotate(12deg)}
+.lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted);margin:0}
+.lg span{display:inline-flex;align-items:center;gap:6px}
+.lg i{width:12px;height:12px;border-radius:3px;background:var(--qc);box-shadow:inset 0 0 0 1px var(--qline)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
-.w{max-width:1040px;margin:0 auto;padding:0 20px}
+.w{max-width:1040px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
 header{padding:56px 0 28px}
-h1{font-size:clamp(30px,5vw,44px);line-height:1.1;margin:0 0 10px;font-weight:700;letter-spacing:-.01em}
+h1{font-family:var(--f-disp);font-variation-settings:"SOFT" 100;font-size:clamp(30px,5vw,46px);line-height:1.05;margin:0;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
 header p{color:var(--muted);max-width:38em;margin:0}
 .ctl{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:24px}
 #tags{display:flex;gap:8px;flex-wrap:wrap;flex:1 1 0;min-width:0}
@@ -23,14 +37,16 @@ header p{color:var(--muted);max-width:38em;margin:0}
 #q{flex:0 0 190px;font:inherit;font-size:14px;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:6px 12px}
 .chip:focus-visible,#q:focus-visible,.c:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 #g{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;padding-bottom:40px}
-.c{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;color:inherit;text-decoration:none}
-.c:hover{border-color:var(--acc)}
-.th{aspect-ratio:3/2;background:var(--th);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
-.th img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+.c{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;color:inherit;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
+.c:hover{border-color:var(--qc);transform:translateY(-2px);box-shadow:0 6px 18px -10px var(--qc)}
+@media (prefers-reduced-motion:reduce){.c{transition:none}.c:hover{transform:none}}
+.th{aspect-ratio:3/2;max-width:100%;background:var(--qc);padding:10px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 -1px 0 var(--qline)}
+.th img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block;border-radius:5px;background:var(--card)}
 .th svg{width:46%;height:auto;color:var(--acc)}
 .b{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
 .b h2{font-size:18px;line-height:1.25;margin:0}
-.m{font-size:13px;color:var(--muted)}
+.m{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.m::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--qc);box-shadow:inset 0 0 0 1px var(--qline);flex:0 0 auto}
 .b p{font-size:14.5px;margin:0;color:var(--ink)}
 .tg{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
 .tg span{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 7px}
@@ -46,11 +62,11 @@ header p{color:var(--muted);max-width:38em;margin:0}
 .yl[aria-pressed=true]{text-decoration:underline;text-underline-offset:3px}
 .cells{display:flex;gap:3px}
 .mc{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;padding:0;cursor:pointer;font:inherit}
-.mc i{display:block;width:22px;height:22px;border-radius:4px;background:var(--th);border:1.5px solid transparent}
+.mc i{display:block;width:22px;height:22px;border-radius:4px;background:var(--th);border:1.5px solid transparent;box-sizing:border-box}
 .mc[data-n="0"] i{background:transparent;border-color:var(--line)}
-.mc[data-l="1"] i{background:color-mix(in srgb,var(--acc) 30%,var(--card))}
-.mc[data-l="2"] i{background:color-mix(in srgb,var(--acc) 58%,var(--card))}
-.mc[data-l="3"] i{background:var(--acc)}
+.mc[data-l="1"] i{background:color-mix(in srgb,var(--qc) 50%,var(--card))}
+.mc[data-l="2"] i{background:color-mix(in srgb,var(--qc) 76%,var(--card))}
+.mc[data-l="3"] i{background:var(--qc)}
 .mc b{font-size:10.5px;font-weight:400;color:var(--muted);line-height:1}
 .mc[aria-pressed=true] i{border-color:var(--ink)}
 .tl.sel .mc[aria-pressed=false] i{opacity:.35}
@@ -68,13 +84,14 @@ footer a{color:var(--ink)}
 <body>
 <div class="w">
 <header>
-<h1>Leo's Data Viz Studies</h1>
+<div class="ttl"><img src="pug.svg" alt=""><h1>A Pug’s Data Viz Studies</h1></div>
+<svg class="tail" viewBox="0 0 150 22" aria-hidden="true"><path d="M2 15 C40 15 70 16 104 12 C122 10 132 4 126 2 C119 0 114 9 121 13 C128 17 138 12 140 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
 <p>Exercises and studies in data visualization, including MakeoverMonday projects and dashboards built in Tableau Public. Each card opens the full piece.</p>
 </header>
 <div class="ctl"><div id="tags" role="group" aria-label="Filter by tag"></div><input id="q" type="search" placeholder="Search the work" aria-label="Search the work"></div>
-<div class="tlw"><div class="tlr"><div class="tl" id="tl" role="group" aria-label="Filter by month: tap a month, then another to choose a range"></div><button id="clr" hidden>Clear dates</button></div><p class="tls" id="tls" aria-live="polite"></p></div>
+<div class="tlw"><div class="tlr"><div class="tl" id="tl" role="group" aria-label="Filter by month: tap a month, then another to choose a range"></div><button id="clr" hidden>Clear dates</button></div><p class="tls" id="tls" aria-live="polite"></p><p class="lg" aria-label="Card colours by quarter"><span class="q1"><i></i>Jan–Mar</span><span class="q2"><i></i>Apr–Jun</span><span class="q3"><i></i>Jul–Sep</span><span class="q4"><i></i>Oct–Dec</span></p></div>
 <main id="g"></main>
-<footer><a href="https://public.tableau.com/app/profile/leonagata/vizzes" target="_blank" rel="noopener">Tableau Public profile</a><br>MakeoverMonday is a community project: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">makeovermonday.vercel.app</a></footer>
+<footer><div class="paws" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg></div><a href="https://public.tableau.com/app/profile/leonagata/vizzes" target="_blank" rel="noopener">Tableau Public profile</a><br>MakeoverMonday is a community project: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">makeovermonday.vercel.app</a></footer>
 </div>
 <script>
 const P=[
@@ -101,13 +118,13 @@ const lab=i=>MO[i%12]+" "+Math.floor(i/12);
 const tg=document.getElementById("tags"),g=document.getElementById("g");
 function chips(){tg.innerHTML=T.map(t=>`<button class="chip" data-t="${t}" aria-pressed="${S.t==t}">${t}</button>`).join("")}
 function draw(){const q=S.q,r=P.filter(p=>(S.t=="All"||p.g.includes(S.t))&&(S.a==null||(p.ix>=S.a&&p.ix<=S.b))&&(!q||(p.t+" "+p.d+" "+p.m+" "+p.g.join(" ")).toLowerCase().includes(q)));status(r.length);
-g.innerHTML=r.map(p=>`<a class="c" href="${p.u}" target="_blank" rel="noopener">${p.i?`<div class="th"><img src="${p.i}" alt="" loading="lazy"></div>`:TH[p.th]?`<div class="th">${TH[p.th]}</div>`:""}<div class="b"><div class="m">${p.m}</div><h2>${p.t}</h2>${p.d?`<p>${p.d}</p>`:""}<span class="o">${p.o}</span><div class="tg"><span>${p.g[0]}</span></div></div></a>`).join("")||`<p class="empty">No pieces match. Clear the dates, the tag filter or the search.</p>`}
+g.innerHTML=r.map(p=>`<a class="c q${Math.floor(p.mo/3)+1}" href="${p.u}" target="_blank" rel="noopener">${p.i?`<div class="th"><img src="${p.i}" alt="" loading="lazy"></div>`:TH[p.th]?`<div class="th">${TH[p.th]}</div>`:""}<div class="b"><div class="m">${p.m}</div><h2>${p.t}</h2>${p.d?`<p>${p.d}</p>`:""}<span class="o">${p.o}</span><div class="tg"><span>${p.g[0]}</span></div></div></a>`).join("")||`<p class="empty">No pieces match. Clear the dates, the tag filter or the search.</p>`}
 tg.onclick=e=>{const b=e.target.closest("[data-t]");if(!b)return;S.t=b.dataset.t;chips();draw()};
 document.getElementById("q").oninput=e=>{S.q=e.target.value.trim().toLowerCase();draw()};
 function tl(){const tlEl=document.getElementById("tl"),ys=[...new Set(MS.map(x=>x.y))];
 tlEl.classList.toggle("sel",S.a!=null);tlEl.innerHTML=ys.map(y=>{const ms=MS.filter(x=>x.y===y),a=ms[0].i,b=ms[ms.length-1].i,whole=S.a===a&&S.b===b&&!S.pend;
 return `<div class="yr"><button class="yl" data-y="${y}" aria-pressed="${whole}" title="Show all of ${y}">${y}</button><div class="cells">${ms.map(x=>{const on=S.a!=null&&x.i>=S.a&&x.i<=S.b,l=x.n===0?0:x.n===1?1:x.n<=3?2:3;
-return `<button class="mc" data-i="${x.i}" data-n="${x.n}" data-l="${l}" aria-pressed="${on}" aria-label="${MF[x.m]} ${x.y}: ${x.n} piece${x.n===1?"":"s"}" title="${MF[x.m]} ${x.y}: ${x.n} piece${x.n===1?"":"s"}"><i></i><b>${MO[x.m][0]}</b></button>`}).join("")}</div></div>`}).join("");
+return `<button class="mc q${Math.floor(x.m/3)+1}" data-i="${x.i}" data-n="${x.n}" data-l="${l}" aria-pressed="${on}" aria-label="${MF[x.m]} ${x.y}: ${x.n} piece${x.n===1?"":"s"}" title="${MF[x.m]} ${x.y}: ${x.n} piece${x.n===1?"":"s"}"><i></i><b>${MO[x.m][0]}</b></button>`}).join("")}</div></div>`}).join("");
 document.getElementById("clr").hidden=S.a==null}
 function status(n){const el=document.getElementById("tls"),pc=n+" piece"+(n===1?"":"s");
 if(S.a==null){el.innerHTML=`Showing <b>all dates</b> · ${pc}. Tap a month to filter, then another month for a range, or a year.`;return}
