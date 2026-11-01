@@ -18,8 +18,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 var(--f-body
 .q1{--qc:var(--q1)}.q2{--qc:var(--q2)}.q3{--qc:var(--q3)}.q4{--qc:var(--q4)}
 .ttl{display:flex;align-items:center;gap:14px;margin:0 0 10px}
 .ttl img{height:clamp(72px,10vw,100px);width:auto;flex:0 0 auto}
-.tt{display:flex;flex-direction:column;gap:8px;min-width:0}
-.tag{margin:0;max-width:36em;font-family:var(--f-body);font-weight:400;font-size:clamp(15px,1.8vw,17.5px);line-height:1.5;color:var(--acc);text-wrap:balance}
+.tt{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1 1 0;container-type:inline-size}
+/* one line that scales with the space beside the logo; wraps only below 13px */
+.tag{margin:0;font-family:var(--f-body);font-weight:400;font-size:clamp(13px,calc(100cqi / 56),18px);line-height:1.5;color:var(--acc);text-wrap:pretty}
 .tag b{font-weight:600;color:var(--ink)}
 .tail{display:block;width:150px;height:22px;margin:4px 0 14px;color:var(--q2)}
 .paws{display:flex;gap:10px;color:var(--q2);margin-bottom:12px}
@@ -32,7 +33,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .w{max-width:1040px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
 header{padding:56px 0 28px}
 h1{font-family:var(--f-disp);font-size:clamp(30px,5vw,46px);line-height:1.05;margin:0;font-weight:700;letter-spacing:-.035em;text-wrap:balance}
-header p{color:var(--muted);max-width:38em;margin:0}
+header{container-type:inline-size}
+header p{color:var(--muted);margin:0}
+/* one line across the header; wraps only below 12.5px */
+.lede{font-size:clamp(12.5px,calc(100cqi / 76.5),15.5px);text-wrap:pretty}
 .ctl{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:24px}
 #tags{display:flex;gap:8px;flex-wrap:wrap;flex:1 1 0;min-width:0}
 .chip{white-space:nowrap;font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:99px;padding:4px 12px;cursor:pointer}
@@ -89,7 +93,7 @@ footer a{color:var(--ink)}
 <header>
 <div class="ttl"><img src="pug.png" alt=""><div class="tt"><h1>A Pug’s Data Viz Studies</h1><p class="tag"><b>Pug factor:</b> the right amount of random thinking and creativity that makes life and data a lot more interesting.</p></div></div>
 <svg class="tail" viewBox="0 0 150 22" aria-hidden="true"><path d="M2 15 C40 15 70 16 104 12 C122 10 132 4 126 2 C119 0 114 9 121 13 C128 17 138 12 140 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-<p>Exercises and studies in data visualization, including MakeoverMonday projects and dashboards built in Tableau Public. Each card opens the full piece.</p>
+<p class="lede">Exercises and studies in data visualization, including MakeoverMonday projects and dashboards built in Tableau Public. Each card opens the full piece.</p>
 </header>
 <div class="ctl"><div id="tags" role="group" aria-label="Filter by tag"></div><input id="q" type="search" placeholder="Search the work" aria-label="Search the work"></div>
 <div class="tlw"><div class="tlr"><div class="tl" id="tl" role="group" aria-label="Filter by month: tap a month, then another to choose a range"></div><button id="clr" hidden>Clear dates</button></div><p class="tls" id="tls" aria-live="polite"></p><p class="lg" aria-label="Card colours by quarter"><span class="q1"><i></i>Jan–Mar</span><span class="q2"><i></i>Apr–Jun</span><span class="q3"><i></i>Jul–Sep</span><span class="q4"><i></i>Oct–Dec</span></p></div>
