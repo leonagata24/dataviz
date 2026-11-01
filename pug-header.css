@@ -9,6 +9,6 @@
 .pug-hdr.pug-hdr b{color:var(--pug-ink);font-weight:600}
 .pug-hdr.pug-hdr p{margin:0}
 .pug-hdr .pug-home.pug-home{display:inline-flex;align-items:center;gap:7px;color:var(--pug-ink);font-weight:700;text-decoration:none;white-space:nowrap}
-.pug-hdr .pug-home.pug-home::before{content:"";width:22px;height:22px;flex:0 0 auto;background:url("pug.svg") center/contain no-repeat}
+.pug-hdr .pug-home.pug-home::before{content:"";width:24px;height:22px;flex:0 0 auto;background:url("pug-head.png") center/contain no-repeat}
 .pug-hdr .pug-home.pug-home:hover,.pug-hdr .pug-home.pug-home:focus-visible{text-decoration:underline;text-underline-offset:3px}
 .pug-hdr .pug-ai.pug-ai{display:inline-flex;align-items:center;background:var(--pug-mask);color:var(--pug-fawn);padding:2px 9px;border-radius:99px;text-transform:uppercase;letter-spacing:.1em;font-size:11px;font-weight:600}
