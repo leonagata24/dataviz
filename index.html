@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>A Pug’s Data Viz Studies</title>
 <link rel="icon" href="pug-head.png" type="image/png">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,600,100&family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,600,100;1,9..144,400,100&family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 /* Pug palette: very light fawn ground; cards matted in the quarter's coat colour (Q1 cream fawn, Q2 fawn, Q3 brown, Q4 black mask) */
 :root{--bg:#FBF5EC;--card:#FFFCF7;--ink:#241B16;--muted:#76624E;--line:#EADCC8;--acc:#8A5A36;--th:#F3E7D5;
@@ -18,6 +18,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument S
 .q1{--qc:var(--q1)}.q2{--qc:var(--q2)}.q3{--qc:var(--q3)}.q4{--qc:var(--q4)}
 .ttl{display:flex;align-items:center;gap:14px;margin:0 0 10px}
 .ttl img{height:clamp(72px,10vw,100px);width:auto;flex:0 0 auto}
+.tt{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tag{margin:0;max-width:34em;font-family:var(--f-disp);font-variation-settings:"SOFT" 100;font-style:italic;font-size:clamp(16px,2vw,19px);line-height:1.4;color:var(--acc);text-wrap:balance}
+.tag b{font-style:normal;font-weight:600;color:var(--ink)}
 .tail{display:block;width:150px;height:22px;margin:4px 0 14px;color:var(--q2)}
 .paws{display:flex;gap:10px;color:var(--q2);margin-bottom:12px}
 .paws svg{width:16px;height:16px}
@@ -84,7 +87,7 @@ footer a{color:var(--ink)}
 <body>
 <div class="w">
 <header>
-<div class="ttl"><img src="pug.png" alt=""><h1>A Pug’s Data Viz Studies</h1></div>
+<div class="ttl"><img src="pug.png" alt=""><div class="tt"><h1>A Pug’s Data Viz Studies</h1><p class="tag"><b>Pug factor:</b> the right amount of random thinking and creativity that makes life and data a lot more interesting.</p></div></div>
 <svg class="tail" viewBox="0 0 150 22" aria-hidden="true"><path d="M2 15 C40 15 70 16 104 12 C122 10 132 4 126 2 C119 0 114 9 121 13 C128 17 138 12 140 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
 <p>Exercises and studies in data visualization, including MakeoverMonday projects and dashboards built in Tableau Public. Each card opens the full piece.</p>
 </header>
