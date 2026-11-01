@@ -31,18 +31,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 var(--f-body
 .lg i{width:12px;height:12px;border-radius:3px;background:var(--qc);box-shadow:inset 0 0 0 1px var(--qline)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
 .w{max-width:1040px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-header{padding:56px 0 28px}
+header{padding:56px 0 10px}
 h1{font-family:var(--f-disp);font-size:clamp(30px,5vw,46px);line-height:1.05;margin:0;font-weight:700;letter-spacing:-.035em;text-wrap:balance}
 header{container-type:inline-size}
 header p{color:var(--muted);margin:0}
 /* one line across the header; wraps only below 12.5px */
 .lede{font-size:clamp(12.5px,calc(100cqi / 76.5),15.5px);text-wrap:pretty}
-.ctl{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:24px}
-#tags{display:flex;gap:8px;flex-wrap:wrap;flex:1 1 0;min-width:0}
-.chip{white-space:nowrap;font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:99px;padding:4px 12px;cursor:pointer}
-.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 #q{flex:0 0 190px;font:inherit;font-size:14px;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:6px 12px}
-.chip:focus-visible,#q:focus-visible,.c:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+#q:focus-visible,.c:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 #g{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;padding-bottom:40px}
 .c{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;color:inherit;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
 .c:hover{border-color:var(--qc);transform:translateY(-2px);box-shadow:0 6px 18px -10px var(--qc)}
@@ -59,7 +55,6 @@ header p{color:var(--muted);margin:0}
 .tg span{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 7px}
 .o{font-size:13px;color:var(--acc);font-weight:600}
 .empty{grid-column:1/-1;color:var(--muted)}
-.ctl{margin-bottom:0;border-bottom:0}
 .tlw{display:flex;flex-direction:column;gap:6px;padding:4px 0 14px;border-bottom:1px solid var(--line);margin-bottom:24px}
 .tlr{display:flex;flex-wrap:wrap;align-items:flex-end;gap:6px 10px;min-width:0}
 .tl{display:flex;gap:14px;overflow-x:auto;flex:0 1 auto;max-width:100%;min-width:0;padding:2px 2px 4px;scrollbar-width:thin}
@@ -84,6 +79,31 @@ header p{color:var(--muted);margin:0}
 .tls{margin:0;font-size:13.5px;color:var(--muted)}
 .tls b{color:var(--ink);font-weight:600}
 @media (max-width:560px){.mc i{width:16px;height:18px}.tl{gap:10px}}
+
+/* Chart of the day */
+.potd{display:flex;flex-direction:column;gap:14px;padding:6px 0 30px}
+.potd-hd{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;border-top:1px solid var(--line);padding-top:18px}
+.potd-hd h2{margin:0;font-family:var(--f-disp);font-size:clamp(18px,2.4vw,22px);font-weight:600;letter-spacing:-.025em}
+.potd-date{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.potd-fig{margin:0;display:flex;flex-direction:column;gap:16px}
+.potd-mat{background:var(--qc);border-radius:14px;padding:clamp(10px,2vw,16px);display:flex;justify-content:center;box-shadow:inset 0 0 0 1px var(--qline)}
+.potd-mat img{display:block;max-width:100%;width:auto;height:auto;max-height:min(480px,70vh);border-radius:6px;background:var(--card)}
+.potd-cap{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:10px 32px;align-items:start}
+@media (max-width:720px){.potd-cap{grid-template-columns:1fr}}
+.potd-cap h3{grid-column:1/-1;margin:0;font-size:clamp(17px,2vw,20px);font-weight:600;letter-spacing:-.02em;line-height:1.3}
+.potd-obs{margin:0;font-size:clamp(15px,1.7vw,17px);line-height:1.55}
+.potd-ctx{display:flex;flex-direction:column;gap:8px;font-size:13.5px;color:var(--muted);border-left:3px solid var(--qc);padding-left:14px}
+.potd-ctx p{margin:0}
+.potd-ctx .m{font-size:12px}
+.potd-go{align-self:flex-start;font-weight:600;font-size:14px;color:var(--bg);background:var(--ink);text-decoration:none;border-radius:99px;padding:7px 16px}
+.potd-go:hover{background:var(--acc)}
+.potd-go:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.intro{container-type:inline-size;padding:4px 0 12px;border-top:1px solid var(--line);padding-top:20px}
+.intro .lede{margin:0;color:var(--muted)}
+.ctlr{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 18px}
+.ctlr .tlr{flex:1 1 auto}
+#q{margin-bottom:12px}
+@media (max-width:560px){#q{flex:1 1 100%;margin-bottom:0}}
 footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:14px;color:var(--muted)}
 footer a{color:var(--ink)}
 </style>
@@ -93,10 +113,13 @@ footer a{color:var(--ink)}
 <header>
 <div class="ttl"><img src="pug.png" alt=""><div class="tt"><h1>A Pug’s Data Viz Studies</h1><p class="tag"><b>Pug factor:</b> the right amount of random thinking and creativity that makes life and data a lot more interesting.</p></div></div>
 <svg class="tail" viewBox="0 0 150 22" aria-hidden="true"><path d="M2 15 C40 15 70 16 104 12 C122 10 132 4 126 2 C119 0 114 9 121 13 C128 17 138 12 140 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-<p class="lede">Exercises and studies in data visualization, including MakeoverMonday projects and dashboards built in Tableau Public. Each card opens the full piece.</p>
 </header>
-<div class="ctl"><div id="tags" role="group" aria-label="Filter by tag"></div><input id="q" type="search" placeholder="Search the work" aria-label="Search the work"></div>
-<div class="tlw"><div class="tlr"><div class="tl" id="tl" role="group" aria-label="Filter by month: tap a month, then another to choose a range"></div><button id="clr" hidden>Clear dates</button></div><p class="tls" id="tls" aria-live="polite"></p><p class="lg" aria-label="Card colours by quarter"><span class="q1"><i></i>Jan–Mar</span><span class="q2"><i></i>Apr–Jun</span><span class="q3"><i></i>Jul–Sep</span><span class="q4"><i></i>Oct–Dec</span></p></div>
+<section class="potd" aria-labelledby="potd-h">
+<div class="potd-hd"><h2 id="potd-h">Random visualization and observation of the day</h2><span class="potd-date" id="potd-date"></span></div>
+<figure class="potd-fig" id="potd"></figure>
+</section>
+<div class="intro"><p class="lede">Exercises and studies in data visualization, including MakeoverMonday projects and dashboards built in Tableau Public. Each card opens the full piece.</p></div>
+<div class="tlw"><div class="ctlr"><div class="tlr"><div class="tl" id="tl" role="group" aria-label="Filter by month: tap a month, then another to choose a range"></div><button id="clr" hidden>Clear dates</button></div><input id="q" type="search" placeholder="Search the work" aria-label="Search the work"></div><p class="tls" id="tls" aria-live="polite"></p><p class="lg" aria-label="Card colours by quarter"><span class="q1"><i></i>Jan–Mar</span><span class="q2"><i></i>Apr–Jun</span><span class="q3"><i></i>Jul–Sep</span><span class="q4"><i></i>Oct–Dec</span></p></div>
 <main id="g"></main>
 <footer><div class="paws" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg></div>MakeoverMonday is a community project: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">makeovermonday.vercel.app</a></footer>
 </div>
@@ -116,17 +139,15 @@ const SH={"2025_12_15_London_Crimes":"MakeoverMonday2025W49LondonCrimes","2025_1
 "2026_09_28_World_Pop,2026_09_14_Man_Killers,2026_08_31_Taylor_Swift,2026_08_24_Global_GDP,2026_08_17_GenZ_Betting,2026_08_10_UK_Temp,2026_08_03_Trade,2026_07_27_Squirrels,2026_07_20_Data_Centers,2026_07_13_Parks,2026_07_06_Cyclones,2026_06_29_Space_Launch_Sites,2026_06_15_Global_Top_Foreign_Investments,2026_06_08_Coachella,2026_06_01_Arsenal,2026_05_25_GPU_Performance,2026_05_18_UK_Fuel,2026_05_11_Net_Migration,2026_05_04_Taco_San_Diego,2026_04_27_Democracy_Index,2026_04_20_AI_Risk_Rankings,2026_04_13_Big_Tech_Hiring,2026_04_06_Global_Oil,2026_03_30_AI_Workslop,2026_03_23_London_Unemployment,2026_03_16_Fastest_Cars,2026_03_09_Mario_Sales,2026_03_02_Trump_Approval,2026_02_23_Periodic_Table_AI,2026_02_15_Living_Planet_Index,2026_02_09_BigMac_Price,2026_02_02_Gold,2026_01_25_US_Jobs,2026_01_16_Maestra,2026_01_12_Housing_Bubbles,2026_01_05_Tallest_Rollercoasters,2025_12_29_New_Year_Resolutions,2025_12_23_Kevin_Grocery2025,2025_12_15_London_Crimes".split(",").forEach(s=>{const[y,mo,dd,...n]=s.split("_"),mn=MO[+mo-1];P.push({t:TI[s]||n.join(" "),k:s,m:"MakeoverMonday, "+mn+" "+(+dd)+", "+y,d:"",g:["Tableau",mn],u:"https://public.tableau.com/app/profile/leonagata/viz/MM_"+s+"/"+(SH[s]||"MM_"+s),th:"b",i:"thumbs/"+s+".jpg",o:"Opens Tableau Public"})});
 P.sort((a,b)=>b.k.localeCompare(a.k));
 const TH={s:'<svg viewBox="0 0 120 80" fill="currentColor"><g opacity=".85"><circle cx="20" cy="62" r="4"/><circle cx="38" cy="54" r="4"/><circle cx="52" cy="44" r="4"/><circle cx="64" cy="48" r="4"/><circle cx="78" cy="30" r="4"/><circle cx="96" cy="20" r="4"/></g><path d="M12 66L104 14" stroke="currentColor" stroke-width="2" fill="none"/></svg>',b:'<svg viewBox="0 0 120 80" fill="currentColor"><rect x="14" y="40" width="16" height="30" rx="2"/><rect x="38" y="22" width="16" height="48" rx="2"/><rect x="62" y="48" width="16" height="22" rx="2"/><rect x="86" y="12" width="16" height="58" rx="2"/></svg>'};
-const S={t:"All",q:"",a:null,b:null,pend:false},T=["All","Tableau","HTML and SVG"];
+const S={q:"",a:null,b:null,pend:false};
 const MF=["January","February","March","April","May","June","July","August","September","October","November","December"];
 P.forEach(p=>{const[y,m]=p.k.split("_");p.y=+y;p.mo=+m-1;p.ix=p.y*12+p.mo});
 const IX0=Math.min(...P.map(p=>p.ix)),IX1=Math.max(...P.map(p=>p.ix));
 const MS=[];for(let i=IX0;i<=IX1;i++)MS.push({i,y:Math.floor(i/12),m:i%12,n:P.filter(p=>p.ix===i).length});
 const lab=i=>MO[i%12]+" "+Math.floor(i/12);
-const tg=document.getElementById("tags"),g=document.getElementById("g");
-function chips(){tg.innerHTML=T.map(t=>`<button class="chip" data-t="${t}" aria-pressed="${S.t==t}">${t}</button>`).join("")}
-function draw(){const q=S.q,r=P.filter(p=>(S.t=="All"||p.g.includes(S.t))&&(S.a==null||(p.ix>=S.a&&p.ix<=S.b))&&(!q||(p.t+" "+p.d+" "+p.m+" "+p.g.join(" ")).toLowerCase().includes(q)));status(r.length);
-g.innerHTML=r.map(p=>`<a class="c q${Math.floor(p.mo/3)+1}" href="${p.u}" target="_blank" rel="noopener">${p.i?`<div class="th"><img src="${p.i}" alt="" loading="lazy"></div>`:TH[p.th]?`<div class="th">${TH[p.th]}</div>`:""}<div class="b"><div class="m">${p.m}</div><h2>${p.t}</h2>${p.d?`<p>${p.d}</p>`:""}<span class="o">${p.o}</span><div class="tg"><span>${p.g[0]}</span></div></div></a>`).join("")||`<p class="empty">No pieces match. Clear the dates, the tag filter or the search.</p>`}
-tg.onclick=e=>{const b=e.target.closest("[data-t]");if(!b)return;S.t=b.dataset.t;chips();draw()};
+const g=document.getElementById("g");
+function draw(){const q=S.q,r=P.filter(p=>(S.a==null||(p.ix>=S.a&&p.ix<=S.b))&&(!q||(p.t+" "+p.d+" "+p.m+" "+p.g.join(" ")).toLowerCase().includes(q)));status(r.length);
+g.innerHTML=r.map(p=>`<a class="c q${Math.floor(p.mo/3)+1}" href="${p.u}" target="_blank" rel="noopener">${p.i?`<div class="th"><img src="${p.i}" alt="" loading="lazy"></div>`:TH[p.th]?`<div class="th">${TH[p.th]}</div>`:""}<div class="b"><div class="m">${p.m}</div><h2>${p.t}</h2>${p.d?`<p>${p.d}</p>`:""}<span class="o">${p.o}</span><div class="tg"><span>${p.g[0]}</span></div></div></a>`).join("")||`<p class="empty">No pieces match. Clear the dates or the search.</p>`}
 document.getElementById("q").oninput=e=>{S.q=e.target.value.trim().toLowerCase();draw()};
 function tl(){const tlEl=document.getElementById("tl"),ys=[...new Set(MS.map(x=>x.y))];
 tlEl.classList.toggle("sel",S.a!=null);tlEl.innerHTML=ys.map(y=>{const ms=MS.filter(x=>x.y===y),a=ms[0].i,b=ms[ms.length-1].i,whole=S.a===a&&S.b===b&&!S.pend;
@@ -143,7 +164,13 @@ if(c){const i=+c.dataset.i;if(S.pend&&S.a!==i){S.a=Math.min(S.a,i);S.b=Math.max(
 else if(y){const ms=MS.filter(x=>x.y===+y.dataset.y);const a=ms[0].i,b=ms[ms.length-1].i;if(S.a===a&&S.b===b&&!S.pend){S.a=S.b=null}else{S.a=a;S.b=b}S.pend=false}
 else return;tl();draw()};
 document.getElementById("clr").onclick=()=>{S.a=S.b=null;S.pend=false;tl();draw()};
-chips();tl();draw();
+tl();draw();
+const FEAT=[{"k": "bb-attrition", "u": "bigs-backyard/", "t": "Who’s still running?", "o": "Half the 2026 field had dropped out a few hours into day two, yet the tail grew longer: 18.1% of starters reached 48 yards (200 miles), up from 5.3% in 2020.", "w": 1600, "h": 640}, {"k": "cc-map", "u": "census-century/", "t": "Where the people were", "o": "Between 1790 and 1900 the estimated centre of the U.S. population moved about 500 miles west, from near Baltimore to southern Indiana.", "w": 1552, "h": 974}, {"k": "tn-months", "u": "tourism-nights/", "t": "August is four times January", "o": "EU platform bookings peak at 166.2M nights in August, about four times January’s 39.2M. December breaks the pattern: it is 41% busier than November, the only rise between August and spring.", "w": 1600, "h": 530}, {"k": "mc-trend", "u": "more-cowbell/", "t": "When the cowbell had rizz", "o": "The 1970s were peak cowbell, with 231 songs and 37% of every dated song on the list. By the 2010s it had almost vanished: just 2 songs.", "w": 1072, "h": 572}, {"k": "bw-animals", "u": "bears-will-be-boys/", "t": "Bears lead the cast, and most are boys", "o": "Bears are the most common animal in these picture books, and 62% of them are he/him. Frogs are the most lopsided at 16 of 17 male. Birds and ducks are the only common animals with more girls than boys.", "w": 1600, "h": 929}, {"k": "uf-time", "u": "ufo-sightings/", "t": "Time of day", "o": "More than half of UFO reports (53%) describe sightings between 6 p.m. and midnight. The peak is 7 p.m., when the sky is dark but plenty of people are still outside.", "w": 1052, "h": 872}, {"k": "cf-scatter", "u": "cfb-budgets/", "t": "Money gets you in the poll", "o": "Ranked teams spend about $13M more than unranked ones, but budget alone says little about where a team lands in the AP Top 25.", "w": 1600, "h": 1054}, {"k": "bb-hazard", "u": "bigs-backyard/", "t": "The night shift", "o": "Runners quit more often in the small hours: 3.5% of those still racing stop each hour between midnight and 6 a.m., against 2.6% the rest of the day. The gap holds when runners at the same stage are compared.", "w": 1052, "h": 798}, {"k": "cc-area", "u": "census-century/", "t": "The balance shifts", "o": "The Midwest had no counted residents in 1790. By 1900 it was the largest region, home to 34.7% of the population.", "w": 1600, "h": 605}, {"k": "tn-offseason", "u": "tourism-nights/", "t": "Who stays busy after summer", "o": "Across the EU, 18.1% of 2025 platform nights fell in October to December. Island regions such as the South Aegean and Ionian Islands sit far below that line; Alsace and Northern and Eastern Finland sit far above it.", "w": 1600, "h": 738}, {"k": "mc-rank", "u": "more-cowbell/", "t": "Who reaches for the cowbell most", "o": "Kiss lead with 9 cowbell songs, ahead of the Beatles with 8 and Rush with 7. Yet 75% of the 443 artists on the list have just one.", "w": 1600, "h": 868}, {"k": "bw-decades", "u": "bears-will-be-boys/", "t": "Pronouns by decade", "o": "She/her characters rose to 40% of the cast in the 1980s and 1990s, then slipped back to 27% in the 2010s.", "w": 1170, "h": 898}, {"k": "uf-shape", "u": "ufo-sightings/", "t": "Reported shape", "o": "Round is the most reported shape, at 30% of 1,317 reports. Points of light come second at 18%.", "w": 1052, "h": 872}, {"k": "cf-gap", "u": "cfb-budgets/", "t": "Over- and underperformers", "o": "Georgia is only the 15th-biggest spender among ranked teams but sits 2nd in the AP poll. Oregon is the 2nd-biggest spender and ranks 21st.", "w": 1600, "h": 1099}];
+(function potd(){const now=new Date(),day=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/864e5),f=FEAT[day%FEAT.length],p=P.find(x=>x.u===f.u);if(!p)return;
+const q="q"+(Math.floor(p.mo/3)+1),el=document.getElementById("potd");el.className="potd-fig "+q;
+document.getElementById("potd-date").textContent=now.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+el.innerHTML=`<div class="potd-mat"><picture><source media="(prefers-color-scheme: dark)" srcset="feature/${f.k}-dark.webp"><img src="feature/${f.k}-light.webp" width="${f.w}" height="${f.h}" alt="Chart: ${f.t}, from ${p.t}"></picture></div>
+<figcaption class="potd-cap"><h3>${f.t}</h3><p class="potd-obs">${f.o}</p><div class="potd-ctx"><span class="m">${p.m}</span><p>From <b>${p.t}</b>. ${p.d}</p><a class="potd-go" href="${p.u}" target="_blank" rel="noopener">Open the full page →</a></div></figcaption>`})();
 {const t=document.getElementById("tl");t.scrollLeft=t.scrollWidth}
 </script>
 </body>
