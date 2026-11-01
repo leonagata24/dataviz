@@ -1,0 +1,1128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Last One Standing · Big's Backyard Ultra 2026</title>
+<meta name="description" content="MakeoverMonday 2026 Week 43: Big's Backyard Ultra World Team Championship 2026, an alternative view with significance tests for every claim.">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+/* Tokens that the dashboard runtime normally provides */
+:root {
+  color-scheme: light;
+  --font-anthropic-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-anthropic-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --color-fg: #141413; --color-fg-muted: #6b6a65; --color-bg: #f9f9f7; --color-panel: #fcfcfb;
+  --color-border-line: #e1e0d9; --color-ok: #006300; --color-warn: #a86b00; --color-bad: #d03b3b;
+  --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 16px; --cds-gap-lg: 24px; --cds-gap-xl: 40px;
+  --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 20px; --cds-pad-xl: 32px;
+  --cds-radius: 8px;
+  --cds-font-size-caption: 12.5px; --cds-font-size-body: 15px; --cds-font-size-heading: 16px; --cds-font-size-title: 24px;
+  --cds-font-weight-medium: 600;
+  --cds-chart-grid: #ebeae4; --cds-chart-axis: #c3c2b7; --cds-chart-reference: #898781; --cds-chart-muted: #b9b8b0;
+  --cds-surface-popover: #ffffff; --cds-border: rgba(11,11,11,.12); --cds-shadow-popover: 0 6px 20px rgba(0,0,0,.12);
+  --cds-text-secondary: #52514e; --cds-dur-slow: 240ms; --cds-ease-out: cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --color-fg: #f0efec; --color-fg-muted: #a3a29b; --color-bg: #121211; --color-panel: #1a1a19;
+  --color-border-line: #2f2f2c; --color-ok: #2fc02f; --color-warn: #e0a020; --color-bad: #e66767;
+  --cds-chart-grid: #2a2a28; --cds-chart-axis: #45453f; --cds-chart-reference: #898781; --cds-chart-muted: #5e5d57;
+  --cds-surface-popover: #232321; --cds-border: rgba(255,255,255,.12); --cds-shadow-popover: 0 6px 20px rgba(0,0,0,.5);
+  --cds-text-secondary: #c3c2b7;
+} }
+[hidden] { display: none !important; }
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-size: 15px; line-height: 1.45; }
+#dash-root { padding-block: 32px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+#dash-root b, #dash-root strong { font-weight: 600; }
+.dash-skeleton:empty { background: linear-gradient(90deg, var(--cds-chart-grid), var(--color-panel), var(--cds-chart-grid)); background-size: 200% 100%; border-radius: var(--cds-radius); }
+@media (prefers-reduced-motion: no-preference) { .dash-skeleton:empty { animation: skel 1.4s linear infinite; } @keyframes skel { to { background-position: -200% 0; } } }
+.site-foot { max-width: 72rem; margin: 48px auto 0; padding-top: 16px; border-top: 1px solid var(--color-border-line); font-size: 13px; color: var(--color-fg-muted); }
+.site-foot a { color: var(--color-fg); }
+</style>
+<script>
+/* A small stand-in for the dashboard runtime: loads the CSV datasets, runs the page's calculations and redraws on resize. */
+(() => {
+  const DATASETS = { laps: 'data/laps_2026.csv', runners: 'data/runner_results.csv', nations: 'data/nation_years.csv' };
+  const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const colors = dark ? ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#008300', '#9085e9', '#e66767']
+                      : ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300', '#6250d6', '#e34948'];
+  const raw = {}; const calcs = {}; const cache = {}; const draws = {}; let ready = false; let failed = null;
+  const value = (id) => {
+    if (id in raw) return raw[id];
+    if (id in cache) return cache[id];
+    const c = calcs[id]; if (!c) throw new Error('Unknown source ' + id);
+    cache[id] = c.fn(...c.inputs.map(value)); return cache[id];
+  };
+  const runDraw = (name) => { const fn = draws[name]; if (!fn) return; document.querySelectorAll(`[data-draw="${name}"]`).forEach((el) => { try { fn(el); } catch (e) { console.error(name, e); } }); };
+  const runAll = () => Object.keys(draws).forEach(runDraw);
+  window.dash = {
+    colors,
+    calc(id, spec) { calcs[id] = spec; },
+    loader() {},
+    data(id) {
+      if (failed) return { status: 'error', data: [], message: failed };
+      if (!ready) return { status: 'loading', data: [] };
+      try { return { status: 'ok', data: value(id) }; } catch (e) { console.error(id, e); return { status: 'error', data: [], message: String(e) }; }
+    },
+    draw(name, fn) { if (fn) { draws[name] = fn; if (ready) runDraw(name); } else runDraw(name); },
+    onData(fn) { fn(); },
+    params() { return {}; }, setParams() {}, resetParams() {}, setLink() {}, refresh() {},
+  };
+  document.addEventListener('DOMContentLoaded', () => {
+    runAll();
+    Promise.all(Object.entries(DATASETS).map(([id, url]) => fetch(url).then((r) => { if (!r.ok) throw new Error(url + ' ' + r.status); return r.text(); }).then((t) => { raw[id] = d3.csvParse(t); })))
+      .then(() => { ready = true; runAll(); })
+      .catch((e) => { failed = String(e); runAll(); });
+    let w = window.innerWidth, t = null;
+    window.addEventListener('resize', () => { if (window.innerWidth === w) return; w = window.innerWidth; clearTimeout(t); t = setTimeout(runAll, 150); });
+  });
+})();
+</script>
+</head>
+<body>
+<div id="dash-root">
+<style>
+.bb { display: grid; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); color: var(--color-fg); max-width: 72rem; margin-inline: auto; }
+.bb-mast { display: grid; gap: var(--cds-gap-md); border-bottom: 2px solid var(--color-fg); padding-bottom: var(--cds-pad-lg); }
+.bb-credits { display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 12px; color: var(--color-fg-muted); letter-spacing: .02em; border-bottom: 1px solid var(--color-border-line); padding-bottom: 12px; align-items: center; }
+.bb-credits span { display: inline-flex; gap: 6px; align-items: center; }
+.bb-credits b { color: var(--color-fg); font-weight: 500; }
+.bb-credits a { color: var(--color-fg); text-underline-offset: 2px; }
+.bb-ai { background: var(--color-fg); color: var(--color-bg); padding: 2px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: .1em; font-size: 11px; }
+.bb-disclaimer { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); max-width: 90ch; line-height: 1.5; }
+.bb-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: var(--cds-gap-xl); align-items: start; }
+@media (max-width: 860px) { .bb-hero { grid-template-columns: 1fr; } }
+.bb-hero-fig { margin: 0; display: grid; gap: var(--cds-gap-xs); min-width: 0; }
+.bb-h400 { min-height: 426px; }
+.bb-head { display: grid; gap: var(--cds-gap-sm); }
+.bb-eyebrow { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .06em; text-transform: uppercase; margin: 0; }
+.bb-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 2.25rem; line-height: 1.1; margin: 0; text-wrap: balance; }
+.bb-lede { font-size: var(--cds-font-size-body); line-height: 1.55; max-width: 68ch; margin: 0; }
+.bb-lede b, .bb-note b, .bb-sec p b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.bb-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: var(--cds-gap-md); }
+.bb-tile { display: grid; align-content: start; gap: var(--cds-gap-xs); padding-block: var(--cds-pad-sm); border-top: 1px solid var(--color-border-line); }
+.bb-tile-l { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.bb-tile-v { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 2rem; line-height: 1.1; }
+.bb-tile-s { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.bb-sec { display: grid; gap: var(--cds-gap-md); }
+.bb-sec > h2 { font-size: var(--cds-font-size-title); font-family: var(--font-anthropic-serif); font-weight: 400; margin: 0; text-wrap: balance; }
+.bb-sec > p { margin: 0; max-width: 68ch; line-height: 1.55; }
+.bb-num { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.bb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--cds-gap-md); }
+.bb-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-sm); align-content: start; min-width: 0; }
+.bb-card.wide { grid-column: 1 / -1; }
+.bb-card h3 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.bb-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; line-height: 1.5; }
+.bb-chart { position: relative; width: 100%; min-width: 0; }
+.bb-chart svg { display: block; overflow: visible; }
+.bb-h300 { min-height: 300px; } .bb-h180 { min-height: 180px; } .bb-h220 { min-height: 220px; } .bb-h220 { min-height: 220px; } .bb-h240 { min-height: 240px; } .bb-h260 { min-height: 260px; } .bb-h320 { min-height: 320px; }
+.bb-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; padding: 0; list-style: none; }
+.bb-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.bb-sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.bb-sw.line { height: 2px; width: 14px; border-radius: 1px; }
+.bb-tick { font-size: 11px; fill: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.bb-lab { font-size: 11px; fill: var(--color-fg-muted); }
+.bb-labstrong { font-size: 12px; fill: var(--color-fg); }
+.bb-grid-l { stroke: var(--cds-chart-grid); stroke-width: 1; }
+.bb-axis-l { stroke: var(--cds-chart-axis); stroke-width: 1; }
+.bb-ref { stroke: var(--cds-chart-reference); stroke-width: 1; stroke-dasharray: 3 3; }
+.bb-band { fill: var(--cds-chart-grid); opacity: .55; }
+.bb-tip { position: absolute; z-index: 5; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; display: grid; gap: 2px; font-variant-numeric: tabular-nums; }
+.bb-tip .h { color: var(--cds-text-secondary); }
+.bb-tip .r { display: flex; align-items: center; gap: 6px; }
+.bb-seg { display: inline-flex; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); overflow: hidden; width: fit-content; }
+.bb-seg button { font: inherit; font-size: var(--cds-font-size-caption); padding: 4px 12px; background: transparent; color: var(--color-fg-muted); border: 0; border-right: 1px solid var(--color-border-line); cursor: pointer; font-variant-numeric: tabular-nums; }
+.bb-seg button:last-child { border-right: 0; }
+.bb-seg button[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); }
+.bb-seg button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: -2px; }
+.bb-tablewrap { overflow-x: auto; }
+.bb-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-body); font-variant-numeric: tabular-nums; }
+.bb-table th { text-align: right; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding: 6px 10px; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.bb-table th:first-child, .bb-table td:first-child { text-align: left; }
+.bb-table td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.bb-table tbody tr { cursor: pointer; }
+.bb-table tbody tr:hover td { background: var(--cds-chart-grid); }
+.bb-table tbody tr[aria-selected="true"] td { background: var(--cds-chart-grid); font-weight: 600; }
+.bb-table tbody tr[aria-selected="true"] td:first-child { box-shadow: inset 3px 0 0 var(--color-fg); }
+.bb-table tbody tr:focus-visible { outline: 2px solid var(--color-fg); outline-offset: -2px; }
+.bb-badge { position: relative; display: inline-flex; align-items: center; gap: 4px; vertical-align: 1px; font-size: 11px; font-weight: 500; line-height: 1; padding: 3px 7px; border-radius: 999px; border: 1px solid var(--color-border-line); color: var(--color-fg-muted); white-space: nowrap; cursor: help; }
+.bb-badge.sig { color: var(--color-ok); border-color: currentColor; }
+.bb-badge.ns { color: var(--color-fg-muted); border-style: dashed; }
+.bb-badge.sig::before { content: "✓"; } .bb-badge.ns::before { content: "≈"; }
+.bb-badge:hover::after, .bb-badge:focus-visible::after { content: attr(data-tip); position: absolute; left: 0; top: calc(100% + 6px); z-index: 6; background: var(--cds-surface-popover); color: var(--color-fg); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-weight: 400; white-space: normal; width: max-content; max-width: 16rem; line-height: 1.4; }
+.bb-badge:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+.bb-methods td, .bb-methods th { white-space: normal; text-align: left; vertical-align: top; }
+.bb-methods td:nth-child(n+3), .bb-methods th:nth-child(n+3) { text-align: right; white-space: nowrap; }
+.bb-methods td:first-child { min-width: 14rem; } .bb-methods td:nth-child(2) { min-width: 12rem; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.bb-methods tbody tr { cursor: default; }
+.bb-fail { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.bb-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+.bb-glossary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: var(--cds-gap-md); margin: 0; }
+.bb-glossary div { display: grid; gap: 2px; }
+.bb-glossary dt { font-weight: 600; font-size: var(--cds-font-size-caption); }
+.bb-glossary dd { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; }
+[data-dash-source-state=empty] { color: transparent; }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+@media (max-width: 480px) { .bb-title { font-size: 1.75rem; } .bb-tile-v { font-size: 1.6rem; } }
+</style>
+
+<div class="bb">
+  <header class="bb-mast" id="top">
+    <div class="bb-credits">
+      <span class="bb-ai">Built with AI</span>
+      <span><b>MakeoverMonday 2026 · Week 43</b></span>
+      <span>Project: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">MakeoverMonday</a></span>
+      <span>Article: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big's Backyard Ultra World Team Championship 2026</a></span>
+      <span>Data: <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big's Backyard Ultramarathon World Team Championships</a></span>
+    </div>
+    <p class="bb-disclaimer">Analysis, charts and text were produced with AI (Claude) from the MakeoverMonday dataset, and every figure is computed from that data. Check against the official results before citing.</p>
+    <div class="bb-hero">
+      <div class="bb-head">
+        <p class="bb-eyebrow">Big's Backyard Ultra · World Team Championship 2026</p>
+        <h1 class="bb-title">Last One Standing</h1>
+        <p class="bb-lede">Every hour, on the hour, every runner sets off on the same 4.167-mile loop, called a yard. Finish inside the hour and you may start the next one. In 2026, <b data-draw="num" data-source="headline" data-field="runners">—</b> runners from <b data-draw="num" data-source="headline" data-field="nations">—</b> nations ran at home courses at the same moment. Two races run at once. The team title goes to the nation whose 15 runners add up to the most yards: <b data-draw="num" data-source="headline" data-field="champion" data-fmt="text">—</b> won with <b data-draw="num" data-source="headline" data-field="championYards" data-fmt="int">—</b>. The individual story is who lasts longest: the last two, both from <b data-draw="num" data-source="headline" data-field="farthestNation" data-fmt="text">—</b>, stopped together after <b data-draw="num" data-source="headline" data-field="farthest">—</b> yards, about <b data-draw="num" data-source="headline" data-field="miles">—</b> miles in <b data-draw="num" data-source="headline" data-field="days" data-fmt="d1">—</b> days.</p>
+      </div>
+      <figure class="bb-hero-fig">
+        <div class="bb-chart bb-h400 dash-skeleton" id="chart-hero" data-draw="hero" data-source="heroRunners" role="img" aria-label="Runners of the top 20 teams of 2026, one row per nation, placed by yards run, with each national winner carrying the flag"></div>
+        <figcaption class="bb-note">The top 20 teams of 2026, ranked top to bottom by combined team yards, the score that decides the title. Along each row, each figure is one runner placed by how far they ran on their own. That is why Belgium's two runners sit farthest right while the United States tops the table. Each nation's winner carries its flag; Belgium's two runners who stopped together share it. AIN (Individual Neutral Athletes) runners compete without a national flag, so their leader carries a plain white one.</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <div class="bb-tiles">
+    <div class="bb-tile"><span class="bb-tile-l">Team champion</span><span class="bb-tile-v" data-draw="num" data-source="headline" data-field="championYards">—</span><span class="bb-tile-s">combined yards, <span data-draw="num" data-source="headline" data-field="champion" data-fmt="text">—</span></span></div>
+    <div class="bb-tile"><span class="bb-tile-l">Nations</span><span class="bb-tile-v" data-draw="num" data-source="headline" data-field="nations">—</span><span class="bb-tile-s">15 runners each, on home soil</span></div>
+    <div class="bb-tile"><span class="bb-tile-l">Runners who started</span><span class="bb-tile-v" data-draw="num" data-source="headline" data-field="runners">—</span><span class="bb-tile-s">2026 championship</span></div>
+    <div class="bb-tile"><span class="bb-tile-l">Yards completed</span><span class="bb-tile-v" data-draw="num" data-source="headline" data-field="yards">—</span><span class="bb-tile-s">Each one a 4.167-mile loop</span></div>
+    <div class="bb-tile"><span class="bb-tile-l">Farthest anyone ran</span><span class="bb-tile-v" data-draw="num" data-source="headline" data-field="farthest">—</span><span class="bb-tile-s">yards, two Belgians who stopped together. <span data-draw="num" data-source="headline" data-field="farthestNation" data-fmt="text">—</span> placed <span data-draw="num" data-source="headline" data-field="farthestRank" data-fmt="ord">—</span> as a team.</span></div>
+  </div>
+
+  <section class="bb-sec" id="attrition">
+    <span class="bb-num">1 · Attrition</span>
+    <h2>Who's still running?</h2>
+    <p>Half the field is gone a few hours into the second day. In 2026 the median runner stopped after <b data-draw="num" data-source="medians" data-where="year=2026" data-field="median">—</b> yards, against <b data-draw="num" data-source="medians" data-where="year=2020" data-field="median">—</b> in 2020 <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=median" data-field="result">—</span>. The tail got longer too: <b data-draw="num" data-source="tests" data-where="id=reach48" data-field="a" data-fmt="pct">—</b> of 2026 starters reached 48 yards, against <b data-draw="num" data-source="tests" data-where="id=reach48" data-field="b" data-fmt="pct">—</b> in 2020 <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=reach48" data-field="result">—</span>.</p>
+    <div class="bb-grid">
+      <div class="bb-card wide">
+        <h3>Share of starters still running after each yard</h3>
+        <p class="bb-note">Dashed lines mark every 24 yards, which is 100 miles and one full day. Hover to compare years.</p>
+        <ul class="bb-legend">
+          <li><span class="bb-sw line" data-sw="0"></span>2026</li>
+          <li><span class="bb-sw line" data-sw="1"></span>2024</li>
+          <li><span class="bb-sw line" data-sw="2"></span>2022</li>
+          <li><span class="bb-sw line" data-sw="3"></span>2020</li>
+        </ul>
+        <div class="bb-chart bb-h300 dash-skeleton" id="chart-attrition" data-draw="attrition" data-source="attrition"></div>
+      </div>
+      <div class="bb-card wide">
+        <h3>Where 2026 runners stopped</h3>
+        <p class="bb-note">Runners by final yards. The 100-mile mark is a magnet: <b data-draw="num" data-source="finalHist" data-where="yards=24" data-field="runners">—</b> runners stopped at exactly 24 yards, <b data-draw="num" data-source="tests" data-where="id=spike24" data-field="effect" data-fmt="x">—</b> the average of the yards around it <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike24" data-field="result">—</span>. A smaller peak follows at 48 yards <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike48" data-field="result">—</span>. The bump at 72 yards is within noise <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike72" data-field="result">—</span>.</p>
+        <div class="bb-chart bb-h220 dash-skeleton" id="chart-hist" data-draw="hist" data-source="finalHist"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-sec" id="night">
+    <span class="bb-num">2 · Day and night</span>
+    <h2>The night shift</h2>
+    <p>Between midnight and 6 a.m. local time, <b data-draw="num" data-source="nightDay" data-where="period=night" data-field="rate" data-fmt="pct">—</b> of the runners still in the race stop each hour. Over the rest of the day it's <b data-draw="num" data-source="nightDay" data-where="period=day" data-field="rate" data-fmt="pct">—</b>. Part of that gap comes from how far into the race runners are when night falls. Comparing runners at the same stage, and leaving out the 24, 48 and 72-yard milestone stops, the odds of stopping in a night hour are still <b data-draw="num" data-source="tests" data-where="id=nightOdds" data-field="effect" data-fmt="x">—</b> the daytime odds (95% range <b data-draw="num" data-source="tests" data-where="id=nightOdds" data-field="lo" data-fmt="x">—</b> to <b data-draw="num" data-source="tests" data-where="id=nightOdds" data-field="hi" data-fmt="x">—</b>) <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=nightOdds" data-field="result">—</span>. Laps slow down in the small hours too, even for the same runner.</p>
+    <div class="bb-grid">
+      <div class="bb-card">
+        <h3>Chance of stopping, by local hour</h3>
+        <p class="bb-note">Runners who stop at each hour, divided by runners eligible to start that hour's yard. Most nations started in the afternoon, so the 14:00 spike is mostly runners stopping at 24 yards.</p>
+        <div class="bb-chart bb-h240 dash-skeleton" id="chart-hazard" data-draw="hazard" data-source="hazard"></div>
+      </div>
+      <div class="bb-card">
+        <h3>Lap time against each runner's own typical lap</h3>
+        <p class="bb-note">Median seconds slower (+) or faster (−) than the runner's own median lap, by local start hour. The slowest hour is <b data-draw="num" data-source="lapPeak" data-field="hour" data-fmt="hour">—</b>, at <b data-draw="num" data-source="lapPeak" data-field="rel" data-fmt="sec">—</b> seconds. Comparing each runner's night and day laps within the same 24-yard day, night laps are a median <b data-draw="num" data-source="tests" data-where="id=nightLaps" data-field="effect" data-fmt="int">—</b> seconds slower <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=nightLaps" data-field="result">—</span>.</p>
+        <div class="bb-chart bb-h240 dash-skeleton" id="chart-lap" data-draw="lap" data-source="lapByHour"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-sec" id="stops">
+    <span class="bb-num">3 · How it ends</span>
+    <h2>How a race ends</h2>
+    <p>There are three ways out. <b data-draw="num" data-source="stopTotals" data-where="status=RTC" data-field="runners">—</b> runners chose not to start the next yard, <b data-draw="num" data-source="stopTotals" data-where="status=INC" data-field="runners">—</b> started a yard but didn't finish it, and <b data-draw="num" data-source="stopTotals" data-where="status=OVER" data-field="runners">—</b> finished a yard but took more than 60 minutes. Early quitters mostly stay in the corral: <b data-draw="num" data-source="tests" data-where="id=rtcShift" data-field="a" data-fmt="pct">—</b> of stops in the first 24 yards are RTC, against <b data-draw="num" data-source="tests" data-where="id=rtcShift" data-field="b" data-fmt="pct">—</b> after 48 yards <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=rtcShift" data-field="result">—</span>. Later on, most runners who stop break down out on the course.</p>
+    <div class="bb-card">
+      <h3>How 2026 runners stopped, by how far they got</h3>
+      <p class="bb-note">Share of non-winners in each band of final yards. National winners are left out.</p>
+      <ul class="bb-legend">
+        <li><span class="bb-sw" data-sw="0"></span>Didn't start the next yard (RTC)</li>
+        <li><span class="bb-sw" data-sw="1"></span>Stopped mid-yard (INC)</li>
+        <li><span class="bb-sw" data-sw="3"></span>Finished over 60 minutes (OVER)</li>
+      </ul>
+      <div class="bb-chart bb-h260 dash-skeleton" id="chart-stops" data-draw="stops" data-source="stopStage"></div>
+    </div>
+  </section>
+
+  <section class="bb-sec" id="depth">
+    <span class="bb-num">4 · Team scoring</span>
+    <h2>Stars or depth?</h2>
+    <p>A team's score is the total yards of all 15 runners. One star can't carry a team. In 2026 the 10th-best runner's yards explain <b data-draw="num" data-source="depthFit" data-where="year=2026" data-field="tenth" data-fmt="pct0">—</b> of the variation in team scores. The farthest runner explains <b data-draw="num" data-source="depthFit" data-where="year=2026" data-field="top" data-fmt="pct0">—</b>. Depth led by a wide margin in 2020 and 2022. Since 2024 the two are close to level, because strong teams now tend to have both: in 2026 a team's farthest and 10th-best runners correlate at <b data-draw="num" data-source="gapStats" data-where="year=2026" data-field="rAB" data-fmt="r2">—</b>.</p>
+    <div class="bb-grid">
+      <div class="bb-card wide">
+        <h3>Stars vs depth, year by year</h3>
+        <p class="bb-note">r² of team yards against each runner, closer to 1 means a tighter fit. Select a year to show it in the scatter plots below.</p>
+        <div class="bb-tablewrap">
+          <table class="bb-table" id="table-fit" data-source="depthFit" data-row-key="year">
+            <thead><tr>
+              <th scope="col" data-field="year">Year</th>
+              <th scope="col" data-field="top">Stars: farthest runner r²</th>
+              <th scope="col" data-field="tenth">Depth: 10th-best runner r²</th>
+              <th scope="col" data-source="depthWinner" data-field="verdict">Which one won</th>
+              <th scope="col" data-field="nations">Nations</th>
+            </tr></thead>
+            <tbody data-draw="fitTable"></tbody>
+          </table>
+        </div>
+        <h3>How far depth is ahead</h3>
+        <p class="bb-note">Depth r² minus stars r², with 95% bootstrap intervals. Above zero, the 10th-best runner explains team yards better than the farthest runner. The gap shrank from <b data-draw="num" data-source="depthWinner" data-where="year=2020" data-field="margin" data-fmt="r2">—</b> in 2020 to <b data-draw="num" data-source="depthWinner" data-where="year=2026" data-field="margin" data-fmt="r2">—</b> in 2026.</p>
+        <div class="bb-chart bb-h220 dash-skeleton" id="chart-gap" data-draw="gap" data-source="gapStats gapChange"></div>
+        <p class="bb-note"><b>The last two years are level.</b> The gap moved by <b data-draw="num" data-source="tests" data-where="id=change" data-field="effect" data-fmt="r2s">—</b> from 2024 to 2026 (95% range <b data-draw="num" data-source="tests" data-where="id=change" data-field="lo" data-fmt="r2s">—</b> to <b data-draw="num" data-source="tests" data-where="id=change" data-field="hi" data-fmt="r2s">—</b>) <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=change" data-field="result">—</span>. Depth's lead holds up in 2026 <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=lead2026" data-field="result">—</span>, but not in 2024 once corrected for the number of tests <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=lead2024" data-field="result">—</span>. Both runners' yards are part of the team total, and nations aren't a random sample, so read these as descriptive tests.</p>
+      </div>
+      <div class="bb-card wide">
+        <h3>Team yards against the farthest and the 10th-best runner</h3>
+        <p class="bb-note">One dot per nation, for the year selected in the table. r² is the share of variation in team yards that a straight line through each panel explains.</p>
+        <div class="bb-chart bb-h260 dash-skeleton" id="chart-depth" data-draw="depth" data-source="depth depthFit"></div>
+      </div>
+      <div class="bb-card wide">
+        <h3>The top 10 teams of 2026, runner by runner</h3>
+        <p class="bb-note">Each dot is one runner's final yards. Team total at right.</p>
+        <div class="bb-chart bb-h320 dash-skeleton" id="chart-strip" data-draw="strip" data-source="teamStrip"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-sec" id="rest">
+    <span class="bb-num">5 · The rest budget</span>
+    <h2>The minutes between loops</h2>
+    <p>Whatever is left of the hour is rest: food, shoes, a few minutes in a chair. In their last full yard, runners who went on to stop had a median of <b data-draw="num" data-source="restDrop" data-field="last" data-fmt="min">—</b> minutes left, down from <b data-draw="num" data-source="restDrop" data-field="dayBefore" data-fmt="min">—</b> a day earlier <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=restDrop" data-field="result">—</span>. When the rest runs out, the race does too.</p>
+    <div class="bb-grid">
+      <div class="bb-card">
+        <h3>Median rest in the last 24 yards before stopping</h3>
+        <p class="bb-note">Minutes left in the hour after each lap, counted back from the runner's last completed yard (0).</p>
+        <ul class="bb-legend">
+          <li><span class="bb-sw line" data-sw="0"></span>RTC</li>
+          <li><span class="bb-sw line" data-sw="1"></span>INC</li>
+          <li><span class="bb-sw line" data-sw="3"></span>OVER</li>
+          <li><span class="bb-sw line" data-sw="2"></span>National winners</li>
+        </ul>
+        <div class="bb-chart bb-h260 dash-skeleton" id="chart-rest" data-draw="rest" data-source="restToEnd"></div>
+      </div>
+      <div class="bb-card">
+        <h3>The longest races of 2026, yard by yard</h3>
+        <p class="bb-note">Rest after every lap for the three runners who went farthest.</p>
+        <div class="bb-chart bb-h260 dash-skeleton" id="chart-resttop" data-draw="restTop" data-source="restTop"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-sec" id="methods">
+    <span class="bb-num">Methods</span>
+    <h2>How the claims were tested</h2>
+    <p>Every comparison on this page has a test behind it. A claim counts as significant when its p-value stays under 0.05 after a Holm correction across all the claims at once, which guards against finding something by chance when testing many things. Ranges are 95% intervals, from bootstraps with a fixed seed or from the model. A claim that fails is reworded on the page, not removed.</p>
+    <div class="bb-card">
+      <div class="bb-tablewrap">
+        <table class="bb-table bb-methods" id="table-tests" data-source="tests" data-row-key="id">
+          <thead><tr>
+            <th scope="col" data-field="claim">Claim</th>
+            <th scope="col" data-field="test">Test</th>
+            <th scope="col" data-field="effectText">Effect</th>
+            <th scope="col" data-field="rangeText">95% range</th>
+            <th scope="col" data-field="p">p</th>
+            <th scope="col" data-field="holm">Holm p</th>
+            <th scope="col" data-field="result">Result</th>
+          </tr></thead>
+          <tbody data-draw="testsTable"></tbody>
+        </table>
+      </div>
+    </div>
+    <p class="bb-note">Night means a yard starting between 00:00 and 05:59 local time. The night-odds model compares stopping in night and day hours within the same 6-yard stage of the race and leaves out every 24th yard, where milestone stops pile up. Two notes on the team tests: both runners' yards are part of the team total they're compared with, and the nations aren't a random sample, so those tests describe these championships rather than prove a general rule.</p>
+  </section>
+
+  <section class="bb-sec" id="glossary">
+    <h2>Terms</h2>
+    <dl class="bb-glossary">
+      <div><dt>Yard</dt><dd>One 4.167-mile loop. A new one starts every hour, so 24 yards is 100 miles in a day.</dd></div>
+      <div><dt>National winner</dt><dd>The last runner standing in a nation, who must then finish one more yard alone. If the last runners stop on the same yard, there is no winner.</dd></div>
+      <div><dt>Assist</dt><dd>The runner who stopped last before the winner.</dd></div>
+      <div><dt>Team score</dt><dd>Total yards completed by a nation's 15 runners.</dd></div>
+    </dl>
+  </section>
+</div>
+
+<script>
+(() => {
+  const N = (v) => (v === null || v === undefined || v === '' ? NaN : Number(v));
+
+  dash.calc('headline', {
+    inputs: ['laps', 'nations'], title: '2026 headline figures',
+    description: 'Runners who started, yards completed, nations entered, the team champion and its yards, and the farthest anyone ran in 2026 with that nation\'s team rank.',
+    fn: (laps, nations) => {
+      const ids = new Set(laps.map((r) => r.runner_id));
+      let far = 0; laps.forEach((r) => { const f = Number(r.final_yards); if (f > far) far = f; });
+      const farNations = [...new Set(laps.filter((r) => Number(r.final_yards) === far).map((r) => r.nation))].join(' and ');
+      const n26 = nations.filter((r) => Number(r.year) === 2026); const champ = n26.find((r) => Number(r.rank) === 1);
+      const farRank = Math.min(...n26.filter((r) => farNations.split(' and ').includes(r.nation)).map((r) => Number(r.rank)));
+      return [{ runners: ids.size, yards: laps.length, nations: n26.length, farthest: far, farthestNation: farNations, farthestRank: farRank,
+        champion: champ.nation, championYards: Number(champ.team_yards), miles: Math.round(far * 4.167), days: far / 24 }];
+    }
+  });
+
+  dash.calc('attrition', {
+    inputs: ['runners'], title: 'Runners still in, by yard',
+    description: 'For each year, starters (not DNS) who completed at least N yards, as a count and a share.',
+    fn: (runners) => {
+      const out = []; const byYear = {};
+      runners.filter((r) => r.result !== 'DNS').forEach((r) => { (byYear[r.year] = byYear[r.year] || []).push(Number(r.yards)); });
+      Object.keys(byYear).forEach((y) => {
+        const ys = byYear[y]; const mx = Math.max(...ys);
+        for (let k = 0; k <= mx; k++) { const s = ys.filter((v) => v >= k).length; out.push({ year: Number(y), yard: k, still: s, pct: s / ys.length }); }
+      });
+      return out;
+    }
+  });
+
+  dash.calc('medians', {
+    inputs: ['runners'], title: 'Median yards per year',
+    description: 'Median final yards of starters (not DNS) in each championship.',
+    fn: (runners) => {
+      const by = {}; runners.filter((r) => r.result !== 'DNS').forEach((r) => { (by[r.year] = by[r.year] || []).push(Number(r.yards)); });
+      return Object.keys(by).map((y) => { const s = by[y].sort((a, b) => a - b); const m = s.length;
+        return { year: Number(y), median: m % 2 ? s[(m - 1) / 2] : (s[m / 2 - 1] + s[m / 2]) / 2 }; });
+    }
+  });
+
+  dash.calc('finalHist', {
+    inputs: ['runners'], title: '2026 runners by final yards',
+    description: 'How many 2026 starters finished on each yard count.',
+    fn: (runners) => {
+      const c = {}; let mx = 0;
+      runners.filter((r) => Number(r.year) === 2026 && r.result !== 'DNS').forEach((r) => { const y = Number(r.yards); c[y] = (c[y] || 0) + 1; if (y > mx) mx = y; });
+      const out = []; for (let y = 0; y <= mx; y++) out.push({ yards: y, runners: c[y] || 0 }); return out;
+    }
+  });
+
+  dash.calc('hazard', {
+    inputs: ['laps'], title: 'Stops by local hour',
+    description: 'For each local hour, runners eligible to start that hour\'s yard and how many stopped then, by how they stopped. National winners are counted as eligible, never as stops.',
+    fn: (laps) => {
+      const rows = []; for (let h = 0; h < 24; h++) rows.push({ hour: h, at_risk: 0, RTC: 0, INC: 0, OVER: 0, stops: 0, rate: 0 });
+      laps.forEach((r) => {
+        const h = (Number(r.start_hour) + 1) % 24; rows[h].at_risk++;
+        if (Number(r.yard) === Number(r.final_yards) && r.final_status !== 'Winner') { rows[h][r.final_status]++; rows[h].stops++; }
+      });
+      rows.forEach((r) => { r.rate = r.at_risk ? r.stops / r.at_risk : 0; }); return rows;
+    }
+  });
+
+  dash.calc('nightDay', {
+    inputs: ['hazard'], title: 'Night vs day stop rate',
+    description: 'Hourly stop rate pooled over 00:00–05:59 local (night) and all other hours (day).',
+    fn: (hazard) => {
+      const pool = (f) => { const rs = hazard.filter(f); const s = rs.reduce((a, r) => a + r.stops, 0); const k = rs.reduce((a, r) => a + r.at_risk, 0); return k ? s / k : 0; };
+      return [{ period: 'night', rate: pool((r) => r.hour < 6) }, { period: 'day', rate: pool((r) => r.hour >= 6) }];
+    }
+  });
+
+  dash.calc('lapByHour', {
+    inputs: ['laps'], title: 'Lap time vs own median, by hour',
+    description: 'For each local start hour, the median of (lap seconds minus that runner\'s own median lap).',
+    fn: (laps) => {
+      const med = (a) => { const s = a.slice().sort((x, y) => x - y); const m = s.length; return m % 2 ? s[(m - 1) / 2] : (s[m / 2 - 1] + s[m / 2]) / 2; };
+      const byR = {}; laps.forEach((r) => { (byR[r.runner_id] = byR[r.runner_id] || []).push(Number(r.lap_seconds)); });
+      const own = {}; Object.keys(byR).forEach((k) => { own[k] = med(byR[k]); });
+      const byH = {}; laps.forEach((r) => { (byH[r.start_hour] = byH[r.start_hour] || []).push(Number(r.lap_seconds) - own[r.runner_id]); });
+      return Object.keys(byH).map((h) => ({ hour: Number(h), rel: med(byH[h]), laps: byH[h].length })).sort((a, b) => a.hour - b.hour);
+    }
+  });
+
+  dash.calc('lapPeak', {
+    inputs: ['lapByHour'], title: 'Slowest hour',
+    description: 'The local start hour with the largest median slowdown.',
+    fn: (lapByHour) => { const m = lapByHour.reduce((a, r) => (r.rel > a.rel ? r : a), lapByHour[0]); return [{ hour: m.hour, rel: m.rel }]; }
+  });
+
+  dash.calc('stopStage', {
+    inputs: ['laps'], title: 'How runners stopped, by stage',
+    description: 'Non-winners in 2026 by band of final yards and how they stopped (RTC, INC, OVER).',
+    fn: (laps) => {
+      const bands = [[1, 12], [13, 24], [25, 36], [37, 48], [49, 60], [61, 72], [73, 999]];
+      const rows = bands.map(([a, b]) => ({ stage: b === 999 ? `${a}+` : `${a}–${b}`, lo: a, RTC: 0, INC: 0, OVER: 0, total: 0 }));
+      laps.forEach((r) => {
+        if (Number(r.yard) !== Number(r.final_yards) || r.final_status === 'Winner') return;
+        const f = Number(r.final_yards); const i = bands.findIndex(([a, b]) => f >= a && f <= b);
+        if (i >= 0 && rows[i][r.final_status] !== undefined) { rows[i][r.final_status]++; rows[i].total++; }
+      });
+      return rows;
+    }
+  });
+
+  dash.calc('stopTotals', {
+    inputs: ['laps'], title: 'How runners stopped, totals',
+    description: 'Number of 2026 runners by how they stopped (excluding national winners and non-starters).',
+    fn: (laps) => {
+      const c = {}; laps.forEach((r) => { if (Number(r.yard) === Number(r.final_yards) && r.final_status !== 'Winner') c[r.final_status] = (c[r.final_status] || 0) + 1; });
+      return Object.keys(c).map((k) => ({ status: k, runners: c[k] }));
+    }
+  });
+
+  dash.calc('depth', {
+    inputs: ['nations'], title: 'Team yards, farthest and 10th-best runner',
+    description: 'Nations whose race finished, with team yards, the farthest runner and the 10th-best runner.',
+    fn: (nations) => nations.filter((r) => r.result_status === 'Final').map((r) => ({
+      year: Number(r.year), nation: r.nation, rank: Number(r.rank), team: Number(r.team_yards),
+      top: Number(r.farthest_runner_yards), tenth: r.tenth_best_runner_yards === '' || r.tenth_best_runner_yards == null ? null : Number(r.tenth_best_runner_yards) }))
+  });
+
+  dash.calc('depthFit', {
+    inputs: ['depth'], title: 'How well each runner explains team yards',
+    description: 'r² of team yards against the farthest runner and against the 10th-best runner, per year (nations with a 10th runner).',
+    fn: (depth) => {
+      const r2 = (xs, ys) => { const n = xs.length; const mx = xs.reduce((a, b) => a + b, 0) / n; const my = ys.reduce((a, b) => a + b, 0) / n;
+        let sxy = 0, sxx = 0, syy = 0; for (let i = 0; i < n; i++) { sxy += (xs[i] - mx) * (ys[i] - my); sxx += (xs[i] - mx) ** 2; syy += (ys[i] - my) ** 2; }
+        return (sxy * sxy) / (sxx * syy); };
+      const years = [...new Set(depth.map((r) => r.year))].sort();
+      return years.map((y) => { const rs = depth.filter((r) => r.year === y && r.tenth !== null);
+        return { year: y, top: r2(rs.map((r) => r.top), rs.map((r) => r.team)), tenth: r2(rs.map((r) => r.tenth), rs.map((r) => r.team)), nations: rs.length }; });
+    }
+  });
+
+  dash.calc('depthWinner', {
+    inputs: ['depthFit', 'tests'], title: 'Stars or depth, winner per year',
+    description: 'Per year, whichever runner has the higher r² (Stars = farthest, Depth = 10th-best), by how much, and whether the lead is significant after Holm correction.',
+    fn: (depthFit, tests) => depthFit.map((r) => { const w = r.tenth >= r.top ? 'Depth' : 'Stars'; const m = Math.abs(r.tenth - r.top); const t = tests.find((x) => x.id === 'lead' + r.year);
+      const sig = t && t.result === 'Significant'; return { year: r.year, winner: w, margin: m, significant: sig, verdict: sig ? `${w}, by ${m.toFixed(2)}` : `Too close to call (${w.toLowerCase()} +${m.toFixed(2)})` }; })
+  });
+
+  dash.calc('gapStats', {
+    inputs: ['depth'], title: 'Depth lead: test and interval',
+    description: 'Per year: depth r² minus stars r², a 95% bootstrap interval (4,000 resamples of nations, fixed seed), the Williams t-test for two dependent correlations sharing team yards, and the correlation of farthest with 10th-best runner.',
+    fn: (depth) => {
+      let s = 20261101; const rand = () => { s |= 0; s = (s + 0x6D2B79F5) | 0; let t = Math.imul(s ^ (s >>> 15), 1 | s); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+      const corr = (a, b) => { const n = a.length; const ma = a.reduce((x, y) => x + y, 0) / n; const mb = b.reduce((x, y) => x + y, 0) / n;
+        let sab = 0, saa = 0, sbb = 0; for (let i = 0; i < n; i++) { sab += (a[i] - ma) * (b[i] - mb); saa += (a[i] - ma) ** 2; sbb += (b[i] - mb) ** 2; } return sab / Math.sqrt(saa * sbb); };
+      const lgam = (z) => { const g = [676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
+        z -= 1; let x = 0.99999999999980993; for (let i = 0; i < 8; i++) x += g[i] / (z + i + 1); const t = z + 7.5; return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(x); };
+      const tTwoSided = (t, v) => { const c = Math.exp(lgam((v + 1) / 2) - lgam(v / 2)) / Math.sqrt(v * Math.PI); const f = (x) => c * Math.pow(1 + x * x / v, -(v + 1) / 2);
+        const a = Math.abs(t), n = 2000, hstep = a / n; let sum = f(0) + f(a); for (let i = 1; i < n; i++) sum += f(i * hstep) * (i % 2 ? 4 : 2); return Math.max(0, 1 - 2 * (sum * hstep / 3)); };
+      const years = [...new Set(depth.map((r) => r.year))].sort();
+      return years.map((y) => {
+        const rs = depth.filter((r) => r.year === y && r.tenth !== null); const N = rs.length;
+        const T = rs.map((r) => r.team), A = rs.map((r) => r.top), B = rs.map((r) => r.tenth);
+        const r1 = corr(T, A), r2 = corr(T, B), r12 = corr(A, B);
+        const R = (1 - r1 * r1 - r2 * r2 - r12 * r12) + 2 * r1 * r2 * r12;
+        const t = (r2 - r1) * Math.sqrt(((N - 1) * (1 + r12)) / (2 * ((N - 1) / (N - 3)) * R + ((r1 + r2) ** 2 / 4) * (1 - r12) ** 3));
+        const boots = [];
+        for (let k = 0; k < 4000; k++) { const ti = [], ai = [], bi = []; for (let i = 0; i < N; i++) { const j = Math.floor(rand() * N); ti.push(T[j]); ai.push(A[j]); bi.push(B[j]); }
+          boots.push(corr(ti, bi) ** 2 - corr(ti, ai) ** 2); }
+        const sorted = boots.slice().sort((p, q) => p - q);
+        return { year: y, nations: N, gap: r2 * r2 - r1 * r1, lo: sorted[Math.floor(0.025 * 4000)], hi: sorted[Math.floor(0.975 * 4000)], t, p: tTwoSided(t, N - 3), rAB: r12, boots };
+      });
+    }
+  });
+
+  dash.calc('gapChange', {
+    inputs: ['gapStats'], title: 'Change in depth lead, 2024 to 2026',
+    description: 'Change in (depth r² minus stars r²) from 2024 to 2026, with a 95% interval from pairing the two years\' bootstrap resamples.',
+    fn: (gapStats) => {
+      const a = gapStats.find((r) => r.year === 2024), b = gapStats.find((r) => r.year === 2026);
+      const d = b.boots.map((v, i) => v - a.boots[i]).sort((p, q) => p - q);
+      return [{ from: 2024, to: 2026, change: b.gap - a.gap, lo: d[Math.floor(0.025 * d.length)], hi: d[Math.floor(0.975 * d.length)] }];
+    }
+  });
+
+  dash.calc('tests', {
+    inputs: ['laps', 'runners', 'gapStats'], title: 'Significance tests for each claim',
+    description: 'One row per claim on the page: the test used, its effect, a 95% range, the p-value and the Holm-corrected p-value across all claims (significant when Holm p < 0.05). Bootstraps use a fixed seed.',
+    fn: (laps, runners, gapStats) => {
+      let s = 7; const rand = () => { s |= 0; s = (s + 0x6D2B79F5) | 0; let t = Math.imul(s ^ (s >>> 15), 1 | s); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+      const erfc = (x) => { const z = Math.abs(x); const t = 1 / (1 + 0.5 * z); const r = t * Math.exp(-z * z - 1.26551223 + t * (1.00002368 + t * (0.37409196 + t * (0.09678418 + t * (-0.18628806 + t * (0.27886807 + t * (-1.13520398 + t * (1.48851587 + t * (-0.82215223 + t * 0.17087277))))))))); return x >= 0 ? r : 2 - r; };
+      const pz = (z) => erfc(Math.abs(z) / Math.SQRT2);
+      const med = (a) => { const v = a.slice().sort((x, y) => x - y); const m = v.length; return m % 2 ? v[(m - 1) / 2] : (v[m / 2 - 1] + v[m / 2]) / 2; };
+      const q = (v, f) => v[Math.min(v.length - 1, Math.floor(f * v.length))];
+      const boot = (stat, reps = 2000) => { const out = []; for (let i = 0; i < reps; i++) out.push(stat()); out.sort((x, y) => x - y); return [q(out, 0.025), q(out, 0.975)]; };
+      const pick = (a) => { const r = []; for (let i = 0; i < a.length; i++) r.push(a[Math.floor(rand() * a.length)]); return r; };
+      const ranks = (vals) => { const idx = vals.map((v, i) => [v, i]).sort((a, b) => a[0] - b[0]); const r = new Array(vals.length); let ties = 0;
+        for (let i = 0; i < idx.length;) { let j = i; while (j + 1 < idx.length && idx[j + 1][0] === idx[i][0]) j++; const avg = (i + j) / 2 + 1; for (let k = i; k <= j; k++) r[idx[k][1]] = avg; const t = j - i + 1; ties += t * t * t - t; i = j + 1; }
+        return { r, ties }; };
+      const mannWhitney = (a, b) => { const { r, ties } = ranks(a.concat(b)); const n1 = a.length, n2 = b.length, n = n1 + n2;
+        const R1 = r.slice(0, n1).reduce((x, y) => x + y, 0); const U = R1 - n1 * (n1 + 1) / 2; const mu = n1 * n2 / 2;
+        const sd = Math.sqrt(n1 * n2 / 12 * ((n + 1) - ties / (n * (n - 1)))); return pz((Math.abs(U - mu) - 0.5) / sd); };
+      const wilcoxon = (d) => { const nz = d.filter((x) => x !== 0); const n = nz.length; const { r, ties } = ranks(nz.map(Math.abs));
+        const W = nz.reduce((acc, x, i) => acc + (x > 0 ? r[i] : 0), 0); const mu = n * (n + 1) / 4; const sd = Math.sqrt(n * (n + 1) * (2 * n + 1) / 24 - ties / 48); return pz((Math.abs(W - mu) - 0.5) / sd); };
+      const twoProp = (x1, n1, x2, n2) => { const p = (x1 + x2) / (n1 + n2); const z = (x1 / n1 - x2 / n2) / Math.sqrt(p * (1 - p) * (1 / n1 + 1 / n2));
+        const d = x1 / n1 - x2 / n2; const se = Math.sqrt(x1 / n1 * (1 - x1 / n1) / n1 + x2 / n2 * (1 - x2 / n2) / n2); return { p: pz(z), d, lo: d - 1.96 * se, hi: d + 1.96 * se }; };
+      const poisUpper = (k, mu) => { let term = Math.exp(-mu); for (let i = 1; i <= k; i++) term *= mu / i; let sum = 0; for (let i = k; i < k + 400; i++) { sum += term; term *= mu / (i + 1); } return Math.min(1, sum); };
+      const rows = [];
+      // 1 medians and tail
+      const st = runners.filter((r) => r.result !== 'DNS'); const y26 = st.filter((r) => Number(r.year) === 2026).map((r) => Number(r.yards)); const y20 = st.filter((r) => Number(r.year) === 2020).map((r) => Number(r.yards));
+      const mci = boot(() => med(pick(y26)) - med(pick(y20)));
+      rows.push({ id: 'median', section: 'Attrition', claim: '2026 runners went farther than 2020 runners (median yards)', test: 'Mann–Whitney U', a: med(y26), b: med(y20), effect: med(y26) - med(y20), lo: mci[0], hi: mci[1], unit: 'yards', p: mannWhitney(y26, y20) });
+      const r48 = twoProp(y26.filter((v) => v >= 48).length, y26.length, y20.filter((v) => v >= 48).length, y20.length);
+      rows.push({ id: 'reach48', section: 'Attrition', claim: 'More 2026 starters reached 48 yards than in 2020', test: 'Two-proportion z-test', a: y26.filter((v) => v >= 48).length / y26.length, b: y20.filter((v) => v >= 48).length / y20.length, effect: r48.d, lo: r48.lo, hi: r48.hi, unit: 'share', p: r48.p });
+      // 2 milestone spikes
+      const cnt = {}; y26.forEach((v) => { cnt[v] = (cnt[v] || 0) + 1; });
+      [24, 48, 72].forEach((k) => { const nb = [-4, -3, -2, -1, 1, 2, 3, 4].map((d) => cnt[k + d] || 0); const mu = nb.reduce((x, y) => x + y, 0) / nb.length; const obs = cnt[k] || 0;
+        rows.push({ id: 'spike' + k, section: 'Attrition', claim: `More runners stop at exactly ${k} yards than at the yards around it`, test: 'Poisson test vs mean of the 8 neighbouring yards', a: obs, b: mu, effect: obs / mu, lo: null, hi: null, unit: 'ratio', p: poisUpper(obs, mu) }); });
+      // 3 night vs day, adjusted for race stage (logistic regression, milestone yards left out)
+      const nb = 13; const data = laps.filter((r) => Number(r.yard) % 24 !== 0);
+      const P = nb + 1; let beta = new Array(P).fill(0);
+      const feats = data.map((r) => { const band = Math.min(Math.floor((Number(r.yard) - 1) / 6), nb - 1); const x = new Array(P).fill(0); x[0] = 1; x[1] = ((Number(r.start_hour) + 1) % 24) < 6 ? 1 : 0; if (band > 0) x[1 + band] = 1;
+        return { x, y: Number(r.yard) === Number(r.final_yards) && r.final_status !== 'Winner' ? 1 : 0 }; });
+      const solve = (A, bvec) => { const n = bvec.length; const M = A.map((row, i) => row.concat([bvec[i]]));
+        for (let c = 0; c < n; c++) { let piv = c; for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[piv][c])) piv = r; [M[c], M[piv]] = [M[piv], M[c]];
+          for (let r = 0; r < n; r++) if (r !== c) { const f = M[r][c] / M[c][c]; for (let k = c; k <= n; k++) M[r][k] -= f * M[c][k]; } }
+        return M.map((row, i) => row[n] / row[i]); };
+      let H;
+      for (let it = 0; it < 30; it++) { H = Array.from({ length: P }, () => new Array(P).fill(0)); const g = new Array(P).fill(0);
+        feats.forEach(({ x, y }) => { let eta = 0; for (let i = 0; i < P; i++) eta += x[i] * beta[i]; const pr = 1 / (1 + Math.exp(-eta)); const w = pr * (1 - pr);
+          for (let i = 0; i < P; i++) { if (!x[i]) continue; g[i] += x[i] * (y - pr); for (let j = 0; j < P; j++) if (x[j]) H[i][j] += w; } });
+        const step = solve(H, g); beta = beta.map((b, i) => b + step[i]); if (Math.max(...step.map(Math.abs)) < 1e-8) break; }
+      const e1 = new Array(P).fill(0); e1[1] = 1; const se = Math.sqrt(solve(H, e1)[1]);
+      rows.push({ id: 'nightOdds', section: 'Day and night', claim: 'Runners are more likely to stop at night, at the same stage of the race', test: 'Logistic regression, stop ~ night + 6-yard race-stage bands; 24/48/72… yards left out', a: null, b: null, effect: Math.exp(beta[1]), lo: Math.exp(beta[1] - 1.96 * se), hi: Math.exp(beta[1] + 1.96 * se), unit: 'odds ratio', p: pz(beta[1] / se) });
+      // 4 night laps, same runner and same 24-yard day
+      const blk = {}; laps.forEach((r) => { const key = r.runner_id + '|' + Math.floor((Number(r.yard) - 1) / 24); const n = Number(r.start_hour) < 6 ? 'n' : 'd';
+        const o = (blk[key] = blk[key] || { id: r.runner_id, n: [], d: [] }); o[n].push(Number(r.lap_seconds)); });
+      const per = {}; Object.values(blk).forEach((o) => { if (!o.n.length || !o.d.length) return; const m = (a) => a.reduce((x, y) => x + y, 0) / a.length; (per[o.id] = per[o.id] || []).push(m(o.n) - m(o.d)); });
+      const nd = Object.values(per).map((a) => a.reduce((x, y) => x + y, 0) / a.length); const ndci = boot(() => med(pick(nd)));
+      rows.push({ id: 'nightLaps', section: 'Day and night', claim: 'The same runner laps slower at night than by day', test: 'Wilcoxon signed-rank on each runner’s night minus day lap, within the same 24-yard day', a: nd.length, b: null, effect: med(nd), lo: ndci[0], hi: ndci[1], unit: 'seconds', p: wilcoxon(nd) });
+      // 5 how runners stop
+      const fin = laps.filter((r) => Number(r.yard) === Number(r.final_yards) && r.final_status !== 'Winner');
+      const early = fin.filter((r) => Number(r.final_yards) <= 24), late = fin.filter((r) => Number(r.final_yards) >= 49);
+      const rt = twoProp(early.filter((r) => r.final_status === 'RTC').length, early.length, late.filter((r) => r.final_status === 'RTC').length, late.length);
+      rows.push({ id: 'rtcShift', section: 'How it ends', claim: 'Early stops are more often RTC than stops after 48 yards', test: 'Two-proportion z-test', a: rt.d + late.filter((r) => r.final_status === 'RTC').length / late.length, b: late.filter((r) => r.final_status === 'RTC').length / late.length, effect: rt.d, lo: rt.lo, hi: rt.hi, unit: 'share', p: rt.p });
+      // 6 depth vs stars
+      gapStats.forEach((g) => rows.push({ id: 'lead' + g.year, section: 'Team scoring', claim: `Depth explains ${g.year} team yards better than stars`, test: 'Williams t-test, two correlations sharing team yards', a: null, b: null, effect: g.gap, lo: g.lo, hi: g.hi, unit: 'r² gap', p: g.p }));
+      const g24 = gapStats.find((g) => g.year === 2024), g26 = gapStats.find((g) => g.year === 2026);
+      const dd = g26.boots.map((v, i) => v - g24.boots[i]); const sorted = dd.slice().sort((x, y) => x - y); const below = dd.filter((v) => v <= 0).length / dd.length;
+      rows.push({ id: 'change', section: 'Team scoring', claim: 'Depth’s lead changed from 2024 to 2026', test: 'Bootstrap of the difference (4,000 resamples per year)', a: null, b: null, effect: g26.gap - g24.gap, lo: q(sorted, 0.025), hi: q(sorted, 0.975), unit: 'r² gap', p: Math.min(1, 2 * Math.min(below, 1 - below)) });
+      // 7 rest budget
+      const rk = {}; laps.forEach((r) => { if (r.final_status === 'Winner') return; const k = Number(r.final_yards) - Number(r.yard); if (k !== 0 && k !== 24) return; (rk[r.runner_id] = rk[r.runner_id] || {})[k] = (3600 - Number(r.lap_seconds)) / 60; });
+      const pairs = Object.values(rk).filter((o) => o[0] !== undefined && o[24] !== undefined); const rd = pairs.map((o) => o[0] - o[24]); const rdci = boot(() => med(pick(rd)));
+      rows.push({ id: 'restDrop', section: 'Rest budget', claim: 'Runners have less rest in their last yard than a day earlier', test: 'Wilcoxon signed-rank, paired by runner', a: med(pairs.map((o) => o[0])), b: med(pairs.map((o) => o[24])), effect: med(rd), lo: rdci[0], hi: rdci[1], unit: 'minutes', p: wilcoxon(rd) });
+      // Holm
+      const m = rows.length; const ord = rows.map((r, i) => i).sort((i, j) => rows[i].p - rows[j].p); let run = 0;
+      ord.forEach((i, k) => { run = Math.max(run, Math.min(1, (m - k) * rows[i].p)); rows[i].holm = run; });
+      const f2 = (v) => (Math.abs(v) < 10 ? v.toFixed(2) : v.toFixed(0));
+      const show = (r, v) => (v === null ? '—' : r.unit === 'share' ? (v * 100).toFixed(1) + ' pts' : r.unit === 'ratio' || r.unit === 'odds ratio' ? v.toFixed(2) + '×' : f2(v) + ' ' + r.unit.replace('r² gap', ''));
+      rows.forEach((r, i) => { r.order = i + 1; r.result = r.holm < 0.05 ? 'Significant' : 'Not significant'; r.effectText = show(r, r.effect).trim(); r.rangeText = r.lo === null ? '—' : `${show(r, r.lo).trim()} to ${show(r, r.hi).trim()}`; });
+      return rows;
+    }
+  });
+
+  dash.calc('heroRunners', {
+    inputs: ['runners', 'nations'], title: 'Top 20 teams of 2026, by runner',
+    description: 'Every starter on the 20 highest-scoring 2026 teams with final yards; lead marks the runner(s) with the most yards in each nation.',
+    fn: (runners, nations) => {
+      const top = nations.filter((r) => Number(r.year) === 2026 && r.result_status === 'Final').sort((a, b) => Number(a.rank) - Number(b.rank)).slice(0, 20);
+      const out = [];
+      top.forEach((t) => { const rs = runners.filter((r) => Number(r.year) === 2026 && r.nation_code === t.nation_code && r.result !== 'DNS');
+        const mx = Math.max(...rs.map((r) => Number(r.yards)));
+        rs.forEach((r) => out.push({ code: t.nation_code, nation: t.nation, rank: Number(t.rank), team: Number(t.team_yards), runner: r.runner_name, yards: Number(r.yards), result: r.result, lead: Number(r.yards) === mx })); });
+      return out;
+    }
+  });
+
+  dash.calc('teamStrip', {
+    inputs: ['runners', 'nations'], title: 'Top 10 teams of 2026, by runner',
+    description: 'Every runner on the ten highest-scoring 2026 teams, with their final yards.',
+    fn: (runners, nations) => {
+      const top = nations.filter((r) => Number(r.year) === 2026 && r.result_status === 'Final').sort((a, b) => Number(a.rank) - Number(b.rank)).slice(0, 10);
+      const out = [];
+      top.forEach((t) => runners.filter((r) => Number(r.year) === 2026 && r.nation_code === t.nation_code && r.result !== 'DNS')
+        .forEach((r) => out.push({ nation: t.nation, rank: Number(t.rank), team: Number(t.team_yards), runner: r.runner_name, yards: Number(r.yards), result: r.result })));
+      return out;
+    }
+  });
+
+  dash.calc('restToEnd', {
+    inputs: ['laps'], title: 'Rest before stopping',
+    description: 'Median minutes of rest (60 minus lap time) by yards before each runner\'s last completed yard, by how they stopped.',
+    fn: (laps) => {
+      const med = (a) => { const s = a.slice().sort((x, y) => x - y); const m = s.length; return m % 2 ? s[(m - 1) / 2] : (s[m / 2 - 1] + s[m / 2]) / 2; };
+      const g = {}; laps.forEach((r) => { const k = Number(r.final_yards) - Number(r.yard); if (k > 24) return;
+        const key = r.final_status + '|' + k; (g[key] = g[key] || []).push((3600 - Number(r.lap_seconds)) / 60); });
+      return Object.keys(g).map((key) => { const [status, k] = key.split('|'); return { status, k: Number(k), rest: med(g[key]), laps: g[key].length }; });
+    }
+  });
+
+  dash.calc('restDrop', {
+    inputs: ['laps'], title: 'Rest in the last yard vs a day before',
+    description: 'Median rest minutes of non-winners in their last completed yard and 24 yards before it.',
+    fn: (laps) => {
+      const med = (a) => { const s = a.slice().sort((x, y) => x - y); const m = s.length; return m % 2 ? s[(m - 1) / 2] : (s[m / 2 - 1] + s[m / 2]) / 2; };
+      const a = [], b = []; laps.forEach((r) => { if (r.final_status === 'Winner') return; const k = Number(r.final_yards) - Number(r.yard);
+        const rest = (3600 - Number(r.lap_seconds)) / 60; if (k === 0) a.push(rest); if (k === 24) b.push(rest); });
+      return [{ last: med(a), dayBefore: med(b) }];
+    }
+  });
+
+  dash.calc('restTop', {
+    inputs: ['laps'], title: 'Rest per yard, the three farthest runners',
+    description: 'Minutes of rest after each lap for the three 2026 runners with the most yards.',
+    fn: (laps) => {
+      const best = {}; laps.forEach((r) => { best[r.runner_id] = Number(r.final_yards); });
+      const ids = Object.keys(best).sort((a, b) => best[b] - best[a]).slice(0, 3);
+      return laps.filter((r) => ids.includes(r.runner_id)).map((r) => ({ runner_id: r.runner_id, runner: r.runner_name, nation: r.nation,
+        order: ids.indexOf(r.runner_id), yard: Number(r.yard), rest: (3600 - Number(r.lap_seconds)) / 60, hour: Number(r.start_hour) }));
+    }
+  });
+
+  // ---------- helpers ----------
+  const col = (i) => { const c = dash.colors[i]; return typeof c === 'string' ? c : (c && (c.color || c.light || c.value)) || 'currentColor'; };
+  const muted = 'var(--cds-chart-muted)';
+  const f0 = d3.format(','); const f1 = d3.format(',.1f'); const pct1 = d3.format('.1%'); const pct0 = d3.format('.0%');
+  const hourFmt = (h) => String(h).padStart(2, '0') + ':00';
+  const fmts = { int: (v) => f0(Math.round(v)), d1: (v) => f1(v), pct: (v) => pct1(v), pct0: (v) => pct0(v), hour: hourFmt,
+    sec: (v) => (v > 0 ? '+' : '') + f0(Math.round(v)), min: (v) => f1(v), r2: (v) => d3.format('.2f')(v), r2s: (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + d3.format('.2f')(Math.abs(v)), p: (v) => (v < 0.001 ? '<0.001' : d3.format('.3f')(v)), x: (v) => d3.format('.2f')(v) + '×', ord: (v) => { const n = Math.round(v); const s = ['th', 'st', 'nd', 'rd']; const m = n % 100; return n + (s[(m - 20) % 10] || s[m] || s[0]); }, text: (v) => String(v) };
+
+  document.querySelectorAll('[data-sw]').forEach((s) => { s.style.background = col(Number(s.getAttribute('data-sw'))); });
+
+  const pick = (el, rows) => {
+    const w = el.getAttribute('data-where');
+    if (w) { const conds = w.split('&').map((p) => p.split('=').map(decodeURIComponent)); return rows.find((r) => conds.every(([k, v]) => String(r[k]) === v)); }
+    return rows[Number(el.getAttribute('data-row') || 0)];
+  };
+  dash.draw('num', (el) => {
+    const d = dash.data(el.getAttribute('data-source'));
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const row = pick(el, d.data); const v = row ? row[el.getAttribute('data-field')] : undefined;
+    if (v === undefined || v === null) { el.textContent = '—'; return; }
+    el.textContent = (fmts[el.getAttribute('data-fmt') || 'int'])(v);
+  });
+
+  dash.draw('badge', (el) => {
+    const d = dash.data('tests'); el.classList.remove('sig', 'ns');
+    if (d.status !== 'ok') { el.textContent = '—'; el.removeAttribute('data-tip'); el.removeAttribute('tabindex'); return; }
+    const row = pick(el, d.data); if (!row) { el.textContent = '—'; return; }
+    el.textContent = row.result; el.classList.add(row.result === 'Significant' ? 'sig' : 'ns'); el.tabIndex = 0;
+    el.setAttribute('data-tip', `${row.test}. Effect ${row.effectText}${row.rangeText !== '—' ? ` (95% range ${row.rangeText})` : ''}. p = ${fmts.p(row.p)}, Holm p = ${fmts.p(row.holm)}.`);
+    el.setAttribute('aria-label', `${row.result}: ${row.test}, Holm p ${fmts.p(row.holm)}`);
+  });
+  dash.draw('testsTable', (tb) => {
+    const d = dash.data('tests'); tb.replaceChildren(); if (d.status !== 'ok') return;
+    d.data.forEach((r) => { const tr = document.createElement('tr'); tr.setAttribute('data-key', r.id);
+      [r.claim, r.test, r.effectText, r.rangeText, fmts.p(r.p), fmts.p(r.holm)].forEach((v) => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+      const td = document.createElement('td'); const b = document.createElement('span'); b.className = 'bb-badge ' + (r.result === 'Significant' ? 'sig' : 'ns'); b.style.cursor = 'default'; b.textContent = r.result; td.appendChild(b); tr.appendChild(td);
+      tb.appendChild(tr); });
+  });
+
+  const state = (el, ids) => {
+    const st = ids.map((id) => dash.data(id));
+    const bad = st.find((s) => s.status === 'error' || s.status === 'connect' || s.status === 'declined' || s.status === 'missing');
+    el.replaceChildren();
+    if (bad) { el.classList.remove('dash-skeleton'); const f = document.createElement('div'); f.className = 'bb-fail'; f.textContent = 'Failed to load'; el.appendChild(f); return null; }
+    if (st.some((s) => s.status !== 'ok')) { el.classList.add('dash-skeleton'); return null; }
+    el.classList.remove('dash-skeleton'); return st.map((s) => s.data);
+  };
+  const frame = (el, H) => {
+    const W = Math.max(280, el.clientWidth || 600);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    return { svg, W, H };
+  };
+  const textW = (svg, strs, cls = 'bb-tick') => { const t = svg.append('text').attr('class', cls); let w = 0;
+    strs.forEach((s) => { t.text(s); w = Math.max(w, t.node().getComputedTextLength()); }); t.remove(); return w; };
+  const tip = (el) => {
+    const t = document.createElement('div'); t.className = 'bb-tip'; t.hidden = true; el.appendChild(t);
+    return {
+      show(x, y, head, lines) {
+        t.replaceChildren(); const h = document.createElement('div'); h.className = 'h'; h.textContent = head; t.appendChild(h);
+        lines.forEach((l) => { const r = document.createElement('div'); r.className = 'r';
+          if (l.c) { const s = document.createElement('span'); s.className = 'bb-sw'; s.style.background = l.c; r.appendChild(s); }
+          r.appendChild(document.createTextNode(l.t)); t.appendChild(r); });
+        t.hidden = false; const W = el.clientWidth; const tw = t.offsetWidth; const th = t.offsetHeight;
+        let left = x + 14; if (left + tw > W) left = x - 14 - tw; if (left < 0) left = 0;
+        let top = y - th / 2; if (top < 0) top = 0; t.style.left = left + 'px'; t.style.top = top + 'px';
+      },
+      hide() { t.hidden = true; }
+    };
+  };
+  const yGrid = (svg, y, ticks, x0, x1, fmt) => {
+    ticks.forEach((v) => {
+      svg.append('line').attr('class', 'bb-grid-l').attr('x1', x0).attr('x2', x1).attr('y1', y(v)).attr('y2', y(v));
+      svg.append('text').attr('class', 'bb-tick').attr('x', x0 - 6).attr('y', y(v)).attr('dy', '0.32em').attr('text-anchor', 'end').text(fmt(v));
+    });
+  };
+  const xTicks = (svg, x, ticks, yb, fmt) => {
+    svg.append('line').attr('class', 'bb-axis-l').attr('x1', x.range()[0]).attr('x2', x.range()[1]).attr('y1', yb).attr('y2', yb);
+    ticks.forEach((v) => svg.append('text').attr('class', 'bb-tick').attr('x', x(v)).attr('y', yb + 16).attr('text-anchor', 'middle').text(fmt(v)));
+  };
+  const yearIdx = { 2026: 0, 2024: 1, 2022: 2, 2020: 3 };
+  const statusIdx = { RTC: 0, INC: 1, OVER: 3, Winner: 2 };
+  const statusName = { RTC: "Didn't start next yard", INC: 'Stopped mid-yard', OVER: 'Over 60 minutes', Winner: 'National winners' };
+
+  // ---------- 1a attrition ----------
+  dash.draw('attrition', (el) => {
+    const got = state(el, ['attrition']); if (!got) return; const [rows] = got;
+    const H = 300; const { svg, W } = frame(el, H);
+    const m = { t: 12, r: 12, b: 34, l: 0 }; m.l = textW(svg, ['100%', '75%']) + 12;
+    const maxY = d3.max(rows, (r) => r.yard);
+    const x = d3.scaleLinear([0, maxY], [m.l, W - m.r]); const y = d3.scaleLinear([0, 1], [H - m.b, m.t]);
+    yGrid(svg, y, [0, .25, .5, .75, 1], m.l, W - m.r, pct0);
+    for (let d = 24; d <= maxY; d += 24) {
+      svg.append('line').attr('class', 'bb-ref').attr('x1', x(d)).attr('x2', x(d)).attr('y1', m.t).attr('y2', H - m.b);
+      svg.append('text').attr('class', 'bb-lab').attr('x', x(d) + 4).attr('y', m.t + 10).text(`Day ${d / 24}`);
+    }
+    xTicks(svg, x, d3.range(0, maxY + 1, W < 500 ? 24 : 12), H - m.b, f0);
+    svg.append('text').attr('class', 'bb-lab').attr('x', W - m.r).attr('y', H - 2).attr('text-anchor', 'end').text('Yards completed');
+    const byY = d3.group(rows, (r) => r.year); const years = [...byY.keys()].sort((a, b) => a - b);
+    const line = d3.line().x((d) => x(d.yard)).y((d) => y(d.pct));
+    years.forEach((yr) => svg.append('path').datum(byY.get(yr)).attr('fill', 'none').attr('stroke', col(yearIdx[yr]))
+      .attr('stroke-width', yr === 2026 ? 2.5 : 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('d', line));
+    const rule = svg.append('line').attr('class', 'bb-axis-l').attr('y1', m.t).attr('y2', H - m.b).style('opacity', 0);
+    const dots = svg.append('g'); const tt = tip(el);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [px] = d3.pointer(ev); const k = Math.max(0, Math.min(maxY, Math.round(x.invert(px))));
+        rule.attr('x1', x(k)).attr('x2', x(k)).style('opacity', 1); dots.selectAll('*').remove();
+        const lines = [];
+        years.slice().reverse().forEach((yr) => { const r = byY.get(yr).find((d) => d.yard === k);
+          if (r) { dots.append('circle').attr('cx', x(k)).attr('cy', y(r.pct)).attr('r', 4).attr('fill', col(yearIdx[yr])).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2);
+            lines.push({ c: col(yearIdx[yr]), t: `${yr}  ${pct1(r.pct)} · ${f0(r.still)} runners` }); }
+          else lines.push({ c: col(yearIdx[yr]), t: `${yr}  race over` }); });
+        const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, `After yard ${k} · ${f0(Math.round(k * 4.167))} miles`, lines);
+      })
+      .on('pointerleave', () => { rule.style('opacity', 0); dots.selectAll('*').remove(); tt.hide(); });
+  });
+
+  // ---------- 1b histogram ----------
+  dash.draw('hist', (el) => {
+    const got = state(el, ['finalHist']); if (!got) return; const rows = got[0].filter((r) => r.yards > 0);
+    const H = 220; const { svg, W } = frame(el, H);
+    const maxC = d3.max(rows, (r) => r.runners); const m = { t: 10, r: 8, b: 34, l: 0 }; m.l = textW(svg, [f0(maxC)]) + 12;
+    const maxY = d3.max(rows, (r) => r.yards);
+    const x = d3.scaleBand(rows.map((r) => r.yards), [m.l, W - m.r]).paddingInner(0.2);
+    const y = d3.scaleLinear([0, maxC], [H - m.b, m.t]).nice();
+    yGrid(svg, y, y.ticks(4), m.l, W - m.r, f0);
+    svg.selectAll('rect.b').data(rows).join('rect').attr('class', 'b').attr('x', (d) => x(d.yards)).attr('width', Math.max(1, x.bandwidth()))
+      .attr('y', (d) => y(d.runners)).attr('height', (d) => y(0) - y(d.runners)).attr('rx', Math.min(2, x.bandwidth() / 2))
+      .attr('fill', (d) => (d.yards % 24 === 0 ? col(0) : muted));
+    const xs = d3.scaleLinear([0.5, maxY + 0.5], [m.l, W - m.r]);
+    svg.append('line').attr('class', 'bb-axis-l').attr('x1', m.l).attr('x2', W - m.r).attr('y1', H - m.b).attr('y2', H - m.b);
+    d3.range(24, maxY + 1, 24).forEach((v) => svg.append('text').attr('class', 'bb-tick').attr('x', x(v) + x.bandwidth() / 2).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text(v));
+    svg.append('text').attr('class', 'bb-tick').attr('x', x(1)).attr('y', H - m.b + 16).attr('text-anchor', 'start').text('1');
+    svg.append('text').attr('class', 'bb-lab').attr('x', W - m.r).attr('y', H - 2).attr('text-anchor', 'end').text('Final yards');
+    const tt = tip(el); const step = x.step();
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => { const [px] = d3.pointer(ev); const i = Math.max(0, Math.min(rows.length - 1, Math.floor((px - m.l) / step)));
+        const r = rows[i]; const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, `${r.yards} yards · ${f0(Math.round(r.yards * 4.167))} miles`, [{ t: `${f0(r.runners)} runners stopped here` }]); })
+      .on('pointerleave', () => tt.hide());
+    void xs;
+  });
+
+  // ---------- 2a hazard ----------
+  const nightBand = (svg, x, top, bottom) => {
+    svg.append('rect').attr('class', 'bb-band').attr('x', x(0)).attr('width', x(6) - x(0)).attr('y', top).attr('height', bottom - top);
+    svg.append('text').attr('class', 'bb-lab').attr('x', x(0) + 4).attr('y', top + 11).text('Night');
+  };
+  dash.draw('hazard', (el) => {
+    const got = state(el, ['hazard']); if (!got) return; const [rows] = got;
+    const H = 240; const { svg, W } = frame(el, H);
+    const maxR = d3.max(rows, (r) => r.rate); const y = d3.scaleLinear([0, maxR], [H - 34, 16]).nice();
+    const m = { t: 16, r: 8, b: 34, l: textW(svg, y.ticks(4).map(pct0)) + 12 };
+    const x = d3.scaleLinear([0, 24], [m.l, W - m.r]); const bw = (x(1) - x(0)) * 0.7;
+    nightBand(svg, x, m.t, H - m.b);
+    yGrid(svg, y, y.ticks(4), m.l, W - m.r, d3.format('.0%'));
+    svg.selectAll('rect.b').data(rows).join('rect').attr('class', 'b').attr('x', (d) => x(d.hour) + (x(1) - x(0) - bw) / 2).attr('width', bw)
+      .attr('y', (d) => y(d.rate)).attr('height', (d) => y(0) - y(d.rate)).attr('rx', Math.min(3, bw / 2)).attr('fill', col(0));
+    xTicks(svg, x, [], H - m.b, hourFmt);
+    [0, 6, 12, 18].forEach((h) => svg.append('text').attr('class', 'bb-tick').attr('x', x(h) + (x(1) - x(0)) / 2).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text(hourFmt(h)));
+    const tt = tip(el);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => { const [px] = d3.pointer(ev); const h = Math.max(0, Math.min(23, Math.floor(x.invert(px)))); const r = rows[h]; const [ex, ey] = d3.pointer(ev, el);
+        tt.show(ex, ey, `${hourFmt(h)} local`, [{ t: `${pct1(r.rate)} stopped (${f0(r.stops)} of ${f0(r.at_risk)})` }, { c: col(0), t: `RTC ${r.RTC} · INC ${r.INC} · OVER ${r.OVER}` }]); })
+      .on('pointerleave', () => tt.hide());
+  });
+
+  // ---------- 2b lap vs own median ----------
+  dash.draw('lap', (el) => {
+    const got = state(el, ['lapByHour']); if (!got) return; const [rows] = got;
+    const H = 240; const { svg, W } = frame(el, H);
+    const ext = d3.extent(rows, (r) => r.rel); const y = d3.scaleLinear([Math.min(-10, ext[0]), Math.max(10, ext[1])], [H - 34, 16]).nice();
+    const sfmt = (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + 's';
+    const m = { t: 16, r: 10, b: 34, l: textW(svg, y.ticks(5).map(sfmt)) + 12 };
+    const x = d3.scaleLinear([0, 24], [m.l, W - m.r]); const cx = (h) => x(h + 0.5);
+    nightBand(svg, x, m.t, H - m.b);
+    yGrid(svg, y, y.ticks(5), m.l, W - m.r, sfmt);
+    svg.append('line').attr('class', 'bb-axis-l').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0));
+    svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col(0)).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+      .attr('d', d3.line().x((d) => cx(d.hour)).y((d) => y(d.rel)));
+    [0, 6, 12, 18].forEach((h) => svg.append('text').attr('class', 'bb-tick').attr('x', cx(h)).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text(hourFmt(h)));
+    const dot = svg.append('circle').attr('r', 4).attr('fill', col(0)).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2).style('opacity', 0); const tt = tip(el);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => { const [px] = d3.pointer(ev); const h = Math.max(0, Math.min(23, Math.floor(x.invert(px)))); const r = rows.find((d) => d.hour === h); if (!r) return;
+        dot.attr('cx', cx(h)).attr('cy', y(r.rel)).style('opacity', 1); const [ex, ey] = d3.pointer(ev, el);
+        tt.show(ex, ey, `Laps starting ${hourFmt(h)}`, [{ t: `${fmts.sec(r.rel)} s vs own median` }, { t: `${f0(r.laps)} laps` }]); })
+      .on('pointerleave', () => { dot.style('opacity', 0); tt.hide(); });
+  });
+
+  // ---------- 3 stops by stage ----------
+  dash.draw('stops', (el) => {
+    const got = state(el, ['stopStage']); if (!got) return; const [rows] = got;
+    const keys = ['RTC', 'INC', 'OVER']; const rowH = 30; const H = rows.length * rowH + 30;
+    const { svg, W } = frame(el, H);
+    const labels = rows.map((r) => `Yards ${r.stage}`); const lw = textW(svg, labels) + 12; const rw = textW(svg, rows.map((r) => `${f0(r.total)} runners`)) + 12;
+    const x = d3.scaleLinear([0, 1], [lw, W - rw]); const tt = tip(el);
+    rows.forEach((r, i) => {
+      const yy = i * rowH + 4; let acc = 0;
+      svg.append('text').attr('class', 'bb-tick').attr('x', lw - 8).attr('y', yy + 11).attr('dy', '0.32em').attr('text-anchor', 'end').text(labels[i]);
+      keys.forEach((k) => { const share = r.total ? r[k] / r.total : 0; const x0 = x(acc); const w = Math.max(0, x(acc + share) - x0 - 2);
+        svg.append('rect').attr('x', x0).attr('y', yy).attr('width', w).attr('height', 22).attr('rx', 3).attr('fill', col(statusIdx[k]))
+          .on('pointermove', (ev) => { const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, `Yards ${r.stage}`, [{ c: col(statusIdx[k]), t: `${statusName[k]}: ${f0(r[k])} (${pct0(share)})` }]); })
+          .on('pointerleave', () => tt.hide());
+        acc += share; });
+      svg.append('text').attr('class', 'bb-tick').attr('x', W - rw + 8).attr('y', yy + 11).attr('dy', '0.32em').text(`${f0(r.total)} runners`);
+    });
+    [0, .5, 1].forEach((v) => svg.append('text').attr('class', 'bb-tick').attr('x', x(v)).attr('y', H - 4).attr('text-anchor', v === 0 ? 'start' : v === 1 ? 'end' : 'middle').text(pct0(v)));
+  });
+
+  // ---------- 4a depth scatter ----------
+  window.bbDepthYear = 2026;
+  const r2f = d3.format('.2f');
+  dash.draw('fitTable', (tb) => {
+    const a = dash.data('depthFit'); const b = dash.data('depthWinner');
+    tb.replaceChildren();
+    if (a.status !== 'ok' || b.status !== 'ok') return;
+    a.data.slice().sort((p, q) => q.year - p.year).forEach((r) => {
+      const w = b.data.find((x) => x.year === r.year);
+      const tr = document.createElement('tr'); tr.tabIndex = 0; tr.setAttribute('aria-selected', String(r.year === window.bbDepthYear));
+      [String(r.year), r2f(r.top), r2f(r.tenth), w ? w.verdict : '—', f0(r.nations)].forEach((v) => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+      const choose = () => { window.bbDepthYear = r.year; dash.draw('fitTable'); dash.draw('depth'); };
+      tr.addEventListener('click', choose);
+      tr.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); choose(); } });
+      tb.appendChild(tr);
+    });
+  });
+  dash.draw('depth', (el) => {
+    const got = state(el, ['depth', 'depthFit']); if (!got) return; const [rows, fits] = got;
+    const yr = window.bbDepthYear || 2026; const data = rows.filter((r) => r.year === yr && r.tenth !== null);
+    const fit = fits.find((f) => f.year === yr);
+    const full = Math.max(280, el.clientWidth || 600); const two = full >= 560; const pw = two ? (full - 24) / 2 : full; const H = 260;
+    const wrap = document.createElement('div'); wrap.style.display = 'grid'; wrap.style.gridTemplateColumns = two ? '1fr 1fr' : '1fr'; wrap.style.gap = '24px'; el.appendChild(wrap);
+    const maxTeam = d3.max(rows, (r) => r.team); const tt = tip(el);
+    [['top', 'Stars: Farthest runner', 'Farthest runner', fit ? fit.top : null], ['tenth', 'Depth: 10th-best runner', '10th-best runner', fit ? fit.tenth : null]].forEach(([key, name, short, r2]) => {
+      const cell = document.createElement('div'); cell.style.minWidth = '0'; wrap.appendChild(cell);
+      const svg = d3.select(cell).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${pw} ${H}`).attr('height', H);
+      const y = d3.scaleLinear([0, maxTeam], [H - 36, 24]).nice();
+      const m = { l: textW(svg, y.ticks(4).map(f0)) + 12, r: 10 };
+      const maxX = d3.max(rows, (r) => r[key]); const x = d3.scaleLinear([0, maxX], [m.l, pw - m.r]).nice();
+      svg.append('text').attr('class', 'bb-labstrong').attr('x', m.l).attr('y', 12).text(`${name} · ${yr} · r² ${r2 === null ? '—' : d3.format('.2f')(r2)}`);
+      yGrid(svg, y, y.ticks(4), m.l, pw - m.r, f0);
+      xTicks(svg, x, x.ticks(5), H - 36, f0);
+      svg.append('text').attr('class', 'bb-lab').attr('x', pw - m.r).attr('y', H - 2).attr('text-anchor', 'end').text(`${short}'s yards`);
+      svg.selectAll('circle').data(data).join('circle').attr('cx', (d) => x(d[key])).attr('cy', (d) => y(d.team)).attr('r', 5)
+        .attr('fill', col(0)).attr('fill-opacity', 0.85).attr('stroke', 'var(--color-panel)').attr('stroke-width', 1.5)
+        .on('pointermove', (ev, d) => { const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, `${d.nation} · rank ${d.rank}`, [{ t: `Team ${f0(d.team)} yards` }, { t: `Farthest ${d.top} · 10th-best ${d.tenth}` }]); })
+        .on('pointerleave', () => tt.hide());
+    });
+  });
+
+  // ---------- 4a2 gap over years ----------
+  dash.draw('gap', (el) => {
+    const got = state(el, ['gapStats', 'gapChange']); if (!got) return;
+    const rows = got[0].slice().sort((a, b) => a.year - b.year); const ch = got[1][0];
+    const H = 220; const { svg, W } = frame(el, H); const yf = d3.format('.2f');
+    const y = d3.scaleLinear([Math.min(0, d3.min(rows, (r) => r.lo)), d3.max(rows, (r) => r.hi)], [H - 30, 40]).nice();
+    const m = { t: 40, r: 24, b: 30, l: textW(svg, y.ticks(4).map(yf)) + 12 };
+    const x = d3.scalePoint(rows.map((r) => r.year), [m.l + 40, W - m.r - 40]);
+    yGrid(svg, y, y.ticks(4), m.l, W - m.r, yf);
+    svg.append('line').attr('class', 'bb-axis-l').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0));
+    rows.forEach((r) => svg.append('text').attr('class', 'bb-tick').attr('x', x(r.year)).attr('y', H - 8).attr('text-anchor', 'middle').text(r.year));
+    rows.forEach((r) => { svg.append('line').attr('x1', x(r.year)).attr('x2', x(r.year)).attr('y1', y(r.lo)).attr('y2', y(r.hi)).attr('stroke', col(0)).attr('stroke-opacity', 0.45).attr('stroke-width', 6).attr('stroke-linecap', 'round'); });
+    svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col(0)).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+      .attr('d', d3.line().x((d) => x(d.year)).y((d) => y(d.gap)));
+    // observation: bracket over the last two years
+    const a = rows.find((r) => r.year === ch.from), b = rows.find((r) => r.year === ch.to);
+    if (a && b) { const by = y(Math.max(a.hi, b.hi)) - 12; const xa = x(a.year), xb = x(b.year);
+      svg.append('path').attr('d', `M${xa},${by + 6}V${by}H${xb}V${by + 6}`).attr('fill', 'none').attr('class', 'bb-axis-l').style('stroke', 'var(--color-fg-muted)');
+      svg.append('text').attr('class', 'bb-labstrong').attr('x', (xa + xb) / 2).attr('y', by - 6).attr('text-anchor', 'middle').text(`Level: ${fmts.r2s(ch.change)}, within noise`); }
+    const tt = tip(el);
+    rows.forEach((r) => {
+      const lx = x(r.year) + 10; svg.append('text').attr('class', 'bb-labstrong').attr('x', lx).attr('y', y(r.gap)).attr('dy', '0.32em').text(yf(r.gap));
+      svg.append('circle').attr('cx', x(r.year)).attr('cy', y(r.gap)).attr('r', 4.5).attr('fill', col(0)).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2);
+      svg.append('rect').attr('x', x(r.year) - 18).attr('y', m.t).attr('width', 36).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+        .on('pointermove', (ev) => { const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, `${r.year} · ${r.nations} nations`, [
+          { t: `Depth ahead by ${yf(r.gap)}` }, { t: `95% interval ${fmts.r2s(r.lo)} to ${fmts.r2s(r.hi)}` }, { t: `Williams test p = ${fmts.p(r.p)}` }]); })
+        .on('pointerleave', () => tt.hide());
+    });
+  });
+
+  // ---------- header illustration: runners by nation ----------
+  const NATION_COLOR = { USA: '#3b5bb5', AUS: '#1a9a5a', BEL: '#e3a400', JPN: '#d0283c', GBR: '#2a3f8f', FRA: '#3f7fe0', POL: '#e4566a', NZL: '#7a7a7a', CAN: '#e0442f', AIN: '#9aa0a6',
+    NOR: '#b02a45', SWE: '#e8b800', MEX: '#2e8b57', HUN: '#4f8f3a', DEU: '#c99700', NLD: '#f07a1a', AUT: '#c23b3b', ITA: '#1e7fd6', DNK: '#c8203a', ISL: '#2160c4' };
+  let flagSeq = 0;
+  const drawFlag = (g, code, w, h) => {
+    const id = `bbflag-${code}-${flagSeq++}`;
+    g.append('clipPath').attr('id', id).append('rect').attr('width', w).attr('height', h);
+    const f = g.append('g').attr('clip-path', `url(#${id})`);
+    const rect = (x, y, rw, rh, c) => f.append('rect').attr('x', x).attr('y', y).attr('width', rw).attr('height', rh).attr('fill', c);
+    const vert = (cs) => cs.forEach((c, i) => rect(i * w / cs.length, 0, w / cs.length + 0.1, h, c));
+    const horiz = (cs) => cs.forEach((c, i) => rect(0, i * h / cs.length, w, h / cs.length + 0.1, c));
+    const nordic = (bg, cross, border) => { rect(0, 0, w, h, bg); const cx = w * 0.36, t = h * 0.22;
+      if (border) { rect(cx - t * 0.8, 0, t * 1.6, h, border); rect(0, h / 2 - t * 0.8, w, t * 1.6, border); }
+      rect(cx - t / 2, 0, t, h, cross); rect(0, h / 2 - t / 2, w, t, cross); };
+    const jack = (x0, y0, jw, jh) => { rect(x0, y0, jw, jh, '#012169');
+      [[x0, y0, x0 + jw, y0 + jh], [x0 + jw, y0, x0, y0 + jh]].forEach(([a, b, c, d]) => {
+        f.append('line').attr('x1', a).attr('y1', b).attr('x2', c).attr('y2', d).attr('stroke', '#fff').attr('stroke-width', jh * 0.2);
+        f.append('line').attr('x1', a).attr('y1', b).attr('x2', c).attr('y2', d).attr('stroke', '#c8102e').attr('stroke-width', jh * 0.08); });
+      rect(x0 + jw / 2 - jh * 0.17, y0, jh * 0.34, jh, '#fff'); rect(x0, y0 + jh / 2 - jh * 0.17, jw, jh * 0.34, '#fff');
+      rect(x0 + jw / 2 - jh * 0.1, y0, jh * 0.2, jh, '#c8102e'); rect(x0, y0 + jh / 2 - jh * 0.1, jw, jh * 0.2, '#c8102e'); };
+    const dot = (cx, cy, r, c) => f.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r).attr('fill', c);
+    switch (code) {
+      case 'USA': for (let i = 0; i < 7; i++) rect(0, i * h / 7, w, h / 7 + 0.1, i % 2 ? '#fff' : '#b22234'); rect(0, 0, w * 0.42, h * 4 / 7, '#3c3b6e'); break;
+      case 'AUS': rect(0, 0, w, h, '#012169'); jack(0, 0, w / 2, h / 2); dot(w * 0.25, h * 0.77, h * 0.1, '#fff'); dot(w * 0.75, h * 0.3, h * 0.07, '#fff'); dot(w * 0.68, h * 0.62, h * 0.07, '#fff'); dot(w * 0.85, h * 0.75, h * 0.07, '#fff'); break;
+      case 'NZL': rect(0, 0, w, h, '#012169'); jack(0, 0, w / 2, h / 2); [[0.75, 0.25], [0.66, 0.5], [0.85, 0.45], [0.75, 0.8]].forEach(([x, y]) => { dot(w * x, h * y, h * 0.09, '#fff'); dot(w * x, h * y, h * 0.06, '#c8102e'); }); break;
+      case 'GBR': jack(0, 0, w, h); break;
+      case 'BEL': vert(['#000', '#fdda24', '#ef3340']); break;
+      case 'JPN': rect(0, 0, w, h, '#fff'); dot(w / 2, h / 2, h * 0.3, '#bc002d'); break;
+      case 'FRA': vert(['#002395', '#fff', '#ed2939']); break;
+      case 'POL': horiz(['#fff', '#dc143c']); break;
+      case 'CAN': rect(0, 0, w, h, '#fff'); rect(0, 0, w / 4, h, '#d52b1e'); rect(w * 3 / 4, 0, w / 4, h, '#d52b1e');
+        f.append('path').attr('d', `M${w / 2},${h * 0.18} L${w * 0.57},${h * 0.42} L${w * 0.66},${h * 0.36} L${w * 0.62},${h * 0.62} L${w * 0.52},${h * 0.66} L${w * 0.52},${h * 0.82} L${w * 0.48},${h * 0.82} L${w * 0.48},${h * 0.66} L${w * 0.38},${h * 0.62} L${w * 0.34},${h * 0.36} L${w * 0.43},${h * 0.42} Z`).attr('fill', '#d52b1e'); break;
+      case 'NOR': nordic('#ba0c2f', '#00205b', '#fff'); break;
+      case 'SWE': nordic('#006aa7', '#fecc02'); break;
+      case 'DNK': nordic('#c8102e', '#fff'); break;
+      case 'ISL': nordic('#02529c', '#dc1e35', '#fff'); break;
+      case 'MEX': vert(['#006847', '#fff', '#ce1126']); dot(w / 2, h / 2, h * 0.14, '#8c6a3c'); break;
+      case 'HUN': horiz(['#ce2939', '#fff', '#477050']); break;
+      case 'DEU': horiz(['#000', '#dd0000', '#ffce00']); break;
+      case 'NLD': horiz(['#ae1c28', '#fff', '#21468b']); break;
+      case 'AUT': horiz(['#ed2939', '#fff', '#ed2939']); break;
+      case 'ITA': vert(['#009246', '#fff', '#ce2b37']); break;
+      default: rect(0, 0, w, h, '#fff'); // AIN: neutral athletes, no national flag
+    }
+    g.append('rect').attr('width', w).attr('height', h).attr('fill', 'none').attr('stroke', 'rgba(0,0,0,.35)').attr('stroke-width', 0.5);
+  };
+  // a small running figure, origin at the feet, facing right
+  const runnerFigure = (g, c, s, stride) => {
+    const line = (x1, y1, x2, y2) => g.append('line').attr('x1', x1 * s).attr('y1', y1 * s).attr('x2', x2 * s).attr('y2', y2 * s).attr('stroke', c).attr('stroke-width', 1.3).attr('stroke-linecap', 'round');
+    g.append('circle').attr('cx', 1.2 * s).attr('cy', -9.2 * s).attr('r', 1.5 * s).attr('fill', c);
+    line(0.8, -7.4, -0.4, -3.6); // torso
+    if (stride) { line(-0.4, -3.6, 1.8, -1.6); line(1.8, -1.6, 1.4, 0); line(-0.4, -3.6, -2.4, -0.4); line(0.4, -6.6, 2.4, -5); line(0.4, -6.6, -1.6, -5.4); }
+    else { line(-0.4, -3.6, 1.2, 0); line(-0.4, -3.6, -1.8, 0); line(0.4, -6.6, 2.2, -5.6); line(0.4, -6.6, -1.4, -4.8); }
+  };
+  dash.draw('hero', (el) => {
+    const got = state(el, ['heroRunners']); if (!got) return; const [rows] = got;
+    const teams = d3.groups(rows, (r) => r.code).sort((a, b) => a[1][0].rank - b[1][0].rank);
+    const rowH = 19; const top = 22; const H = top + teams.length * rowH + 24; const { svg, W } = frame(el, H);
+    const labels = teams.map((t) => `${t[1][0].rank}  ${t[0]}`);
+    const lw = textW(svg, labels, 'bb-tick') + 10; const rw = textW(svg, teams.map((t) => f0(t[1][0].team)), 'bb-labstrong') + 12;
+    const maxY = d3.max(rows, (r) => r.yards); const x = d3.scaleLinear([0, maxY], [lw + 4, W - rw - 14]);
+    svg.append('text').attr('class', 'bb-lab').attr('x', lw - 6).attr('y', 11).attr('text-anchor', 'end').text('Team rank');
+    svg.append('text').attr('class', 'bb-lab').attr('x', lw + 4).attr('y', 11).text('Each runner by individual yards →');
+    svg.append('text').attr('class', 'bb-lab').attr('x', W).attr('y', 11).attr('text-anchor', 'end').text('Team yards');
+    // champion band
+    svg.append('rect').attr('x', 0).attr('y', top - 1).attr('width', W).attr('height', rowH).attr('class', 'bb-band');
+    for (let d = 24; d <= maxY; d += 24) {
+      svg.append('line').attr('class', 'bb-grid-l').attr('x1', x(d)).attr('x2', x(d)).attr('y1', top).attr('y2', H - 22);
+      svg.append('text').attr('class', 'bb-tick').attr('x', x(d)).attr('y', H - 8).attr('text-anchor', 'middle').text(`Day ${d / 24}`);
+    }
+    svg.append('text').attr('class', 'bb-tick').attr('x', lw + 4).attr('y', H - 8).text('Start');
+    const tt = tip(el);
+    teams.forEach(([code, rs], i) => {
+      const base = top + i * rowH + rowH - 3; const c = NATION_COLOR[code] || 'var(--color-fg-muted)';
+      svg.append('text').attr('class', i === 0 ? 'bb-labstrong' : 'bb-tick').attr('x', lw - 6).attr('y', base - 4).attr('text-anchor', 'end').text(labels[i]);
+      svg.append('text').attr('class', i === 0 ? 'bb-labstrong' : 'bb-tick').attr('x', W).attr('y', base - 4).attr('text-anchor', 'end').text(f0(rs[0].team));
+      svg.append('line').attr('x1', lw + 4).attr('x2', W - rw - 14).attr('y1', base + 0.5).attr('y2', base + 0.5).attr('stroke', c).attr('stroke-opacity', 0.25);
+      const leaders = rs.filter((r) => r.lead);
+      rs.slice().sort((a, b) => a.yards - b.yards).forEach((r, j) => {
+        const g = svg.append('g').attr('transform', `translate(${x(r.yards)},${base})`).style('cursor', 'default');
+        g.style('opacity', r.lead ? 1 : 0.82);
+        runnerFigure(g, c, 1.25, j % 2 === 0);
+        if (r.lead) {
+          const k = leaders.indexOf(r); const fx = 3.2 + k * 2;
+          g.append('line').attr('x1', fx).attr('y1', -6).attr('x2', fx).attr('y2', -17.5).attr('stroke', 'var(--color-fg)').attr('stroke-width', 0.9);
+          const fg = g.append('g').attr('transform', `translate(${fx},${-17.5})`); drawFlag(fg, code, 11, 7.3);
+        }
+        g.append('rect').attr('x', -4).attr('y', -15).attr('width', 9).attr('height', 16).attr('fill', 'transparent')
+          .on('pointermove', (ev) => { const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, `${r.nation} · team rank ${r.rank} · ${f0(r.team)} team yards`,
+            [{ c, t: `${r.runner}: ${r.yards} yards${r.result === 'Winner' ? ' · national winner' : r.result === 'Assist' ? ' · assist' : ''}` }]); })
+          .on('pointerleave', () => tt.hide());
+      });
+    });
+  });
+
+  // ---------- 4b team strip ----------
+  dash.draw('strip', (el) => {
+    const got = state(el, ['teamStrip']); if (!got) return; const [rows] = got;
+    const teams = d3.groups(rows, (r) => r.nation).sort((a, b) => a[1][0].rank - b[1][0].rank);
+    const rowH = 28; const H = teams.length * rowH + 30; const { svg, W } = frame(el, H);
+    const lw = textW(svg, teams.map((t) => t[0])) + 12; const rw = textW(svg, teams.map((t) => f0(t[1][0].team))) + 14;
+    const x = d3.scaleLinear([0, d3.max(rows, (r) => r.yards)], [lw, W - rw]).nice(); const tt = tip(el);
+    x.ticks(W < 500 ? 4 : 8).forEach((v) => { svg.append('line').attr('class', 'bb-grid-l').attr('x1', x(v)).attr('x2', x(v)).attr('y1', 0).attr('y2', H - 24);
+      svg.append('text').attr('class', 'bb-tick').attr('x', x(v)).attr('y', H - 8).attr('text-anchor', 'middle').text(v); });
+    teams.forEach(([nation, rs], i) => {
+      const cy = i * rowH + rowH / 2;
+      svg.append('text').attr('class', 'bb-tick').attr('x', lw - 8).attr('y', cy).attr('dy', '0.32em').attr('text-anchor', 'end').text(nation);
+      svg.append('text').attr('class', 'bb-labstrong').attr('x', W - rw + 10).attr('y', cy).attr('dy', '0.32em').text(f0(rs[0].team));
+      svg.append('line').attr('class', 'bb-grid-l').attr('x1', lw).attr('x2', W - rw).attr('y1', cy).attr('y2', cy);
+      svg.selectAll(null).data(rs).join('circle').attr('cx', (d) => x(d.yards)).attr('cy', cy).attr('r', 5)
+        .attr('fill', (d) => (d.result === 'Winner' ? col(0) : muted)).attr('fill-opacity', 0.9).attr('stroke', 'var(--color-panel)').attr('stroke-width', 1.5)
+        .on('pointermove', (ev, d) => { const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, d.nation, [{ t: `${d.runner}: ${d.yards} yards${d.result === 'Winner' ? ' · national winner' : d.result === 'Assist' ? ' · assist' : ''}` }]); })
+        .on('pointerleave', () => tt.hide());
+    });
+  });
+
+  // ---------- 5a rest to end ----------
+  dash.draw('rest', (el) => {
+    const got = state(el, ['restToEnd']); if (!got) return; const [rows] = got;
+    const H = 260; const { svg, W } = frame(el, H);
+    const y = d3.scaleLinear([0, d3.max(rows, (r) => r.rest)], [H - 34, 12]).nice();
+    const m = { t: 12, r: 12, b: 34, l: textW(svg, y.ticks(5).map((v) => v + ' min')) + 12 };
+    const x = d3.scaleLinear([24, 0], [m.l, W - m.r]);
+    yGrid(svg, y, y.ticks(5), m.l, W - m.r, (v) => v + ' min');
+    xTicks(svg, x, [24, 18, 12, 6, 0], H - m.b, (v) => (v === 0 ? 'Last' : `−${v}`));
+    svg.append('text').attr('class', 'bb-lab').attr('x', W - m.r).attr('y', H - 2).attr('text-anchor', 'end').text('Yards before stopping');
+    const by = d3.group(rows, (r) => r.status); const order = ['Winner', 'RTC', 'INC', 'OVER'];
+    order.forEach((s) => { const d = (by.get(s) || []).slice().sort((a, b) => b.k - a.k);
+      svg.append('path').datum(d).attr('fill', 'none').attr('stroke', col(statusIdx[s])).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+        .attr('d', d3.line().x((p) => x(p.k)).y((p) => y(p.rest))); });
+    const rule = svg.append('line').attr('class', 'bb-axis-l').attr('y1', m.t).attr('y2', H - m.b).style('opacity', 0); const dots = svg.append('g'); const tt = tip(el);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => { const [px] = d3.pointer(ev); const k = Math.max(0, Math.min(24, Math.round(x.invert(px))));
+        rule.attr('x1', x(k)).attr('x2', x(k)).style('opacity', 1); dots.selectAll('*').remove(); const lines = [];
+        ['RTC', 'INC', 'OVER', 'Winner'].forEach((s) => { const r = (by.get(s) || []).find((p) => p.k === k); if (!r) return;
+          dots.append('circle').attr('cx', x(k)).attr('cy', y(r.rest)).attr('r', 4).attr('fill', col(statusIdx[s])).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2);
+          lines.push({ c: col(statusIdx[s]), t: `${statusName[s]}: ${f1(r.rest)} min` }); });
+        const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, k === 0 ? 'Last completed yard' : `${k} yards before the last`, lines); })
+      .on('pointerleave', () => { rule.style('opacity', 0); dots.selectAll('*').remove(); tt.hide(); });
+  });
+
+  // ---------- 5b rest of the top three ----------
+  dash.draw('restTop', (el) => {
+    const got = state(el, ['restTop']); if (!got) return; const [rows] = got;
+    const runners = d3.groups(rows, (r) => r.runner_id).sort((a, b) => a[1][0].order - b[1][0].order);
+    const ul = document.createElement('ul'); ul.className = 'bb-legend'; ul.style.marginBottom = '8px';
+    runners.forEach(([, rs], i) => { const li = document.createElement('li'); const s = document.createElement('span'); s.className = 'bb-sw line'; s.style.background = col(i);
+      li.appendChild(s); li.appendChild(document.createTextNode(`${rs[0].runner} (${rs[0].nation}, ${d3.max(rs, (r) => r.yard)})`)); ul.appendChild(li); });
+    el.appendChild(ul);
+    const H = 230; const { svg, W } = frame(el, H);
+    const y = d3.scaleLinear([0, d3.max(rows, (r) => r.rest)], [H - 34, 10]).nice();
+    const m = { t: 10, r: 12, b: 34, l: textW(svg, y.ticks(4).map((v) => v + ' min')) + 12 };
+    const maxY = d3.max(rows, (r) => r.yard); const x = d3.scaleLinear([1, maxY], [m.l, W - m.r]);
+    yGrid(svg, y, y.ticks(4), m.l, W - m.r, (v) => v + ' min');
+    xTicks(svg, x, d3.range(24, maxY + 1, 24), H - m.b, f0);
+    svg.append('text').attr('class', 'bb-lab').attr('x', W - m.r).attr('y', H - 2).attr('text-anchor', 'end').text('Yard');
+    runners.forEach(([, rs], i) => svg.append('path').datum(rs.slice().sort((a, b) => a.yard - b.yard)).attr('fill', 'none').attr('stroke', col(i))
+      .attr('stroke-width', 1.5).attr('stroke-opacity', 0.9).attr('stroke-linejoin', 'round').attr('d', d3.line().x((p) => x(p.yard)).y((p) => y(p.rest))));
+    const rule = svg.append('line').attr('class', 'bb-axis-l').attr('y1', m.t).attr('y2', H - m.b).style('opacity', 0); const tt = tip(el);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => { const [px] = d3.pointer(ev); const k = Math.max(1, Math.min(maxY, Math.round(x.invert(px))));
+        rule.attr('x1', x(k)).attr('x2', x(k)).style('opacity', 1); const lines = [];
+        runners.forEach(([, rs], i) => { const r = rs.find((p) => p.yard === k); if (r) lines.push({ c: col(i), t: `${r.runner}: ${f1(r.rest)} min (lap at ${hourFmt(r.hour)})` }); });
+        const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, `Yard ${k}`, lines); })
+      .on('pointerleave', () => { rule.style('opacity', 0); tt.hide(); });
+  });
+
+  void N;
+})();
+</script>
+
+<footer class="site-foot">Part of <a href="../">Leo's Data Viz Studies</a>. MakeoverMonday is a community project: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">makeovermonday.vercel.app</a>.</footer>
+</div>
+</body>
+</html>

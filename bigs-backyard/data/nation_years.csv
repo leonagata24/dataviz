@@ -1,0 +1,191 @@
+year,nation_code,nation,team_yards,rank,farthest_runner_yards,tenth_best_runner_yards,runners_started,national_winner,result_status
+2020,BEL,Belgium,574,1,75,34.0,15,Karel Sabbe,Final
+2020,USA,United States of America,517,2,68,26.0,14,Courtney Dauwalter,Final
+2020,CAN,Canada,492,3,43,30.0,15,Stephanie Simpson,Final
+2020,SWE,Sweden,480,4,55,30.0,15,Torbjörn Gyllenbring,Final
+2020,FRA,France,464,5,46,30.0,13,Christian Mauduit,Final
+2020,DEU,Germany,457,6,51,25.0,15,Marina Kollassa,Final
+2020,ESP,Spain,451,7,36,29.0,15,Jorge Manuel García Rodríguez,Final
+2020,MEX,Mexico,447,8,64,22.0,15,Perdió Parra,Final
+2020,FIN,Finland,447,9,40,28.0,15,Kati Ahokas,Final
+2020,IRL,Ireland,444,10,42,26.0,15,Ed McGroarty,Final
+2020,UKR,Ukraine,440,11,41,27.0,15,Andrii Tkachuk,Final
+2020,DNK,Denmark,405,12,38,26.0,15,Stine Rex,Final
+2020,GBR,United Kingdom,402,13,39,26.0,15,Richie Hinson,Final
+2020,CHE,Switzerland,373,14,32,24.0,15,Niklas Sjöblom,Final
+2020,AUS,Australia,368,15,46,21.0,15,Chris Murphy,Final
+2020,NZL,New Zealand,361,16,35,20.0,15,Adam Keen,Final
+2020,SGP,Singapore,321,17,34,20.0,15,Abimanyu Shunmugam,Final
+2020,JPN,Japan,291,18,43,15.0,10,Akio Ueno,Final
+2020,RUS,Russia,270,19,28,15.0,15,Tatyana Maslova,Final
+2020,BLR,Belarus,174,20,26,8.0,14,Aksana Sulimchik,Final
+2020,IND,India,145,21,21,,9,Kartik Joshi,Final
+2022,USA,United States of America,860,1,76,52.0,15,Piotr Chadovich,Final
+2022,BEL,Belgium,788,2,101,40.0,15,,Final
+2022,AUS,Australia,744,3,76,47.0,15,Phil Gore,Final
+2022,JPN,Japan,741,4,86,38.0,15,Shibawaki Daiki,Final
+2022,CAN,Canada,620,5,67,38.0,15,Ihor Verys,Final
+2022,HUN,Hungary,599,6,54,37.0,15,Szilard Fodor,Final
+2022,DNK,Denmark,541,7,66,31.0,15,Soren Moller,Final
+2022,FRA,France,525,8,51,31.0,15,Christian Mauduit,Final
+2022,SWE,Sweden,524,9,57,30.0,15,Torbjorn Gyllebring,Final
+2022,MEX,Mexico,517,10,66,24.0,14,Reyes Satevo,Final
+2022,NZL,New Zealand,497,11,46,30.0,15,Sam Harvey,Final
+2022,ESP,Spain,496,12,51,30.0,15,Oriol Antoli Sarrau,Final
+2022,GBR,United Kingdom,486,13,47,30.0,15,Matthew Blackburn,Final
+2022,DEU,Germany,484,14,46,30.0,15,Hendrik Boury,Final
+2022,NLD,Netherlands,480,15,41,30.0,15,Roman Packbier,Final
+2022,ITA,Italy,454,16,57,25.0,14,Antonio Di Manno,Final
+2022,IRL,Ireland,424,17,51,24.0,15,Jivee Tolentino,Final
+2022,PRT,Portugal,403,18,36,25.0,15,Hugo Alves,Final
+2022,SVK,Slovakia,398,19,46,27.0,14,Patrik Hrotek,Final
+2022,NOR,Norway,392,20,38,27.0,14,Jon Asphjell,Final
+2022,ISL,Iceland,384,21,37,24.0,15,Thorleifur Thorleifsson,Final
+2022,FIN,Finland,377,22,32,25.0,14,,Final
+2022,CHE,Switzerland,360,23,35,21.0,15,Nima Javaheri,Final
+2022,AUT,Austria,358,24,36,24.0,15,Angelika Huemer-Toff,Final
+2022,SGP,Singapore,351,25,51,19.0,15,Joshua Toh,Final
+2022,VNM,Vietnam,326,26,32,21.0,15,Da Bui Van,Final
+2022,UKR,Ukraine,325,27,28,21.0,15,Nazarii Hnat,Final
+2022,MAR,Morocco,298,28,32,16.0,15,Abderrahmane Ait Haddou,Final
+2022,MLT,Malta,293,29,27,18.0,15,Niki Micallef,Final
+2022,ECU,Ecuador,293,30,35,18.0,14,Andres Villagran,Final
+2022,ZAF,South Africa,287,31,31,15.0,15,Thembinkosi Sojola,Final
+2022,PAK,Pakistan,282,32,50,11.0,15,Jamal Said,Final
+2022,BRA,Brazil,258,33,30,15.0,14,Rene Cunha,Final
+2022,IND,India,241,34,22,16.0,15,Kartik Joshi,Final
+2022,VEN,Venezuela,201,35,23,12.0,14,Moises Lopez,Final
+2022,MUS,Mauritius,173,36,22,9.0,15,Julien Law Hin Chin,Final
+2022,MYS,Malaysia,161,37,25,3.0,11,David Christopher,Final
+2024,BEL,Belgium,1147,1,110,56.0,15,,Final
+2024,AUS,Australia,971,2,96,56.0,15,Phil Gore,Final
+2024,USA,United States of America,969,3,88,56.0,15,Scott Snell,Final
+2024,JPN,Japan,883,4,92,55.0,15,Kazuhiro Kawahata,Final
+2024,FRA,France,847,5,84,50.0,15,Nicolas Cointepas,Final
+2024,NZL,New Zealand,811,6,73,48.0,15,Sam Harvey,Final
+2024,SWE,Sweden,729,7,81,46.0,15,Niklas Sjoblom,Final
+2024,CAN,Canada,673,8,68,40.0,15,Lee Alonzo Murphy,Final
+2024,MEX,Mexico,671,9,81,40.0,14,Rodolfo Ramirez Leonides,Final
+2024,POL,Poland,659,10,67,34.0,15,Pawel Pszczolkowski,Final
+2024,HUN,Hungary,658,11,60,37.0,15,Edit Furesz,Final
+2024,ESP,Spain,636,12,62,45.0,13,Jose Manuel Ruiz Verdugo,Final
+2024,GBR,United Kingdom,629,13,59,37.0,15,Sarah Perry,Final
+2024,ISL,Iceland,595,14,62,30.0,15,Thorleifur Thorleifsson,Final
+2024,NLD,Netherlands,549,15,54,33.0,15,Kanter Eefting,Final
+2024,DEU,Germany,542,16,49,35.0,15,Hendrik Boury,Final
+2024,CHE,Switzerland,501,17,59,30.0,15,Nima Javaheri,Final
+2024,NOR,Norway,485,18,54,30.0,15,Eivind Svellingen,Final
+2024,DNK,Denmark,478,19,41,30.0,15,David Stoltenborg,Final
+2024,ITA,Italy,477,20,55,28.0,15,Daniele Lissoni,Final
+2024,PRT,Portugal,457,21,43,31.0,15,Jose Monsanto,Final
+2024,SVK,Slovakia,451,22,41,28.0,15,Patrik Hrotek,Final
+2024,CZE,Czechia,439,23,63,25.0,15,Jaroslav Kopriva,Final
+2024,IND,India,417,24,52,23.0,15,Sunil Sharma,Final
+2024,TUR,Turkey,413,25,53,24.0,15,Savas Lutfi Kara,Final
+2024,AUT,Austria,407,26,42,21.0,15,Stefan Wilfinger,Final
+2024,EST,Estonia,394,27,36,25.0,15,Karl Kevin Ruul,Final
+2024,BRA,Brazil,394,28,52,21.0,15,Paulo Sergio Andrade Oliveira,Final
+2024,FIN,Finland,390,29,40,27.0,14,Verneri Teppo,Final
+2024,LVA,Latvia,367,30,32,25.0,15,Artis Zvejnieks,Final
+2024,BOL,Bolivia,327,31,38,20.0,13,Jose Luis Guzman,Final
+2024,ZAF,South Africa,326,32,32,20.0,15,Rapelang Kgaje,Final
+2024,ARG,Argentina,325,33,32,19.0,15,Luis Agustin Casajus,Final
+2024,KEN,Kenya,319,34,38,20.0,14,Reuben Josphat Mgonga Njorege,Final
+2024,VNM,Vietnam,298,35,38,20.0,10,Trung Nguyen Dang,Final
+2024,MAR,Morocco,291,36,32,15.0,15,Ibrahim Aldaz,Final
+2024,IRL,Ireland,291,37,20,20.0,15,,Final
+2024,MLT,Malta,268,38,26,15.0,15,,Final
+2024,PHL,Philippines,260,39,29,15.0,14,Marvin Buizon,Final
+2024,GTM,Guatemala,258,40,26,16.0,14,Edgar Nehemias Cali,Final
+2024,SGP,Singapore,253,41,26,13.0,15,Ned Phillips,Final
+2024,URY,Uruguay,245,42,29,14.0,15,Jonatan Torena,Final
+2024,MYS,Malaysia,244,43,29,13.0,15,Willie David Christopher,Final
+2024,NAM,Namibia,239,44,26,15.0,15,Andre Ross,Final
+2024,COL,Colombia,238,45,27,15.0,14,Julian Esteban Villegas Gonzalez,Final
+2024,DZA,Algeria,236,46,25,15.0,14,Malek Leroul,Final
+2024,ZMB,Zambia,233,47,23,13.0,15,Cosmas Bwalya,Final
+2024,CIV,Côte d'Ivoire,224,48,28,12.0,15,Marius Kouakou,Final
+2024,VEN,Venezuela,224,49,25,13.0,15,Carlos Hernandez,Final
+2024,BMU,Bermuda,220,50,28,13.0,15,Jason Williams,Final
+2024,PAK,Pakistan,209,51,39,9.0,12,Jamal Said,Final
+2024,TWN,Taipei,208,52,25,12.0,14,Hsiao Chun Huang,Final
+2024,ECU,Ecuador,192,53,23,10.0,14,Erwin Ibarra,Final
+2024,UKR,Ukraine,191,54,33,,8,Viktoriia Nikolaienko,Final
+2024,PRY,Paraguay,189,55,24,11.0,14,Brian Pasmor,Final
+2024,MUS,Mauritius,188,56,19,11.0,15,Wesley Gourdin,Final
+2024,MKD,North Macedonia,185,57,25,10.0,12,Zikica Ivanovski,Final
+2024,BRN,Brunei,184,58,18,11.0,15,Muhammad Ajmal Azman Haji Sudin,Final
+2024,CYP,Cyprus,133,59,16,7.0,14,Irina Masinova,Final
+2024,EGY,Egypt,103,60,16,4.0,15,Vitalii Bulashov,Final
+2024,BWA,Botswana,71,61,14,2.0,10,Onneile Kealotswe,Final
+2024,GRC,Greece,0,62,0,,0,,Did not start
+2024,ISR,Israel,0,63,0,,0,,Did not start
+2026,USA,United States of America,1120,1,107,69.0,15,Mark Dowdle,Final
+2026,AUS,Australia,1069,2,87,72.0,15,Dan Camac,Final
+2026,BEL,Belgium,1058,3,124,60.0,15,,Final
+2026,JPN,Japan,1038,4,105,57.0,15,Kazuhiro Kawahata,Final
+2026,GBR,United Kingdom,939,5,90,53.0,15,Dave Phillips,Final
+2026,FRA,France,889,6,101,53.0,15,Christophe Baud,Final
+2026,POL,Poland,840,7,83,43.0,15,Michał Sitarek,Final
+2026,NZL,New Zealand,834,8,77,48.0,15,Sam Harvey,Final
+2026,CAN,Canada,830,9,82,45.0,15,Michael Serani,Final
+2026,AIN,AIN,732,10,81,45.0,14,Ivan Zaborsky,Final
+2026,NOR,Norway,688,11,73,35.0,15,Anders Johnsen,Final
+2026,SWE,Sweden,666,12,58,41.0,15,Niklas Sjoblom,Final
+2026,MEX,Mexico,663,13,73,36.0,15,Rodolfo Ramirez Leonides,Final
+2026,HUN,Hungary,633,14,63,36.0,15,Adam Kertesz,Final
+2026,DEU,Germany,620,15,69,35.0,15,Martin Stiller,Final
+2026,NLD,Netherlands,617,16,63,36.0,15,Luciano Pappalettera,Final
+2026,AUT,Austria,605,17,52,36.0,15,Stefan Wilfinger,Final
+2026,ITA,Italy,584,18,55,34.0,15,Vittorio Silva,Final
+2026,DNK,Denmark,575,19,60,28.0,15,David Stoltenborg,Final
+2026,ISL,Iceland,559,20,69,31.0,15,Gunnar Karlsson,Final
+2026,ARG,Argentina,545,21,51,34.0,15,Cristian Bartolochini,Final
+2026,FIN,Finland,525,22,52,30.0,15,Verneri Teppo,Final
+2026,LTU,Lithuania,523,23,49,32.0,15,Julija Soryte,Final
+2026,ROU,Romania,519,24,62,30.0,15,Mihail Balica,Final
+2026,LVA,Latvia,506,25,43,30.0,15,Ritvars Kalniņš,Final
+2026,ISR,Israel,492,26,48,30.0,15,Ido Dassa,Final
+2026,BRA,Brazil,481,27,52,25.0,15,Paulo Sérgio Andrade Oliveira,Final
+2026,IRL,Ireland,481,28,39,29.0,15,Wayne McGuigan,Final
+2026,CZE,Czechia,468,29,41,30.0,15,Milan Hauer,Final
+2026,PRT,Portugal,462,30,49,33.0,14,Paulo Moreira,Final
+2026,CHE,Switzerland,452,31,43,27.0,15,Nima Javaheri,Final
+2026,ZAF,South Africa,450,32,41,26.0,15,Thembinkosi Sojola,Final
+2026,GRC,Greece,448,33,43,30.0,15,Ilias Tsaparelis,Final
+2026,VEN,Venezuela,436,34,40,27.0,15,Lialbert Marrufo,Final
+2026,SVN,Slovenia,433,35,42,27.0,15,Bojana Gostan,Final
+2026,SVK,Slovakia,431,36,37,30.0,15,Milan Kralik,Final
+2026,GTM,Guatemala,422,37,43,24.0,15,Reyna Raymundo,Final
+2026,PHL,Philippines,417,38,48,24.0,15,Ronnel Yongot,Final
+2026,EST,Estonia,412,39,41,26.0,15,Kaur Alle,Final
+2026,COL,Colombia,400,40,41,23.0,14,José Antonio Rodríguez Pinzon,Final
+2026,IND,India,397,41,45,22.0,15,Mitesh Vijayvargiy,Final
+2026,BOL,Bolivia,389,42,40,21.0,15,Jose Luis Guzman,Final
+2026,DZA,Algeria,389,43,36,24.0,15,Naim Selloum,Final
+2026,TUR,Turkey,387,44,49,24.0,14,Savaş Lütfi Kara,Final
+2026,MLT,Malta,364,45,34,22.0,15,Ray Grech,Final
+2026,KEN,Kenya,361,46,39,25.0,12,King'ori Wanjiru,Final
+2026,ESP,Spain,358,47,24,24.0,15,,Cancelled
+2026,URY,Uruguay,356,48,39,19.0,15,Jonatan Rodrigo Torena Rodríguez,Final
+2026,UKR,Ukraine,350,49,38,21.0,15,Anatolii Verbivskyi,Final
+2026,CHL,Chile,346,50,38,21.0,15,Victor Muñoz Garcia,Final
+2026,MAR,Morocco,331,51,47,15.0,15,Brahim Aldaz,Final
+2026,PRY,Paraguay,323,52,31,18.0,15,Ricardo Arias,Final
+2026,TWN,Taipei,309,53,29,20.0,15,高正治,Final
+2026,CIV,Côte d'Ivoire,284,54,36,15.0,15,Marius Kouakou,Final
+2026,ZMB,Zambia,277,55,32,15.0,15,Cosmas Bwalya,Final
+2026,NAM,Namibia,274,56,23,17.0,15,Tobias Verwey,Final
+2026,CRI,Costa Rica,270,57,25,17.0,15,Kendall Picado Fallas,Final
+2026,DOM,Dominican Republic,253,58,26,15.0,15,Livio Feliz,Final
+2026,BRN,Brunei,249,59,27,15.0,15,John Witton,Final
+2026,PAK,Pakistan,234,60,29,15.0,15,Jamal Said,Final
+2026,BGR,Bulgaria,232,61,34,12.0,14,Nikolay Hristov,Final
+2026,NPL,Nepal,230,62,27,15.0,13,Arjun Kulung Rai,Final
+2026,CUB,Cuba,222,63,25,11.0,15,Ramon Arceo Rodriguez,Final
+2026,ECU,Ecuador,206,64,27,11.0,12,Julio Cesar Sharup Guanuchi,Final
+2026,BMU,Bermuda,203,65,25,12.0,15,Florin Teleman,Final
+2026,TJK,Tajikistan,190,66,25,10.0,15,Wayne Cassidy,Final
+2026,MYS,Malaysia,181,67,21,9.0,13,Willie David Christopher,Final
+2026,MUS,Mauritius,0,68,0,,0,,Did not start
+2026,SGP,Singapore,0,69,0,,0,,Did not start
