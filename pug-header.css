@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
-/* A Pug's Data Viz Studies: shared attribution header for every study page.
+/* The Pugs' Data Viz Studies: shared attribution header for every study page.
    Linked after each page's own styles; classes pug-hdr / pug-home / pug-ai are added to the existing markup. */
 :root{--pug-bg:#F6EBDA;--pug-ink:#241B16;--pug-muted:#6F5B47;--pug-line:#E6D3B8;--pug-mask:#241B16;--pug-fawn:#E2C59B}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pug-bg:#2A211B;--pug-ink:#F3E8D9;--pug-muted:#C3AE95;--pug-line:#3E3229;--pug-mask:#050403;--pug-fawn:#E2C59B}}
