@@ -1,14 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 /* A Pug's Data Viz Studies: shared attribution header for every study page.
    Linked after each page's own styles; classes pug-hdr / pug-home / pug-ai are added to the existing markup. */
 :root{--pug-bg:#F6EBDA;--pug-ink:#241B16;--pug-muted:#6F5B47;--pug-line:#E6D3B8;--pug-mask:#241B16;--pug-fawn:#E2C59B}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pug-bg:#2A211B;--pug-ink:#F3E8D9;--pug-muted:#C3AE95;--pug-line:#3E3229;--pug-mask:#050403;--pug-fawn:#E2C59B}}
 :root[data-theme="dark"]{--pug-bg:#2A211B;--pug-ink:#F3E8D9;--pug-muted:#C3AE95;--pug-line:#3E3229;--pug-mask:#050403;--pug-fawn:#E2C59B}
 
-.pug-hdr.pug-hdr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;background:var(--pug-bg);color:var(--pug-muted);border:1px solid var(--pug-line);border-radius:12px;padding:9px 14px;font-family:"Instrument Sans",system-ui,sans-serif;font-size:12.5px;line-height:1.45;letter-spacing:.01em;box-sizing:border-box}
+.pug-hdr.pug-hdr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;background:var(--pug-bg);color:var(--pug-muted);border:1px solid var(--pug-line);border-radius:12px;padding:9px 14px;font-family:"Sora",system-ui,sans-serif;font-size:12px;line-height:1.45;letter-spacing:.01em;box-sizing:border-box}
 .pug-hdr.pug-hdr a{color:var(--pug-ink)}
-.pug-hdr.pug-hdr b{color:var(--pug-ink);font-weight:600}
+.pug-hdr.pug-hdr b{color:var(--pug-ink);font-weight:500;font-family:"JetBrains Mono",ui-monospace,monospace;letter-spacing:-.01em}
 .pug-hdr.pug-hdr p{margin:0}
 .pug-hdr .pug-home.pug-home{display:inline-flex;align-items:center;gap:7px;color:var(--pug-ink);font-weight:700;text-decoration:none;white-space:nowrap}
 .pug-hdr .pug-home.pug-home::before{content:"";width:24px;height:22px;flex:0 0 auto;background:url("pug-head.png") center/contain no-repeat}
 .pug-hdr .pug-home.pug-home:hover,.pug-hdr .pug-home.pug-home:focus-visible{text-decoration:underline;text-underline-offset:3px}
-.pug-hdr .pug-ai.pug-ai{display:inline-flex;align-items:center;background:var(--pug-mask);color:var(--pug-fawn);padding:2px 9px;border-radius:99px;text-transform:uppercase;letter-spacing:.1em;font-size:11px;font-weight:600}
+.pug-hdr .pug-ai.pug-ai{display:inline-flex;align-items:center;background:var(--pug-mask);color:var(--pug-fawn);padding:2px 9px;border-radius:99px;text-transform:uppercase;letter-spacing:.08em;font-size:10.5px;font-weight:600;font-family:"JetBrains Mono",ui-monospace,monospace}
