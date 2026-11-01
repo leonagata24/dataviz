@@ -1,0 +1,2831 @@
+year,nation_code,nation,runner_name,yards,result
+2020,BEL,Belgium,Sabbe,75,Winner
+2020,BEL,Belgium,Geerts,74,Assist
+2020,BEL,Belgium,Munaut,49,Ran
+2020,BEL,Belgium,Van Meulder,41,Ran
+2020,BEL,Belgium,Jean,38,Ran
+2020,BEL,Belgium,Steyaert,36,Ran
+2020,BEL,Belgium,Hardenne,36,Ran
+2020,BEL,Belgium,De Graef,34,Ran
+2020,BEL,Belgium,De Cock,34,Ran
+2020,BEL,Belgium,Badot,34,Ran
+2020,BEL,Belgium,Bastiaens,31,Ran
+2020,BEL,Belgium,Clukers,30,Ran
+2020,BEL,Belgium,Lejeune,27,Ran
+2020,BEL,Belgium,Landresse,24,Ran
+2020,BEL,Belgium,Lamotte,11,Ran
+2020,USA,United States of America,Dauwalter,68,Winner
+2020,USA,United States of America,Lewis,67,Assist
+2020,USA,United States of America,Conrad,49,Ran
+2020,USA,United States of America,Moore,48,Ran
+2020,USA,United States of America,Rainwater,48,Ran
+2020,USA,United States of America,Guterl,39,Ran
+2020,USA,United States of America,Leblond,34,Ran
+2020,USA,United States of America,Boone,33,Ran
+2020,USA,United States of America,Ellison,32,Ran
+2020,USA,United States of America,Trinkle,26,Ran
+2020,USA,United States of America,Fejes,24,Ran
+2020,USA,United States of America,Powell,24,Ran
+2020,USA,United States of America,McCarthy,16,Ran
+2020,USA,United States of America,Johnston,9,Ran
+2020,CAN,Canada,Simpson,43,Winner
+2020,CAN,Canada,Shepard,42,Assist
+2020,CAN,Canada,Topping,40,Ran
+2020,CAN,Canada,Barata,40,Ran
+2020,CAN,Canada,Salt,36,Ran
+2020,CAN,Canada,Stevens,35,Ran
+2020,CAN,Canada,Brown,34,Ran
+2020,CAN,Canada,Huber,33,Ran
+2020,CAN,Canada,Courtice,32,Ran
+2020,CAN,Canada,Gaudet,30,Ran
+2020,CAN,Canada,Tetreault,29,Ran
+2020,CAN,Canada,Welwood,27,Ran
+2020,CAN,Canada,Cooper,25,Ran
+2020,CAN,Canada,Proctor,24,Ran
+2020,CAN,Canada,Biloski,22,Ran
+2020,SWE,Sweden,Gyllenbring,55,Winner
+2020,SWE,Sweden,Carlsson,54,Assist
+2020,SWE,Sweden,Blomqvist,37,Ran
+2020,SWE,Sweden,Hällneby,37,Ran
+2020,SWE,Sweden,Gällentoft,34,Ran
+2020,SWE,Sweden,Antonsson,33,Ran
+2020,SWE,Sweden,Ekenstierna,32,Ran
+2020,SWE,Sweden,Johnson,32,Ran
+2020,SWE,Sweden,Barrulf,31,Ran
+2020,SWE,Sweden,George,30,Ran
+2020,SWE,Sweden,Kämpe,26,Ran
+2020,SWE,Sweden,Bengtsson,26,Ran
+2020,SWE,Sweden,Amundsson,24,Ran
+2020,SWE,Sweden,Otto,16,Ran
+2020,SWE,Sweden,Rangelind,13,Ran
+2020,FRA,France,Mauduit,46,Winner
+2020,FRA,France,Caussarieu,45,Assist
+2020,FRA,France,Bannwarth,41,Ran
+2020,FRA,France,Calmettes,40,Ran
+2020,FRA,France,Tharion,38,Ran
+2020,FRA,France,Jacquemet,37,Ran
+2020,FRA,France,Gauduin,37,Ran
+2020,FRA,France,Makhlouf,36,Ran
+2020,FRA,France,Rousset,31,Ran
+2020,FRA,France,Arthus,30,Ran
+2020,FRA,France,Barranger,29,Ran
+2020,FRA,France,Sanchez,28,Ran
+2020,FRA,France,Jegard,26,Ran
+2020,FRA,France,Michaudet,0,DNS
+2020,FRA,France,Derouch,0,DNS
+2020,DEU,Germany,Kollassa,51,Winner
+2020,DEU,Germany,Ohler,50,Assist
+2020,DEU,Germany,Loeffler,50,Assist
+2020,DEU,Germany,Menzel,34,Ran
+2020,DEU,Germany,Epple,33,Ran
+2020,DEU,Germany,Obert,30,Ran
+2020,DEU,Germany,Krumm,27,Ran
+2020,DEU,Germany,Neuweiler,27,Ran
+2020,DEU,Germany,Mantel,27,Ran
+2020,DEU,Germany,Drollinger,25,Ran
+2020,DEU,Germany,George,24,Ran
+2020,DEU,Germany,Goetze,22,Ran
+2020,DEU,Germany,Bonn,22,Ran
+2020,DEU,Germany,Hoeschele,21,Ran
+2020,DEU,Germany,Warlich,14,Ran
+2020,ESP,Spain,García Rodríguez,36,Winner
+2020,ESP,Spain,Novoa Rodríguez,35,Assist
+2020,ESP,Spain,Soriano Rubio,34,Ran
+2020,ESP,Spain,Gfeller,34,Ran
+2020,ESP,Spain,Cristina Constantin,33,Ran
+2020,ESP,Spain,Iglesias Martín,31,Ran
+2020,ESP,Spain,Sánchez Parra,30,Ran
+2020,ESP,Spain,López De Aberasturi,30,Ran
+2020,ESP,Spain,Gamboa Santorcuato,30,Ran
+2020,ESP,Spain,Cristian Malone,29,Ran
+2020,ESP,Spain,Martinez Hervas,28,Ran
+2020,ESP,Spain,Javier Barrera Gomez,26,Ran
+2020,ESP,Spain,Pastor Corredor,26,Ran
+2020,ESP,Spain,de Andrés Santos,25,Ran
+2020,ESP,Spain,Romero Rivero,24,Ran
+2020,MEX,Mexico,Parra,64,Winner
+2020,MEX,Mexico,Viniegra,63,Assist
+2020,MEX,Mexico,Contreras,61,Ran
+2020,MEX,Mexico,Antonio Zaragoza,43,Ran
+2020,MEX,Mexico,Giltro Satevo,30,Ran
+2020,MEX,Mexico,Moreno,30,Ran
+2020,MEX,Mexico,García Gardea,30,Ran
+2020,MEX,Mexico,Quimare,24,Ran
+2020,MEX,Mexico,Ramirez,23,Ran
+2020,MEX,Mexico,Gutierrez,22,Ran
+2020,MEX,Mexico,Moreno,15,Ran
+2020,MEX,Mexico,Rascon,12,Ran
+2020,MEX,Mexico,Sanchez,11,Ran
+2020,MEX,Mexico,Modesta Ayala,10,Ran
+2020,MEX,Mexico,Concheno Tapadera,9,Ran
+2020,FIN,Finland,Ahokas,40,Winner
+2020,FIN,Finland,Söderlund,39,Assist
+2020,FIN,Finland,Niemenmaa,36,Ran
+2020,FIN,Finland,Soikkeli,34,Ran
+2020,FIN,Finland,Jumisko,31,Ran
+2020,FIN,Finland,Palmer,31,Ran
+2020,FIN,Finland,Mäkinen,30,Ran
+2020,FIN,Finland,Hitonen,29,Ran
+2020,FIN,Finland,Saarinen,28,Ran
+2020,FIN,Finland,Hihnala,28,Ran
+2020,FIN,Finland,Eskelinen,27,Ran
+2020,FIN,Finland,Lempinen,27,Ran
+2020,FIN,Finland,Koivu,27,Ran
+2020,FIN,Finland,Lehtonen,20,Ran
+2020,FIN,Finland,Hyttinen,20,Ran
+2020,IRL,Ireland,McGroarty,42,Winner
+2020,IRL,Ireland,Keith,41,Assist
+2020,IRL,Ireland,Staunton,38,Ran
+2020,IRL,Ireland,Mark Walker,34,Ran
+2020,IRL,Ireland,McCann,32,Ran
+2020,IRL,Ireland,Hagan,32,Ran
+2020,IRL,Ireland,Shannon,30,Ran
+2020,IRL,Ireland,Owens,30,Ran
+2020,IRL,Ireland,O'Mara,28,Ran
+2020,IRL,Ireland,Swann,26,Ran
+2020,IRL,Ireland,McMath,25,Ran
+2020,IRL,Ireland,Lane,25,Ran
+2020,IRL,Ireland,Smart,25,Ran
+2020,IRL,Ireland,Brady,22,Ran
+2020,IRL,Ireland,Da Costa,14,Ran
+2020,UKR,Ukraine,Tkachuk,41,Winner
+2020,UKR,Ukraine,Khanas,40,Assist
+2020,UKR,Ukraine,Skorokhod,39,Ran
+2020,UKR,Ukraine,Nikolaienko,38,Ran
+2020,UKR,Ukraine,Krasnov,36,Ran
+2020,UKR,Ukraine,Chyzhyk,33,Ran
+2020,UKR,Ukraine,Slipets,31,Ran
+2020,UKR,Ukraine,Ziuman,30,Ran
+2020,UKR,Ukraine,Hnat,30,Ran
+2020,UKR,Ukraine,Cheremisin,27,Ran
+2020,UKR,Ukraine,Hrebelskyi,24,Ran
+2020,UKR,Ukraine,Shypunov,24,Ran
+2020,UKR,Ukraine,Sakhanda,20,Ran
+2020,UKR,Ukraine,Shymanskyi,15,Ran
+2020,UKR,Ukraine,Bendas,12,Ran
+2020,DNK,Denmark,Rex,38,Winner
+2020,DNK,Denmark,Nielsen,37,Assist
+2020,DNK,Denmark,Thure Tornbo,33,Ran
+2020,DNK,Denmark,Olsen,32,Ran
+2020,DNK,Denmark,Skjødeberg,32,Ran
+2020,DNK,Denmark,Lue Tornbo,30,Ran
+2020,DNK,Denmark,Elfving,28,Ran
+2020,DNK,Denmark,Jakobsen,27,Ran
+2020,DNK,Denmark,Dahl,26,Ran
+2020,DNK,Denmark,Klingenberg,26,Ran
+2020,DNK,Denmark,Kjeldmann,25,Ran
+2020,DNK,Denmark,Valbak,24,Ran
+2020,DNK,Denmark,Søgaard Hanusova,21,Ran
+2020,DNK,Denmark,Fogh,15,Ran
+2020,DNK,Denmark,Olesen,11,Ran
+2020,GBR,United Kingdom,Hinson,39,Winner
+2020,GBR,United Kingdom,Breen,38,Assist
+2020,GBR,United Kingdom,Miles,36,Ran
+2020,GBR,United Kingdom,Irvine,33,Ran
+2020,GBR,United Kingdom,Nickell,30,Ran
+2020,GBR,United Kingdom,King,28,Ran
+2020,GBR,United Kingdom,Black,28,Ran
+2020,GBR,United Kingdom,Stevenson,28,Ran
+2020,GBR,United Kingdom,McKee,27,Ran
+2020,GBR,United Kingdom,Piper,26,Ran
+2020,GBR,United Kingdom,Persson,25,Ran
+2020,GBR,United Kingdom,Lister,24,Ran
+2020,GBR,United Kingdom,Connolly,16,Ran
+2020,GBR,United Kingdom,McKeown,13,Ran
+2020,GBR,United Kingdom,Thompson,11,Ran
+2020,CHE,Switzerland,Sjöblom,32,Winner
+2020,CHE,Switzerland,Dippacher,31,Assist
+2020,CHE,Switzerland,Brennwald,30,Ran
+2020,CHE,Switzerland,Bühler,29,Ran
+2020,CHE,Switzerland,Knüsel,28,Ran
+2020,CHE,Switzerland,Knapp,28,Ran
+2020,CHE,Switzerland,Evers,27,Ran
+2020,CHE,Switzerland,Ambrosini,26,Ran
+2020,CHE,Switzerland,Winkler,25,Ran
+2020,CHE,Switzerland,Stimpfle,24,Ran
+2020,CHE,Switzerland,Knoche,24,Ran
+2020,CHE,Switzerland,Förster,22,Ran
+2020,CHE,Switzerland,Schmid,18,Ran
+2020,CHE,Switzerland,Kaufmann,18,Ran
+2020,CHE,Switzerland,Stolba,11,Ran
+2020,AUS,Australia,Murphy,46,Winner
+2020,AUS,Australia,Loveday,45,Assist
+2020,AUS,Australia,Crawford,30,Ran
+2020,AUS,Australia,Pearson,26,Ran
+2020,AUS,Australia,Macneil,25,Ran
+2020,AUS,Australia,Schweitzer,24,Ran
+2020,AUS,Australia,Ponych,24,Ran
+2020,AUS,Australia,Munro,24,Ran
+2020,AUS,Australia,Thwaites,22,Ran
+2020,AUS,Australia,Oborne,21,Ran
+2020,AUS,Australia,Chatterton,18,Ran
+2020,AUS,Australia,Spink,17,Ran
+2020,AUS,Australia,Bremner,17,Ran
+2020,AUS,Australia,Harvey-Jamieson,15,Ran
+2020,AUS,Australia,Ryan,14,Ran
+2020,NZL,New Zealand,Keen,35,Winner
+2020,NZL,New Zealand,Sutton,34,Assist
+2020,NZL,New Zealand,Hayvice,31,Ran
+2020,NZL,New Zealand,Smith,31,Ran
+2020,NZL,New Zealand,Collins,26,Ran
+2020,NZL,New Zealand,Bailey,25,Ran
+2020,NZL,New Zealand,Bisley,23,Ran
+2020,NZL,New Zealand,Wright,23,Ran
+2020,NZL,New Zealand,Field,22,Ran
+2020,NZL,New Zealand,Evans,20,Ran
+2020,NZL,New Zealand,McDowall,20,Ran
+2020,NZL,New Zealand,Stuart,20,Ran
+2020,NZL,New Zealand,Kelly,20,Ran
+2020,NZL,New Zealand,Wood,16,Ran
+2020,NZL,New Zealand,Thomas,15,Ran
+2020,SGP,Singapore,Shunmugam,34,Winner
+2020,SGP,Singapore,Hoong Wei,33,Assist
+2020,SGP,Singapore,Goh,29,Ran
+2020,SGP,Singapore,Dau,24,Ran
+2020,SGP,Singapore,Swee,24,Ran
+2020,SGP,Singapore,Toh,23,Ran
+2020,SGP,Singapore,Phillips,22,Ran
+2020,SGP,Singapore,Ang,21,Ran
+2020,SGP,Singapore,Loke,21,Ran
+2020,SGP,Singapore,Corser,20,Ran
+2020,SGP,Singapore,Lim,19,Ran
+2020,SGP,Singapore,Kay Kiat,18,Ran
+2020,SGP,Singapore,Weng Hoe,16,Ran
+2020,SGP,Singapore,Png,11,Ran
+2020,SGP,Singapore,Ong,6,Ran
+2020,JPN,Japan,Ueno,43,Winner
+2020,JPN,Japan,Noguchi,42,Assist
+2020,JPN,Japan,Tateno,32,Ran
+2020,JPN,Japan,Takei,31,Ran
+2020,JPN,Japan,Tanaka,30,Ran
+2020,JPN,Japan,Yamanomoto,27,Ran
+2020,JPN,Japan,Uchida,26,Ran
+2020,JPN,Japan,Miyazaki,26,Ran
+2020,JPN,Japan,Morishita,19,Ran
+2020,JPN,Japan,Sasano,15,Ran
+2020,RUS,Russia,Maslova,28,Winner
+2020,RUS,Russia,Karasev,27,Assist
+2020,RUS,Russia,Masanova,26,Ran
+2020,RUS,Russia,Regetsiy,24,Ran
+2020,RUS,Russia,Levandovskiy,22,Ran
+2020,RUS,Russia,Kraev,18,Ran
+2020,RUS,Russia,Demchuk,18,Ran
+2020,RUS,Russia,Dyuzhakov,16,Ran
+2020,RUS,Russia,Evgrafova,15,Ran
+2020,RUS,Russia,Rankovskiy,15,Ran
+2020,RUS,Russia,Mironenko,14,Ran
+2020,RUS,Russia,Porotikova,13,Ran
+2020,RUS,Russia,Shevchuk,12,Ran
+2020,RUS,Russia,Vasilenko,12,Ran
+2020,RUS,Russia,Karlina,10,Ran
+2020,BLR,Belarus,Sulimchik,26,Winner
+2020,BLR,Belarus,Kulikou,25,Assist
+2020,BLR,Belarus,Lavnik,21,Ran
+2020,BLR,Belarus,Zyuzina,15,Ran
+2020,BLR,Belarus,Shvants,14,Ran
+2020,BLR,Belarus,Berezouski,11,Ran
+2020,BLR,Belarus,Skuratovich,11,Ran
+2020,BLR,Belarus,Ivanov,9,Ran
+2020,BLR,Belarus,Alexeev,9,Ran
+2020,BLR,Belarus,Khramau,8,Ran
+2020,BLR,Belarus,Gerasimuk,8,Ran
+2020,BLR,Belarus,Bendzer,7,Ran
+2020,BLR,Belarus,Pukhaeva,5,Ran
+2020,BLR,Belarus,Strakovich,5,Ran
+2020,BLR,Belarus,Yarets,0,DNS
+2020,IND,India,Joshi,21,Winner
+2020,IND,India,Sudani,20,Assist
+2020,IND,India,Wadhwani,19,Ran
+2020,IND,India,Kumar,18,Ran
+2020,IND,India,Pardeshi,15,Ran
+2020,IND,India,Mukati,15,Ran
+2020,IND,India,Manjrekar,13,Ran
+2020,IND,India,Modi,12,Ran
+2020,IND,India,Kamaliya,12,Ran
+2020,IND,India,Singh,0,DNS
+2020,IND,India,Dubey,0,DNS
+2022,USA,United States of America,Lewis,75,Assist
+2022,USA,United States of America,Roberts,60,Ran
+2022,USA,United States of America,Noll,74,Ran
+2022,USA,United States of America,Snell,62,Ran
+2022,USA,United States of America,Russo,48,Ran
+2022,USA,United States of America,Chadovich,76,Winner
+2022,USA,United States of America,Slaby,72,Ran
+2022,USA,United States of America,Bigonia,54,Ran
+2022,USA,United States of America,McCabe,38,Ran
+2022,USA,United States of America,VanGraafeiland,62,Ran
+2022,USA,United States of America,Yovichin,70,Ran
+2022,USA,United States of America,Winkles,25,Ran
+2022,USA,United States of America,Eubanks,48,Ran
+2022,USA,United States of America,Yoder,52,Ran
+2022,USA,United States of America,Wright,44,Ran
+2022,BEL,Belgium,Geerts,101,Ran
+2022,BEL,Belgium,Steyaert,101,Ran
+2022,BEL,Belgium,Van Meulder,40,Ran
+2022,BEL,Belgium,Munaut,37,Ran
+2022,BEL,Belgium,Jean,40,Ran
+2022,BEL,Belgium,Gielen,67,Ran
+2022,BEL,Belgium,Sneyders,65,Ran
+2022,BEL,Belgium,Pelgrims,42,Ran
+2022,BEL,Belgium,Bels,43,Ran
+2022,BEL,Belgium,Vandamme,60,Ran
+2022,BEL,Belgium,de Wolf,48,Ran
+2022,BEL,Belgium,David,43,Ran
+2022,BEL,Belgium,Hardenne,36,Ran
+2022,BEL,Belgium,Germeys,35,Ran
+2022,BEL,Belgium,Clukers,30,Ran
+2022,AUS,Australia,Crawford,75,Assist
+2022,AUS,Australia,Gore,76,Winner
+2022,AUS,Australia,Young,48,Ran
+2022,AUS,Australia,Murphy,48,Ran
+2022,AUS,Australia,Smith,26,Ran
+2022,AUS,Australia,Parsons,73,Ran
+2022,AUS,Australia,Nicholls,56,Ran
+2022,AUS,Australia,Yoon,51,Ran
+2022,AUS,Australia,Dube,30,Ran
+2022,AUS,Australia,Martin,34,Ran
+2022,AUS,Australia,Hadley,47,Ran
+2022,AUS,Australia,Douglas,41,Ran
+2022,AUS,Australia,Mcphee,49,Ran
+2022,AUS,Australia,Hirst,40,Ran
+2022,AUS,Australia,Kacprzak,50,Ran
+2022,JPN,Japan,Yoshida,85,Assist
+2022,JPN,Japan,Quatresous,67,Ran
+2022,JPN,Japan,Daiki,86,Winner
+2022,JPN,Japan,Noguchi,26,Ran
+2022,JPN,Japan,Suzuki,45,Ran
+2022,JPN,Japan,Masaoka,24,Ran
+2022,JPN,Japan,Hirata,74,Ran
+2022,JPN,Japan,Tsuchiya,32,Ran
+2022,JPN,Japan,Tamura,38,Ran
+2022,JPN,Japan,Fujita,32,Ran
+2022,JPN,Japan,Abe,45,Ran
+2022,JPN,Japan,Fujikawa,35,Ran
+2022,JPN,Japan,Tateno,52,Ran
+2022,JPN,Japan,Tsukada,48,Ran
+2022,JPN,Japan,Tanaka,52,Ran
+2022,CAN,Canada,Deshaies,66,Assist
+2022,CAN,Canada,Simpson,38,Ran
+2022,CAN,Canada,Shepard,40,Ran
+2022,CAN,Canada,Poulin,40,Ran
+2022,CAN,Canada,Barata,36,Ran
+2022,CAN,Canada,Verys,67,Winner
+2022,CAN,Canada,Leblanc,43,Ran
+2022,CAN,Canada,Salt,30,Ran
+2022,CAN,Canada,Chavanne,40,Ran
+2022,CAN,Canada,Nelson,55,Ran
+2022,CAN,Canada,Isenor,32,Ran
+2022,CAN,Canada,Huber,25,Ran
+2022,CAN,Canada,Bird,26,Ran
+2022,CAN,Canada,Bondy,42,Ran
+2022,CAN,Canada,Wyllie,40,Ran
+2022,HUN,Hungary,Geszti,46,Ran
+2022,HUN,Hungary,Fodor,54,Winner
+2022,HUN,Hungary,Csecsei,53,Assist
+2022,HUN,Hungary,Gabor,45,Ran
+2022,HUN,Hungary,Furesz,43,Ran
+2022,HUN,Hungary,Blasko,40,Ran
+2022,HUN,Hungary,Kelemen,33,Ran
+2022,HUN,Hungary,Sarosi,38,Ran
+2022,HUN,Hungary,Keller,43,Ran
+2022,HUN,Hungary,Kertesz,38,Ran
+2022,HUN,Hungary,Gyongyosi,32,Ran
+2022,HUN,Hungary,Horn,33,Ran
+2022,HUN,Hungary,Gurisatti,37,Ran
+2022,HUN,Hungary,Hugyecz,32,Ran
+2022,HUN,Hungary,Huzsvay,32,Ran
+2022,DNK,Denmark,Stoltenborg,65,Assist
+2022,DNK,Denmark,Klingenberg,41,Ran
+2022,DNK,Denmark,Rex,33,Ran
+2022,DNK,Denmark,Baastrup,31,Ran
+2022,DNK,Denmark,Skjodeberg,35,Ran
+2022,DNK,Denmark,Holm,37,Ran
+2022,DNK,Denmark,Jakobsen,33,Ran
+2022,DNK,Denmark,Moller,66,Winner
+2022,DNK,Denmark,Brodsgaard,25,Ran
+2022,DNK,Denmark,Moller Jensen,28,Ran
+2022,DNK,Denmark,Bremholm,34,Ran
+2022,DNK,Denmark,Lund,31,Ran
+2022,DNK,Denmark,Offersen,26,Ran
+2022,DNK,Denmark,Jakobsen,31,Ran
+2022,DNK,Denmark,Hansen,25,Ran
+2022,FRA,France,Mauduit,51,Winner
+2022,FRA,France,Pollesel,31,Ran
+2022,FRA,France,Bannwarth,45,Ran
+2022,FRA,France,Ohl,50,Assist
+2022,FRA,France,Makhlouf,34,Ran
+2022,FRA,France,Jacquemet,31,Ran
+2022,FRA,France,David,35,Ran
+2022,FRA,France,Marion,35,Ran
+2022,FRA,France,Delannoy,28,Ran
+2022,FRA,France,Rousset,33,Ran
+2022,FRA,France,Ballanger,31,Ran
+2022,FRA,France,Ballanger,28,Ran
+2022,FRA,France,Ollivier,30,Ran
+2022,FRA,France,Payen,27,Ran
+2022,FRA,France,Henin,36,Ran
+2022,SWE,Sweden,Gyllebring,57,Winner
+2022,SWE,Sweden,Sjoblom,30,Ran
+2022,SWE,Sweden,Orsvarn,33,Ran
+2022,SWE,Sweden,Johansson,40,Ran
+2022,SWE,Sweden,Lilja,25,Ran
+2022,SWE,Sweden,Rangelind,35,Ran
+2022,SWE,Sweden,Lowemark,33,Ran
+2022,SWE,Sweden,Pavic,56,Assist
+2022,SWE,Sweden,Stenemo,33,Ran
+2022,SWE,Sweden,Edlund,33,Ran
+2022,SWE,Sweden,Oster,27,Ran
+2022,SWE,Sweden,Jonsson,22,Ran
+2022,SWE,Sweden,Schroder,29,Ran
+2022,SWE,Sweden,Stot,30,Ran
+2022,SWE,Sweden,Soderling,41,Ran
+2022,MEX,Mexico,Parra,43,Ran
+2022,MEX,Mexico,Viniegra,40,Ran
+2022,MEX,Mexico,Contreras,47,Ran
+2022,MEX,Mexico,Campillo,65,Assist
+2022,MEX,Mexico,Teach,18,Ran
+2022,MEX,Mexico,Alonso,43,Ran
+2022,MEX,Mexico,Carro,0,DNS
+2022,MEX,Mexico,Gonzalez,24,Ran
+2022,MEX,Mexico,Leonides,58,Ran
+2022,MEX,Mexico,Garcia,40,Ran
+2022,MEX,Mexico,Elox,32,Ran
+2022,MEX,Mexico,Gardea,9,Ran
+2022,MEX,Mexico,Moreno,10,Ran
+2022,MEX,Mexico,Satevo,66,Winner
+2022,MEX,Mexico,Quintana,22,Ran
+2022,NZL,New Zealand,Harvey,46,Winner
+2022,NZL,New Zealand,Keen,26,Ran
+2022,NZL,New Zealand,Sutton,38,Ran
+2022,NZL,New Zealand,Purdue,34,Ran
+2022,NZL,New Zealand,Bayne,24,Ran
+2022,NZL,New Zealand,Smith,32,Ran
+2022,NZL,New Zealand,Hayvice,37,Ran
+2022,NZL,New Zealand,Hunt,26,Ran
+2022,NZL,New Zealand,Bergman,40,Ran
+2022,NZL,New Zealand,Bryant,32,Ran
+2022,NZL,New Zealand,Pelvin,30,Ran
+2022,NZL,New Zealand,Merrill,32,Ran
+2022,NZL,New Zealand,Bougen,45,Assist
+2022,NZL,New Zealand,Inwood,27,Ran
+2022,NZL,New Zealand,Pari,28,Ran
+2022,ESP,Spain,Gamboa Santorcuato,32,Ran
+2022,ESP,Spain,Sarrau,51,Winner
+2022,ESP,Spain,Perea,43,Ran
+2022,ESP,Spain,Rubio,28,Ran
+2022,ESP,Spain,Corvo,50,Assist
+2022,ESP,Spain,Sanchez Parra,45,Ran
+2022,ESP,Spain,Lopez De Aberasturi,17,Ran
+2022,ESP,Spain,Guembe Ibanez,35,Ran
+2022,ESP,Spain,Plasin,30,Ran
+2022,ESP,Spain,Rodriguez,25,Ran
+2022,ESP,Spain,Barrera,21,Ran
+2022,ESP,Spain,Corredor,25,Ran
+2022,ESP,Spain,Penalver,30,Ran
+2022,ESP,Spain,Pastor Corredor,31,Ran
+2022,ESP,Spain,Lozano,33,Ran
+2022,GBR,United Kingdom,Stocker,8,Ran
+2022,GBR,United Kingdom,Blackburn,47,Winner
+2022,GBR,United Kingdom,Smith,26,Ran
+2022,GBR,United Kingdom,Day,26,Ran
+2022,GBR,United Kingdom,Jackson,46,Assist
+2022,GBR,United Kingdom,Hinson,30,Ran
+2022,GBR,United Kingdom,Spurling,43,Ran
+2022,GBR,United Kingdom,Hobbs,31,Ran
+2022,GBR,United Kingdom,Cooper,35,Ran
+2022,GBR,United Kingdom,Collum,34,Ran
+2022,GBR,United Kingdom,Bettinson,27,Ran
+2022,GBR,United Kingdom,Brunger,37,Ran
+2022,GBR,United Kingdom,Wilson,35,Ran
+2022,GBR,United Kingdom,Harrison,36,Ran
+2022,GBR,United Kingdom,Burge,25,Ran
+2022,DEU,Germany,Ohler,45,Assist
+2022,DEU,Germany,Boury,46,Winner
+2022,DEU,Germany,Mohler,35,Ran
+2022,DEU,Germany,Dippacher,39,Ran
+2022,DEU,Germany,Mascher-Aspensjo,38,Ran
+2022,DEU,Germany,Obert,12,Ran
+2022,DEU,Germany,Strosny,32,Ran
+2022,DEU,Germany,Gakstatter,45,Assist
+2022,DEU,Germany,Kroling,45,Assist
+2022,DEU,Germany,Bohm,11,Ran
+2022,DEU,Germany,Ernst,25,Ran
+2022,DEU,Germany,Weissbach,33,Ran
+2022,DEU,Germany,Wurm,26,Ran
+2022,DEU,Germany,Mantel,22,Ran
+2022,DEU,Germany,Neuweiler,30,Ran
+2022,NLD,Netherlands,van der Vleuten,31,Ran
+2022,NLD,Netherlands,Ten Velde,30,Ran
+2022,NLD,Netherlands,Schokker,40,Assist
+2022,NLD,Netherlands,Dekker,30,Ran
+2022,NLD,Netherlands,Pandelaers,40,Assist
+2022,NLD,Netherlands,Kruger,33,Ran
+2022,NLD,Netherlands,Metselaar,31,Ran
+2022,NLD,Netherlands,Oevermans,38,Ran
+2022,NLD,Netherlands,Coolen,12,Ran
+2022,NLD,Netherlands,Packbier,41,Winner
+2022,NLD,Netherlands,Eefting,34,Ran
+2022,NLD,Netherlands,Kasanardjo,31,Ran
+2022,NLD,Netherlands,Konneke-Scherpenkate,30,Ran
+2022,NLD,Netherlands,Jakobs,29,Ran
+2022,NLD,Netherlands,Snoeren,30,Ran
+2022,ITA,Italy,Di Manno,57,Winner
+2022,ITA,Italy,Alimonti,46,Ran
+2022,ITA,Italy,Ferraro,37,Ran
+2022,ITA,Italy,Colzada,33,Ran
+2022,ITA,Italy,Rollo,0,DNS
+2022,ITA,Italy,Brusamonti,23,Ran
+2022,ITA,Italy,Ambrosini,30,Ran
+2022,ITA,Italy,Spreafico,27,Ran
+2022,ITA,Italy,Collu,56,Assist
+2022,ITA,Italy,Capezzera,22,Ran
+2022,ITA,Italy,Taliani,27,Ran
+2022,ITA,Italy,Pieri,35,Ran
+2022,ITA,Italy,Viezzi,21,Ran
+2022,ITA,Italy,Favia,15,Ran
+2022,ITA,Italy,Deriu,25,Ran
+2022,IRL,Ireland,Tolentino,51,Winner
+2022,IRL,Ireland,Cromie,50,Assist
+2022,IRL,Ireland,Staunton,27,Ran
+2022,IRL,Ireland,Breen,24,Ran
+2022,IRL,Ireland,Irvine,26,Ran
+2022,IRL,Ireland,McParland,39,Ran
+2022,IRL,Ireland,Black,15,Ran
+2022,IRL,Ireland,Nickell,10,Ran
+2022,IRL,Ireland,McAuley,24,Ran
+2022,IRL,Ireland,Stevenson,24,Ran
+2022,IRL,Ireland,McMath,26,Ran
+2022,IRL,Ireland,Hagan,27,Ran
+2022,IRL,Ireland,Canning,30,Ran
+2022,IRL,Ireland,Mckee,27,Ran
+2022,IRL,Ireland,Elliott York,24,Ran
+2022,PRT,Portugal,Martins,27,Ran
+2022,PRT,Portugal,Pinto,19,Ran
+2022,PRT,Portugal,Quaresma,33,Ran
+2022,PRT,Portugal,Alves,36,Winner
+2022,PRT,Portugal,Catarino,18,Ran
+2022,PRT,Portugal,Aires,25,Ran
+2022,PRT,Portugal,Barbosa,31,Ran
+2022,PRT,Portugal,Santos,24,Ran
+2022,PRT,Portugal,Andrade,27,Ran
+2022,PRT,Portugal,Monsanto,35,Assist
+2022,PRT,Portugal,Pereira,30,Ran
+2022,PRT,Portugal,Leite,21,Ran
+2022,PRT,Portugal,Ramos,27,Ran
+2022,PRT,Portugal,Teixiera,18,Ran
+2022,PRT,Portugal,Guimaraes,32,Ran
+2022,SVK,Slovakia,Hatala,45,Assist
+2022,SVK,Slovakia,Hrotek,46,Winner
+2022,SVK,Slovakia,Porubcan,31,Ran
+2022,SVK,Slovakia,Drga,25,Ran
+2022,SVK,Slovakia,Petrikovic,33,Ran
+2022,SVK,Slovakia,Filo,27,Ran
+2022,SVK,Slovakia,Kopcokova,0,DNS
+2022,SVK,Slovakia,Karcak,28,Ran
+2022,SVK,Slovakia,Durik,12,Ran
+2022,SVK,Slovakia,Orsag,27,Ran
+2022,SVK,Slovakia,Ondras,25,Ran
+2022,SVK,Slovakia,Hanecakova,14,Ran
+2022,SVK,Slovakia,Pavuk,28,Ran
+2022,SVK,Slovakia,Marekova,27,Ran
+2022,SVK,Slovakia,Husar,30,Ran
+2022,NOR,Norway,Asphjell,38,Winner
+2022,NOR,Norway,Roncoroni,31,Ran
+2022,NOR,Norway,Bjerke,28,Ran
+2022,NOR,Norway,Svellingen,37,Assist
+2022,NOR,Norway,Moen,27,Ran
+2022,NOR,Norway,Wattland,31,Ran
+2022,NOR,Norway,Skatoy,30,Ran
+2022,NOR,Norway,Kvam,31,Ran
+2022,NOR,Norway,Nesteby,30,Ran
+2022,NOR,Norway,Hansen,0,DNS
+2022,NOR,Norway,Meland-Tangen,30,Ran
+2022,NOR,Norway,Gylland,11,Ran
+2022,NOR,Norway,Razukiene,24,Ran
+2022,NOR,Norway,Gundersen,17,Ran
+2022,NOR,Norway,Parise,27,Ran
+2022,ISL,Iceland,Jaersk,36,Assist
+2022,ISL,Iceland,Thorleifsson,37,Winner
+2022,ISL,Iceland,Halldorsson,35,Ran
+2022,ISL,Iceland,Benediktsson,27,Ran
+2022,ISL,Iceland,Sigurdsson,24,Ran
+2022,ISL,Iceland,Sturluson,21,Ran
+2022,ISL,Iceland,Saevarsson,26,Ran
+2022,ISL,Iceland,Gunnarsson,19,Ran
+2022,ISL,Iceland,Komorowski,27,Ran
+2022,ISL,Iceland,Adalsteinsdottir,17,Ran
+2022,ISL,Iceland,Jonsdottir,19,Ran
+2022,ISL,Iceland,Skulason,18,Ran
+2022,ISL,Iceland,Ragnarsdottir,24,Ran
+2022,ISL,Iceland,Radziszewska,30,Ran
+2022,ISL,Iceland,Steingrimsson,24,Ran
+2022,FIN,Finland,Ahokas,19,Ran
+2022,FIN,Finland,Soderlund,32,Ran
+2022,FIN,Finland,Kivinen,32,Ran
+2022,FIN,Finland,Palmer,21,Ran
+2022,FIN,Finland,Jumisko,32,Ran
+2022,FIN,Finland,Aro,32,Ran
+2022,FIN,Finland,Hitonen,30,Ran
+2022,FIN,Finland,Forsstrom,25,Ran
+2022,FIN,Finland,Hihnala,0,DNS
+2022,FIN,Finland,Saarinen,24,Ran
+2022,FIN,Finland,Koivu,29,Ran
+2022,FIN,Finland,Hobbs,28,Ran
+2022,FIN,Finland,Eskelinen,16,Ran
+2022,FIN,Finland,Karlsson,27,Ran
+2022,FIN,Finland,Mikkola,30,Ran
+2022,CHE,Switzerland,Javaheri,35,Winner
+2022,CHE,Switzerland,Knoche,29,Ran
+2022,CHE,Switzerland,Desteffani,34,Assist
+2022,CHE,Switzerland,Drilling,32,Ran
+2022,CHE,Switzerland,Vetterli,20,Ran
+2022,CHE,Switzerland,Knusel,24,Ran
+2022,CHE,Switzerland,Muller,11,Ran
+2022,CHE,Switzerland,Erne,33,Ran
+2022,CHE,Switzerland,Shepherd,22,Ran
+2022,CHE,Switzerland,Buchler,13,Ran
+2022,CHE,Switzerland,Treptow,14,Ran
+2022,CHE,Switzerland,Weilenmann,24,Ran
+2022,CHE,Switzerland,Schumacher,28,Ran
+2022,CHE,Switzerland,Rubin,21,Ran
+2022,CHE,Switzerland,Kohler,20,Ran
+2022,AUT,Austria,Schieder,35,Assist
+2022,AUT,Austria,Schiessl,31,Ran
+2022,AUT,Austria,Huemer-Toff,36,Winner
+2022,AUT,Austria,Luftenegger,30,Ran
+2022,AUT,Austria,Riedl,24,Ran
+2022,AUT,Austria,Michl,27,Ran
+2022,AUT,Austria,Michalitz,30,Ran
+2022,AUT,Austria,Weinberger,10,Ran
+2022,AUT,Austria,Stummvoll,30,Ran
+2022,AUT,Austria,Raney,8,Ran
+2022,AUT,Austria,Oberndorfer,24,Ran
+2022,AUT,Austria,Krichhammer,12,Ran
+2022,AUT,Austria,Hitzenberger,24,Ran
+2022,AUT,Austria,Bruggler,13,Ran
+2022,AUT,Austria,Schimanko,24,Ran
+2022,SGP,Singapore,Shunmugam,17,Ran
+2022,SGP,Singapore,Wong,24,Ran
+2022,SGP,Singapore,Swee,10,Ran
+2022,SGP,Singapore,Toh,51,Winner
+2022,SGP,Singapore,Phillips,28,Ran
+2022,SGP,Singapore,Lim,15,Ran
+2022,SGP,Singapore,Yap,12,Ran
+2022,SGP,Singapore,Lau,50,Assist
+2022,SGP,Singapore,Timms,27,Ran
+2022,SGP,Singapore,Lin,20,Ran
+2022,SGP,Singapore,Zhang,21,Ran
+2022,SGP,Singapore,Ong,20,Ran
+2022,SGP,Singapore,Tsui,22,Ran
+2022,SGP,Singapore,Tang,19,Ran
+2022,SGP,Singapore,Tay,15,Ran
+2022,VNM,Vietnam,Van,32,Winner
+2022,VNM,Vietnam,Nguyen Dang,30,Ran
+2022,VNM,Vietnam,Nguyen Dang,26,Ran
+2022,VNM,Vietnam,Nguyen Minh,21,Ran
+2022,VNM,Vietnam,Do Trong,19,Ran
+2022,VNM,Vietnam,Nguyen Thanh,31,Assist
+2022,VNM,Vietnam,Phung Van,23,Ran
+2022,VNM,Vietnam,Nguyen Va,22,Ran
+2022,VNM,Vietnam,Thorel,21,Ran
+2022,VNM,Vietnam,Vuong Chi,24,Ran
+2022,VNM,Vietnam,Nguyen Hien,15,Ran
+2022,VNM,Vietnam,Ngo Ngoc,12,Ran
+2022,VNM,Vietnam,Pham Thi Hong,21,Ran
+2022,VNM,Vietnam,Tat,9,Ran
+2022,VNM,Vietnam,Huy,20,Ran
+2022,UKR,Ukraine,Nesterets,26,Ran
+2022,UKR,Ukraine,Khanas,23,Ran
+2022,UKR,Ukraine,Slipets,27,Assist
+2022,UKR,Ukraine,Hnat,28,Winner
+2022,UKR,Ukraine,Tsapenko,17,Ran
+2022,UKR,Ukraine,Stadnyk,7,Ran
+2022,UKR,Ukraine,Olivson,14,Ran
+2022,UKR,Ukraine,Sapiga,25,Ran
+2022,UKR,Ukraine,Dmytro,24,Ran
+2022,UKR,Ukraine,Bodnar,25,Ran
+2022,UKR,Ukraine,Bidiyk,24,Ran
+2022,UKR,Ukraine,Khrapko,20,Ran
+2022,UKR,Ukraine,Dadasheva,21,Ran
+2022,UKR,Ukraine,Iablunovskaia,24,Ran
+2022,UKR,Ukraine,Zghurska,20,Ran
+2022,MAR,Morocco,Glia,31,Assist
+2022,MAR,Morocco,el Bouazzaouii,14,Ran
+2022,MAR,Morocco,Ait Haddou,32,Winner
+2022,MAR,Morocco,Aldaz,28,Ran
+2022,MAR,Morocco,el Fadel,26,Ran
+2022,MAR,Morocco,Ezzouak,30,Ran
+2022,MAR,Morocco,Aresmouk,9,Ran
+2022,MAR,Morocco,El Hamdany,24,Ran
+2022,MAR,Morocco,Belmahi,10,Ran
+2022,MAR,Morocco,Majdi,13,Ran
+2022,MAR,Morocco,Benamar,17,Ran
+2022,MAR,Morocco,Mahfoud,16,Ran
+2022,MAR,Morocco,Bendoumou,16,Ran
+2022,MAR,Morocco,Wassel,14,Ran
+2022,MAR,Morocco,Bouaziz,18,Ran
+2022,MLT,Malta,Camilleri,21,Ran
+2022,MLT,Malta,Micallef,27,Winner
+2022,MLT,Malta,Fenech,13,Ran
+2022,MLT,Malta,Tabone,13,Ran
+2022,MLT,Malta,Agius,18,Ran
+2022,MLT,Malta,Smith,25,Ran
+2022,MLT,Malta,Fenech,20,Ran
+2022,MLT,Malta,Formosa,22,Ran
+2022,MLT,Malta,Greenaway,16,Ran
+2022,MLT,Malta,Sciberras,19,Ran
+2022,MLT,Malta,Nurminen,26,Assist
+2022,MLT,Malta,Portelli,20,Ran
+2022,MLT,Malta,Peyre,20,Ran
+2022,MLT,Malta,Camilleri,15,Ran
+2022,MLT,Malta,Lang,18,Ran
+2022,ECU,Ecuador,Villagran,35,Winner
+2022,ECU,Ecuador,Vasquez,34,Assist
+2022,ECU,Ecuador,Enriquez,29,Ran
+2022,ECU,Ecuador,Morales,20,Ran
+2022,ECU,Ecuador,Baez,18,Ran
+2022,ECU,Ecuador,Reinoso,15,Ran
+2022,ECU,Ecuador,Valenzuela,24,Ran
+2022,ECU,Ecuador,Matango,20,Ran
+2022,ECU,Ecuador,Escobar,21,Ran
+2022,ECU,Ecuador,Ante,13,Ran
+2022,ECU,Ecuador,Guachamin,16,Ran
+2022,ECU,Ecuador,Abril,10,Ran
+2022,ECU,Ecuador,Padilla,19,Ran
+2022,ECU,Ecuador,Aucacama,0,DNS
+2022,ECU,Ecuador,Merlo,19,Ran
+2022,ZAF,South Africa,Sojola,31,Winner
+2022,ZAF,South Africa,Nongodlwana,19,Ran
+2022,ZAF,South Africa,Barnard,27,Ran
+2022,ZAF,South Africa,Miya,16,Ran
+2022,ZAF,South Africa,Msizi,30,Assist
+2022,ZAF,South Africa,Miller,27,Ran
+2022,ZAF,South Africa,Atkinson,17,Ran
+2022,ZAF,South Africa,Coles,9,Ran
+2022,ZAF,South Africa,O'Brien,29,Ran
+2022,ZAF,South Africa,Esterhuyse,15,Ran
+2022,ZAF,South Africa,Caromba,13,Ran
+2022,ZAF,South Africa,Booysens,25,Ran
+2022,ZAF,South Africa,Crous,3,Ran
+2022,ZAF,South Africa,Manyane,11,Ran
+2022,ZAF,South Africa,Smit,15,Ran
+2022,PAK,Pakistan,Muhammad,49,Assist
+2022,PAK,Pakistan,Sajid,27,Ran
+2022,PAK,Pakistan,Habib,29,Ran
+2022,PAK,Pakistan,Zafar,18,Ran
+2022,PAK,Pakistan,Nasir,12,Ran
+2022,PAK,Pakistan,Said,50,Winner
+2022,PAK,Pakistan,Rehman,9,Ran
+2022,PAK,Pakistan,Khan,15,Ran
+2022,PAK,Pakistan,Awais,15,Ran
+2022,PAK,Pakistan,Ali,8,Ran
+2022,PAK,Pakistan,Maki,15,Ran
+2022,PAK,Pakistan,Kiyani,3,Ran
+2022,PAK,Pakistan,Shaikh,11,Ran
+2022,PAK,Pakistan,Usman Khan,10,Ran
+2022,PAK,Pakistan,Azhar,11,Ran
+2022,BRA,Brazil,Hill,25,Ran
+2022,BRA,Brazil,Itamar,0,DNS
+2022,BRA,Brazil,Cunha,30,Winner
+2022,BRA,Brazil,Leandro,16,Ran
+2022,BRA,Brazil,Silva,20,Ran
+2022,BRA,Brazil,dos Santos,18,Ran
+2022,BRA,Brazil,Condrati,29,Assist
+2022,BRA,Brazil,Cianfarani,15,Ran
+2022,BRA,Brazil,Saddock,17,Ran
+2022,BRA,Brazil,Helfensteller,10,Ran
+2022,BRA,Brazil,Cupira,26,Ran
+2022,BRA,Brazil,Bavaresco,19,Ran
+2022,BRA,Brazil,Lambert,15,Ran
+2022,BRA,Brazil,Uehara,9,Ran
+2022,BRA,Brazil,Reis,9,Ran
+2022,IND,India,Joshi,22,Winner
+2022,IND,India,Adhau,9,Ran
+2022,IND,India,Kashyap,19,Ran
+2022,IND,India,Singh,21,Assist
+2022,IND,India,Singh Hada,20,Ran
+2022,IND,India,Singh Roopra,18,Ran
+2022,IND,India,Kalpana,15,Ran
+2022,IND,India,Varma,7,Ran
+2022,IND,India,Nehra,15,Ran
+2022,IND,India,Choudhary,8,Ran
+2022,IND,India,Abhishek,17,Ran
+2022,IND,India,Kumar,17,Ran
+2022,IND,India,Choudhary,19,Ran
+2022,IND,India,Sharma,18,Ran
+2022,IND,India,Pandey,16,Ran
+2022,VEN,Venezuela,Tortoza,15,Ran
+2022,VEN,Venezuela,Blanco,19,Ran
+2022,VEN,Venezuela,Salazar,13,Ran
+2022,VEN,Venezuela,Silva,12,Ran
+2022,VEN,Venezuela,Lopez,23,Winner
+2022,VEN,Venezuela,Gomez,7,Ran
+2022,VEN,Venezuela,Hernandez,22,Assist
+2022,VEN,Venezuela,Feijoo,12,Ran
+2022,VEN,Venezuela,Rojas,18,Ran
+2022,VEN,Venezuela,Stringer,21,Ran
+2022,VEN,Venezuela,Marin,0,DNS
+2022,VEN,Venezuela,Vera,14,Ran
+2022,VEN,Venezuela,Rojas,6,Ran
+2022,VEN,Venezuela,Casanova,12,Ran
+2022,VEN,Venezuela,Polo,7,Ran
+2022,MUS,Mauritius,Chin,22,Winner
+2022,MUS,Mauritius,Raggoo,8,Ran
+2022,MUS,Mauritius,Lennon,15,Ran
+2022,MUS,Mauritius,Rivet,21,Assist
+2022,MUS,Mauritius,Clain,9,Ran
+2022,MUS,Mauritius,Antonio,10,Ran
+2022,MUS,Mauritius,Parisot,13,Ran
+2022,MUS,Mauritius,Hennequin,7,Ran
+2022,MUS,Mauritius,Seneque,6,Ran
+2022,MUS,Mauritius,Martin,12,Ran
+2022,MUS,Mauritius,Gomes da Costa,9,Ran
+2022,MUS,Mauritius,Varjhanbhay,12,Ran
+2022,MUS,Mauritius,Christian,9,Ran
+2022,MUS,Mauritius,de Salle,12,Ran
+2022,MUS,Mauritius,Perrin,8,Ran
+2022,MYS,Malaysia,Christopher,25,Winner
+2022,MYS,Malaysia,bin Din,19,Ran
+2022,MYS,Malaysia,Bullah,24,Assist
+2022,MYS,Malaysia,Narayanasamy,17,Ran
+2022,MYS,Malaysia,Lim,0,DNS
+2022,MYS,Malaysia,Oh,0,DNS
+2022,MYS,Malaysia,Chai,15,Ran
+2022,MYS,Malaysia,Lim,9,Ran
+2022,MYS,Malaysia,Lim,15,Ran
+2022,MYS,Malaysia,Tan,7,Ran
+2022,MYS,Malaysia,Quay,0,DNS
+2022,MYS,Malaysia,Mohd Ali,3,Ran
+2022,MYS,Malaysia,Omar,3,Ran
+2022,MYS,Malaysia,Phothet,0,DNS
+2022,MYS,Malaysia,Ong,24,Assist
+2024,BEL,Belgium,Geerts,110,Ran
+2024,BEL,Belgium,Steyaert,110,Ran
+2024,BEL,Belgium,Gielen,110,Ran
+2024,BEL,Belgium,Pelgrims,85,Ran
+2024,BEL,Belgium,Sneyders,79,Ran
+2024,BEL,Belgium,Vandamme,92,Ran
+2024,BEL,Belgium,Badot,51,Ran
+2024,BEL,Belgium,de Wolf,53,Ran
+2024,BEL,Belgium,De Graef,58,Ran
+2024,BEL,Belgium,Malfiet,50,Ran
+2024,BEL,Belgium,Vandekerckhove,86,Ran
+2024,BEL,Belgium,Kerckaert,53,Ran
+2024,BEL,Belgium,Ligneel,54,Ran
+2024,BEL,Belgium,Vanthuyne,100,Ran
+2024,BEL,Belgium,Tielemans,56,Ran
+2024,AUS,Australia,Gore,96,Winner
+2024,AUS,Australia,Parsons,65,Ran
+2024,AUS,Australia,Crawford,95,Assist
+2024,AUS,Australia,Young,55,Ran
+2024,AUS,Australia,Blanton,82,Ran
+2024,AUS,Australia,Kacprzak,82,Ran
+2024,AUS,Australia,Botha,56,Ran
+2024,AUS,Australia,Sexton,50,Ran
+2024,AUS,Australia,Ash,75,Ran
+2024,AUS,Australia,Bellmon,73,Ran
+2024,AUS,Australia,Nicholls,62,Ran
+2024,AUS,Australia,Camac,75,Ran
+2024,AUS,Australia,Finnila,30,Ran
+2024,AUS,Australia,Hirst,33,Ran
+2024,AUS,Australia,Martin,42,Ran
+2024,USA,United States of America,Lewis,76,Ran
+2024,USA,United States of America,Noll,72,Ran
+2024,USA,United States of America,Chadovich,80,Ran
+2024,USA,United States of America,Snell,88,Winner
+2024,USA,United States of America,Russo,46,Ran
+2024,USA,United States of America,Eckert,87,Assist
+2024,USA,United States of America,Yoder,75,Ran
+2024,USA,United States of America,Metivier,30,Ran
+2024,USA,United States of America,Van Graafeiland,39,Ran
+2024,USA,United States of America,Kwiatkowski,64,Ran
+2024,USA,United States of America,Roberts,56,Ran
+2024,USA,United States of America,Eubanks,54,Ran
+2024,USA,United States of America,Fall,75,Ran
+2024,USA,United States of America,Shelby,53,Ran
+2024,USA,United States of America,Wireman,74,Ran
+2024,JPN,Japan,Yoshida,71,Ran
+2024,JPN,Japan,Maeda,56,Ran
+2024,JPN,Japan,Hirata,91,Assist
+2024,JPN,Japan,Mizuno,64,Ran
+2024,JPN,Japan,Kiso,75,Ran
+2024,JPN,Japan,Tanaka,81,Ran
+2024,JPN,Japan,Iwasawa,45,Ran
+2024,JPN,Japan,Okumura,60,Ran
+2024,JPN,Japan,Inanaga,55,Ran
+2024,JPN,Japan,Nakata,27,Ran
+2024,JPN,Japan,Sakuraba,32,Ran
+2024,JPN,Japan,Kawahata,92,Winner
+2024,JPN,Japan,Takahasi,58,Ran
+2024,JPN,Japan,Sagou,52,Ran
+2024,JPN,Japan,Minami,24,Ran
+2024,FRA,France,Baud,83,Assist
+2024,FRA,France,Cointepas,84,Winner
+2024,FRA,France,Rouat,83,Assist
+2024,FRA,France,Bannwarth,36,Ran
+2024,FRA,France,le Meitour,65,Ran
+2024,FRA,France,Pollesel,53,Ran
+2024,FRA,France,Puaud,36,Ran
+2024,FRA,France,Grajdura,34,Ran
+2024,FRA,France,Aubery,50,Ran
+2024,FRA,France,Mauduit,52,Ran
+2024,FRA,France,Sophys,67,Ran
+2024,FRA,France,Pierre,80,Ran
+2024,FRA,France,Rascalou,60,Ran
+2024,FRA,France,Ohl,40,Ran
+2024,FRA,France,Charton,24,Ran
+2024,NZL,New Zealand,Harvey,73,Winner
+2024,NZL,New Zealand,Kerr-Taylor,45,Ran
+2024,NZL,New Zealand,McLean,65,Ran
+2024,NZL,New Zealand,Bayne,72,Assist
+2024,NZL,New Zealand,Pelvin,65,Ran
+2024,NZL,New Zealand,Sutton,38,Ran
+2024,NZL,New Zealand,Pearson,61,Ran
+2024,NZL,New Zealand,Rhodes,40,Ran
+2024,NZL,New Zealand,Matthews,48,Ran
+2024,NZL,New Zealand,Tomlinson,69,Ran
+2024,NZL,New Zealand,Bergman,50,Ran
+2024,NZL,New Zealand,Taylor,43,Ran
+2024,NZL,New Zealand,Chamberlain,51,Ran
+2024,NZL,New Zealand,Read,48,Ran
+2024,NZL,New Zealand,McAlpine,43,Ran
+2024,SWE,Sweden,Sjoblom,81,Winner
+2024,SWE,Sweden,Pavic,38,Ran
+2024,SWE,Sweden,Drakfors,32,Ran
+2024,SWE,Sweden,Rangelind,50,Ran
+2024,SWE,Sweden,Lilja,55,Ran
+2024,SWE,Sweden,Oster,50,Ran
+2024,SWE,Sweden,Yjord,80,Assist
+2024,SWE,Sweden,Bergwall,56,Ran
+2024,SWE,Sweden,Hogfeldt,42,Ran
+2024,SWE,Sweden,Edlund,46,Ran
+2024,SWE,Sweden,Fahlen,33,Ran
+2024,SWE,Sweden,Soderling,46,Ran
+2024,SWE,Sweden,Enqvist,54,Ran
+2024,SWE,Sweden,Johansson,15,Ran
+2024,SWE,Sweden,Stenemo,51,Ran
+2024,CAN,Canada,Deshaies,67,Assist
+2024,CAN,Canada,Nelson,60,Ran
+2024,CAN,Canada,Murphy,68,Winner
+2024,CAN,Canada,Poulin,36,Ran
+2024,CAN,Canada,Shepard,44,Ran
+2024,CAN,Canada,Poulin,44,Ran
+2024,CAN,Canada,Chavanne,41,Ran
+2024,CAN,Canada,Beaulieu,37,Ran
+2024,CAN,Canada,Brown,34,Ran
+2024,CAN,Canada,Wright,40,Ran
+2024,CAN,Canada,Simpson,30,Ran
+2024,CAN,Canada,Decelles,50,Ran
+2024,CAN,Canada,Roulier,41,Ran
+2024,CAN,Canada,Fitzgerald,45,Ran
+2024,CAN,Canada,Schaffer,36,Ran
+2024,MEX,Mexico,Leonides,81,Winner
+2024,MEX,Mexico,Satevo,80,Assist
+2024,MEX,Mexico,Campillo,46,Ran
+2024,MEX,Mexico,Ramirez,43,Ran
+2024,MEX,Mexico,Contreras,76,Ran
+2024,MEX,Mexico,Parra,18,Ran
+2024,MEX,Mexico,Alonso,36,Ran
+2024,MEX,Mexico,Bravo,0,DNS
+2024,MEX,Mexico,Santiago,56,Ran
+2024,MEX,Mexico,Elox,42,Ran
+2024,MEX,Mexico,Garcia,41,Ran
+2024,MEX,Mexico,Almonte,30,Ran
+2024,MEX,Mexico,Hernandez,67,Ran
+2024,MEX,Mexico,Anaya,15,Ran
+2024,MEX,Mexico,Godinez,40,Ran
+2024,POL,Poland,Wrobel,62,Ran
+2024,POL,Poland,Cyganski,34,Ran
+2024,POL,Poland,Swietochowski,15,Ran
+2024,POL,Poland,Pszczolkowski,67,Winner
+2024,POL,Poland,Luszcz,37,Ran
+2024,POL,Poland,Sułek,56,Ran
+2024,POL,Poland,Sikora,66,Assist
+2024,POL,Poland,Szymański,50,Ran
+2024,POL,Poland,Sitarek,63,Ran
+2024,POL,Poland,Mazur,30,Ran
+2024,POL,Poland,Mikulski,31,Ran
+2024,POL,Poland,Korczak,48,Ran
+2024,POL,Poland,Cieplik,31,Ran
+2024,POL,Poland,Wojciechowski,37,Ran
+2024,POL,Poland,Falandysz,32,Ran
+2024,HUN,Hungary,Fodor,59,Assist
+2024,HUN,Hungary,Geszti,54,Ran
+2024,HUN,Hungary,Furesz,60,Winner
+2024,HUN,Hungary,Sarosi,54,Ran
+2024,HUN,Hungary,Kertesz,54,Ran
+2024,HUN,Hungary,Nemes,32,Ran
+2024,HUN,Hungary,Gurisatti,54,Ran
+2024,HUN,Hungary,Keller,45,Ran
+2024,HUN,Hungary,Filep,37,Ran
+2024,HUN,Hungary,Horvath,34,Ran
+2024,HUN,Hungary,Blasko,41,Ran
+2024,HUN,Hungary,Gyongyosi,32,Ran
+2024,HUN,Hungary,Kelemen,34,Ran
+2024,HUN,Hungary,Gyorffy,37,Ran
+2024,HUN,Hungary,Hugyecz,31,Ran
+2024,ESP,Spain,Sarrau,61,Assist
+2024,ESP,Spain,Corvo,45,Ran
+2024,ESP,Spain,Verdugo,62,Winner
+2024,ESP,Spain,Parra,0,DNS
+2024,ESP,Spain,Jimenez,48,Ran
+2024,ESP,Spain,Corredor,49,Ran
+2024,ESP,Spain,Pastor,60,Ran
+2024,ESP,Spain,Corredor,49,Ran
+2024,ESP,Spain,Sanchez,42,Ran
+2024,ESP,Spain,Garcia,51,Ran
+2024,ESP,Spain,Gomez,46,Ran
+2024,ESP,Spain,Marin,38,Ran
+2024,ESP,Spain,Penalver,0,DNS
+2024,ESP,Spain,Rodriguez,48,Ran
+2024,ESP,Spain,Gonzalez,37,Ran
+2024,GBR,United Kingdom,Stocker,38,Ran
+2024,GBR,United Kingdom,Jackson,37,Ran
+2024,GBR,United Kingdom,Spurling,49,Ran
+2024,GBR,United Kingdom,Smith,53,Ran
+2024,GBR,United Kingdom,Thompson,33,Ran
+2024,GBR,United Kingdom,Raffan,32,Ran
+2024,GBR,United Kingdom,Perry,59,Winner
+2024,GBR,United Kingdom,Sweet,58,Assist
+2024,GBR,United Kingdom,Nicol,36,Ran
+2024,GBR,United Kingdom,Imms,41,Ran
+2024,GBR,United Kingdom,Elsdon,40,Ran
+2024,GBR,United Kingdom,Carter,19,Ran
+2024,GBR,United Kingdom,Bethune,48,Ran
+2024,GBR,United Kingdom,Hugon,49,Ran
+2024,GBR,United Kingdom,Bethune,37,Ran
+2024,ISL,Iceland,Jaersk,50,Ran
+2024,ISL,Iceland,Kristinsdottir,61,Assist
+2024,ISL,Iceland,Gudmundsson,60,Ran
+2024,ISL,Iceland,Thorleifsson,62,Winner
+2024,ISL,Iceland,Radziszewska,60,Ran
+2024,ISL,Iceland,Halldorsson,24,Ran
+2024,ISL,Iceland,Sigurdsson,40,Ran
+2024,ISL,Iceland,Kristinsson,38,Ran
+2024,ISL,Iceland,Sumarlidadottir,37,Ran
+2024,ISL,Iceland,Jonsdottir,25,Ran
+2024,ISL,Iceland,Benediktsson,33,Ran
+2024,ISL,Iceland,Karadottir,30,Ran
+2024,ISL,Iceland,Thorsteinsdottir,27,Ran
+2024,ISL,Iceland,Hjaltadottir,21,Ran
+2024,ISL,Iceland,Gudmundsson,27,Ran
+2024,NLD,Netherlands,Packbier,53,Assist
+2024,NLD,Netherlands,Metselaar,40,Ran
+2024,NLD,Netherlands,Schokker,48,Ran
+2024,NLD,Netherlands,Pandelaers,39,Ran
+2024,NLD,Netherlands,Oevermans,33,Ran
+2024,NLD,Netherlands,Leeuwenhoek,39,Ran
+2024,NLD,Netherlands,Eefting,54,Winner
+2024,NLD,Netherlands,Kinnegim,36,Ran
+2024,NLD,Netherlands,Hessels,34,Ran
+2024,NLD,Netherlands,Smit,33,Ran
+2024,NLD,Netherlands,Kasanardjo,22,Ran
+2024,NLD,Netherlands,Dekker,31,Ran
+2024,NLD,Netherlands,Jakobs,27,Ran
+2024,NLD,Netherlands,Heijboer,25,Ran
+2024,NLD,Netherlands,Scholing,35,Ran
+2024,DEU,Germany,Boury,49,Winner
+2024,DEU,Germany,Giesen,24,Ran
+2024,DEU,Germany,Ohler,35,Ran
+2024,DEU,Germany,Gakstatter,35,Ran
+2024,DEU,Germany,Kroling,30,Ran
+2024,DEU,Germany,Trodler,39,Ran
+2024,DEU,Germany,Dippacher,35,Ran
+2024,DEU,Germany,Mascher-Aspensjo,32,Ran
+2024,DEU,Germany,Mehner,42,Ran
+2024,DEU,Germany,Mohler,48,Assist
+2024,DEU,Germany,Weissbach,30,Ran
+2024,DEU,Germany,Muller,36,Ran
+2024,DEU,Germany,Volkel,38,Ran
+2024,DEU,Germany,Wielers,36,Ran
+2024,DEU,Germany,Miyagi,33,Ran
+2024,CHE,Switzerland,Tenchio,58,Assist
+2024,CHE,Switzerland,Javaheri,59,Winner
+2024,CHE,Switzerland,Schneider,33,Ran
+2024,CHE,Switzerland,Briner,34,Ran
+2024,CHE,Switzerland,Hormann,34,Ran
+2024,CHE,Switzerland,Desteffani,30,Ran
+2024,CHE,Switzerland,Schneckenburger,31,Ran
+2024,CHE,Switzerland,Drilling,25,Ran
+2024,CHE,Switzerland,Lehmann,38,Ran
+2024,CHE,Switzerland,Stamm,32,Ran
+2024,CHE,Switzerland,Vetterli,26,Ran
+2024,CHE,Switzerland,Knoche,30,Ran
+2024,CHE,Switzerland,Kopp,24,Ran
+2024,CHE,Switzerland,Nonorgue,17,Ran
+2024,CHE,Switzerland,Schwitter,30,Ran
+2024,NOR,Norway,Svellingen,54,Winner
+2024,NOR,Norway,Moen,33,Ran
+2024,NOR,Norway,Melby Olsen,30,Ran
+2024,NOR,Norway,Rosten,31,Ran
+2024,NOR,Norway,Auset,32,Ran
+2024,NOR,Norway,Jorgensen,33,Ran
+2024,NOR,Norway,Roncoroni,53,Assist
+2024,NOR,Norway,Wattland,28,Ran
+2024,NOR,Norway,Skatoy,18,Ran
+2024,NOR,Norway,Nesteby,16,Ran
+2024,NOR,Norway,Meland-Tangen,21,Ran
+2024,NOR,Norway,Bjerke,44,Ran
+2024,NOR,Norway,Steiro,30,Ran
+2024,NOR,Norway,Aam,32,Ran
+2024,NOR,Norway,Johnsen,30,Ran
+2024,DNK,Denmark,Stoltenborg,41,Winner
+2024,DNK,Denmark,Moller,33,Ran
+2024,DNK,Denmark,Klingenberg,27,Ran
+2024,DNK,Denmark,Billeskov,24,Ran
+2024,DNK,Denmark,Holm,40,Assist
+2024,DNK,Denmark,Skjodeberg,30,Ran
+2024,DNK,Denmark,Bremholm,39,Ran
+2024,DNK,Denmark,Binger,37,Ran
+2024,DNK,Denmark,Therkildsen,26,Ran
+2024,DNK,Denmark,Moller Jensen,32,Ran
+2024,DNK,Denmark,Baastrup,27,Ran
+2024,DNK,Denmark,Lund,32,Ran
+2024,DNK,Denmark,Brodsgaard,33,Ran
+2024,DNK,Denmark,Hansen,30,Ran
+2024,DNK,Denmark,Blomstrand,27,Ran
+2024,ITA,Italy,Di Manno,28,Ran
+2024,ITA,Italy,Lissoni,55,Winner
+2024,ITA,Italy,Alimonte,17,Ran
+2024,ITA,Italy,Calabrese,30,Ran
+2024,ITA,Italy,Mauri,19,Ran
+2024,ITA,Italy,Silva,46,Ran
+2024,ITA,Italy,Costi,28,Ran
+2024,ITA,Italy,Pieri,34,Ran
+2024,ITA,Italy,Notarangelo,12,Ran
+2024,ITA,Italy,Ferraro,40,Ran
+2024,ITA,Italy,Monegato,30,Ran
+2024,ITA,Italy,Intini,54,Assist
+2024,ITA,Italy,Colzada,32,Ran
+2024,ITA,Italy,Ambrosini,24,Ran
+2024,ITA,Italy,Matteucci,28,Ran
+2024,PRT,Portugal,Alves,42,Assist
+2024,PRT,Portugal,da Costa,36,Ran
+2024,PRT,Portugal,Freitas,12,Ran
+2024,PRT,Portugal,Monsanto,43,Winner
+2024,PRT,Portugal,Felisberto,33,Ran
+2024,PRT,Portugal,Quaresma,37,Ran
+2024,PRT,Portugal,Ramos,15,Ran
+2024,PRT,Portugal,Gomes,33,Ran
+2024,PRT,Portugal,Teixeira,36,Ran
+2024,PRT,Portugal,Silva,18,Ran
+2024,PRT,Portugal,Costa,32,Ran
+2024,PRT,Portugal,Andrade,33,Ran
+2024,PRT,Portugal,Pereira,31,Ran
+2024,PRT,Portugal,Luz,25,Ran
+2024,PRT,Portugal,Martins,31,Ran
+2024,SVK,Slovakia,Hrotek,41,Winner
+2024,SVK,Slovakia,Hatala,35,Ran
+2024,SVK,Slovakia,Petrikovic,34,Ran
+2024,SVK,Slovakia,Kralik,40,Assist
+2024,SVK,Slovakia,Durta,32,Ran
+2024,SVK,Slovakia,Husar,28,Ran
+2024,SVK,Slovakia,Hanecakova,30,Ran
+2024,SVK,Slovakia,Pavuk,26,Ran
+2024,SVK,Slovakia,Pintrava,28,Ran
+2024,SVK,Slovakia,Kepesi,28,Ran
+2024,SVK,Slovakia,Filo,31,Ran
+2024,SVK,Slovakia,Orsag,19,Ran
+2024,SVK,Slovakia,Marekova,30,Ran
+2024,SVK,Slovakia,Hanecak,25,Ran
+2024,SVK,Slovakia,Zigo,24,Ran
+2024,CZE,Czechia,Kopriva,63,Winner
+2024,CZE,Czechia,Velicka,32,Ran
+2024,CZE,Czechia,Cinciala,36,Ran
+2024,CZE,Czechia,Hauer,62,Assist
+2024,CZE,Czechia,Berrouche,20,Ran
+2024,CZE,Czechia,Vondracek,30,Ran
+2024,CZE,Czechia,Brazdil,21,Ran
+2024,CZE,Czechia,Hornicka,16,Ran
+2024,CZE,Czechia,Jerhot,31,Ran
+2024,CZE,Czechia,Kolar,25,Ran
+2024,CZE,Czechia,Plhon,27,Ran
+2024,CZE,Czechia,Kolar,30,Ran
+2024,CZE,Czechia,Gregr,25,Ran
+2024,CZE,Czechia,Jakob,9,Ran
+2024,CZE,Czechia,Lekes,12,Ran
+2024,IND,India,Kashyap,42,Ran
+2024,IND,India,Singh,27,Ran
+2024,IND,India,Sharma,51,Assist
+2024,IND,India,Kumar,30,Ran
+2024,IND,India,Kaushik,24,Ran
+2024,IND,India,Meena,23,Ran
+2024,IND,India,Sanap,25,Ran
+2024,IND,India,Chewang,17,Ran
+2024,IND,India,Bisht,37,Ran
+2024,IND,India,Abhishek,18,Ran
+2024,IND,India,Verma,21,Ran
+2024,IND,India,Choudhary,27,Ran
+2024,IND,India,Sharma,52,Winner
+2024,IND,India,Mondal,16,Ran
+2024,IND,India,Kachare,7,Ran
+2024,TUR,Turkey,Kara,53,Winner
+2024,TUR,Turkey,Kansu,52,Assist
+2024,TUR,Turkey,Akdag,26,Ran
+2024,TUR,Turkey,Yavuz,27,Ran
+2024,TUR,Turkey,Terentev,32,Ran
+2024,TUR,Turkey,Yilmaz,24,Ran
+2024,TUR,Turkey,Sahinoz,32,Ran
+2024,TUR,Turkey,Halis,26,Ran
+2024,TUR,Turkey,Balin,17,Ran
+2024,TUR,Turkey,Erkale,25,Ran
+2024,TUR,Turkey,Khorovinnikov,18,Ran
+2024,TUR,Turkey,Huzevich,25,Ran
+2024,TUR,Turkey,Esgin,14,Ran
+2024,TUR,Turkey,Ildirar,24,Ran
+2024,TUR,Turkey,Demir,18,Ran
+2024,AUT,Austria,Schieder,40,Ran
+2024,AUT,Austria,Raney,25,Ran
+2024,AUT,Austria,Huemer,36,Ran
+2024,AUT,Austria,Schiessl,17,Ran
+2024,AUT,Austria,Wilfinger,42,Winner
+2024,AUT,Austria,Baier,25,Ran
+2024,AUT,Austria,Tiani,19,Ran
+2024,AUT,Austria,Mirtl,41,Assist
+2024,AUT,Austria,Stummvoll,38,Ran
+2024,AUT,Austria,Oberndorfer,15,Ran
+2024,AUT,Austria,Angerer,19,Ran
+2024,AUT,Austria,Granegger,30,Ran
+2024,AUT,Austria,Prommegger,21,Ran
+2024,AUT,Austria,Sartori,15,Ran
+2024,AUT,Austria,Eisl,24,Ran
+2024,EST,Estonia,Veide,25,Ran
+2024,EST,Estonia,Soomets,31,Ran
+2024,EST,Estonia,Lehtla,35,Assist
+2024,EST,Estonia,Valk,27,Ran
+2024,EST,Estonia,Ruul,36,Winner
+2024,EST,Estonia,Pihlak,31,Ran
+2024,EST,Estonia,Ilp,18,Ran
+2024,EST,Estonia,Mand,25,Ran
+2024,EST,Estonia,Punt,27,Ran
+2024,EST,Estonia,Ivanov,17,Ran
+2024,EST,Estonia,Ruutelmaa,26,Ran
+2024,EST,Estonia,Komp,28,Ran
+2024,EST,Estonia,Valkman,27,Ran
+2024,EST,Estonia,Rouk,22,Ran
+2024,EST,Estonia,Tamkivi,19,Ran
+2024,BRA,Brazil,de Almeida,25,Ran
+2024,BRA,Brazil,dos Santos,10,Ran
+2024,BRA,Brazil,Alves,25,Ran
+2024,BRA,Brazil,Varela,15,Ran
+2024,BRA,Brazil,Lima,35,Ran
+2024,BRA,Brazil,Brandelli,20,Ran
+2024,BRA,Brazil,de Oliviera,27,Ran
+2024,BRA,Brazil,Filho,34,Ran
+2024,BRA,Brazil,Leandro,27,Ran
+2024,BRA,Brazil,Griesang,51,Assist
+2024,BRA,Brazil,Gomes,13,Ran
+2024,BRA,Brazil,Oliveira,52,Winner
+2024,BRA,Brazil,Bavaresco,21,Ran
+2024,BRA,Brazil,Botelho,26,Ran
+2024,BRA,Brazil,Sa,13,Ran
+2024,FIN,Finland,Teppo,40,Winner
+2024,FIN,Finland,Lepisto,39,Assist
+2024,FIN,Finland,Kivinen,28,Ran
+2024,FIN,Finland,Jumisko,31,Ran
+2024,FIN,Finland,Borman,28,Ran
+2024,FIN,Finland,Hobbs,27,Ran
+2024,FIN,Finland,Latvala,16,Ran
+2024,FIN,Finland,Mikkola,32,Ran
+2024,FIN,Finland,Koivu,17,Ran
+2024,FIN,Finland,Tuominiemi,35,Ran
+2024,FIN,Finland,Aspegren,0,DNS
+2024,FIN,Finland,Leskinen,30,Ran
+2024,FIN,Finland,Lindstrom,21,Ran
+2024,FIN,Finland,Vahasoyrinki,16,Ran
+2024,FIN,Finland,Silvola,30,Ran
+2024,LVA,Latvia,Kalnins,31,Assist
+2024,LVA,Latvia,Zvejnieks,32,Winner
+2024,LVA,Latvia,Kanna,31,Assist
+2024,LVA,Latvia,Bondars,27,Ran
+2024,LVA,Latvia,Nilovs,30,Ran
+2024,LVA,Latvia,Krumins,13,Ran
+2024,LVA,Latvia,Abolins,26,Ran
+2024,LVA,Latvia,Saburova,17,Ran
+2024,LVA,Latvia,Muceniece,26,Ran
+2024,LVA,Latvia,Vace-Vecvagare,24,Ran
+2024,LVA,Latvia,Auzbikis,25,Ran
+2024,LVA,Latvia,Abols,13,Ran
+2024,LVA,Latvia,Berzins,25,Ran
+2024,LVA,Latvia,Actins,25,Ran
+2024,LVA,Latvia,Actina,22,Ran
+2024,BOL,Bolivia,Cuellar,20,Ran
+2024,BOL,Bolivia,Hinojosa,6,Ran
+2024,BOL,Bolivia,Aguilar,37,Assist
+2024,BOL,Bolivia,Guzman,38,Winner
+2024,BOL,Bolivia,Patino,24,Ran
+2024,BOL,Bolivia,Combra,30,Ran
+2024,BOL,Bolivia,Mullisaca,33,Ran
+2024,BOL,Bolivia,Denegri,24,Ran
+2024,BOL,Bolivia,Chambi,24,Ran
+2024,BOL,Bolivia,Porco,28,Ran
+2024,BOL,Bolivia,Menacho,19,Ran
+2024,BOL,Bolivia,Miqueu,20,Ran
+2024,BOL,Bolivia,Gutiérrez,24,Ran
+2024,BOL,Bolivia,Yujra,0,DNS
+2024,BOL,Bolivia,Chahuares,0,DNS
+2024,ZAF,South Africa,Sojola,31,Assist
+2024,ZAF,South Africa,Booyens,25,Ran
+2024,ZAF,South Africa,Lekaka,8,Ran
+2024,ZAF,South Africa,Hamilton,20,Ran
+2024,ZAF,South Africa,Miller,25,Ran
+2024,ZAF,South Africa,O'Brien,26,Ran
+2024,ZAF,South Africa,Shirley,22,Ran
+2024,ZAF,South Africa,Barnard,24,Ran
+2024,ZAF,South Africa,Kgaje,32,Winner
+2024,ZAF,South Africa,Ludick,24,Ran
+2024,ZAF,South Africa,Kuhn,18,Ran
+2024,ZAF,South Africa,le Roux,18,Ran
+2024,ZAF,South Africa,Ebertsohn,24,Ran
+2024,ZAF,South Africa,O'Mahony,13,Ran
+2024,ZAF,South Africa,Adams,16,Ran
+2024,ARG,Argentina,Dominguez,30,Ran
+2024,ARG,Argentina,Belarde,23,Ran
+2024,ARG,Argentina,Casajus,32,Winner
+2024,ARG,Argentina,Gomez,8,Ran
+2024,ARG,Argentina,Lesaint,28,Ran
+2024,ARG,Argentina,Cuervo,31,Assist
+2024,ARG,Argentina,Rivara,27,Ran
+2024,ARG,Argentina,Iovane,17,Ran
+2024,ARG,Argentina,Beltran,19,Ran
+2024,ARG,Argentina,Barbagallo,10,Ran
+2024,ARG,Argentina,Montoya,25,Ran
+2024,ARG,Argentina,Bugge,17,Ran
+2024,ARG,Argentina,Mancini,21,Ran
+2024,ARG,Argentina,Castanarez,20,Ran
+2024,ARG,Argentina,Prado,17,Ran
+2024,KEN,Kenya,Wanjiru,32,Ran
+2024,KEN,Kenya,Kihiko,20,Ran
+2024,KEN,Kenya,Akach,37,Assist
+2024,KEN,Kenya,Hinojosa,24,Ran
+2024,KEN,Kenya,Njorege,38,Winner
+2024,KEN,Kenya,Kipkemoi,14,Ran
+2024,KEN,Kenya,Yusuf,21,Ran
+2024,KEN,Kenya,Wawaru,24,Ran
+2024,KEN,Kenya,Njoroge,22,Ran
+2024,KEN,Kenya,Atati,20,Ran
+2024,KEN,Kenya,Wangoe,24,Ran
+2024,KEN,Kenya,Odambo,0,DNS
+2024,KEN,Kenya,Simondson,15,Ran
+2024,KEN,Kenya,Kinyae,8,Ran
+2024,KEN,Kenya,Kiprono,20,Ran
+2024,VNM,Vietnam,Tran,31,Ran
+2024,VNM,Vietnam,Duong,35,Ran
+2024,VNM,Vietnam,Phan,0,DNS
+2024,VNM,Vietnam,Da Bui,0,DNS
+2024,VNM,Vietnam,Nguyen,0,DNS
+2024,VNM,Vietnam,Nguyen Van,37,Assist
+2024,VNM,Vietnam,Nguyen Thanh,37,Assist
+2024,VNM,Vietnam,Dau Tuan,20,Ran
+2024,VNM,Vietnam,Nguyen Dang,38,Winner
+2024,VNM,Vietnam,Haniquaut,0,DNS
+2024,VNM,Vietnam,Phung Van,27,Ran
+2024,VNM,Vietnam,Nguyen Dang,26,Ran
+2024,VNM,Vietnam,Bui Ngoc,22,Ran
+2024,VNM,Vietnam,cutie,0,DNS
+2024,VNM,Vietnam,Tran Minh,25,Ran
+2024,MAR,Morocco,Ait Haddou,31,Assist
+2024,MAR,Morocco,Glia,24,Ran
+2024,MAR,Morocco,Ezzouak,24,Ran
+2024,MAR,Morocco,Aldaz,32,Winner
+2024,MAR,Morocco,El Hamdany,10,Ran
+2024,MAR,Morocco,el Bouazzaoui,15,Ran
+2024,MAR,Morocco,Bouaziz,15,Ran
+2024,MAR,Morocco,Sahih,15,Ran
+2024,MAR,Morocco,Tahiri,4,Ran
+2024,MAR,Morocco,Sadeq,20,Ran
+2024,MAR,Morocco,Benamar,7,Ran
+2024,MAR,Morocco,Bendoumou,25,Ran
+2024,MAR,Morocco,Wajiz,9,Ran
+2024,MAR,Morocco,Sekkat,30,Ran
+2024,MAR,Morocco,Ezzaydani,30,Ran
+2024,IRL,Ireland,Cromie,20,Ran
+2024,IRL,Ireland,McGuigan,18,Ran
+2024,IRL,Ireland,Barnes,20,Ran
+2024,IRL,Ireland,McParland,20,Ran
+2024,IRL,Ireland,Walker,20,Ran
+2024,IRL,Ireland,McMath,19,Ran
+2024,IRL,Ireland,Perry,19,Ran
+2024,IRL,Ireland,Gallagher,18,Ran
+2024,IRL,Ireland,McKee,20,Ran
+2024,IRL,Ireland,Lupari,18,Ran
+2024,IRL,Ireland,Crawley,20,Ran
+2024,IRL,Ireland,Crilly,20,Ran
+2024,IRL,Ireland,Brillantes,20,Ran
+2024,IRL,Ireland,Johnston,20,Ran
+2024,IRL,Ireland,Gordon,20,Ran
+2024,MLT,Malta,Bezzina,26,Ran
+2024,MLT,Malta,Micallef,17,Ran
+2024,MLT,Malta,Lang,13,Ran
+2024,MLT,Malta,Zammit,21,Ran
+2024,MLT,Malta,Formosa,26,Ran
+2024,MLT,Malta,Sultana,26,Ran
+2024,MLT,Malta,Fenech,16,Ran
+2024,MLT,Malta,Debono,24,Ran
+2024,MLT,Malta,Agius,12,Ran
+2024,MLT,Malta,Greenaway,11,Ran
+2024,MLT,Malta,Portelli,18,Ran
+2024,MLT,Malta,Fiteni,18,Ran
+2024,MLT,Malta,Camilleri,15,Ran
+2024,MLT,Malta,Cassar,15,Ran
+2024,MLT,Malta,Hill,10,Ran
+2024,PHL,Philippines,Baldovino,28,Assist
+2024,PHL,Philippines,Buizon,29,Winner
+2024,PHL,Philippines,Monsanto,25,Ran
+2024,PHL,Philippines,Campos,14,Ran
+2024,PHL,Philippines,Blanco,27,Ran
+2024,PHL,Philippines,Iglesias,0,DNS
+2024,PHL,Philippines,Espela,19,Ran
+2024,PHL,Philippines,Bustamonte,15,Ran
+2024,PHL,Philippines,Gadong,16,Ran
+2024,PHL,Philippines,Ferrer,15,Ran
+2024,PHL,Philippines,Abugan,16,Ran
+2024,PHL,Philippines,Tafalla,16,Ran
+2024,PHL,Philippines,Serfino,10,Ran
+2024,PHL,Philippines,Vasquez,12,Ran
+2024,PHL,Philippines,Combisen,17,Ran
+2024,GTM,Guatemala,Cali,26,Winner
+2024,GTM,Guatemala,Tiul,20,Ran
+2024,GTM,Guatemala,Pichol,25,Assist
+2024,GTM,Guatemala,Salama,22,Ran
+2024,GTM,Guatemala,Perez,20,Ran
+2024,GTM,Guatemala,Rodas,17,Ran
+2024,GTM,Guatemala,Escalante,16,Ran
+2024,GTM,Guatemala,Blanco,18,Ran
+2024,GTM,Guatemala,Hernandez,18,Ran
+2024,GTM,Guatemala,Echeverria,15,Ran
+2024,GTM,Guatemala,Snow,17,Ran
+2024,GTM,Guatemala,Valladares,16,Ran
+2024,GTM,Guatemala,Sanchez,15,Ran
+2024,GTM,Guatemala,Morales,0,DNS
+2024,GTM,Guatemala,Maldonado,13,Ran
+2024,SGP,Singapore,Toh,25,Assist
+2024,SGP,Singapore,Phillips,26,Winner
+2024,SGP,Singapore,Wong,11,Ran
+2024,SGP,Singapore,Lim,13,Ran
+2024,SGP,Singapore,Kolbasov,17,Ran
+2024,SGP,Singapore,Feng,24,Ran
+2024,SGP,Singapore,Ong,10,Ran
+2024,SGP,Singapore,Yee,13,Ran
+2024,SGP,Singapore,Simensen,16,Ran
+2024,SGP,Singapore,Ferreira,16,Ran
+2024,SGP,Singapore,Yam,12,Ran
+2024,SGP,Singapore,Tan,12,Ran
+2024,SGP,Singapore,Hu,21,Ran
+2024,SGP,Singapore,Zeng,12,Ran
+2024,SGP,Singapore,Wong,25,Assist
+2024,URY,Uruguay,Torena,29,Winner
+2024,URY,Uruguay,Rodríguez,12,Ran
+2024,URY,Uruguay,Delfino,14,Ran
+2024,URY,Uruguay,Rocio,19,Ran
+2024,URY,Uruguay,Molina,28,Assist
+2024,URY,Uruguay,Stinger,22,Ran
+2024,URY,Uruguay,Vila,15,Ran
+2024,URY,Uruguay,Herrera,13,Ran
+2024,URY,Uruguay,Lara,18,Ran
+2024,URY,Uruguay,Silveira,11,Ran
+2024,URY,Uruguay,Manzur,18,Ran
+2024,URY,Uruguay,Godoy,16,Ran
+2024,URY,Uruguay,Cantera,5,Ran
+2024,URY,Uruguay,Laluz,10,Ran
+2024,URY,Uruguay,Guerra,15,Ran
+2024,MYS,Malaysia,Christopher,29,Winner
+2024,MYS,Malaysia,Yong,28,Assist
+2024,MYS,Malaysia,Ong,7,Ran
+2024,MYS,Malaysia,Nurafendy,21,Ran
+2024,MYS,Malaysia,Narayanasamy,13,Ran
+2024,MYS,Malaysia,Hau-Yen,17,Ran
+2024,MYS,Malaysia,Lim,20,Ran
+2024,MYS,Malaysia,Eyton-Jones,18,Ran
+2024,MYS,Malaysia,Balmforth,18,Ran
+2024,MYS,Malaysia,Tebay,15,Ran
+2024,MYS,Malaysia,Wahab,8,Ran
+2024,MYS,Malaysia,Parker,13,Ran
+2024,MYS,Malaysia,Watts,13,Ran
+2024,MYS,Malaysia,Jones,12,Ran
+2024,MYS,Malaysia,Sulaiman,12,Ran
+2024,NAM,Namibia,Ross,26,Winner
+2024,NAM,Namibia,Visser,15,Ran
+2024,NAM,Namibia,Goeieman,25,Assist
+2024,NAM,Namibia,Verwey,15,Ran
+2024,NAM,Namibia,Zimny,16,Ran
+2024,NAM,Namibia,Mukupuki,14,Ran
+2024,NAM,Namibia,Reid,13,Ran
+2024,NAM,Namibia,Brits,13,Ran
+2024,NAM,Namibia,Roberts,16,Ran
+2024,NAM,Namibia,Kalwenya,24,Ran
+2024,NAM,Namibia,Dreyer,16,Ran
+2024,NAM,Namibia,Adriaanse,15,Ran
+2024,NAM,Namibia,Lacock,4,Ran
+2024,NAM,Namibia,Dryer,12,Ran
+2024,NAM,Namibia,von Stein,15,Ran
+2024,COL,Colombia,Gonzalez,27,Winner
+2024,COL,Colombia,Figueroa,6,Ran
+2024,COL,Colombia,Pinzon,23,Ran
+2024,COL,Colombia,Calderon,20,Ran
+2024,COL,Colombia,Ramos,26,Assist
+2024,COL,Colombia,Querubin,15,Ran
+2024,COL,Colombia,Serna,24,Ran
+2024,COL,Colombia,Perez,7,Ran
+2024,COL,Colombia,Diaz,24,Ran
+2024,COL,Colombia,Arenas,20,Ran
+2024,COL,Colombia,Contreras,7,Ran
+2024,COL,Colombia,Lobo,15,Ran
+2024,COL,Colombia,Moreno,0,DNS
+2024,COL,Colombia,Chivata,18,Ran
+2024,COL,Colombia,Tosoy,6,Ran
+2024,DZA,Algeria,Makhlouf,24,Assist
+2024,DZA,Algeria,Azzouz,15,Ran
+2024,DZA,Algeria,Bouzidi,10,Ran
+2024,DZA,Algeria,Djebrouni,22,Ran
+2024,DZA,Algeria,Dogha,15,Ran
+2024,DZA,Algeria,Gourari,8,Ran
+2024,DZA,Algeria,Hamamid,0,DNS
+2024,DZA,Algeria,Lamdani,15,Ran
+2024,DZA,Algeria,Leroul,25,Winner
+2024,DZA,Algeria,Reffaf,17,Ran
+2024,DZA,Algeria,Saad,21,Ran
+2024,DZA,Algeria,Saidi,21,Ran
+2024,DZA,Algeria,Semri,20,Ran
+2024,DZA,Algeria,Younsi,11,Ran
+2024,DZA,Algeria,Seri,12,Ran
+2024,ZMB,Zambia,Mwale,13,Ran
+2024,ZMB,Zambia,Haambayi,8,Ran
+2024,ZMB,Zambia,Wall,22,Assist
+2024,ZMB,Zambia,Muyunda,20,Ran
+2024,ZMB,Zambia,Mubita,17,Ran
+2024,ZMB,Zambia,Mwale,20,Ran
+2024,ZMB,Zambia,Cohen,16,Ran
+2024,ZMB,Zambia,Kalombo,16,Ran
+2024,ZMB,Zambia,Sihulume,10,Ran
+2024,ZMB,Zambia,Mwaba,10,Ran
+2024,ZMB,Zambia,Campbell,12,Ran
+2024,ZMB,Zambia,Nyirongo,18,Ran
+2024,ZMB,Zambia,Mwansa,17,Ran
+2024,ZMB,Zambia,Bwalya,23,Winner
+2024,ZMB,Zambia,Kasonde,11,Ran
+2024,CIV,Côte d'Ivoire,Kouakou,28,Winner
+2024,CIV,Côte d'Ivoire,Yahiri,27,Assist
+2024,CIV,Côte d'Ivoire,Kouassi,16,Ran
+2024,CIV,Côte d'Ivoire,Fellay,8,Ran
+2024,CIV,Côte d'Ivoire,al Khalil,25,Ran
+2024,CIV,Côte d'Ivoire,Caplain,15,Ran
+2024,CIV,Côte d'Ivoire,Goutto,15,Ran
+2024,CIV,Côte d'Ivoire,Preteseille,20,Ran
+2024,CIV,Côte d'Ivoire,Perret,15,Ran
+2024,CIV,Côte d'Ivoire,Ade,8,Ran
+2024,CIV,Côte d'Ivoire,Souemi,12,Ran
+2024,CIV,Côte d'Ivoire,Kone,10,Ran
+2024,CIV,Côte d'Ivoire,Ezzedine,5,Ran
+2024,CIV,Côte d'Ivoire,Konate,12,Ran
+2024,CIV,Côte d'Ivoire,Koudou,8,Ran
+2024,VEN,Venezuela,Stringer Ventura,24,Assist
+2024,VEN,Venezuela,Lopez,18,Ran
+2024,VEN,Venezuela,Díaz,15,Ran
+2024,VEN,Venezuela,Hurtado,7,Ran
+2024,VEN,Venezuela,Hernandez,25,Winner
+2024,VEN,Venezuela,Rojas,13,Ran
+2024,VEN,Venezuela,Vera,21,Ran
+2024,VEN,Venezuela,Gonzalez,6,Ran
+2024,VEN,Venezuela,Gonzalez,14,Ran
+2024,VEN,Venezuela,Marin,8,Ran
+2024,VEN,Venezuela,Tortoza,17,Ran
+2024,VEN,Venezuela,Hugas,20,Ran
+2024,VEN,Venezuela,Jardines,11,Ran
+2024,VEN,Venezuela,Marrero,12,Ran
+2024,VEN,Venezuela,Feijoo,13,Ran
+2024,BMU,Bermuda,Alvera,15,Ran
+2024,BMU,Bermuda,Williams,28,Winner
+2024,BMU,Bermuda,Howells,15,Ran
+2024,BMU,Bermuda,Teleman,27,Assist
+2024,BMU,Bermuda,Woolins,16,Ran
+2024,BMU,Bermuda,Chapman,7,Ran
+2024,BMU,Bermuda,Wells,14,Ran
+2024,BMU,Bermuda,Evans,9,Ran
+2024,BMU,Bermuda,Derham,19,Ran
+2024,BMU,Bermuda,Willis,13,Ran
+2024,BMU,Bermuda,Olcheski-Bell,11,Ran
+2024,BMU,Bermuda,Harris,13,Ran
+2024,BMU,Bermuda,Brogdon,13,Ran
+2024,BMU,Bermuda,Ryan,11,Ran
+2024,BMU,Bermuda,Barrow,9,Ran
+2024,PAK,Pakistan,Said,39,Winner
+2024,PAK,Pakistan,Muhammad,38,Assist
+2024,PAK,Pakistan,Sajid,0,DNS
+2024,PAK,Pakistan,Mehmood,7,Ran
+2024,PAK,Pakistan,Iqbal,0,DNS
+2024,PAK,Pakistan,Ahmed,16,Ran
+2024,PAK,Pakistan,Awais,15,Ran
+2024,PAK,Pakistan,Maki,22,Ran
+2024,PAK,Pakistan,Shiraz,20,Ran
+2024,PAK,Pakistan,Khattak,6,Ran
+2024,PAK,Pakistan,Abbas,9,Ran
+2024,PAK,Pakistan,Nasir,0,DNS
+2024,PAK,Pakistan,Ghazee,12,Ran
+2024,PAK,Pakistan,Sultan,15,Ran
+2024,PAK,Pakistan,Hameed,10,Ran
+2024,TWN,Taipei,Huang,25,Winner
+2024,TWN,Taipei,Chu,13,Ran
+2024,TWN,Taipei,Lin,21,Ran
+2024,TWN,Taipei,Li,19,Ran
+2024,TWN,Taipei,Lee,24,Assist
+2024,TWN,Taipei,Wang,8,Ran
+2024,TWN,Taipei,Wang,16,Ran
+2024,TWN,Taipei,Chen,8,Ran
+2024,TWN,Taipei,Chen,16,Ran
+2024,TWN,Taipei,Wang,12,Ran
+2024,TWN,Taipei,Lu,0,DNS
+2024,TWN,Taipei,Blundell,13,Ran
+2024,TWN,Taipei,Hsu,11,Ran
+2024,TWN,Taipei,Huang,12,Ran
+2024,TWN,Taipei,Tseng,10,Ran
+2024,ECU,Ecuador,Vasquez,0,DNS
+2024,ECU,Ecuador,Ibarra,23,Winner
+2024,ECU,Ecuador,Matango,17,Ran
+2024,ECU,Ecuador,Ubilla,15,Ran
+2024,ECU,Ecuador,Lalvay,10,Ran
+2024,ECU,Ecuador,Ramon,15,Ran
+2024,ECU,Ecuador,Sharup,9,Ran
+2024,ECU,Ecuador,Antun,12,Ran
+2024,ECU,Ecuador,Freire,22,Assist
+2024,ECU,Ecuador,Loja,13,Ran
+2024,ECU,Ecuador,Tuqueres,15,Ran
+2024,ECU,Ecuador,Tacuri,16,Ran
+2024,ECU,Ecuador,Monge,8,Ran
+2024,ECU,Ecuador,Tsakimp,9,Ran
+2024,ECU,Ecuador,Illescas,8,Ran
+2024,UKR,Ukraine,Nikolaienko,33,Winner
+2024,UKR,Ukraine,Nesterets,32,Assist
+2024,UKR,Ukraine,Yablunovska,0,DNS
+2024,UKR,Ukraine,Dadasheva,17,Ran
+2024,UKR,Ukraine,Alekseienko,22,Ran
+2024,UKR,Ukraine,Storozhyk,25,Ran
+2024,UKR,Ukraine,Volkov,11,Ran
+2024,UKR,Ukraine,Nikitin,27,Ran
+2024,UKR,Ukraine,Lazarieva,0,DNS
+2024,UKR,Ukraine,Kovalska,24,Ran
+2024,PRY,Paraguay,Pasmor,24,Winner
+2024,PRY,Paraguay,Franco,16,Ran
+2024,PRY,Paraguay,Samaniego,23,Assist
+2024,PRY,Paraguay,Etienne,11,Ran
+2024,PRY,Paraguay,Gomez,15,Ran
+2024,PRY,Paraguay,Benitez,0,DNS
+2024,PRY,Paraguay,Figueredo,13,Ran
+2024,PRY,Paraguay,Fichter,15,Ran
+2024,PRY,Paraguay,Cantero,14,Ran
+2024,PRY,Paraguay,Rolon,8,Ran
+2024,PRY,Paraguay,Walden,15,Ran
+2024,PRY,Paraguay,Cuenca,14,Ran
+2024,PRY,Paraguay,Villalba,9,Ran
+2024,PRY,Paraguay,Meza,5,Ran
+2024,PRY,Paraguay,Paez,7,Ran
+2024,MUS,Mauritius,Gourdin,19,Winner
+2024,MUS,Mauritius,Rivet,17,Ran
+2024,MUS,Mauritius,Comarmond,14,Ran
+2024,MUS,Mauritius,Ricaud,16,Ran
+2024,MUS,Mauritius,Rosiere,10,Ran
+2024,MUS,Mauritius,Panpadoo,13,Ran
+2024,MUS,Mauritius,Parisot,18,Assist
+2024,MUS,Mauritius,Japsy,6,Ran
+2024,MUS,Mauritius,Volny,11,Ran
+2024,MUS,Mauritius,Huet,9,Ran
+2024,MUS,Mauritius,Varjangbhay,12,Ran
+2024,MUS,Mauritius,de Salle,10,Ran
+2024,MUS,Mauritius,le Breton-Ah Youne,10,Ran
+2024,MUS,Mauritius,Clain,11,Ran
+2024,MUS,Mauritius,Biret,12,Ran
+2024,MKD,North Macedonia,Ivanovski,25,Winner
+2024,MKD,North Macedonia,Jovanova,11,Ran
+2024,MKD,North Macedonia,Gjufteski,14,Ran
+2024,MKD,North Macedonia,Mircevski,24,Assist
+2024,MKD,North Macedonia,Belevski,0,DNS
+2024,MKD,North Macedonia,Petrusevski,21,Ran
+2024,MKD,North Macedonia,Veljanovski,16,Ran
+2024,MKD,North Macedonia,Mircevski,12,Ran
+2024,MKD,North Macedonia,Manev,10,Ran
+2024,MKD,North Macedonia,Jovancev,0,DNS
+2024,MKD,North Macedonia,Veljanovska,20,Ran
+2024,MKD,North Macedonia,Ancev,0,DNS
+2024,MKD,North Macedonia,Todevski,8,Ran
+2024,MKD,North Macedonia,Todosova,8,Ran
+2024,MKD,North Macedonia,Mileski,16,Ran
+2024,BRN,Brunei,Sudin,18,Winner
+2024,BRN,Brunei,Nudin,10,Ran
+2024,BRN,Brunei,Lee,15,Ran
+2024,BRN,Brunei,Dyn,13,Ran
+2024,BRN,Brunei,Townsend,17,Assist
+2024,BRN,Brunei,Jaludin,9,Ran
+2024,BRN,Brunei,Juhari,14,Ran
+2024,BRN,Brunei,Rahim,16,Ran
+2024,BRN,Brunei,Yong,14,Ran
+2024,BRN,Brunei,Emran,7,Ran
+2024,BRN,Brunei,Momin,12,Ran
+2024,BRN,Brunei,Momin,12,Ran
+2024,BRN,Brunei,Zain,11,Ran
+2024,BRN,Brunei,Daruis,6,Ran
+2024,BRN,Brunei,Low,10,Ran
+2024,CYP,Cyprus,Stankovic,15,Assist
+2024,CYP,Cyprus,Masinova,16,Winner
+2024,CYP,Cyprus,Busel,11,Ran
+2024,CYP,Cyprus,Christodoulou,11,Ran
+2024,CYP,Cyprus,Paraskevas,5,Ran
+2024,CYP,Cyprus,Dietl,13,Ran
+2024,CYP,Cyprus,Chrisostomou,10,Ran
+2024,CYP,Cyprus,Antoniou,7,Ran
+2024,CYP,Cyprus,Ioannou,9,Ran
+2024,CYP,Cyprus,Delidis,9,Ran
+2024,CYP,Cyprus,Benzar,10,Ran
+2024,CYP,Cyprus,Antwniou,6,Ran
+2024,CYP,Cyprus,Aristokleous,4,Ran
+2024,CYP,Cyprus,Panagi,0,DNS
+2024,CYP,Cyprus,Monoyios,7,Ran
+2024,EGY,Egypt,Bulashov,16,Winner
+2024,EGY,Egypt,Markau,12,Ran
+2024,EGY,Egypt,Zainisheva,15,Assist
+2024,EGY,Egypt,Garanin,2,Ran
+2024,EGY,Egypt,Anisimov,10,Ran
+2024,EGY,Egypt,Botvinev,3,Ran
+2024,EGY,Egypt,Bykova,8,Ran
+2024,EGY,Egypt,Kaipova,8,Ran
+2024,EGY,Egypt,Stashevskii,3,Ran
+2024,EGY,Egypt,Smelov,4,Ran
+2024,EGY,Egypt,Parkhomenko,4,Ran
+2024,EGY,Egypt,Vasilenko,4,Ran
+2024,EGY,Egypt,Moskalenko,3,Ran
+2024,EGY,Egypt,Grishchenkov,8,Ran
+2024,EGY,Egypt,Pavlov,3,Ran
+2024,BWA,Botswana,Kealotswe,14,Winner
+2024,BWA,Botswana,Motswiri,0,DNS
+2024,BWA,Botswana,January,3,Ran
+2024,BWA,Botswana,Cunliffe,9,Ran
+2024,BWA,Botswana,Armstrong,0,DNS
+2024,BWA,Botswana,Mosweu,3,Ran
+2024,BWA,Botswana,Mashiakgomo,0,DNS
+2024,BWA,Botswana,Hays,5,Ran
+2024,BWA,Botswana,Steinbach,13,Assist
+2024,BWA,Botswana,Russell,12,Ran
+2024,BWA,Botswana,van Zyl,0,DNS
+2024,BWA,Botswana,Tlhophane,0,DNS
+2024,BWA,Botswana,Phto,4,Ran
+2024,BWA,Botswana,Rabantetse,6,Ran
+2024,BWA,Botswana,Kigondu,2,Ran
+2024,GRC,Greece,Aek,0,DNS
+2024,GRC,Greece,Thomadakis,0,DNS
+2024,GRC,Greece,Leonidis,0,DNS
+2024,GRC,Greece,Koutroulis,0,DNS
+2024,GRC,Greece,Leonidis,0,DNS
+2024,GRC,Greece,Konstantoulakis,0,DNS
+2024,GRC,Greece,Ioannis,0,DNS
+2024,GRC,Greece,Michalis,0,DNS
+2024,GRC,Greece,Christos,0,DNS
+2024,GRC,Greece,Ioannis,0,DNS
+2024,GRC,Greece,Fotis,0,DNS
+2024,GRC,Greece,Manolis,0,DNS
+2024,GRC,Greece,Petros,0,DNS
+2024,GRC,Greece,Violakis,0,DNS
+2024,GRC,Greece,Nasopoulos,0,DNS
+2024,ISR,Israel,Shay,0,DNS
+2024,ISR,Israel,Oshurkov,0,DNS
+2024,ISR,Israel,el Cohen,0,DNS
+2024,ISR,Israel,Peled,0,DNS
+2024,ISR,Israel,Dano,0,DNS
+2024,ISR,Israel,Yair,0,DNS
+2024,ISR,Israel,Khalepski,0,DNS
+2024,ISR,Israel,Rozenfeld,0,DNS
+2024,ISR,Israel,Sela,0,DNS
+2024,ISR,Israel,Gelvan,0,DNS
+2024,ISR,Israel,Rozilio,0,DNS
+2024,ISR,Israel,Gilad,0,DNS
+2024,ISR,Israel,Cohen,0,DNS
+2026,USA,United States of America,Mark Dowdle,107,Winner
+2026,USA,United States of America,Jon Noll,106,Assist
+2026,USA,United States of America,Nicholas Steel,94,Ran
+2026,USA,United States of America,Greg Fall,92,Ran
+2026,USA,United States of America,Levi Yoder,86,Ran
+2026,USA,United States of America,Nick Petterson,84,Ran
+2026,USA,United States of America,Harvey Lewis,83,Ran
+2026,USA,United States of America,Megan Smyth,82,Ran
+2026,USA,United States of America,Jeff Walker,75,Ran
+2026,USA,United States of America,Ryan Snickles,69,Ran
+2026,USA,United States of America,Scott Snell,56,Ran
+2026,USA,United States of America,Stephanie Rosebaugh,51,Ran
+2026,USA,United States of America,Jennifer Russo,49,Ran
+2026,USA,United States of America,Scott Martin,44,Ran
+2026,USA,United States of America,Ron Wireman,42,Ran
+2026,JPN,Japan,Kazuhiro Kawahata,105,Winner
+2026,JPN,Japan,Kengo Takahashi,104,Assist
+2026,JPN,Japan,Kyohei Yoshizaw,92,Ran
+2026,JPN,Japan,Tetsuo Kiso,79,Ran
+2026,JPN,Japan,Terumichi Morishita,71,Ran
+2026,JPN,Japan,Michitaro Mizuno,70,Ran
+2026,JPN,Japan,Mamoru Haga,68,Ran
+2026,JPN,Japan,Shuji Ikeda,66,Ran
+2026,JPN,Japan,Minoru Tanaka,60,Ran
+2026,JPN,Japan,Hiroto Komatsu,57,Ran
+2026,JPN,Japan,Yukinori Yoshida,55,Ran
+2026,JPN,Japan,Akihisa Koike,55,Ran
+2026,JPN,Japan,Yusuke Takahashi,53,Ran
+2026,JPN,Japan,Takeshi Sakuraba,52,Ran
+2026,JPN,Japan,Ryo Akamatsu,51,Ran
+2026,BEL,Belgium,Merijn Geerts,124,Ran
+2026,BEL,Belgium,Ivo Steyaert,124,Ran
+2026,BEL,Belgium,Bert Verbist,86,Ran
+2026,BEL,Belgium,Kenneth Vanthuyne,78,Ran
+2026,BEL,Belgium,Benoît Badot,72,Ran
+2026,BEL,Belgium,Callens Evariest,68,Ran
+2026,BEL,Belgium,Matthias Pelgrims,67,Ran
+2026,BEL,Belgium,Mataigne Damien,64,Ran
+2026,BEL,Belgium,Lieven Pandelaers,60,Ran
+2026,BEL,Belgium,Gil Pochet,60,Ran
+2026,BEL,Belgium,Yvan De-Graef,60,Ran
+2026,BEL,Belgium,Vandamme Brecht,58,Ran
+2026,BEL,Belgium,Kevin Sneyders,50,Ran
+2026,BEL,Belgium,Jelle Tielemans,45,Ran
+2026,BEL,Belgium,Willem De Troyer,42,Ran
+2026,AUS,Australia,Dan Camac,87,Winner
+2026,AUS,Australia,Ben Nicholls,86,Assist
+2026,AUS,Australia,Mathieu Dube,78,Ran
+2026,AUS,Australia,Brady Nankervis,77,Ran
+2026,AUS,Australia,Jack Hanley,76,Ran
+2026,AUS,Australia,Tim Kacprzak,75,Ran
+2026,AUS,Australia,Jayden McCormack,75,Ran
+2026,AUS,Australia,Brandon-Lee Grech,73,Ran
+2026,AUS,Australia,Sam Christie,73,Ran
+2026,AUS,Australia,James Blanton,72,Ran
+2026,AUS,Australia,Barry Keem,70,Ran
+2026,AUS,Australia,Scott Cameron,64,Ran
+2026,AUS,Australia,Colin Moulden,62,Ran
+2026,AUS,Australia,Jason Rantall,61,Ran
+2026,AUS,Australia,Jonathan Ash,40,Ran
+2026,AIN,AIN,Ivan Zaborsky,81,Winner
+2026,AIN,AIN,Dimitrii Romanyuk,80,Assist
+2026,AIN,AIN,Vitaliy Pushkarev,62,Ran
+2026,AIN,AIN,Michael Zaruba,59,Ran
+2026,AIN,AIN,Alexey Belousov,57,Ran
+2026,AIN,AIN,Dmitry Sheremet,55,Ran
+2026,AIN,AIN,Vadim Sharkov,52,Ran
+2026,AIN,AIN,Kirill Bykov,51,Ran
+2026,AIN,AIN,Evgeniy Odnorog,45,Ran
+2026,AIN,AIN,Vadim Kniazev,45,Ran
+2026,AIN,AIN,Viktor Mynza,39,Ran
+2026,AIN,AIN,Andrei Chernyakov,39,Ran
+2026,AIN,AIN,Vera Chekalina,34,Ran
+2026,AIN,AIN,Evgeniy Golubchikov,33,Ran
+2026,FRA,France,Christophe Baud,101,Winner
+2026,FRA,France,Julien Pierlot,100,Assist
+2026,FRA,France,Maxime Le Meitour,72,Ran
+2026,FRA,France,Sebastien Despas,72,Ran
+2026,FRA,France,Sonia Poutrel,68,Ran
+2026,FRA,France,Xuane Nguyen Tri Tuong,64,Ran
+2026,FRA,France,Christophe Rouat,63,Ran
+2026,FRA,France,Pierre Aubery,60,Ran
+2026,FRA,France,Thierry Grajdura,60,Ran
+2026,FRA,France,Christophe Dagorette,53,Ran
+2026,FRA,France,Romain Sophys,51,Ran
+2026,FRA,France,Michaël Pinon,39,Ran
+2026,FRA,France,Fabrice Puaud,31,Ran
+2026,FRA,France,Ronan Pierre,28,Ran
+2026,FRA,France,Benjamin Rascalou,27,Ran
+2026,POL,Poland,Michał Sitarek,83,Winner
+2026,POL,Poland,Grzegorz Sułek,82,Assist
+2026,POL,Poland,Piotr Szymański,75,Ran
+2026,POL,Poland,Mateusz Tatara,73,Ran
+2026,POL,Poland,Łukasz Wróbel,73,Ran
+2026,POL,Poland,Jarosław Gil,61,Ran
+2026,POL,Poland,Tomasz Cyganski,57,Ran
+2026,POL,Poland,Mateusz Bucholc,57,Ran
+2026,POL,Poland,Pawel Pszczolkowski,55,Ran
+2026,POL,Poland,Krzysztof Kowalski,43,Ran
+2026,POL,Poland,Sebastian Sikora,42,Ran
+2026,POL,Poland,Andrzej Pawlak,41,Ran
+2026,POL,Poland,Aleksander Kowalik,37,Ran
+2026,POL,Poland,Norbert Marczuk,33,Ran
+2026,POL,Poland,Bartosz Fudali,28,Ran
+2026,GBR,United Kingdom,Dave Phillips,90,Winner
+2026,GBR,United Kingdom,Matthew Blackburn,89,Assist
+2026,GBR,United Kingdom,Jay Stapley,83,Ran
+2026,GBR,United Kingdom,James Luxton,81,Ran
+2026,GBR,United Kingdom,Iain Bethune,76,Ran
+2026,GBR,United Kingdom,Sarah Perry,76,Ran
+2026,GBR,United Kingdom,Sam Mayhew,62,Ran
+2026,GBR,United Kingdom,Andy Wilson,60,Ran
+2026,GBR,United Kingdom,George Jones,56,Ran
+2026,GBR,United Kingdom,Alun Rose,53,Ran
+2026,GBR,United Kingdom,Phil Marshall,51,Ran
+2026,GBR,United Kingdom,Alex Sweet,46,Ran
+2026,GBR,United Kingdom,Rob Mallett,45,Ran
+2026,GBR,United Kingdom,Andrew Miles,41,Ran
+2026,GBR,United Kingdom,Tal Taran,30,Ran
+2026,NZL,New Zealand,Sam Harvey,77,Winner
+2026,NZL,New Zealand,Theo Atkinson,76,Assist
+2026,NZL,New Zealand,Daniel Beswick,71,Ran
+2026,NZL,New Zealand,Brion Matthews,70,Ran
+2026,NZL,New Zealand,Matt Radford,68,Ran
+2026,NZL,New Zealand,Macee Latimer,67,Ran
+2026,NZL,New Zealand,Milan Chick,65,Ran
+2026,NZL,New Zealand,Simon Mclean,53,Ran
+2026,NZL,New Zealand,Jeremy Pelvin,51,Ran
+2026,NZL,New Zealand,Julia Chamberlain,48,Ran
+2026,NZL,New Zealand,Kieran Philip,44,Ran
+2026,NZL,New Zealand,Tom Turtle,43,Ran
+2026,NZL,New Zealand,Jane McAlpine,38,Ran
+2026,NZL,New Zealand,John Bayne,35,Ran
+2026,NZL,New Zealand,Anthony Kerr-Taylor,28,Ran
+2026,DEU,Germany,Martin Stiller,69,Winner
+2026,DEU,Germany,Niko Langner,68,Assist
+2026,DEU,Germany,Luis Vesely,65,Ran
+2026,DEU,Germany,Hendrik Boury,57,Ran
+2026,DEU,Germany,Jörn Schlag,46,Ran
+2026,DEU,Germany,Adrian Groeschner,40,Ran
+2026,DEU,Germany,Marius Seith,39,Ran
+2026,DEU,Germany,Philip Mete,39,Ran
+2026,DEU,Germany,Jannik Giesen,38,Ran
+2026,DEU,Germany,Norman Mascher-Aspensjoe,35,Ran
+2026,DEU,Germany,Alexander Schult,31,Ran
+2026,DEU,Germany,Matthias Voelkel,30,Ran
+2026,DEU,Germany,Dennis Musche,24,Ran
+2026,DEU,Germany,Devin Agca,24,Ran
+2026,DEU,Germany,Markus Habermann,15,Ran
+2026,MEX,Mexico,Rodolfo Ramirez Leonides,73,Winner
+2026,MEX,Mexico,Alex Hernández muñoz,72,Assist
+2026,MEX,Mexico,Pérez López Bernardo,69,Ran
+2026,MEX,Mexico,Cano Conde Pablo Jordan,48,Ran
+2026,MEX,Mexico,Adelina García González,46,Ran
+2026,MEX,Mexico,Julio Orlando Becerril Garcia,41,Ran
+2026,MEX,Mexico,Mariano Susano,41,Ran
+2026,MEX,Mexico,Ignacio Castro Valenzuela,39,Ran
+2026,MEX,Mexico,Carmona Marcelo,39,Ran
+2026,MEX,Mexico,Reza Romero Isai Misael,36,Ran
+2026,MEX,Mexico,Adan Roque Dominguez Elox,34,Ran
+2026,MEX,Mexico,Yoshua Herrera Godinez,33,Ran
+2026,MEX,Mexico,Luis Espino,33,Ran
+2026,MEX,Mexico,Alejandro Santiago,30,Ran
+2026,MEX,Mexico,Felix Hernández Juárez,29,Ran
+2026,ESP,Spain,Cesar Dominguez,24,Ran
+2026,ESP,Spain,Carlos Miguel Gallego Rodríguez,24,Ran
+2026,ESP,Spain,Jose Carlos Alcazar Garcia,24,Ran
+2026,ESP,Spain,Jose Manuel Ruiz Verdugo,24,Ran
+2026,ESP,Spain,Juan Diego Aguilar Bravo,24,Ran
+2026,ESP,Spain,Jordi,24,Ran
+2026,ESP,Spain,Martha Ccorahua Huallpa,24,Ran
+2026,ESP,Spain,Ivan Perea Jimenez,24,Ran
+2026,ESP,Spain,Carmen Aguilar Girona,24,Ran
+2026,ESP,Spain,Raul Roberto Gomez,24,Ran
+2026,ESP,Spain,Emilio Jose Perez Torres,24,Ran
+2026,ESP,Spain,Jose Manuel Huertas Machi,24,Ran
+2026,ESP,Spain,Eric Priego Pastor,24,Ran
+2026,ESP,Spain,Francisco Guzman Hernandez,24,Ran
+2026,ESP,Spain,Jose Manuel Gonzalez,22,Ran
+2026,CAN,Canada,Michael Serani,82,Winner
+2026,CAN,Canada,Michael Rouleau,81,Assist
+2026,CAN,Canada,Nick Burmey,74,Ran
+2026,CAN,Canada,Pier-Alexandre Beaulieu,68,Ran
+2026,CAN,Canada,Benoit Labreche,64,Ran
+2026,CAN,Canada,Mark Nendick,64,Ran
+2026,CAN,Canada,Ryan Quinlan,62,Ran
+2026,CAN,Canada,Sandra Auger,51,Ran
+2026,CAN,Canada,Austin Sedgwick,48,Ran
+2026,CAN,Canada,Viktoria Brown,45,Ran
+2026,CAN,Canada,Keith Harder,44,Ran
+2026,CAN,Canada,François Decelles,44,Ran
+2026,CAN,Canada,Eric Deshaies,40,Ran
+2026,CAN,Canada,Amanda Nelson,33,Ran
+2026,CAN,Canada,Nicolas Poulin,30,Ran
+2026,HUN,Hungary,Adam Kertesz,63,Winner
+2026,HUN,Hungary,Sárosi Gyula,62,Assist
+2026,HUN,Hungary,Szilard Fodor,50,Ran
+2026,HUN,Hungary,Keller Sándor,46,Ran
+2026,HUN,Hungary,Virág Pál,42,Ran
+2026,HUN,Hungary,Mihaly Blasko,42,Ran
+2026,HUN,Hungary,Gurisatti Gábor,41,Ran
+2026,HUN,Hungary,Válent Sándor,38,Ran
+2026,HUN,Hungary,Győrffy András,38,Ran
+2026,HUN,Hungary,Filep Ákos,36,Ran
+2026,HUN,Hungary,Peter Geszti,36,Ran
+2026,HUN,Hungary,Stefán Beáta,36,Ran
+2026,HUN,Hungary,Nagykéri György,36,Ran
+2026,HUN,Hungary,Horváth Vilmos,34,Ran
+2026,HUN,Hungary,Fűrész Edit,33,Ran
+2026,NOR,Norway,Anders Johnsen,73,Winner
+2026,NOR,Norway,Jon Asphjell,72,Assist
+2026,NOR,Norway,Nora Kojen Stubbe,70,Ran
+2026,NOR,Norway,Jan-Erik Steen,67,Ran
+2026,NOR,Norway,Eivind Svellingen,58,Ran
+2026,NOR,Norway,Borje Cato Moen,57,Ran
+2026,NOR,Norway,Arild Moen,45,Ran
+2026,NOR,Norway,Joakim Melby Olsen,41,Ran
+2026,NOR,Norway,Knut Jensvold,38,Ran
+2026,NOR,Norway,Tone Klevan,35,Ran
+2026,NOR,Norway,Liv Compton,34,Ran
+2026,NOR,Norway,Glenn Hjortefot Jørgensen,33,Ran
+2026,NOR,Norway,Geir Hansen,25,Ran
+2026,NOR,Norway,Harald Bjerke,24,Ran
+2026,NOR,Norway,Anette Devik Bomo,16,Ran
+2026,NLD,Netherlands,Luciano Pappalettera,63,Winner
+2026,NLD,Netherlands,Gerben Oevermans,62,Assist
+2026,NLD,Netherlands,Jacob Hamburg,61,Ran
+2026,NLD,Netherlands,Maurice Kram,41,Ran
+2026,NLD,Netherlands,Mark Hessels,41,Ran
+2026,NLD,Netherlands,Bernhard Scholing,40,Ran
+2026,NLD,Netherlands,Nick Leeuwenhoek,39,Ran
+2026,NLD,Netherlands,Onno Overes,38,Ran
+2026,NLD,Netherlands,Kanter Eefting,36,Ran
+2026,NLD,Netherlands,Adriaan Pandelaers,36,Ran
+2026,NLD,Netherlands,Steven Vegter,35,Ran
+2026,NLD,Netherlands,Roman Packbier,33,Ran
+2026,NLD,Netherlands,Ran Franken,32,Ran
+2026,NLD,Netherlands,Hinke Schokker,31,Ran
+2026,NLD,Netherlands,Gaston Metselaar,29,Ran
+2026,BRA,Brazil,Paulo Sérgio Andrade Oliveira,52,Winner
+2026,BRA,Brazil,David Mello de Almeida,51,Assist
+2026,BRA,Brazil,Rafael Freitas Soares,51,Assist
+2026,BRA,Brazil,Odilon de Jesus Leandro,48,Ran
+2026,BRA,Brazil,Nauriene Brasiliano Melo Nunes,42,Ran
+2026,BRA,Brazil,William Dias Touranca Ribeiro,37,Ran
+2026,BRA,Brazil,Valmir Vieira Mendonça,33,Ran
+2026,BRA,Brazil,Alexsandro Pereira Alves,31,Ran
+2026,BRA,Brazil,Osires Izaga Imenes Filho,26,Ran
+2026,BRA,Brazil,Geovane Griesang,25,Ran
+2026,BRA,Brazil,Guilherme Bavaresco,22,Ran
+2026,BRA,Brazil,Adriana Vilela Alves da Silva,21,Ran
+2026,BRA,Brazil,Altair Ferreira Lima,19,Ran
+2026,BRA,Brazil,Davi Rodrigues Dos Passos,13,Ran
+2026,BRA,Brazil,Luiz Andre Costa Viana,10,Ran
+2026,SWE,Sweden,Niklas Sjoblom,58,Winner
+2026,SWE,Sweden,Niklas Drakfors,57,Assist
+2026,SWE,Sweden,Toivanen Mattias,53,Ran
+2026,SWE,Sweden,David Strodel,50,Ran
+2026,SWE,Sweden,Alex Cravcenco,50,Ran
+2026,SWE,Sweden,Mazharul Haque,50,Ran
+2026,SWE,Sweden,Sannaa Höglind,48,Ran
+2026,SWE,Sweden,Magnus Högfeldt,45,Ran
+2026,SWE,Sweden,Jonathan Lowe,43,Ran
+2026,SWE,Sweden,Emil Lilja,41,Ran
+2026,SWE,Sweden,Anton Johansson,40,Ran
+2026,SWE,Sweden,Mattias Edlund,38,Ran
+2026,SWE,Sweden,Linus Lidström,33,Ran
+2026,SWE,Sweden,Tony Halvarsson,31,Ran
+2026,SWE,Sweden,Andreas Wallin,29,Ran
+2026,AUT,Austria,Stefan Wilfinger,52,Winner
+2026,AUT,Austria,Adrian Mirtl,51,Assist
+2026,AUT,Austria,Klemens Huemer,50,Ran
+2026,AUT,Austria,Angelika Huemer-Toff,49,Ran
+2026,AUT,Austria,Bernhard Herzog,48,Ran
+2026,AUT,Austria,Kathrin Polke,48,Ran
+2026,AUT,Austria,Alexander Stummvoll,48,Ran
+2026,AUT,Austria,Eva-Maria Putz,37,Ran
+2026,AUT,Austria,Sandra Gasser,37,Ran
+2026,AUT,Austria,Fabio Tiani,36,Ran
+2026,AUT,Austria,Richard Reingruber,35,Ran
+2026,AUT,Austria,Kurt Steinhofer,34,Ran
+2026,AUT,Austria,Raphael Stanic,34,Ran
+2026,AUT,Austria,Norbert Lüftenegger,30,Ran
+2026,AUT,Austria,Markus Schieder,16,Ran
+2026,ISL,Iceland,Gunnar Karlsson,69,Winner
+2026,ISL,Iceland,Gudjon Sigurdsson,68,Assist
+2026,ISL,Iceland,Gudmundur Luther Hallgrimsson,63,Ran
+2026,ISL,Iceland,Adam Komorowski,40,Ran
+2026,ISL,Iceland,Thorleifur Thorleifsson,36,Ran
+2026,ISL,Iceland,Sylwester Kalucki,35,Ran
+2026,ISL,Iceland,Hekla Hannesdottir,35,Ran
+2026,ISL,Iceland,Tomas Jacobsen,34,Ran
+2026,ISL,Iceland,Þórdís Jónsdóttir,31,Ran
+2026,ISL,Iceland,Hildur Gudny Karadottir,31,Ran
+2026,ISL,Iceland,Oddur Máni Malmberg,30,Ran
+2026,ISL,Iceland,Mari Jaersk,27,Ran
+2026,ISL,Iceland,Thuridur Thorarinsdottir,26,Ran
+2026,ISL,Iceland,Fridrik Benediktsson,19,Ran
+2026,ISL,Iceland,Solvi Snaer Egilsson,15,Ran
+2026,ITA,Italy,Vittorio Silva,55,Winner
+2026,ITA,Italy,Marco Matteazzi,54,Assist
+2026,ITA,Italy,Alex Giovannetti,48,Ran
+2026,ITA,Italy,Andrea Amato,48,Ran
+2026,ITA,Italy,Elsie Cargniel Bergamasco,40,Ran
+2026,ITA,Italy,Giuseppe Matteucci,38,Ran
+2026,ITA,Italy,Vito Intini,38,Ran
+2026,ITA,Italy,Giancarlo Racca,36,Ran
+2026,ITA,Italy,alessandro Gomiero,35,Ran
+2026,ITA,Italy,Massimiliano Imperi,34,Ran
+2026,ITA,Italy,Fabio Cattelan,34,Ran
+2026,ITA,Italy,Giuliano Zaccaria,33,Ran
+2026,ITA,Italy,Antea Pellegrino,33,Ran
+2026,ITA,Italy,Cesare Mauri,32,Ran
+2026,ITA,Italy,Edoardo Crisostomi,26,Ran
+2026,PRT,Portugal,Paulo Moreira,49,Winner
+2026,PRT,Portugal,Adriano Furtado,48,Assist
+2026,PRT,Portugal,Jose Goncalves,45,Ran
+2026,PRT,Portugal,Mickael Reis,41,Ran
+2026,PRT,Portugal,Francisco Gomes,39,Ran
+2026,PRT,Portugal,Ana Pereira,38,Ran
+2026,PRT,Portugal,Filipe Silva,34,Ran
+2026,PRT,Portugal,Samuel Vidinha,34,Ran
+2026,PRT,Portugal,Tiago Borges da Costa,33,Ran
+2026,PRT,Portugal,João Espiguinha,33,Ran
+2026,PRT,Portugal,Sergio Freitas,24,Ran
+2026,PRT,Portugal,Alexandre Silva,21,Ran
+2026,PRT,Portugal,Antonio Quaresma,13,Ran
+2026,PRT,Portugal,António Pinto,10,Ran
+2026,PRT,Portugal,Hugo Alves,0,DNS
+2026,DNK,Denmark,David Stoltenborg,60,Winner
+2026,DNK,Denmark,Kenneth Risom,59,Assist
+2026,DNK,Denmark,Mads Hansen,58,Ran
+2026,DNK,Denmark,Morten Klingenberg,50,Ran
+2026,DNK,Denmark,Nikolaj Olsen,50,Ran
+2026,DNK,Denmark,Jens Christian Mortensen,50,Ran
+2026,DNK,Denmark,Rasmus Kristensen,37,Ran
+2026,DNK,Denmark,Martin Bremholm,35,Ran
+2026,DNK,Denmark,Christian Balthazar Møller,31,Ran
+2026,DNK,Denmark,Lars Vaedeled Roed,28,Ran
+2026,DNK,Denmark,Kristian Binger,27,Ran
+2026,DNK,Denmark,Peter Jensen,27,Ran
+2026,DNK,Denmark,Lars Skaarup Brodsgaard,24,Ran
+2026,DNK,Denmark,Morten Meng Nordstrøm,24,Ran
+2026,DNK,Denmark,Pernille Thomsen,15,Ran
+2026,CHE,Switzerland,Nima Javaheri,43,Winner
+2026,CHE,Switzerland,Marc Schneider,42,Assist
+2026,CHE,Switzerland,Mona Winter,34,Ran
+2026,CHE,Switzerland,Ismael Röthlisberger,32,Ran
+2026,CHE,Switzerland,Felix Stamm,32,Ran
+2026,CHE,Switzerland,Sebastian Kopp,32,Ran
+2026,CHE,Switzerland,Francois Gervaix,31,Ran
+2026,CHE,Switzerland,Nicolas Lehmann,30,Ran
+2026,CHE,Switzerland,Andrea Pestoni,28,Ran
+2026,CHE,Switzerland,Pierre Biege,27,Ran
+2026,CHE,Switzerland,Jörg Desteffani,27,Ran
+2026,CHE,Switzerland,Matteo Tenchio,27,Ran
+2026,CHE,Switzerland,Daniel Schwitter,27,Ran
+2026,CHE,Switzerland,Julian Schneckenburger,25,Ran
+2026,CHE,Switzerland,Doron De Wolf,15,Ran
+2026,FIN,Finland,Verneri Teppo,52,Winner
+2026,FIN,Finland,Pekka Aalto,51,Assist
+2026,FIN,Finland,Albert Romppanen,48,Ran
+2026,FIN,Finland,Janne Männikkö,36,Ran
+2026,FIN,Finland,Markus Forsström,34,Ran
+2026,FIN,Finland,Jani Reima,34,Ran
+2026,FIN,Finland,Victor Borman,33,Ran
+2026,FIN,Finland,Aleksei Grabtchak,33,Ran
+2026,FIN,Finland,Rami Lehtonen,33,Ran
+2026,FIN,Finland,Joni Lepisto,30,Ran
+2026,FIN,Finland,Juuso Turkia,30,Ran
+2026,FIN,Finland,Mikko Leskinen,29,Ran
+2026,FIN,Finland,Tomi Tuominiemi,28,Ran
+2026,FIN,Finland,Ville-Veikka Silvola,27,Ran
+2026,FIN,Finland,Tomi Mikkola,27,Ran
+2026,SVK,Slovakia,Milan Kralik,37,Winner
+2026,SVK,Slovakia,Patrik Hrotek,36,Assist
+2026,SVK,Slovakia,Jozef Gomola,36,Assist
+2026,SVK,Slovakia,Peter Ondras,33,Ran
+2026,SVK,Slovakia,Roman Petrikovic,33,Ran
+2026,SVK,Slovakia,Milan Told,31,Ran
+2026,SVK,Slovakia,Adam Rusinko,31,Ran
+2026,SVK,Slovakia,Attila Kepesi,31,Ran
+2026,SVK,Slovakia,Marian Pavuk,30,Ran
+2026,SVK,Slovakia,Marijan Crnkovič,30,Ran
+2026,SVK,Slovakia,Jakub Rajnic,24,Ran
+2026,SVK,Slovakia,Ivan Husar,24,Ran
+2026,SVK,Slovakia,Jaroslav Klizan,21,Ran
+2026,SVK,Slovakia,Tomas Durta,21,Ran
+2026,SVK,Slovakia,Daniela Pellerova,13,Ran
+2026,IRL,Ireland,Wayne McGuigan,39,Winner
+2026,IRL,Ireland,Patrick Gallagher,38,Assist
+2026,IRL,Ireland,Joey Feery,36,Ran
+2026,IRL,Ireland,Peter Johnston,36,Ran
+2026,IRL,Ireland,Lonan O Farrell,35,Ran
+2026,IRL,Ireland,Anne Crawford,33,Ran
+2026,IRL,Ireland,Diarmuid O Shea,32,Ran
+2026,IRL,Ireland,Kenneth Crinnion,32,Ran
+2026,IRL,Ireland,Colin Dockery,32,Ran
+2026,IRL,Ireland,Vincent McMath,29,Ran
+2026,IRL,Ireland,Cian Nugent,29,Ran
+2026,IRL,Ireland,Stephen Patterson,29,Ran
+2026,IRL,Ireland,Stephen Machale,27,Ran
+2026,IRL,Ireland,Jivee Tolentino,27,Ran
+2026,IRL,Ireland,Kelly Ryan,27,Ran
+2026,ARG,Argentina,Cristian Bartolochini,51,Winner
+2026,ARG,Argentina,Luis Agustin Casajus,50,Assist
+2026,ARG,Argentina,Sergio Gustavo Ruiz,45,Ran
+2026,ARG,Argentina,Nicolás Mauro Pereyra,43,Ran
+2026,ARG,Argentina,Gabriel Da Silva,42,Ran
+2026,ARG,Argentina,Darío Arauz,38,Ran
+2026,ARG,Argentina,Ana Clara Ferrere,36,Ran
+2026,ARG,Argentina,Sergio Encina,35,Ran
+2026,ARG,Argentina,Gabriel Ricardo Carrizo,35,Ran
+2026,ARG,Argentina,Mauricio Balbis,34,Ran
+2026,ARG,Argentina,Lucas Aragona Dominguez,31,Ran
+2026,ARG,Argentina,Gustavo Cuervo,30,Ran
+2026,ARG,Argentina,Gastón Gennai,28,Ran
+2026,ARG,Argentina,Gustavo Pereyra,27,Ran
+2026,ARG,Argentina,Alejandro Gabriel Maluh,20,Ran
+2026,LTU,Lithuania,Julija Soryte,49,Winner
+2026,LTU,Lithuania,Ramunas Klimavicius,48,Assist
+2026,LTU,Lithuania,Martinkevič Edgar,40,Ran
+2026,LTU,Lithuania,Ernestas Vedeikis,38,Ran
+2026,LTU,Lithuania,Milda Grušauskaitė,36,Ran
+2026,LTU,Lithuania,Tomas Puida,36,Ran
+2026,LTU,Lithuania,Velutis Vaidas,36,Ran
+2026,LTU,Lithuania,Roberta Meksraityte,35,Ran
+2026,LTU,Lithuania,Gelšvartas Julius,34,Ran
+2026,LTU,Lithuania,Alvydas Batakis,32,Ran
+2026,LTU,Lithuania,Pacevicius Algis,31,Ran
+2026,LTU,Lithuania,Marius Zakarauskas,29,Ran
+2026,LTU,Lithuania,Tomas Aglinskas,29,Ran
+2026,LTU,Lithuania,Toleikis Deividas,26,Ran
+2026,LTU,Lithuania,Aleksanders Dubinovicius,24,Ran
+2026,EST,Estonia,Kaur Alle,41,Winner
+2026,EST,Estonia,Mikk Rooden,40,Assist
+2026,EST,Estonia,Andrus Rüütelmaa,34,Ran
+2026,EST,Estonia,Liis Siigur,33,Ran
+2026,EST,Estonia,Gunnar Kingo,30,Ran
+2026,EST,Estonia,Elmo Soomets,30,Ran
+2026,EST,Estonia,Laura Komp,30,Ran
+2026,EST,Estonia,Gerli Nikolajev,30,Ran
+2026,EST,Estonia,Reigo Lehtla,27,Ran
+2026,EST,Estonia,Liina Kesamaa,26,Ran
+2026,EST,Estonia,Priit Valk,24,Ran
+2026,EST,Estonia,Taavi Ilp,22,Ran
+2026,EST,Estonia,Mikk Prantsen,20,Ran
+2026,EST,Estonia,Lauri Pihlak,15,Ran
+2026,EST,Estonia,Maksim Radtsenko,10,Ran
+2026,CZE,Czechia,Milan Hauer,41,Winner
+2026,CZE,Czechia,Pavel Seidl,40,Assist
+2026,CZE,Czechia,Matej Rada,38,Ran
+2026,CZE,Czechia,Tomas Vondracek,36,Ran
+2026,CZE,Czechia,Aleś Sedlak,35,Ran
+2026,CZE,Czechia,Klara Mottlova,35,Ran
+2026,CZE,Czechia,Katka Svensson,34,Ran
+2026,CZE,Czechia,Martin Sokol,33,Ran
+2026,CZE,Czechia,Michal Cinciala,32,Ran
+2026,CZE,Czechia,Radek Brunner,30,Ran
+2026,CZE,Czechia,Ondrej Jerhot,30,Ran
+2026,CZE,Czechia,Zuzana Picmanova,24,Ran
+2026,CZE,Czechia,Jana Maluchova,24,Ran
+2026,CZE,Czechia,Ondrej Velicka,20,Ran
+2026,CZE,Czechia,Dusan Kopecny,16,Ran
+2026,IND,India,Mitesh Vijayvargiy,45,Winner
+2026,IND,India,Sunil Sharma,44,Assist
+2026,IND,India,Soma Jagan Mohan Reddy,37,Ran
+2026,IND,India,Velayutham Marimuthu,30,Ran
+2026,IND,India,Pulkit Jain,27,Ran
+2026,IND,India,Umesh Kumar,26,Ran
+2026,IND,India,Ankit Kumar,25,Ran
+2026,IND,India,Sreekant Nair,24,Ran
+2026,IND,India,Manoj Sundaram,22,Ran
+2026,IND,India,Laishram Singh,22,Ran
+2026,IND,India,Ankit Sharma,20,Ran
+2026,IND,India,Sudipto Chowdhury,20,Ran
+2026,IND,India,Rajneesh Kumar,19,Ran
+2026,IND,India,Ankit Panwar,18,Ran
+2026,IND,India,Ajay Kumar Agarwal,18,Ran
+2026,ROU,Romania,Mihail Balica,62,Winner
+2026,ROU,Romania,Valentin Radu,61,Assist
+2026,ROU,Romania,Andrici Sorin,43,Ran
+2026,ROU,Romania,Constantin Nicolescu,38,Ran
+2026,ROU,Romania,Bogdan Stefanescu,36,Ran
+2026,ROU,Romania,Ruben Nuredini,35,Ran
+2026,ROU,Romania,Razvan Farkas,33,Ran
+2026,ROU,Romania,Mihai Bolboaca,31,Ran
+2026,ROU,Romania,Florin Simion,31,Ran
+2026,ROU,Romania,Nicu Daniel Constantin,30,Ran
+2026,ROU,Romania,Ana Cristina Constantin,28,Ran
+2026,ROU,Romania,Vasile Cretu,26,Ran
+2026,ROU,Romania,Robert Constantin Zamisnicu,24,Ran
+2026,ROU,Romania,Liviu Timofte,21,Ran
+2026,ROU,Romania,Anisia Cojucaru,20,Ran
+2026,GRC,Greece,Ilias Tsaparelis,43,Winner
+2026,GRC,Greece,Anastasios Leonidis,42,Assist
+2026,GRC,Greece,Stefanos Daskalopoulos,38,Ran
+2026,GRC,Greece,Nikos Sfitis,35,Ran
+2026,GRC,Greece,Ioannis Zacharatos,33,Ran
+2026,GRC,Greece,Christos Mavrikios,31,Ran
+2026,GRC,Greece,Georgios Zachariadis,31,Ran
+2026,GRC,Greece,Georgios Kougioumtzis,30,Ran
+2026,GRC,Greece,Apostolos Salagkoudis,30,Ran
+2026,GRC,Greece,Ilias Gkrozos,30,Ran
+2026,GRC,Greece,Paschalis Toumpis,25,Ran
+2026,GRC,Greece,Dionysios Kompothekras,22,Ran
+2026,GRC,Greece,Spyros Chrysikopoulos,21,Ran
+2026,GRC,Greece,Kalliopi Passa,19,Ran
+2026,GRC,Greece,Grigorios Drakos,18,Ran
+2026,LVA,Latvia,Ritvars Kalniņš,43,Winner
+2026,LVA,Latvia,Mihails Kohanovics,42,Assist
+2026,LVA,Latvia,Valdis Nilovs,40,Ran
+2026,LVA,Latvia,Inara Jerina,38,Ran
+2026,LVA,Latvia,Armands Arins,37,Ran
+2026,LVA,Latvia,Sergejs Malins,37,Ran
+2026,LVA,Latvia,Aleksejs Bute,35,Ran
+2026,LVA,Latvia,Juris Riekstins,35,Ran
+2026,LVA,Latvia,Kristaps Kanna,31,Ran
+2026,LVA,Latvia,Arturs Krumins,30,Ran
+2026,LVA,Latvia,Ritvars Lerme,29,Ran
+2026,LVA,Latvia,Janis Grikis,29,Ran
+2026,LVA,Latvia,Rihards Abolins,27,Ran
+2026,LVA,Latvia,Rudolfs Auzbikis,27,Ran
+2026,LVA,Latvia,Rihards Brigis,26,Ran
+2026,ZAF,South Africa,Thembinkosi Sojola,41,Winner
+2026,ZAF,South Africa,Christopher Stobbs,40,Assist
+2026,ZAF,South Africa,lloyd Sithole,36,Ran
+2026,ZAF,South Africa,John Miller,35,Ran
+2026,ZAF,South Africa,William Barrett,33,Ran
+2026,ZAF,South Africa,Jacques Smit,32,Ran
+2026,ZAF,South Africa,Jaco Ebertsohn,31,Ran
+2026,ZAF,South Africa,Etienne Louw,28,Ran
+2026,ZAF,South Africa,Rob Hamilton,27,Ran
+2026,ZAF,South Africa,Rapelang Kgaje,26,Ran
+2026,ZAF,South Africa,Kim Sonntag,26,Ran
+2026,ZAF,South Africa,Donovan Shirley,25,Ran
+2026,ZAF,South Africa,Kgomotso Moyo,24,Ran
+2026,ZAF,South Africa,Fergus O'Brien,23,Ran
+2026,ZAF,South Africa,Adam Wade,23,Ran
+2026,VEN,Venezuela,Lialbert Marrufo,40,Winner
+2026,VEN,Venezuela,Carlos Hernandez,39,Assist
+2026,VEN,Venezuela,Angel Gonzáles,37,Ran
+2026,VEN,Venezuela,Robert Alejandro Zambrano,35,Ran
+2026,VEN,Venezuela,Enmanuel Zambrano,31,Ran
+2026,VEN,Venezuela,Juan Pacheco,31,Ran
+2026,VEN,Venezuela,José Ortega,30,Ran
+2026,VEN,Venezuela,Walter Parra,29,Ran
+2026,VEN,Venezuela,Harry Diaz,27,Ran
+2026,VEN,Venezuela,Luis Rojas,27,Ran
+2026,VEN,Venezuela,Marynels Morales,24,Ran
+2026,VEN,Venezuela,Gregorio Feijoo,23,Ran
+2026,VEN,Venezuela,Moises Lopez,22,Ran
+2026,VEN,Venezuela,Jose Hugas,21,Ran
+2026,VEN,Venezuela,Jose Hurtado,20,Ran
+2026,MAR,Morocco,Brahim Aldaz,47,Winner
+2026,MAR,Morocco,Omar Zahri,46,Assist
+2026,MAR,Morocco,Osmani Rachid,45,Ran
+2026,MAR,Morocco,Youssef Terhmina,31,Ran
+2026,MAR,Morocco,Abderrahmane Ait Haddou,24,Ran
+2026,MAR,Morocco,Mohammed Alaoui,24,Ran
+2026,MAR,Morocco,Salim Sekkat,22,Ran
+2026,MAR,Morocco,Allouch Achraf,18,Ran
+2026,MAR,Morocco,Mohammed Erraghay,16,Ran
+2026,MAR,Morocco,Mohamed Ezzouak,15,Ran
+2026,MAR,Morocco,Marouane Balyot,12,Ran
+2026,MAR,Morocco,Driss Taifour,11,Ran
+2026,MAR,Morocco,kaoutar Bendoumou,9,Ran
+2026,MAR,Morocco,Mohammed Sahih,6,Ran
+2026,MAR,Morocco,Khachbane Abdellah,5,Ran
+2026,COL,Colombia,José Antonio Rodríguez Pinzon,41,Winner
+2026,COL,Colombia,Daniel Alejandro Marín Osorio,40,Assist
+2026,COL,Colombia,Sergio Moreno,38,Ran
+2026,COL,Colombia,Jhon Querubin,35,Ran
+2026,COL,Colombia,Cesar Serna,35,Ran
+2026,COL,Colombia,Brahian Ramirez Gómez,28,Ran
+2026,COL,Colombia,Lauren Matiz,27,Ran
+2026,COL,Colombia,Juan Calle,25,Ran
+2026,COL,Colombia,Mario Vergara,24,Ran
+2026,COL,Colombia,Lorena Saavedra Cardona,23,Ran
+2026,COL,Colombia,Jordin Imanol,22,Ran
+2026,COL,Colombia,Edisson Fuquene,21,Ran
+2026,COL,Colombia,Yehison Ramos,21,Ran
+2026,COL,Colombia,Abrahan Villanueva,20,Ran
+2026,COL,Colombia,Anderson Vaquiro,0,DNS
+2026,PHL,Philippines,Ronnel Yongot,48,Winner
+2026,PHL,Philippines,John Marvin Buizon,47,Assist
+2026,PHL,Philippines,Jose Xavier Dando,47,Assist
+2026,PHL,Philippines,Ayan Rel Digao,29,Ran
+2026,PHL,Philippines,Kimberly Flores,26,Ran
+2026,PHL,Philippines,Ted Monsanto,26,Ran
+2026,PHL,Philippines,Allan B.Gadong,25,Ran
+2026,PHL,Philippines,Rowein Diokno,24,Ran
+2026,PHL,Philippines,Ronel S. Fallaria,24,Ran
+2026,PHL,Philippines,Arnulfo Aquino,24,Ran
+2026,PHL,Philippines,Hilary James Tambolero,24,Ran
+2026,PHL,Philippines,Delfin Osias,20,Ran
+2026,PHL,Philippines,Virgil Reboton,19,Ran
+2026,PHL,Philippines,Jan Mel Doneza,17,Ran
+2026,PHL,Philippines,Dante Sornero,17,Ran
+2026,TUR,Turkey,Savaş Lütfi Kara,49,Winner
+2026,TUR,Turkey,Salim Akdaş,48,Assist
+2026,TUR,Turkey,Engin Özdemir,45,Ran
+2026,TUR,Turkey,Gurhan Akdag,45,Ran
+2026,TUR,Turkey,Mustafa Tuksal,26,Ran
+2026,TUR,Turkey,Seven Aydos,25,Ran
+2026,TUR,Turkey,İlhan Mutlu,24,Ran
+2026,TUR,Turkey,Özgür Pekdüz,24,Ran
+2026,TUR,Turkey,Birkan Halis,24,Ran
+2026,TUR,Turkey,Mustafa Poyraz,24,Ran
+2026,TUR,Turkey,Atıl Balin,23,Ran
+2026,TUR,Turkey,Eyupcan Genc,11,Ran
+2026,TUR,Turkey,Ahmet Sahinoz,10,Ran
+2026,TUR,Turkey,Yusuf Şahin,9,Ran
+2026,TUR,Turkey,Necip Yilmaz,0,DNS
+2026,SVN,Slovenia,Bojana Gostan,42,Winner
+2026,SVN,Slovenia,Andrej Nastran,41,Assist
+2026,SVN,Slovenia,Matej Nidorfer,40,Ran
+2026,SVN,Slovenia,Ivan Hrastovec,34,Ran
+2026,SVN,Slovenia,Marija Trontelj,32,Ran
+2026,SVN,Slovenia,Rok Kvas,31,Ran
+2026,SVN,Slovenia,Jernej Mencinger,30,Ran
+2026,SVN,Slovenia,Tomaz Miklavcic,30,Ran
+2026,SVN,Slovenia,Bojan Fiser,27,Ran
+2026,SVN,Slovenia,Aljaz Holcman,27,Ran
+2026,SVN,Slovenia,Tadej Horvatic,27,Ran
+2026,SVN,Slovenia,Anže Česen,26,Ran
+2026,SVN,Slovenia,Aleš Frlic,18,Ran
+2026,SVN,Slovenia,Teo Kostanjevec,18,Ran
+2026,SVN,Slovenia,Martina Klancnik Potrc,10,Ran
+2026,TWN,Taipei,高正治,29,Winner
+2026,TWN,Taipei,Wen Ya Tsai,28,Assist
+2026,TWN,Taipei,莊俊凱,26,Ran
+2026,TWN,Taipei,林捷如,24,Ran
+2026,TWN,Taipei,Xing-Guo Cai,24,Ran
+2026,TWN,Taipei,Shun-Yuan Cheng,22,Ran
+2026,TWN,Taipei,Ming-Chih Liu,22,Ran
+2026,TWN,Taipei,Hungpin Lee,21,Ran
+2026,TWN,Taipei,李銘峰,20,Ran
+2026,TWN,Taipei,李昱賢,20,Ran
+2026,TWN,Taipei,范榮墀,20,Ran
+2026,TWN,Taipei,林慶華,16,Ran
+2026,TWN,Taipei,Kai Ping Jiang,15,Ran
+2026,TWN,Taipei,Chia-Hung Wei,15,Ran
+2026,TWN,Taipei,Tieh-Cheng Chueh,7,Ran
+2026,ISR,Israel,Ido Dassa,48,Winner
+2026,ISR,Israel,Dudu Dano,47,Assist
+2026,ISR,Israel,Shine Bar,45,Ran
+2026,ISR,Israel,Stas Khalepski,36,Ran
+2026,ISR,Israel,Mikhail Oshurkov,35,Ran
+2026,ISR,Israel,Eliyahu Talker,32,Ran
+2026,ISR,Israel,Oren Nehbas,31,Ran
+2026,ISR,Israel,Pavel Gontsov,30,Ran
+2026,ISR,Israel,Ariel Rozenfeld,30,Ran
+2026,ISR,Israel,Ohad Israel,30,Ran
+2026,ISR,Israel,Eyal Zamir,28,Ran
+2026,ISR,Israel,Asaf Ayalon,27,Ran
+2026,ISR,Israel,Ofer Regev,25,Ran
+2026,ISR,Israel,Oren Nogradi,25,Ran
+2026,ISR,Israel,Yair Raman,23,Ran
+2026,BOL,Bolivia,Jose Luis Guzman,40,Winner
+2026,BOL,Bolivia,Julián Champi Llajsa,39,Assist
+2026,BOL,Bolivia,Tiburcio Aguilar,38,Ran
+2026,BOL,Bolivia,Jose Grover Patino Patino,30,Ran
+2026,BOL,Bolivia,Nelson Gutierrez,30,Ran
+2026,BOL,Bolivia,Jhonny Alberth Porco,26,Ran
+2026,BOL,Bolivia,Lorenzo Castillo,26,Ran
+2026,BOL,Bolivia,Policarpio Chambi,25,Ran
+2026,BOL,Bolivia,Alejandra Sahonero,22,Ran
+2026,BOL,Bolivia,Rodrigo Álvarez Flores,21,Ran
+2026,BOL,Bolivia,Mauricio Coimbra Suárez,21,Ran
+2026,BOL,Bolivia,Yuvany Martinez,19,Ran
+2026,BOL,Bolivia,Oscar Ramiro Mullisaca,19,Ran
+2026,BOL,Bolivia,Rossy Cuellar Balderrama,18,Ran
+2026,BOL,Bolivia,Diego Semeones Peñaranda Puma,15,Ran
+2026,KEN,Kenya,King'ori Wanjiru,39,Winner
+2026,KEN,Kenya,Burton Mudogo,38,Assist
+2026,KEN,Kenya,Stephen Bwire,35,Ran
+2026,KEN,Kenya,Reuben Josphat Mgonga Njoroge,33,Ran
+2026,KEN,Kenya,Clement Akach,32,Ran
+2026,KEN,Kenya,Dylan Johnson,31,Ran
+2026,KEN,Kenya,Phyll Nawanjaya,30,Ran
+2026,KEN,Kenya,Eric de Wildt,25,Ran
+2026,KEN,Kenya,Eva Jacky,25,Ran
+2026,KEN,Kenya,Patrick Scheel Hinojosa,25,Ran
+2026,KEN,Kenya,Carolyne Wanjiru,24,Ran
+2026,KEN,Kenya,Chelimo Kimaiyo,24,Ran
+2026,KEN,Kenya,Dickson Muthiani,0,DNS
+2026,KEN,Kenya,Kaka Yusuf,0,DNS
+2026,KEN,Kenya,Kennedy Mbuyuyu,0,DNS
+2026,GTM,Guatemala,Reyna Raymundo,43,Winner
+2026,GTM,Guatemala,Mauricio Juarez,42,Assist
+2026,GTM,Guatemala,Kelinton Sic,40,Ran
+2026,GTM,Guatemala,David Juarez,35,Ran
+2026,GTM,Guatemala,Luis Guzman,34,Ran
+2026,GTM,Guatemala,Abner Guzman,34,Ran
+2026,GTM,Guatemala,Ismael Antonio Pinzon Santizo,28,Ran
+2026,GTM,Guatemala,Estuardo Rogelio Tobar Vasquez,26,Ran
+2026,GTM,Guatemala,Conrado Paulich,24,Ran
+2026,GTM,Guatemala,Carlos Otoniel Herrera Pérez,24,Ran
+2026,GTM,Guatemala,David Gallo,22,Ran
+2026,GTM,Guatemala,Noé Salatiel Guzmán Morales,20,Ran
+2026,GTM,Guatemala,Edgar Nehemias Cali,19,Ran
+2026,GTM,Guatemala,Fredy Panteul,16,Ran
+2026,GTM,Guatemala,Danny Adolfo Vasquez Salama,15,Ran
+2026,DZA,Algeria,Naim Selloum,36,Winner
+2026,DZA,Algeria,Farouk Azib,35,Assist
+2026,DZA,Algeria,Dahdah Nabyl,34,Ran
+2026,DZA,Algeria,Salim Zaouia,33,Ran
+2026,DZA,Algeria,Ghiles Khati,33,Ran
+2026,DZA,Algeria,Othmane Hamidi,30,Ran
+2026,DZA,Algeria,Saddek Mouloua,30,Ran
+2026,DZA,Algeria,Imessaoudene Mahrez Aghiles,28,Ran
+2026,DZA,Algeria,Malek Leroul,25,Ran
+2026,DZA,Algeria,Djebrouni Zohra,24,Ran
+2026,DZA,Algeria,Kerbouche Bilal,20,Ran
+2026,DZA,Algeria,Madjid Bentalha,19,Ran
+2026,DZA,Algeria,Mazouz Hanane,17,Ran
+2026,DZA,Algeria,Lotfi Mazouz,15,Ran
+2026,DZA,Algeria,Seri Momamed Reda,10,Ran
+2026,MLT,Malta,Ray Grech,34,Winner
+2026,MLT,Malta,Simon Callus,33,Assist
+2026,MLT,Malta,William Lewis,31,Ran
+2026,MLT,Malta,José Luis Lara Natera,30,Ran
+2026,MLT,Malta,Gianni Ciappara,30,Ran
+2026,MLT,Malta,Maria Sultana,28,Ran
+2026,MLT,Malta,Joseph Camilleri,27,Ran
+2026,MLT,Malta,Clara Attard Formosa,26,Ran
+2026,MLT,Malta,Karl Fiteni,22,Ran
+2026,MLT,Malta,Jeffrey Magro,22,Ran
+2026,MLT,Malta,Robert Formosa,21,Ran
+2026,MLT,Malta,Kevin Casaru,20,Ran
+2026,MLT,Malta,Pawlu Zammit,18,Ran
+2026,MLT,Malta,Mark Bezzina,15,Ran
+2026,MLT,Malta,Miguel Mifsud,7,Ran
+2026,URY,Uruguay,Jonatan Rodrigo Torena Rodríguez,39,Winner
+2026,URY,Uruguay,Richard Sosa,38,Assist
+2026,URY,Uruguay,Federico Molina,35,Ran
+2026,URY,Uruguay,Gonzalo Rocío,31,Ran
+2026,URY,Uruguay,Olivia Nascente,24,Ran
+2026,URY,Uruguay,Diego Rodriguez,24,Ran
+2026,URY,Uruguay,Sergio Odela,22,Ran
+2026,URY,Uruguay,Santiago Azaian,21,Ran
+2026,URY,Uruguay,Dario Ferreira,21,Ran
+2026,URY,Uruguay,Sebastian Correa,19,Ran
+2026,URY,Uruguay,Joaquín Gómez Bentancourt,18,Ran
+2026,URY,Uruguay,Juan Fernandez,17,Ran
+2026,URY,Uruguay,Matias Delfino,16,Ran
+2026,URY,Uruguay,Jose Gomez,16,Ran
+2026,URY,Uruguay,Alfredo Arias,15,Ran
+2026,UKR,Ukraine,Anatolii Verbivskyi,38,Winner
+2026,UKR,Ukraine,Ievgen Nesterets,37,Assist
+2026,UKR,Ukraine,Viktoriia Nikolaienko,33,Ran
+2026,UKR,Ukraine,Mykhailo Maistrenko,33,Ran
+2026,UKR,Ukraine,Oleksii Alekseienko,30,Ran
+2026,UKR,Ukraine,Stanislav Frenkel,27,Ran
+2026,UKR,Ukraine,Vitalii Vladychenko,25,Ran
+2026,UKR,Ukraine,Tetiana Hramatikova-Bono,24,Ran
+2026,UKR,Ukraine,Serhii Melnychuk,24,Ran
+2026,UKR,Ukraine,Dmytro Storozhyk,21,Ran
+2026,UKR,Ukraine,Kseniia Svyrydova,16,Ran
+2026,UKR,Ukraine,Ramina Dadasheva,15,Ran
+2026,UKR,Ukraine,Andrii Klatsunov,15,Ran
+2026,UKR,Ukraine,Ozgur Yalcici,8,Ran
+2026,UKR,Ukraine,Serhii Bilyi,4,Ran
+2026,CIV,Côte d'Ivoire,Marius Kouakou,36,Winner
+2026,CIV,Côte d'Ivoire,Adele Al Khalil,35,Assist
+2026,CIV,Côte d'Ivoire,Dimitri Kouassi,26,Ran
+2026,CIV,Côte d'Ivoire,Christophe Yahiri,25,Ran
+2026,CIV,Côte d'Ivoire,Adama Sidibe,20,Ran
+2026,CIV,Côte d'Ivoire,Regis Coumenges,17,Ran
+2026,CIV,Côte d'Ivoire,Epiphane Dossou,17,Ran
+2026,CIV,Côte d'Ivoire,Yann Perret,16,Ran
+2026,CIV,Côte d'Ivoire,Yoann Preteseille,16,Ran
+2026,CIV,Côte d'Ivoire,N'Gadio Wassa Konate,15,Ran
+2026,CIV,Côte d'Ivoire,Bambara Adama,14,Ran
+2026,CIV,Côte d'Ivoire,Marie Pierre Koudou,14,Ran
+2026,CIV,Côte d'Ivoire,Jeremie Goutto,12,Ran
+2026,CIV,Côte d'Ivoire,Zakaria Kossobe,12,Ran
+2026,CIV,Côte d'Ivoire,Florian Buchet,9,Ran
+2026,CHL,Chile,Victor Muñoz Garcia,38,Winner
+2026,CHL,Chile,Fernando Antonio Egaña Acevedo,37,Assist
+2026,CHL,Chile,Hector Gallardo,32,Ran
+2026,CHL,Chile,Pablo Gallardo,30,Ran
+2026,CHL,Chile,Mario Enrique Peñaloza Jara,27,Ran
+2026,CHL,Chile,William Grey,27,Ran
+2026,CHL,Chile,Rodrigo Alejandro Tapia Guzmán,26,Ran
+2026,CHL,Chile,Francisco Diaz,24,Ran
+2026,CHL,Chile,James Quijada,22,Ran
+2026,CHL,Chile,Gabriel Mutis,21,Ran
+2026,CHL,Chile,Marco Miranda,19,Ran
+2026,CHL,Chile,Felipe Benavides,14,Ran
+2026,CHL,Chile,Fermin Diaz,12,Ran
+2026,CHL,Chile,Juan Lorrenz Lizana,10,Ran
+2026,CHL,Chile,Carolina Mayorga,7,Ran
+2026,BMU,Bermuda,Florin Teleman,25,Winner
+2026,BMU,Bermuda,Michelle Bergsma,24,Assist
+2026,BMU,Bermuda,Richard Howells,18,Ran
+2026,BMU,Bermuda,Miles Smith,16,Ran
+2026,BMU,Bermuda,Jason Williams,15,Ran
+2026,BMU,Bermuda,Dave Courcy,13,Ran
+2026,BMU,Bermuda,Philip Woollins,12,Ran
+2026,BMU,Bermuda,Jonathan Chapman,12,Ran
+2026,BMU,Bermuda,Edward Ferrari-Willis,12,Ran
+2026,BMU,Bermuda,James Roberts,12,Ran
+2026,BMU,Bermuda,Katie Vanner,11,Ran
+2026,BMU,Bermuda,Claire Gemmell,10,Ran
+2026,BMU,Bermuda,Toby Derham,8,Ran
+2026,BMU,Bermuda,Hanah Cannon,8,Ran
+2026,BMU,Bermuda,Mark Harris,7,Ran
+2026,PRY,Paraguay,Ricardo Arias,31,Winner
+2026,PRY,Paraguay,Daniel Tellez,30,Assist
+2026,PRY,Paraguay,Carlos Javier Melgarejo,28,Ran
+2026,PRY,Paraguay,Javeth Alexandro Vega Chavez,27,Ran
+2026,PRY,Paraguay,Agustina Cantero Ro,27,Ran
+2026,PRY,Paraguay,Rosana Irene Farina,25,Ran
+2026,PRY,Paraguay,Nelson Sanabria Benítez,24,Ran
+2026,PRY,Paraguay,Celso Damián Duré González,22,Ran
+2026,PRY,Paraguay,Marcos Cantero Gimenez,18,Ran
+2026,PRY,Paraguay,Jesús González,18,Ran
+2026,PRY,Paraguay,Monserrat Chavez,18,Ran
+2026,PRY,Paraguay,Tobias Zañón,18,Ran
+2026,PRY,Paraguay,Thanya Barrios Benítez,17,Ran
+2026,PRY,Paraguay,Ronald Eduardo Franco Britez,13,Ran
+2026,PRY,Paraguay,Carlos Leguizamon,7,Ran
+2026,BGR,Bulgaria,Nikolay Hristov,34,Winner
+2026,BGR,Bulgaria,Yosif Bankov,33,Assist
+2026,BGR,Bulgaria,Viktor Simeonov,19,Ran
+2026,BGR,Bulgaria,Anton Karamatov,19,Ran
+2026,BGR,Bulgaria,Kristian Kadiev,18,Ran
+2026,BGR,Bulgaria,Mariya Stancheva,17,Ran
+2026,BGR,Bulgaria,Lyuba Bozhilova,14,Ran
+2026,BGR,Bulgaria,Mihail Kombakov,14,Ran
+2026,BGR,Bulgaria,Vyara Peteva,13,Ran
+2026,BGR,Bulgaria,Kiril Rangelov,12,Ran
+2026,BGR,Bulgaria,Mario Georgiev,11,Ran
+2026,BGR,Bulgaria,Ivan Venkov,11,Ran
+2026,BGR,Bulgaria,Nikolay Mladenov,9,Ran
+2026,BGR,Bulgaria,Miroslav Sanevski,8,Ran
+2026,BGR,Bulgaria,Elena Koshnicharska,0,DNS
+2026,BRN,Brunei,John Witton,27,Winner
+2026,BRN,Brunei,Faiz Anwar,26,Assist
+2026,BRN,Brunei,Abdul Akim Haji Jalal,24,Ran
+2026,BRN,Brunei,Abdull Matalif Ibrahim,20,Ran
+2026,BRN,Brunei,Wen Ren Lee,19,Ran
+2026,BRN,Brunei,Jennifer Townsend,18,Ran
+2026,BRN,Brunei,Luc Devaux,18,Ran
+2026,BRN,Brunei,Pg Mas Norazlin Pg Momin,16,Ran
+2026,BRN,Brunei,Christopher On,16,Ran
+2026,BRN,Brunei,Hj Edy Astry Abd Malek,15,Ran
+2026,BRN,Brunei,Matnarudin Ibrahim,15,Ran
+2026,BRN,Brunei,Gline Mathew,10,Ran
+2026,BRN,Brunei,Muhammad Ali Rashid Haji Abd Rani,9,Ran
+2026,BRN,Brunei,Wafiy Jauhari,9,Ran
+2026,BRN,Brunei,Muhammad Ajmal Azman Sudin,7,Ran
+2026,MYS,Malaysia,Willie David Christopher,21,Winner
+2026,MYS,Malaysia,Mark Eyton-Jones,20,Assist
+2026,MYS,Malaysia,Thiruventhiran Narayasamy,18,Ran
+2026,MYS,Malaysia,Jesse Tan Siew Chen,17,Ran
+2026,MYS,Malaysia,Grace Lim,16,Ran
+2026,MYS,Malaysia,EugeneChai JunHoe,16,Ran
+2026,MYS,Malaysia,Thomas Bouveau,16,Ran
+2026,MYS,Malaysia,Chai Hau Yen,12,Ran
+2026,MYS,Malaysia,Kevin Tebay,11,Ran
+2026,MYS,Malaysia,Yohan Bethenod,9,Ran
+2026,MYS,Malaysia,MuhammadAzry ZulkarnainYuhanis,9,Ran
+2026,MYS,Malaysia,Megan McKenna,8,Ran
+2026,MYS,Malaysia,Carly Balmforth,8,Ran
+2026,MYS,Malaysia,Koh ChiaoNing,0,DNS
+2026,MYS,Malaysia,Jenny Holloway,0,DNS
+2026,ZMB,Zambia,Cosmas Bwalya,32,Winner
+2026,ZMB,Zambia,Alick Mashowo,31,Assist
+2026,ZMB,Zambia,Joseph Mumba,24,Ran
+2026,ZMB,Zambia,Daniel Mwansa,21,Ran
+2026,ZMB,Zambia,Mike Kannini,20,Ran
+2026,ZMB,Zambia,Maaka Sihulumi,20,Ran
+2026,ZMB,Zambia,Michael Haambayi,20,Ran
+2026,ZMB,Zambia,Bernie Smith,18,Ran
+2026,ZMB,Zambia,Yuval Cohen,18,Ran
+2026,ZMB,Zambia,Clayton Kachamba,15,Ran
+2026,ZMB,Zambia,Clifford Mwale,15,Ran
+2026,ZMB,Zambia,Eric Chapili,13,Ran
+2026,ZMB,Zambia,Trevour Muyunda,12,Ran
+2026,ZMB,Zambia,Limpo Mubita,11,Ran
+2026,ZMB,Zambia,Winstone Mwale,7,Ran
+2026,NPL,Nepal,Arjun Kulung Rai,27,Winner
+2026,NPL,Nepal,Pancha Ram Budha,26,Assist
+2026,NPL,Nepal,Ranjit Rai,25,Ran
+2026,NPL,Nepal,Ashok Gurung,21,Ran
+2026,NPL,Nepal,Keshav Budha,19,Ran
+2026,NPL,Nepal,Lokendra Rai,18,Ran
+2026,NPL,Nepal,Prince Tamang,16,Ran
+2026,NPL,Nepal,Safal Lama,16,Ran
+2026,NPL,Nepal,Sudhir Parajuli,15,Ran
+2026,NPL,Nepal,Manju Sunuwar,15,Ran
+2026,NPL,Nepal,Diwakar Budha Magar,12,Ran
+2026,NPL,Nepal,Harendra Kumar Chaudharu,12,Ran
+2026,NPL,Nepal,Shakti Ram Roka,8,Ran
+2026,NPL,Nepal,Ramesh Limbu,0,DNS
+2026,NPL,Nepal,Baram Ashok,0,DNS
+2026,ECU,Ecuador,Julio Cesar Sharup Guanuchi,27,Winner
+2026,ECU,Ecuador,Juan Carlos Gonzalez Delgado,26,Assist
+2026,ECU,Ecuador,Claudia Jumbo,20,Ran
+2026,ECU,Ecuador,Julio Ubilla,20,Ran
+2026,ECU,Ecuador,Santiago Freire,19,Ran
+2026,ECU,Ecuador,Marcia Tacuri,19,Ran
+2026,ECU,Ecuador,Ronaldo Tsakimp,17,Ran
+2026,ECU,Ecuador,Ivan Mafla,16,Ran
+2026,ECU,Ecuador,Hugo Loja,13,Ran
+2026,ECU,Ecuador,Nelson Pita,11,Ran
+2026,ECU,Ecuador,Oscar Hidalgo,9,Ran
+2026,ECU,Ecuador,Javier Mariscal,9,Ran
+2026,ECU,Ecuador,Santiago Leon,0,DNS
+2026,PAK,Pakistan,Jamal Said,29,Winner
+2026,PAK,Pakistan,Israr Muhammad,28,Assist
+2026,PAK,Pakistan,Ashir Abbas,18,Ran
+2026,PAK,Pakistan,Muhammad Mustafa,17,Ran
+2026,PAK,Pakistan,Mashood Ahmed,16,Ran
+2026,PAK,Pakistan,Rufi Shahzada,16,Ran
+2026,PAK,Pakistan,Taimur Asif Mirza,16,Ran
+2026,PAK,Pakistan,Anum Uzair,16,Ran
+2026,PAK,Pakistan,Wasif Razzaq,16,Ran
+2026,PAK,Pakistan,Omer Khalid,15,Ran
+2026,PAK,Pakistan,Ahsen Qureshi,15,Ran
+2026,PAK,Pakistan,Muhammad Shoaib Khurram,10,Ran
+2026,PAK,Pakistan,Shams Ghazee,8,Ran
+2026,PAK,Pakistan,Taha Kamal Saeed,8,Ran
+2026,PAK,Pakistan,Waqar Khattak,6,Ran
+2026,TJK,Tajikistan,Wayne Cassidy,25,Winner
+2026,TJK,Tajikistan,Sergey,24,Assist
+2026,TJK,Tajikistan,Ahror Kosimi,20,Ran
+2026,TJK,Tajikistan,Yuldosh,12,Ran
+2026,TJK,Tajikistan,Olim,12,Ran
+2026,TJK,Tajikistan,Amir,12,Ran
+2026,TJK,Tajikistan,Parvina,12,Ran
+2026,TJK,Tajikistan,Mirzodaler,11,Ran
+2026,TJK,Tajikistan,Denis Dmitriev,10,Ran
+2026,TJK,Tajikistan,Inna,10,Ran
+2026,TJK,Tajikistan,Doniyor,10,Ran
+2026,TJK,Tajikistan,Firuz,9,Ran
+2026,TJK,Tajikistan,Odil,8,Ran
+2026,TJK,Tajikistan,Bahrom,8,Ran
+2026,TJK,Tajikistan,Shokhrukh,7,Ran
+2026,CUB,Cuba,Ramon Arceo Rodriguez,25,Winner
+2026,CUB,Cuba,Jan Carlos Nunez Garcia,24,Assist
+2026,CUB,Cuba,Marcel Iglesias Llorens,20,Ran
+2026,CUB,Cuba,Omar Mendoza de Lara,19,Ran
+2026,CUB,Cuba,Dirvan Duarte Rodriguez,17,Ran
+2026,CUB,Cuba,Jorge Enrique Meneses Bernal,17,Ran
+2026,CUB,Cuba,Chavely Calero Gonzalez,16,Ran
+2026,CUB,Cuba,Juan Alberto Trisa Bustamante,15,Ran
+2026,CUB,Cuba,Leandro Carreño Rojas,13,Ran
+2026,CUB,Cuba,Luis Edel Iglesias Calzadillas,11,Ran
+2026,CUB,Cuba,Eduardo Rodriguez Rodriguez,11,Ran
+2026,CUB,Cuba,Guillermo David Pelayo Miller,9,Ran
+2026,CUB,Cuba,Higinio Contrera Zuniga,9,Ran
+2026,CUB,Cuba,Daylon Guerra Ramos,8,Ran
+2026,CUB,Cuba,Duniesky Suarez Porte,8,Ran
+2026,DOM,Dominican Republic,Livio Feliz,26,Winner
+2026,DOM,Dominican Republic,Simon Cepeda,25,Assist
+2026,DOM,Dominican Republic,Yeirys Soto,23,Ran
+2026,DOM,Dominican Republic,Rodrigo Farach Aldana,22,Ran
+2026,DOM,Dominican Republic,Carlos Ovalle,20,Ran
+2026,DOM,Dominican Republic,Ivan Ortega,20,Ran
+2026,DOM,Dominican Republic,Cristian Minaya,18,Ran
+2026,DOM,Dominican Republic,Luis Antonio De León Encarnación,18,Ran
+2026,DOM,Dominican Republic,Juan Perez,17,Ran
+2026,DOM,Dominican Republic,Lucas Gaitán,15,Ran
+2026,DOM,Dominican Republic,Daiyi Shiguetome,14,Ran
+2026,DOM,Dominican Republic,Pedro Taveras,13,Ran
+2026,DOM,Dominican Republic,Jose Santos,10,Ran
+2026,DOM,Dominican Republic,Joan Gomez,8,Ran
+2026,DOM,Dominican Republic,Jorge Camilo,4,Ran
+2026,NAM,Namibia,Tobias Verwey,23,Winner
+2026,NAM,Namibia,Buks Gous,22,Assist
+2026,NAM,Namibia,Donatus Aihuki,22,Assist
+2026,NAM,Namibia,Marietjie Steinbach,21,Ran
+2026,NAM,Namibia,Danielle Zimny,21,Ran
+2026,NAM,Namibia,Danie Opperman,20,Ran
+2026,NAM,Namibia,Naude Dreyer,20,Ran
+2026,NAM,Namibia,Richard Reid,20,Ran
+2026,NAM,Namibia,Erich Goeieman,17,Ran
+2026,NAM,Namibia,Ivan Heigan,17,Ran
+2026,NAM,Namibia,Jana van Dyk,16,Ran
+2026,NAM,Namibia,Elze Eigelaar,16,Ran
+2026,NAM,Namibia,Willem Silver,16,Ran
+2026,NAM,Namibia,Karl Birkenstock,13,Ran
+2026,NAM,Namibia,Ethan Snyders,10,Ran
+2026,MUS,Mauritius,Clement Deffrenne,0,DNS
+2026,MUS,Mauritius,Bryan Martin,0,DNS
+2026,MUS,Mauritius,Allan parisot,0,DNS
+2026,MUS,Mauritius,Dominique mootealoo,0,DNS
+2026,MUS,Mauritius,Daniel ricaud,0,DNS
+2026,MUS,Mauritius,Guillaume Kiecken,0,DNS
+2026,MUS,Mauritius,Kuldeep domun,0,DNS
+2026,MUS,Mauritius,Raymond Kok Shun,0,DNS
+2026,MUS,Mauritius,Desire Larosee,0,DNS
+2026,MUS,Mauritius,Johan Sury,0,DNS
+2026,MUS,Mauritius,Nishant chavan,0,DNS
+2026,MUS,Mauritius,Ashvin seewoolall,0,DNS
+2026,MUS,Mauritius,Kenny etiennette,0,DNS
+2026,MUS,Mauritius,Marieyanna prosper,0,DNS
+2026,MUS,Mauritius,Yannick martin,0,DNS
+2026,SGP,Singapore,Joshua Toh,0,DNS
+2026,SGP,Singapore,Andrey Kolbasov,0,DNS
+2026,SGP,Singapore,Houw Ann Khoo,0,DNS
+2026,SGP,Singapore,Sophia Yee,0,DNS
+2026,SGP,Singapore,Kanishk Karan,0,DNS
+2026,SGP,Singapore,Zenton Yam,0,DNS
+2026,SGP,Singapore,Chris Timms,0,DNS
+2026,SGP,Singapore,Dang Trung Nguyen,0,DNS
+2026,SGP,Singapore,Glenn Lee,0,DNS
+2026,SGP,Singapore,Jian Wang,0,DNS
+2026,SGP,Singapore,Kok Cheu Lee,0,DNS
+2026,SGP,Singapore,Kok Kwang Quek,0,DNS
+2026,SGP,Singapore,Lem Chee Ng,0,DNS
+2026,SGP,Singapore,Qi Wei Tan,0,DNS
+2026,SGP,Singapore,Steven Leong,0,DNS
+2026,CRI,Costa Rica,Kendall Picado Fallas,25,Winner
+2026,CRI,Costa Rica,Martín Alonso Mena Jiménez,24,Assist
+2026,CRI,Costa Rica,Romualdo Vanegas López,23,Ran
+2026,CRI,Costa Rica,Pablo Leiva Araya,21,Ran
+2026,CRI,Costa Rica,Diego Fernández Jiménez,20,Ran
+2026,CRI,Costa Rica,Elizabeth Hernández Reyes,19,Ran
+2026,CRI,Costa Rica,Ronald Eduardo Jiménez Méndez,18,Ran
+2026,CRI,Costa Rica,Rocío Arias García,18,Ran
+2026,CRI,Costa Rica,Jesús Cerdas Padilla,18,Ran
+2026,CRI,Costa Rica,Anthony Navarro Ureña,17,Ran
+2026,CRI,Costa Rica,Sandra Mejía Céspedes,17,Ran
+2026,CRI,Costa Rica,Rodolfo Enrique Ortiz Cuadra,15,Ran
+2026,CRI,Costa Rica,Lukas Linner Johanning,14,Ran
+2026,CRI,Costa Rica,Pablo Solano Calderón,13,Ran
+2026,CRI,Costa Rica,Jorge Araya Arias,8,Ran
