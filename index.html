@@ -16,8 +16,8 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 var(--f-body)}
 .q1{--qc:var(--q1)}.q2{--qc:var(--q2)}.q3{--qc:var(--q3)}.q4{--qc:var(--q4)}
-.ttl{display:flex;align-items:center;gap:14px;margin:0 0 10px}
-.ttl img{height:clamp(72px,10vw,100px);width:auto;flex:0 0 auto}
+.ttl{display:flex;align-items:flex-end;gap:14px;margin:0 0 10px}
+.ttl img{height:clamp(104px,13vw,150px);width:auto;flex:0 0 auto}
 .tt{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1 1 0;container-type:inline-size}
 /* one line that scales with the space beside the logo; wraps only below 13px */
 .tag{margin:0;font-family:var(--f-body);font-weight:400;font-size:clamp(13px,calc(100cqi / 56),18px);line-height:1.5;color:var(--acc);text-wrap:pretty}
@@ -111,7 +111,7 @@ footer a{color:var(--ink)}
 <body>
 <div class="w">
 <header>
-<div class="ttl"><img src="pug.png" alt=""><div class="tt"><h1>A Pug’s Data Viz Studies</h1><p class="tag"><b>Pug factor:</b> the right amount of random thinking and creativity that makes life and data a lot more interesting.</p></div></div>
+<div class="ttl"><img src="pug-rock.png" alt=""><div class="tt"><h1>A Pug’s Data Viz Studies</h1><p class="tag"><b>Pug factor:</b> the right amount of random thinking and creativity that makes life and data a lot more interesting.</p></div></div>
 <svg class="tail" viewBox="0 0 150 22" aria-hidden="true"><path d="M2 15 C40 15 70 16 104 12 C122 10 132 4 126 2 C119 0 114 9 121 13 C128 17 138 12 140 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
 </header>
 <section class="potd" aria-labelledby="potd-h">
