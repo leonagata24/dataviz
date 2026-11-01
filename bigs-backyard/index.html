@@ -96,7 +96,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
 .bb-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: var(--cds-gap-xl); align-items: start; }
 @media (max-width: 860px) { .bb-hero { grid-template-columns: 1fr; } }
 .bb-hero-fig { margin: 0; display: grid; gap: var(--cds-gap-xs); min-width: 0; }
-.bb-h400 { min-height: 426px; }
+.bb-h400 { min-height: 444px; }
 .bb-head { display: grid; gap: var(--cds-gap-sm); }
 .bb-eyebrow { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .06em; text-transform: uppercase; margin: 0; }
 .bb-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 2.25rem; line-height: 1.1; margin: 0; text-wrap: balance; }
@@ -187,7 +187,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
       </div>
       <figure class="bb-hero-fig">
         <div class="bb-chart bb-h400 dash-skeleton" id="chart-hero" data-draw="hero" data-source="heroRunners" role="img" aria-label="Runners of the top 20 teams of 2026, one row per nation, placed by yards run, with each national winner carrying the flag"></div>
-        <figcaption class="bb-note">The top 20 teams of 2026, ranked top to bottom by combined team yards, the score that decides the title. Along each row, each figure is one runner placed by how far they ran on their own. That is why Belgium's two runners sit farthest right while the United States tops the table. Each nation's winner carries its flag; Belgium's two runners who stopped together share it. AIN (Individual Neutral Athletes) runners compete without a national flag, so their leader carries a plain white one.</figcaption>
+        <figcaption class="bb-note">The top 20 teams of 2026, ranked top to bottom by combined team yards, the score that decides the title. Along each row, each figure is one runner, placed where they stopped: a runner just past Day 2 kept going for a little over two days, or about 200 miles. That is why Belgium's two runners sit farthest right while the United States tops the table. Each nation's winner carries its flag; Belgium's two runners who stopped together share it. AIN (Individual Neutral Athletes) runners compete without a national flag, so their leader carries a plain white one.</figcaption>
       </figure>
     </div>
   </header>
@@ -1008,20 +1008,21 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
   dash.draw('hero', (el) => {
     const got = state(el, ['heroRunners']); if (!got) return; const [rows] = got;
     const teams = d3.groups(rows, (r) => r.code).sort((a, b) => a[1][0].rank - b[1][0].rank);
-    const rowH = 19; const top = 22; const H = top + teams.length * rowH + 24; const { svg, W } = frame(el, H);
+    const rowH = 19; const top = 22; const H = top + teams.length * rowH + 42; const { svg, W } = frame(el, H);
     const labels = teams.map((t) => `${t[1][0].rank}  ${t[0]}`);
     const lw = textW(svg, labels, 'bb-tick') + 10; const rw = textW(svg, teams.map((t) => f0(t[1][0].team)), 'bb-labstrong') + 12;
     const maxY = d3.max(rows, (r) => r.yards); const x = d3.scaleLinear([0, maxY], [lw + 4, W - rw - 14]);
     svg.append('text').attr('class', 'bb-lab').attr('x', lw - 6).attr('y', 11).attr('text-anchor', 'end').text('Team rank');
-    svg.append('text').attr('class', 'bb-lab').attr('x', lw + 4).attr('y', 11).text('Each runner by individual yards →');
+    svg.append('text').attr('class', 'bb-lab').attr('x', lw + 4).attr('y', 11).text('Where each runner stopped →');
     svg.append('text').attr('class', 'bb-lab').attr('x', W).attr('y', 11).attr('text-anchor', 'end').text('Team yards');
     // champion band
     svg.append('rect').attr('x', 0).attr('y', top - 1).attr('width', W).attr('height', rowH).attr('class', 'bb-band');
     for (let d = 24; d <= maxY; d += 24) {
-      svg.append('line').attr('class', 'bb-grid-l').attr('x1', x(d)).attr('x2', x(d)).attr('y1', top).attr('y2', H - 22);
-      svg.append('text').attr('class', 'bb-tick').attr('x', x(d)).attr('y', H - 8).attr('text-anchor', 'middle').text(`Day ${d / 24}`);
+      svg.append('line').attr('class', 'bb-grid-l').attr('x1', x(d)).attr('x2', x(d)).attr('y1', top).attr('y2', H - 40);
+      svg.append('text').attr('class', 'bb-tick').attr('x', x(d)).attr('y', H - 26).attr('text-anchor', 'middle').text(`Day ${d / 24}`);
     }
-    svg.append('text').attr('class', 'bb-tick').attr('x', lw + 4).attr('y', H - 8).text('Start');
+    svg.append('text').attr('class', 'bb-tick').attr('x', lw + 4).attr('y', H - 26).text('Start');
+    svg.append('text').attr('class', 'bb-lab').attr('x', lw + 4).attr('y', H - 6).text('Days of running before stopping · 1 day = 24 yards = 100 miles');
     const tt = tip(el);
     teams.forEach(([code, rs], i) => {
       const base = top + i * rowH + rowH - 3; const c = NATION_COLOR[code] || 'var(--color-fg-muted)';
