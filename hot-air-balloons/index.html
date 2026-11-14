@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Things in the Sky That Are Not Squirrels · Hot Air Balloons</title>
+<meta name="description" content="MakeoverMonday 2026 Week 45: 7,235 hot air balloons from The Hot Air Balloon Database. How long a balloon lasts, who builds them, why only the big ones got bigger, what people name them, and a full data quality inspection.">
+<style>
+:root {
+  color-scheme: light;
+  --disp: "Sora", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --fg: #1b2330; --muted: #5f6b7a; --second: #44505f; --bg: #eaf3f9; --panel: #fffdf8; --line: #dfe5ea;
+  --grid: #e9edf0; --axis: #bcc6cf; --ref: #7d8894;
+  --sky-a: #a9d3ee; --sky-b: #d9ecf6; --sky-c: #ffe9cf; --sky-d: #ffd2a8; --hill: #9cc7a4; --hill2: #7fb38d; --rope: #6b5a48; --basket: #a9743f;
+  --pop: #ffffff; --bd: rgba(11,11,11,.12); --shadow: 0 6px 20px rgba(20,40,60,.14);
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300; --s0: #b9bec4;
+  --pen: #b0401a; --ok: #006300; --warn: #8a5800;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --fg: #eef2f6; --muted: #9aa7b5; --second: #c3ccd6; --bg: #0d1420; --panel: #151e2c; --line: #263244;
+  --grid: #212c3c; --axis: #3b4a5e; --ref: #7d8894;
+  --sky-a: #0c1730; --sky-b: #1c2a4d; --sky-c: #4a3558; --sky-d: #a8573f; --hill: #1d3a33; --hill2: #16302a; --rope: #c9b59b; --basket: #8a5c2f;
+  --pop: #1c2636; --bd: rgba(255,255,255,.12); --shadow: 0 6px 20px rgba(0,0,0,.5);
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #0ca30c; --s0: #55606e;
+  --pen: #f2a37a; --ok: #2fc02f; --warn: #e0a020;
+} }
+[hidden] { display: none !important; }
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 15px; line-height: 1.45; }
+b, strong { font-weight: 600; }
+a { color: inherit; }
+.wrap { max-width: 70rem; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.top { padding-top: 16px; display: grid; gap: 10px; }
+.credits { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; align-items: center; }
+.credits span { display: inline-flex; gap: 6px; align-items: center; }
+.disclaimer { margin: 0; font-size: 12.5px; color: var(--muted); max-width: 100ch; line-height: 1.5; }
+
+/* Dawn launch field */
+.hero { position: relative; margin-top: 14px; border-radius: 28px; overflow: hidden; background: linear-gradient(180deg, var(--sky-a) 0%, var(--sky-b) 45%, var(--sky-c) 82%, var(--sky-d) 100%); display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); min-height: 420px; }
+.hero-t { padding: clamp(22px, 4vw, 44px); padding-bottom: 104px; display: grid; gap: 14px; align-content: start; position: relative; z-index: 2; }
+.eyebrow { font: 500 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; margin: 0; color: var(--second); }
+.title { font-family: var(--disp); font-weight: 700; font-size: clamp(2rem, 5.2vw, 3.3rem); line-height: 1.03; letter-spacing: -.035em; margin: 0; text-wrap: balance; }
+.lede { line-height: 1.55; max-width: 58ch; margin: 0; font-size: 15.5px; }
+.lede a { font-weight: 600; }
+.hero-art { position: relative; min-height: 220px; }
+.hero-art svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ground { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; z-index: 1; pointer-events: none; }
+.ground svg { width: 100%; height: 100%; display: block; }
+.spotter { position: absolute; left: clamp(22px, 4vw, 44px); bottom: 14px; z-index: 3; display: flex; align-items: flex-end; gap: 10px; }
+.spotter img { width: 46px; height: auto; transform: rotate(-14deg); }
+.spotter span { font: 500 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; background: var(--panel); border-radius: 99px; padding: 4px 10px; margin-bottom: 12px; color: var(--second); }
+@media (prefers-reduced-motion: no-preference) { .drift { animation: drift 9s ease-in-out infinite alternate; } .drift.b { animation-duration: 12s; animation-delay: -4s; } .drift.c { animation-duration: 15s; animation-delay: -8s; } }
+@keyframes drift { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+@media (max-width: 760px) { .hero { grid-template-columns: minmax(0, 1fr); } .hero-art { order: -1; min-height: 190px; } .hero-t { padding-top: 6px; } }
+
+main { display: grid; gap: 22px; padding-block: 22px 64px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr)); gap: 12px; }
+.tile { display: grid; align-content: start; gap: 4px; background: var(--panel); border-radius: 18px; padding: 16px 16px 14px; border-top: 5px solid var(--tc, var(--s1)); }
+.tile-l, .tile-s { font-size: 12.5px; color: var(--muted); }
+.tile-v { font-family: var(--disp); font-weight: 700; letter-spacing: -.03em; font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.tile-v.sm { font-size: 1.55rem; padding-block: .2rem; }
+
+.sec { display: grid; gap: 16px; background: var(--panel); border-radius: 24px; padding: clamp(18px, 3.5vw, 36px); position: relative; overflow: hidden; }
+.sec::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: repeating-linear-gradient(90deg, var(--s2) 0 48px, var(--s4) 48px 96px, var(--s1) 96px 144px, var(--s3) 144px 192px, var(--s5) 192px 240px); }
+.sec > p { margin: 0; max-width: 68ch; line-height: 1.55; }
+.sec > p b, .ans b, .lede b { font-variant-numeric: tabular-nums; }
+.fh { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; align-items: center; }
+.fh .fb { width: 46px; height: 62px; grid-row: span 2; }
+.fh .qn { font: 500 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); align-self: end; }
+.fh h2 { font: 700 clamp(21px, 3vw, 27px)/1.15 var(--disp); letter-spacing: -.03em; margin: 0; text-wrap: balance; align-self: start; }
+.ans { border-radius: 16px; background: color-mix(in srgb, var(--sky-b) 55%, var(--panel)); padding: 14px 18px 16px; max-width: 68ch; line-height: 1.5; display: grid; gap: 6px; justify-items: start; }
+.stamp { font: 600 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; background: var(--fg); color: var(--panel); padding: 3px 10px; border-radius: 99px; }
+.pen { display: flex; gap: 10px; align-items: center; font: 500 14.5px/1.4 var(--disp); color: var(--pen); margin: 0; max-width: 60ch; }
+.pen::before { content: ""; flex: none; width: 30px; height: 28px; background: url("../pug-head.png") center/contain no-repeat; }
+.card { border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: grid; gap: 8px; align-content: start; min-width: 0; background: var(--panel); }
+.card h3 { font: 600 16px var(--disp); letter-spacing: -.01em; margin: 0; }
+.note { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.5; max-width: 90ch; }
+.chart { position: relative; width: 100%; min-width: 0; }
+.chart svg { display: block; overflow: visible; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 12.5px; color: var(--muted); margin: 0; padding: 0; list-style: none; }
+.legend li { display: inline-flex; align-items: center; gap: 6px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.sw.dot { border-radius: 50%; }
+.tick { font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+.lab { font-size: 11.5px; fill: var(--second); paint-order: stroke; stroke: var(--panel); stroke-width: 3px; stroke-linejoin: round; font-variant-numeric: tabular-nums; }
+.lab.in { stroke: none; fill: #fff; font-weight: 600; }
+.lab.strong { fill: var(--fg); font-weight: 600; }
+.gl { stroke: var(--grid); stroke-width: 1; }
+.rf { stroke: var(--ref); stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
+.hit { fill: transparent; }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--pop); border: 1px solid var(--bd); border-radius: 10px; box-shadow: var(--shadow); padding: 6px 10px; font-size: 12.5px; white-space: nowrap; display: grid; gap: 2px; font-variant-numeric: tabular-nums; }
+.tip .h { font-weight: 600; } .tip .m { color: var(--second); }
+.scale { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; align-items: end; text-align: center; }
+.scale figure { margin: 0; display: grid; gap: 6px; justify-items: center; align-content: end; }
+.scale svg { display: block; overflow: visible; }
+.scale b { font: 600 13px var(--disp); font-variant-numeric: tabular-nums; display: block; }
+.scale figcaption { font-size: 12px; color: var(--muted); line-height: 1.35; }
+.mini { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 16px; }
+.mini > div { border-top: 1px solid var(--line); padding-top: 8px; display: grid; gap: 2px; align-content: start; }
+.mini .mv { font: 700 1.6rem/1.1 var(--disp); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.mini .ml { font-size: 12.5px; color: var(--muted); }
+.sec ul.cav { margin: 0; padding-left: 18px; display: grid; gap: 6px; max-width: 76ch; line-height: 1.5; }
+.tbl-wrap { overflow: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { border-collapse: collapse; font-size: 13px; width: 100%; }
+th, td { padding: 10px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); line-height: 1.5; }
+th { font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+.v { font: 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+.v.ok { color: var(--ok); } .v.warn { color: var(--warn); } .v.bad { color: var(--pen); }
+@media (max-width: 720px) { thead { display: none; } tr { display: block; padding: 10px 12px; border-bottom: 1px solid var(--line); } tr:last-child { border-bottom: 0; } td { display: block; padding: 2px 0; border: 0; } td:first-child { white-space: normal; } .scale { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 18px; } }
+.pug-note { display: flex; gap: 14px; align-items: center; background: var(--panel); border-radius: 24px; padding: 18px 22px; max-width: 46rem; }
+.pug-note img { width: 48px; height: auto; flex: none; }
+.pug-note p { margin: 0; font: 500 15px/1.5 var(--disp); color: var(--pen); }
+.pug-note b { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; display: block; color: var(--muted); font-weight: 500; }
+.foot { font-size: 13px; color: var(--muted); }
+</style>
+<link rel="stylesheet" href="../pug-header.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="credits pug-hdr">
+      <a class="home pug-home" href="https://leonagata24.github.io/dataviz/">The Pugs’ Data Viz Studies</a>
+      <span class="pug-ai">Built with AI</span>
+      <span><b>MakeoverMonday 2026 · Week 45</b></span>
+      <span>Project: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">MakeoverMonday</a></span>
+      <span>Article: <a href="https://thehabdatabase.com/" target="_blank" rel="noopener">The Hot Air Balloon Database</a></span>
+      <span>Data: <a href="https://www.kaggle.com/datasets/matthuff4/hot-air-balloon" target="_blank" rel="noopener">Hot Air Balloon (Kaggle)</a></span>
+    </div>
+    <p class="disclaimer">Analysis, charts and text were produced with AI (Claude) from the MakeoverMonday data file. Every figure is computed from that file after the repairs listed in the sniff test at the bottom, and was recomputed a second time with separate code. The archive is a volunteer project and not an official aircraft register; this page is not affiliated with it.</p>
+  </div>
+
+  <header class="hero">
+    <div class="hero-t">
+      <p class="eyebrow">Sky patrol · 7,235 balloons · observer altitude 30 cm</p>
+      <h1 class="title">Things in the Sky That Are Not Squirrels</h1>
+      <p class="lede">Seen from pug height, a hot air balloon is a very large, very slow ball that nobody will throw. The Hot Air Balloon Database lists <b>7,235</b> of them: who built each one, when, how big, who flies it and what it is called. This page asks what a pug would ask: how long a balloon lasts, who makes them, whether they are getting bigger, what people name them, and how many anyone has met in person. The file needed repairs first, and the full <a href="#sniff">sniff test</a> is at the bottom.</p>
+    </div>
+    <div class="hero-art" id="hero-art" aria-hidden="true"></div>
+    <div class="ground" aria-hidden="true"><svg viewBox="0 0 1200 84" preserveAspectRatio="none"><path d="M0,52 C200,18 380,60 600,40 C820,20 1010,58 1200,30 V84 H0Z" fill="var(--hill)"/><path d="M0,70 C260,44 520,80 800,58 C980,46 1100,66 1200,56 V84 H0Z" fill="var(--hill2)"/></svg></div>
+    <div class="spotter" aria-hidden="true"><img src="../pug-head.png" alt=""><span>Not a squirrel. Logging it anyway.</span></div>
+  </header>
+
+  <main>
+  <div class="tiles">
+    <div class="tile" style="--tc:var(--s2)"><span class="tile-l">Balloons in the archive</span><span class="tile-v">7,235</span><span class="tile-s">79% based in the USA, the rest across 51 other countries</span></div>
+    <div class="tile" style="--tc:var(--s4)"><span class="tile-l">Listed as in service</span><span class="tile-v">68%</span><span class="tile-s">4,908 flying, 2,240 retired, 87 unknown</span></div>
+    <div class="tile" style="--tc:var(--s1)"><span class="tile-l">The standard size</span><span class="tile-v">90,000</span><span class="tile-s">cubic feet. 25% of balloons with a recorded size, and the median in every period since 1990</span></div>
+    <div class="tile" style="--tc:var(--s3)"><span class="tile-l">Hand-me-downs renamed</span><span class="tile-v sm">about 7 in 10</span><span class="tile-s">68% to 72% of 1,622 past owners with a recorded name called the balloon something else</span></div>
+    <div class="tile" style="--tc:var(--s5)"><span class="tile-l">Balloons with a pug in the name</span><span class="tile-v">1</span><span class="tile-s">S.S. Rollo Fitzpug, Illinois, built 1995. Currently grounded.</span></div>
+  </div>
+
+  <section class="sec">
+    <div class="fh"><span class="fb" data-n="1"></span><span class="qn">Flight 01 · 6,920 balloons with a build year</span><h2>How long before a toy ends up in the closet?</h2></div>
+    <div class="ans"><span class="stamp">About 35 years</span><span>A balloon built in the early 1990s is a coin flip: <b>52%</b> of them are still listed as in service. From the 1970s it is <b>20%</b>; from the 2010s, <b>93%</b>.</span></div>
+    <p class="pen">My toys last four minutes. Respect.</p>
+    <p>Group the balloons by the year they were built and count how many the archive still lists as in service. The share falls steadily with age and crosses one half between the 1991 and 1992 builds, roughly 35 years old today. For the 1,052 balloons built from 1990 to 1994 it is <b>52%</b>, with a 95% range of 49% to 55%, so "half" is a fair reading and not a rounding trick. There is no cliff: <b>34%</b> of late-1980s builds and <b>74%</b> of early-2000s builds are still flying, so retirement looks gradual rather than tied to a fixed lifespan.</p>
+    <p>This is a snapshot, not a true survival curve. An old balloon scrapped decades ago is less likely to have been entered at all, which would make old balloons look more durable than they were, and "in service" is the archive's label with no date attached. The result does not hinge on the oddities in the file: leaving out rebuilt envelopes gives 50% for 1990 to 1994, and US-based balloons alone give 54%.</p>
+    <div class="card">
+      <h3>Share of balloons still listed as in service, by year built</h3>
+      <div class="chart" id="c-surv"></div>
+      <p class="note">Each point is one build year, 1970 to 2026. Hollow points are build years with fewer than 80 balloons, which bounce around accordingly. Dashed line: half in service.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="fh"><span class="fb" data-n="2"></span><span class="qn">Flight 02 · US-based balloons only</span><h2>Who makes the giant balls now?</h2></div>
+    <div class="ans"><span class="stamp">Changed hands</span><span>Aerostar/Raven built <b>40%</b> of the 1990s balloons in the US part of the archive and none after 2008. Czech-made Kubicek went from <b>0.6%</b> of 2000s builds to <b>32%</b> of 2020s builds, the largest share of any maker.</span></div>
+    <p class="pen">The old toy factory closed. A new one across the big water took over. I will accept either.</p>
+    <p>Among balloons based in the USA, three US-based makers account for most of the 1990s: Aerostar/Raven, Cameron US and Firefly/Balloon Works. Two of them fade. The last Aerostar/Raven in the file is dated 2008, and Firefly/Balloon Works falls from <b>18%</b> of 1990s builds to <b>1.3%</b> of 2020s builds. Lindstrand US arrives in 1995 and holds roughly a fifth from the 2000s on. Kubicek's lead in the 2020s is clear of sampling noise: its share has a 95% range of 29% to 35%, against 18% for Lindstrand US in second place. Kubicek and Spain's Ultramagic together make up <b>39%</b> of US-based balloons built in the 2020s.</p>
+    <p>These are shares of balloons in the archive by build year, not sales figures. Older balloons that were retired and never catalogued are missing, so early decades are the least reliable.</p>
+    <div class="card">
+      <h3>Who built the US-based balloons, by decade built</h3>
+      <ul class="legend" id="lg-mk"></ul>
+      <div class="chart" id="c-mk"></div>
+      <p class="note">Share of US-based balloons built in each decade (1,724 from the 1990s, 703 from the 2020s so far). "Other" groups dozens of smaller makers and home-built experimental balloons. Hover a segment for counts.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="fh"><span class="fb" data-n="3"></span><span class="qn">Flight 03 · 6,749 balloons with a size</span><h2>Is the bed getting bigger?</h2></div>
+    <div class="ans"><span class="stamp">Only the big ones</span><span>The typical balloon has not grown in 35 years: the median is 90,000 cubic feet in every period since 1990. The big end has doubled. One in ten early-1990s builds was <b>105,400</b> cubic feet or more; for 2020 to 2024 that mark is <b>210,000</b>.</span></div>
+    <p class="pen">Same bed for me. Much bigger sofa for the guests.</p>
+    <p>Size here is envelope volume. <b>1,688</b> balloons, 25% of those with a size, are exactly 90,000 cubic feet, and that standard has not moved. What changed is the share of very large balloons: envelopes of 150,000 cubic feet or more were <b>3.8%</b> of early-1990s builds (95% range 2.8% to 5.2%) and <b>16.3%</b> of 2020 to 2024 builds (13.7% to 19.4%). The ranges do not come close to overlapping, and the same rise shows among US-based balloons alone (2.9% to 17.1%).</p>
+    <p>The file does not say what a balloon is used for, but the owners give a hint: the names that appear most on these 474 large envelopes are ride companies, led by Rainbow Ryders (42), Sundance Balloons (29) and Hot Air Expeditions (18). The climb is not smooth, because sizes come in standard classes and the 90th percentile jumps between them: it dipped to 150,000 for 2015 to 2019 builds before returning to 210,000.</p>
+    <div class="card" id="card-size">
+      <h3>Balloon size by period built: the middle and the big end</h3>
+      <ul class="legend"><li><span class="sw" style="background:var(--s1)"></span>Median balloon</li><li><span class="sw" style="background:var(--s2)"></span>90th percentile (one in ten is this big or bigger)</li></ul>
+      <div class="chart" id="c-size"></div>
+      <p class="note">Envelope volume in thousands of cubic feet, by five-year build period. 2025–26 covers two years only.</p>
+    </div>
+    <div class="card">
+      <h3>Four balloons from the file, drawn to scale</h3>
+      <div class="scale" id="c-scale"></div>
+      <p class="note">Width is proportional to the cube root of volume, which is how a round envelope actually grows: 6.7 times the volume is less than twice as wide.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="fh"><span class="fb" data-n="4"></span><span class="qn">Flight 04 · 4,840 balloons with a name</span><h2>Are there any dogs up there? And do rescues keep their name?</h2></div>
+    <div class="ans"><span class="stamp">Outnumbered</span><span>Among single animals, bears lead the sky with <b>30</b> names, then cats with <b>18</b> and ducks with <b>15</b>. Dogs have <b>13</b>, three of them bulldogs. And a balloon rarely keeps its name: about <b>7 in 10</b> past owners with a recorded name called it something different from today's.</span></div>
+    <p class="pen">Cats. In the sky. Above me. I would like to speak to whoever is in charge.</p>
+    <p>Two thirds of balloons (67%) have a recorded name. Searching those names for animal words gives a rough census: it counts the word, so "Stray Cat" and "Legal Eagle" count whether or not the balloon looks like the animal, and puns slip through. Luke Skybarker, a special shape once named Beagle Maximus, is not in the dog count. Read each number as a floor, and do not read much into the order below the top three: 13 dogs, 12 fish, 11 bees and 11 horses are too close to rank. Birds counted as one family, on a looser word list, would come to roughly 85 and beat every single animal. One balloon in the archive has a pug in its name: <b>S.S. Rollo Fitzpug</b>, an Aerostar/Raven from 1995 in Illinois, listed as out of service.</p>
+    <p>Names also show who pays for balloons. The most common name is RE/MAX, on <b>63</b> balloons, followed by the ride company Rainbow Ryders. After the sponsors come the words balloonists reach for themselves: blue, rainbow, dream, spirit, sunrise.</p>
+    <p>When a balloon changes hands, the name usually changes too. The archive records 5,169 past owners, and for <b>1,622</b> of them both the old name and today's name are known. On an exact match, <b>72%</b> differ. Counting near-matches as kept (a respelling, or a name that survives as one of two alternates) brings it to <b>68%</b>, so "about 7 in 10" holds either way. Two cautions: the old name is known for just 31% of past owners, and a changed name may be more likely to get written down than an unchanged one, so the true rate could be lower.</p>
+    <div class="card">
+      <h3>Animal words in balloon names</h3>
+      <div class="chart" id="c-ani"></div>
+      <p class="note">Number of balloons whose name contains the animal, among 4,840 named balloons. Bears include teddies, pandas and koalas; dogs include puppies, hounds, bulldogs and K9s. Hover for examples.</p>
+    </div>
+    <div class="mini">
+      <div><span class="mv">47%</span><span class="ml">of US-based balloons have at least one previous owner recorded. In the UK it is 7%, which says more about what was typed in than about British balloons.</span></div>
+      <div><span class="mv">66%</span><span class="ml">of US-based balloons built in the 1990s are second-hand or more, with 1.3 recorded previous owners on average.</span></div>
+      <div><span class="mv">11</span><span class="ml">previous owners for one 1996 Lindstrand in Kansas, the most-travelled balloon in the file. Its current name: Upon A Star.</span></div>
+      <div><span class="mv">69%</span><span class="ml">of the 3,774 distinct pilot and owner entries appear on exactly one balloon. This is a community of individuals more than fleets.</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="fh"><span class="fb" data-n="5"></span><span class="qn">Flight 05 · the archive's own logbook</span><h2>Has anyone actually sniffed these?</h2></div>
+    <div class="ans"><span class="stamp">One in six</span><span>Whoever keeps this log has seen <b>1,199</b> of the 7,235 balloons in person (16.6%), crewed for <b>68</b>, worked the burner on <b>35</b> and flown in <b>24</b>. A single year, 2023, accounts for <b>813</b> sightings.</span></div>
+    <p class="pen">I only trust what I have sniffed. By that rule, this person trusts 1,199 balloons. That is a lot of sniffing.</p>
+    <p>Five columns in the file are not about balloons at all. They record one person's encounters, and they show how a balloonist's time is spent: mostly looking, sometimes holding a rope, rarely in the basket. The sightings start in 2008 at a few dozen a year, skip 2016 and 2020 almost entirely, then jump from 144 in 2022 to <b>813</b> in 2023 before settling at 247 in 2024. The file does not say why. New Mexico, home of the Albuquerque fiesta, has the most seen balloons (252), followed by Ohio (115).</p>
+    <p>It also explains part of the sniff test. A balloon the logkeeper has seen has a recorded name <b>94%</b> of the time; one they have not, <b>62%</b>. The gap is not just a matter of American balloons being better documented: among US-based balloons alone it is 94% against 65%.</p>
+    <div class="card">
+      <h3>Balloons seen in person, by year of sighting</h3>
+      <div class="chart" id="c-seen"></div>
+      <p class="note">A balloon seen in several years counts once in each. Nine seen balloons have no year recorded.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="fh"><span class="fb" data-n="!"></span><span class="qn">Before you quote any of this</span><h2>What this can and can't tell you</h2></div>
+    <ul class="cav">
+      <li><b>It describes an archive, not the world.</b> Entries arrive through public contributions and one community's attention. A country with few entries may simply have few contributors.</li>
+      <li><b>The chart the pug refused to draw.</b> Special shapes are 25% of UK entries and 4.9% of US entries. That is almost certainly because a foreign balloon gets catalogued when it is remarkable, not because a quarter of British balloons are shaped like something. Any country comparison has this problem.</li>
+      <li><b>Status has no date.</b> "In service" and "out of service" are the archive's labels at an unknown moment, and 87 balloons are unknown.</li>
+      <li><b>Blank is not zero.</b> Missing previous owners, names and sizes mean not recorded. The renaming rate rests on the minority of handovers where both names were written down.</li>
+      <li><b>Name counts are keyword counts.</b> They were checked by eye for false matches (the cow count was dropped because of "Moon"), but they miss puns and shapes with unrelated names, and the small counts are too close to rank.</li>
+      <li><b>Ranges are sampling ranges only.</b> The 95% ranges quoted treat the archive as a sample. They say nothing about which balloons were never entered, which is the larger uncertainty.</li>
+    </ul>
+  </section>
+
+  <section class="sec" id="sniff">
+    <div class="fh"><span class="fb" data-n="✓"></span><span class="qn">Sniff test · 7,934 rows in the file</span><h2>Does this data smell right?</h2></div>
+    <div class="ans"><span class="stamp">Edible, with care</span><span>The file is broken as delivered but repairable, and once repaired it is tidy. Its real limit is coverage: this is one enthusiast community's archive, <b>79%</b> American, not a census of the world's balloons. Counts by country and anything about the ownership trail outside the USA were left alone.</span></div>
+    <p class="pen">Smells like one human's backpack. A good backpack. Still one backpack.</p>
+    <p>Opened naively, the sheet has <b>7,934</b> data rows, and the most common "registration" is the word No. The cause: line breaks inside the previous-owners field spilled <b>699</b> fragments onto rows of their own, pushing the photo link and the four yes/no flags of <b>412</b> balloons into the wrong columns. Every one of those chains ends in exactly one row carrying the displaced values, so stitching them back is unambiguous. It gives <b>7,235</b> balloons with IDs that run from 1 to 7,235 with no gaps and no repeats.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Check</th><th>Result</th><th>What was found</th><th>What was done</th></tr></thead>
+      <tbody>
+      <tr><td>Structure</td><td><span class="v bad">Broken</span></td><td>A title row above the header; 699 overflow rows from line breaks in one text field, shifting columns for 412 balloons.</td><td>Fragments stitched back onto their balloon. All counts on this page come from the repaired table.</td></tr>
+      <tr><td>Identity</td><td><span class="v ok">Clean</span></td><td>7,235 unique IDs, complete from HAB-000001 to the last. About 160 registrations appear on more than one row: usually the same aircraft catalogued again after a rebuild, sometimes a reused registration.</td><td>Kept. A row is an envelope as catalogued, not a tail number.</td></tr>
+      <tr><td>Missing values</td><td><span class="v warn">A trap</span></td><td>Blanks are written as the text "N/A", and one balloon is really named "NA". A spreadsheet tool's default settings silently erase that name; 717 cells also carry stray spaces.</td><td>Only "N/A" and empty cells are read as missing. Spaces trimmed.</td></tr>
+      <tr><td>Completeness</td><td><span class="v warn">Uneven</span></td><td>Registration, model, serial, year and location are 96% to 99% filled. A name is recorded for 67%, previous owners for 40%. Outside the USA and UK, the owner is known for 59%.</td><td>Each section states how many balloons it rests on. Blank previous owners is read as not recorded, not as no previous owner.</td></tr>
+      <tr><td>Placeholders</td><td><span class="v warn">Present</span></td><td>Owner "PENDING" 104 times and location "PENDING" 5 times; registration is a bare "N" 74 times; 2,826 of 5,169 past-owner entries have no name.</td><td>Treated as missing.</td></tr>
+      <tr><td>Validity</td><td><span class="v warn">7 typos</span></td><td>Build years 2997 (twice), 6077, 2969, 200, 2-14 and 2-22. Three spellings of the size unit. Two malformed sighting years.</td><td>The seven years set to missing rather than guessed. Sizes all parse to cubic feet.</td></tr>
+      <tr><td>Mixed fields</td><td><span class="v warn">Parsed</span></td><td>Year built also holds rebuild notes (184 rows), registration also holds former registrations (426 rows), type holds up to three tags, and location mixes US states with countries.</td><td>Split into build year, rebuild flag, type tags and a country (Washington D.C. counted as USA). Rebuilt envelopes keep their original year, which makes them look older than their fabric.</td></tr>
+      <tr><td>Consistency</td><td><span class="v ok">Good</span></td><td>The two "seen" columns disagree on 3 balloons. Registration prefix matches location for 98% of balloons; the exceptions are plausible, such as British-registered balloons kept in the USA.</td><td>Left as recorded.</td></tr>
+      <tr><td>Coverage</td><td><span class="v bad">Not a census</span></td><td>5,686 balloons in the USA, 548 in the UK, 1,001 elsewhere, with New Mexico alone at 795. Entries are contributed by the public, there is no snapshot date and no data dictionary in the file, and status is the archive's own label. Builds dated 2026 (97) suggest it is current.</td><td>No country rankings, no per-capita rates, no market sizes. Maker shares use US-based balloons only.</td></tr>
+      <tr><td>Whose columns</td><td><span class="v warn">Personal</span></td><td>Seen, crewed, flown, burner time and years seen describe one person's encounters with a balloon, not the balloon.</td><td>Analysed as a logbook in Flight 05, and never as a balloon attribute.</td></tr>
+      <tr><td>Second opinion</td><td><span class="v ok">Matches</span></td><td>Every figure on the page was recomputed from the raw file with separately written code. The first pass had miscounted three things: the balloon named "NA", two Washington D.C. balloons filed as non-US, and a handful of owner names differing only by spaces.</td><td>All three corrected; the two computations now agree on every number shown.</td></tr>
+      </tbody></table></div>
+    <div class="card">
+      <h3>How complete is each field, by where the balloon is based</h3>
+      <ul class="legend"><li><span class="sw dot" style="background:var(--s1)"></span>USA (5,686)</li><li><span class="sw dot" style="background:var(--s2)"></span>UK (548)</li><li><span class="sw dot" style="background:var(--s3)"></span>Elsewhere (1,001)</li></ul>
+      <div class="chart" id="c-comp"></div>
+      <p class="note">Share of balloons with a usable value, after treating placeholders as missing. The archive knows American balloons far better than the rest: that gap, not the typos, is what limits the analysis.</p>
+    </div>
+  </section>
+
+  <div class="pug-note"><img src="../pug-head.png" alt=""><p><b>Closing entry</b>Counted 7,235 things in the sky. None were squirrels. One was a pug, and it is grounded in Illinois. Requesting a rescue mission and a snack, in either order.</p></div>
+
+  <footer class="foot">Source: <a href="https://thehabdatabase.com/" target="_blank" rel="noopener">The Hot Air Balloon Database</a>, via the <a href="https://www.kaggle.com/datasets/matthuff4/hot-air-balloon" target="_blank" rel="noopener">Hot Air Balloon dataset on Kaggle</a>, for <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">MakeoverMonday</a> 2026 Week 45.</footer>
+  </main>
+</div>
+<script>
+const D={"comp":[{"f":"Registration","all":0.9883897719419489,"USA":0.9901512486809708,"UK":1.0,"Other":0.972027972027972},{"f":"Photo link","all":0.999861782999309,"USA":0.9998241294407316,"UK":1.0,"Other":1.0},{"f":"Location","all":0.9946095369730477,"USA":1.0,"UK":1.0,"Other":0.961038961038961},{"f":"Model","all":0.9932273669661368,"USA":0.9991206472036581,"UK":1.0,"Other":0.9560439560439561},{"f":"Serial number","all":0.9823082239115412,"USA":0.9910306014773127,"UK":0.9981751824817519,"Other":0.9240759240759241},{"f":"Year built","all":0.9564616447823082,"USA":0.9665845937390081,"UK":0.9963503649635036,"Other":0.8771228771228772},{"f":"Pilot / owner","all":0.9281271596406357,"USA":0.9838199085473092,"UK":0.968978102189781,"Other":0.5894105894105894},{"f":"Size","all":0.9328265376641327,"USA":0.9671122054168132,"UK":0.791970802919708,"Other":0.8151848151848152},{"f":"Name","all":0.6689702833448514,"USA":0.7087583538515653,"UK":0.5985401459854015,"Other":0.48151848151848153},{"f":"Previous owners","all":0.39599170697995856,"USA":0.4730918044319381,"UK":0.07116788321167883,"Other":0.13586413586413587}],"surv":[{"y":1970,"n":7,"in":1},{"y":1971,"n":9,"in":2},{"y":1972,"n":18,"in":4},{"y":1973,"n":20,"in":0},{"y":1974,"n":27,"in":4},{"y":1975,"n":19,"in":4},{"y":1976,"n":31,"in":6},{"y":1977,"n":33,"in":4},{"y":1978,"n":31,"in":10},{"y":1979,"n":64,"in":16},{"y":1980,"n":77,"in":10},{"y":1981,"n":75,"in":19},{"y":1982,"n":51,"in":20},{"y":1983,"n":70,"in":19},{"y":1984,"n":56,"in":18},{"y":1985,"n":71,"in":29},{"y":1986,"n":112,"in":35},{"y":1987,"n":153,"in":53},{"y":1988,"n":125,"in":44},{"y":1989,"n":131,"in":40},{"y":1990,"n":193,"in":83},{"y":1991,"n":216,"in":103},{"y":1992,"n":201,"in":113},{"y":1993,"n":223,"in":115},{"y":1994,"n":219,"in":131},{"y":1995,"n":200,"in":128},{"y":1996,"n":238,"in":148},{"y":1997,"n":223,"in":143},{"y":1998,"n":214,"in":148},{"y":1999,"n":182,"in":121},{"y":2000,"n":194,"in":134},{"y":2001,"n":157,"in":120},{"y":2002,"n":173,"in":133},{"y":2003,"n":171,"in":125},{"y":2004,"n":140,"in":106},{"y":2005,"n":162,"in":128},{"y":2006,"n":144,"in":116},{"y":2007,"n":136,"in":109},{"y":2008,"n":120,"in":105},{"y":2009,"n":87,"in":80},{"y":2010,"n":81,"in":68},{"y":2011,"n":107,"in":97},{"y":2012,"n":107,"in":99},{"y":2013,"n":122,"in":112},{"y":2014,"n":119,"in":109},{"y":2015,"n":108,"in":103},{"y":2016,"n":154,"in":141},{"y":2017,"n":141,"in":136},{"y":2018,"n":128,"in":123},{"y":2019,"n":128,"in":125},{"y":2020,"n":101,"in":100},{"y":2021,"n":159,"in":159},{"y":2022,"n":150,"in":150},{"y":2023,"n":146,"in":144},{"y":2024,"n":155,"in":155},{"y":2025,"n":130,"in":130},{"y":2026,"n":97,"in":97}],"mk":["Aerostar/Raven","Firefly/Balloon Works","Cameron US","Lindstrand US","Kubicek","Ultramagic","Other"],"makers":[{"dec":1970,"n":192,"Aerostar/Raven":55,"Firefly/Balloon Works":33,"Cameron US":1,"Lindstrand US":0,"Kubicek":0,"Ultramagic":0,"Other":103},{"dec":1980,"n":696,"Aerostar/Raven":220,"Firefly/Balloon Works":133,"Cameron US":111,"Lindstrand US":0,"Kubicek":0,"Ultramagic":0,"Other":232},{"dec":1990,"n":1724,"Aerostar/Raven":697,"Firefly/Balloon Works":316,"Cameron US":318,"Lindstrand US":77,"Kubicek":0,"Ultramagic":1,"Other":315},{"dec":2000,"n":1238,"Aerostar/Raven":201,"Firefly/Balloon Works":203,"Cameron US":266,"Lindstrand US":277,"Kubicek":8,"Ultramagic":36,"Other":247},{"dec":2010,"n":937,"Aerostar/Raven":0,"Firefly/Balloon Works":28,"Cameron US":226,"Lindstrand US":223,"Kubicek":150,"Ultramagic":49,"Other":261},{"dec":2020,"n":703,"Aerostar/Raven":0,"Firefly/Balloon Works":9,"Cameron US":121,"Lindstrand US":127,"Kubicek":224,"Ultramagic":50,"Other":172}],"size":[{"y":1970,"n":80,"med":65000.0,"p90":84000.0,"p10":51900.00000000001,"big":0.0125},{"y":1975,"n":171,"med":75000.0,"p90":80000.0,"p10":56000.0,"big":0.0},{"y":1980,"n":316,"med":77000.0,"p90":105000.0,"p10":56000.0,"big":0.006329113924050633},{"y":1985,"n":531,"med":77500.0,"p90":105400.0,"p10":77000.0,"big":0.007532956685499058},{"y":1990,"n":990,"med":90000.0,"p90":105400.0,"p10":54000.0,"big":0.03838383838383838},{"y":1995,"n":988,"med":90000.0,"p90":105400.0,"p10":65000.0,"big":0.03643724696356275},{"y":2000,"n":793,"med":90000.0,"p90":120000.0,"p10":69000.0,"big":0.05296343001261034},{"y":2005,"n":615,"med":90000.0,"p90":143000.00000000012,"p10":60000.0,"big":0.0991869918699187},{"y":2010,"n":506,"med":90000.0,"p90":210000.0,"p10":65000.0,"big":0.1541501976284585},{"y":2015,"n":619,"med":90000.0,"p90":150000.0,"p10":65000.0,"big":0.10177705977382875},{"y":2020,"n":649,"med":90000.0,"p90":210000.0,"p10":60000.0,"big":0.1633281972265023},{"y":2025,"n":212,"med":90000.0,"p90":207000.00000000017,"p10":62500.0,"big":0.11320754716981132}],"animals":[{"k":"Bears","n":30,"ss":16,"ex":["Koola Koala","Hug A Bear","Honey Bear","Teddy Twins"]},{"k":"Cats","n":18,"ss":6,"ex":["Ali Cat","Bob's Cat","Old Cat/Scrumtrulescent","Stray Cat"]},{"k":"Ducks","n":15,"ss":3,"ex":["Just Ducky","Plum Ducky","Splash Duck","Ducking Grateful"]},{"k":"Dogs","n":13,"ss":6,"ex":["Confetti Puppy","Air Hound","Puppy 'N Pals","Fire Dog"]},{"k":"Fish","n":12,"ss":7,"ex":["Somethin' Fishy","Finley The Fish","The Dolphin","Whale Boy"]},{"k":"Bees","n":11,"ss":4,"ex":["Bee Line","Deb \"Bee\"","Busy Bee","Bunch of Bees (BoB)"]},{"k":"Horses","n":11,"ss":3,"ex":["Unicorn","Sky Pony","Lulu The Unicorn","Pegasus"]},{"k":"Dragons","n":10,"ss":5,"ex":["Scorch The Dragon","Oggy The Friendly Dragon","Smaug The Dragon","Fluffy The Dragon"]},{"k":"Eagles","n":10,"ss":1,"ex":["Black Eagle","Eagle Star","Legal Eagle 2ZX","Legal Eagle"]},{"k":"Tigers","n":8,"ss":3,"ex":["Axel The Tiger","BB Tiger","Tony The Tiger","Tiger Lilly"]},{"k":"Frogs","n":8,"ss":2,"ex":["Your Highness The King Hopper T. Frog","Kermie The Frog","The Toad","Frog"]},{"k":"Elephants","n":7,"ss":3,"ex":["Elephant","Know-Z The Elephant","Emmy The Elephant","Ellie The Elephant"]},{"k":"Penguins","n":6,"ss":1,"ex":["Burgess The Penguin","Yuyu The Penguin","Puddles The Penguin 2.0","Puddles The Penguin"]},{"k":"Wolves","n":4,"ss":0,"ex":["Winnie The Wolf","Wolf Spirit","Wes The Wolf","Snowy The Wolf"]},{"k":"Pigs","n":4,"ss":2,"ex":["Pig Headed","Chris P. Bacon The Farmer Pig","Piglet","Spyder Pig"]},{"k":"Foxes","n":2,"ss":1,"ex":["Tally The Fox","Freddie The Fox"]},{"k":"Lions","n":1,"ss":0,"ex":["Simbaloo The Lion"]}],"seenYears":[{"y":2008,"n":17},{"y":2009,"n":37},{"y":2010,"n":38},{"y":2011,"n":40},{"y":2012,"n":50},{"y":2013,"n":46},{"y":2014,"n":75},{"y":2015,"n":48},{"y":2016,"n":1},{"y":2017,"n":39},{"y":2018,"n":40},{"y":2019,"n":41},{"y":2020,"n":0},{"y":2021,"n":57},{"y":2022,"n":144},{"y":2023,"n":813},{"y":2024,"n":247},{"y":2025,"n":178},{"y":2026,"n":130}],"funnel":[["Listed",7235],["Seen",1199],["Crewed",68],["Burner time",35],["Flown",24]],"scale":[{"v":12000.0,"t":"The smallest: a one-person hopper"},{"v":90000,"t":"The standard, unchanged since 1990"},{"v":210000.0,"t":"One in ten recent builds is at least this"},{"v":600000.0,"t":"Prime, the largest in the file"}]};
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const txt=(p,s,a)=>{const e=el("text",a,p);e.textContent=s;return e};
+const pct=(v,d=0)=>(v*100).toFixed(d)+"%",num=v=>Math.round(v).toLocaleString("en-US");
+const lin=(d0,d1,r0,r1)=>v=>r0+(v-d0)/(d1-d0)*(r1-r0);
+const C=["var(--s1)","var(--s2)","var(--s3)","var(--s4)","var(--s5)","var(--s6)","var(--s0)"];
+
+/* A generic striped balloon drawn around (0,0) = envelope centre; about 92 wide, 127 tall */
+let bid=0;
+function balloon(cols,label){const id="bc"+(bid++),env="M0,-50C30,-50 46,-27 46,-4C46,22 18,38 9,54H-9C-18,38 -46,22 -46,-4C-46,-27 -30,-50 0,-50Z";
+  return `<clipPath id="${id}"><path d="${env}"/></clipPath><g clip-path="url(#${id})"><rect x="-50" y="-55" width="100" height="115" fill="${cols[0]}"/><ellipse cx="0" cy="0" rx="33" ry="62" fill="${cols[1]}"/><ellipse cx="0" cy="0" rx="19" ry="62" fill="${cols[2]||cols[0]}"/><ellipse cx="0" cy="0" rx="6" ry="62" fill="${cols[1]}"/><rect x="-50" y="44" width="100" height="14" fill="${cols[3]||cols[1]}"/></g><path d="M-8,54L-6,66M8,54L6,66M0,54V66" stroke="var(--rope)" stroke-width="1.2" fill="none"/><rect x="-7.5" y="66" width="15" height="11" rx="2.5" fill="var(--basket)"/>${label!=null?`<text x="0" y="8" text-anchor="middle" style="font:700 30px var(--disp);fill:#fff;paint-order:stroke;stroke:rgba(0,0,0,.35);stroke-width:4px">${label}</text>`:""}`}
+const PAL=[["var(--s2)","var(--s4)","var(--s2)"],["var(--s1)","#fff","var(--s1)","var(--s4)"],["var(--s3)","var(--s4)","var(--s5)"],["var(--s5)","#fff","var(--s2)"],["var(--s4)","var(--s1)","var(--s4)","var(--s2)"],["var(--s6)","var(--s4)","var(--s6)"]];
+document.getElementById("hero-art").innerHTML=`<svg viewBox="0 0 520 400" preserveAspectRatio="xMidYMid meet"><g class="drift"><g transform="translate(160,150) scale(1.75)">${balloon(PAL[0])}</g></g><g class="drift b"><g transform="translate(370,105) scale(1.15)">${balloon(PAL[1])}</g></g><g class="drift c"><g transform="translate(450,240) scale(.7)">${balloon(PAL[2])}</g></g><g class="drift b"><g transform="translate(300,262) scale(.45)">${balloon(PAL[3])}</g></g><g class="drift c"><g transform="translate(40,60) scale(.34)">${balloon(PAL[4])}</g></g></svg>`;
+document.querySelectorAll(".fb").forEach((e,i)=>{e.innerHTML=`<svg viewBox="-50 -55 100 135" width="46" height="62" aria-hidden="true">${balloon(PAL[i%PAL.length],e.dataset.n)}</svg>`});
+
+function stage(id,h,aria){const box=document.getElementById(id);box.innerHTML="";const w=Math.max(280,box.clientWidth);
+  const svg=el("svg",{width:w,height:h,viewBox:`0 0 ${w} ${h}`,role:"img","aria-label":aria},box);
+  const tip=document.createElement("div");tip.className="tip";tip.hidden=true;box.appendChild(tip);
+  const show=(ev,html)=>{tip.innerHTML=html;tip.hidden=false;const r=box.getBoundingClientRect();let x=ev.clientX-r.left+12,y=ev.clientY-r.top+12;
+    if(x+tip.offsetWidth>w)x=ev.clientX-r.left-tip.offsetWidth-12;tip.style.left=Math.max(0,x)+"px";tip.style.top=y+"px"};
+  const hide=()=>{tip.hidden=true};
+  const hit=(node,html)=>{node.addEventListener("pointermove",e=>show(e,typeof html==="function"?html(e):html));node.addEventListener("pointerleave",hide);node.addEventListener("pointerdown",e=>show(e,typeof html==="function"?html(e):html))};
+  return{svg,w,h,hit,small:w<520}}
+
+function comp(){const rows=D.comp,rh=30,{svg,w,h,hit,small}=stage("c-comp",rows.length*rh+34,"Dot plot of field completeness for balloons based in the USA, the UK and elsewhere");
+  const L=small?112:140,R=18,x=lin(0,1,L,w-R),keys=["USA","UK","Other"],nm={USA:"USA",UK:"UK",Other:"Elsewhere"};
+  [0,.25,.5,.75,1].forEach(t=>{el("line",{x1:x(t),x2:x(t),y1:6,y2:rows.length*rh+6,class:"gl"},svg);txt(svg,pct(t),{x:x(t),y:rows.length*rh+24,"text-anchor":"middle",class:"tick"})});
+  rows.forEach((r,i)=>{const y=6+i*rh+rh/2,vals=keys.map(k=>r[k]);
+    txt(svg,r.f,{x:L-12,y:y+4,"text-anchor":"end",class:"tick",style:"font-size:12px;fill:var(--second)"});
+    el("line",{x1:x(Math.min(...vals)),x2:x(Math.max(...vals)),y1:y,y2:y,stroke:"var(--axis)","stroke-width":2},svg);
+    keys.forEach((k,j)=>el("circle",{cx:x(r[k]),cy:y,r:5.5,fill:C[j],stroke:"var(--panel)","stroke-width":2},svg));
+    hit(el("rect",{x:0,y:y-rh/2,width:w,height:rh,class:"hit"},svg),`<span class="h">${r.f}</span>`+keys.map(k=>`<span class="m">${nm[k]}: ${pct(r[k],1)}</span>`).join("")+`<span class="m">All balloons: ${pct(r.all,1)}</span>`)})}
+
+function surv(){const d=D.surv,{svg,w,h,hit,small}=stage("c-surv",330,"Line chart: share of balloons still in service rises from about 15 percent for 1970s builds to nearly 100 percent for 2020s builds, crossing one half around 1991");
+  const L=44,R=20,T=14,B=30,x=lin(1970,2026,L,w-R),y=lin(0,1,h-B,T);
+  [0,.25,.5,.75,1].forEach(t=>{el("line",{x1:L,x2:w-R,y1:y(t),y2:y(t),class:"gl"},svg);txt(svg,pct(t),{x:L-8,y:y(t)+4,"text-anchor":"end",class:"tick"})});
+  (small?[1970,1990,2010,2026]:[1970,1980,1990,2000,2010,2020,2026]).forEach(t=>txt(svg,t,{x:x(t),y:h-8,"text-anchor":"middle",class:"tick"}));
+  el("line",{x1:L,x2:w-R,y1:y(.5),y2:y(.5),class:"rf"},svg);
+  el("path",{d:d.map((p,i)=>(i?"L":"M")+x(p.y)+","+y(p.in/p.n)).join(""),fill:"none",stroke:C[0],"stroke-width":2,"stroke-linejoin":"round"},svg);
+  d.forEach(p=>el("circle",{cx:x(p.y),cy:y(p.in/p.n),r:p.n<80?2.5:3.5,fill:p.n<80?"var(--panel)":C[0],stroke:C[0],"stroke-width":1.5},svg));
+  const lab=(yr,s,dx,dy,a)=>{const p=d.find(q=>q.y===yr);txt(svg,s.replace("%",pct(p.in/p.n)),{x:x(yr)+dx,y:y(p.in/p.n)+dy,"text-anchor":a,class:"lab"})};
+  lab(1991,small?"1991: %":"Built 1991: % still in service",10,16,"start");lab(1973,"1973: 0 of 20",8,-8,"start");lab(2015,"2015: %",-6,-12,"end");
+  const cur=el("line",{y1:T,y2:h-B,stroke:"var(--axis)","stroke-width":1,visibility:"hidden"},svg);
+  const r=el("rect",{x:L,y:T,width:w-L-R,height:h-T-B,class:"hit"},svg);
+  hit(r,e=>{const bx=svg.getBoundingClientRect(),yr=Math.round(1970+(e.clientX-bx.left-L)/(w-L-R)*56),p=d.reduce((a,b)=>Math.abs(b.y-yr)<Math.abs(a.y-yr)?b:a);
+    cur.setAttribute("x1",x(p.y));cur.setAttribute("x2",x(p.y));cur.setAttribute("visibility","visible");
+    return `<span class="h">Built ${p.y}</span><span class="m">${pct(p.in/p.n)} in service</span><span class="m">${p.in} of ${p.n} balloons</span>`});
+  r.addEventListener("pointerleave",()=>cur.setAttribute("visibility","hidden"))}
+
+function makers(){const d=D.makers,ks=D.mk,{svg,w,h,hit,small}=stage("c-mk",360,"Stacked columns: Aerostar/Raven and Firefly/Balloon Works shrink to nothing by the 2020s while Lindstrand US, Kubicek and Ultramagic grow");
+  document.getElementById("lg-mk").innerHTML=ks.map((k,i)=>`<li><span class="sw" style="background:${C[i]}"></span>${k}</li>`).join("");
+  const L=40,R=8,T=10,B=30,bw=(w-L-R)/d.length,y=lin(0,1,h-B,T),short={"Aerostar/Raven":"Aerostar","Firefly/Balloon Works":"Firefly","Cameron US":"Cameron US","Lindstrand US":"Lindstrand","Kubicek":"Kubicek","Ultramagic":"Ultramagic","Other":"Other"};
+  [0,.25,.5,.75,1].forEach(t=>{el("line",{x1:L,x2:w-R,y1:y(t),y2:y(t),class:"gl"},svg);txt(svg,pct(t),{x:L-8,y:y(t)+4,"text-anchor":"end",class:"tick"})});
+  d.forEach((r,i)=>{let acc=0;const x0=L+i*bw+bw*.12,ww=bw*.76;
+    txt(svg,r.dec+"s",{x:x0+ww/2,y:h-8,"text-anchor":"middle",class:"tick"});
+    ks.forEach((k,j)=>{const s=r[k]/r.n;if(!s)return;const y1=y(acc+s),hh=y(acc)-y1;acc+=s;
+      const seg=el("rect",{x:x0,y:y1+1,width:ww,height:Math.max(0,hh-2),fill:C[j],rx:2},svg);
+      if(hh>20&&ww>44)txt(svg,(ww>96?short[k]+" ":"")+pct(s),{x:x0+ww/2,y:y1+hh/2+4,"text-anchor":"middle",class:"lab in",style:j===6?"fill:var(--fg)":(j>=2&&j<=4)?"fill:#141413":""});
+      hit(seg,`<span class="h">${k}, ${r.dec}s builds</span><span class="m">${pct(s,1)} of US-based balloons</span><span class="m">${r[k]} of ${num(r.n)}</span>`)})})}
+
+function size(){const d=D.size,{svg,w,h,hit,small}=stage("c-size",320,"Line chart: median balloon size is flat at 90 thousand cubic feet from 1990 on, while the 90th percentile rises from 105 thousand to 210 thousand");
+  const L=44,R=small?20:150,T=14,B=30,x=lin(1970,2025,L,w-R),y=lin(0,225000,h-B,T);
+  [0,50,100,150,200].forEach(t=>{el("line",{x1:L,x2:w-R,y1:y(t*1e3),y2:y(t*1e3),class:"gl"},svg);txt(svg,t+"k",{x:L-8,y:y(t*1e3)+4,"text-anchor":"end",class:"tick"})});
+  d.forEach((p,i)=>{if(!small||i%2===0)txt(svg,p.y===2025?"2025–26":p.y+"–"+String(p.y+4).slice(2),{x:x(p.y),y:h-8,"text-anchor":"middle",class:"tick"})});
+  [["med",0,"Median"],["p90",1,"90th percentile"]].forEach(([k,j,nm])=>{
+    el("path",{d:d.map((p,i)=>(i?"L":"M")+x(p.y)+","+y(p[k])).join(""),fill:"none",stroke:C[j],"stroke-width":2,"stroke-linejoin":"round"},svg);
+    d.forEach(p=>el("circle",{cx:x(p.y),cy:y(p[k]),r:4,fill:C[j],stroke:"var(--panel)","stroke-width":2},svg));
+    const last=d[d.length-1];if(!small)txt(svg,nm+" "+Math.round(last[k]/1e3)+"k",{x:x(last.y)+10,y:y(last[k])+4,class:"lab"})});
+  if(small){txt(svg,"Median 90k",{x:x(2010),y:y(90000)+18,"text-anchor":"middle",class:"lab"});txt(svg,"90th pct. 210k",{x:x(2010)-8,y:y(210000)+4,"text-anchor":"end",class:"lab"})}
+  const cur=el("line",{y1:T,y2:h-B,stroke:"var(--axis)","stroke-width":1,visibility:"hidden"},svg);
+  const r=el("rect",{x:L,y:T,width:w-L-R,height:h-T-B,class:"hit"},svg);
+  hit(r,e=>{const bx=svg.getBoundingClientRect(),v=1970+(e.clientX-bx.left-L)/(w-L-R)*55,p=d.reduce((a,b)=>Math.abs(b.y-v)<Math.abs(a.y-v)?b:a);
+    cur.setAttribute("x1",x(p.y));cur.setAttribute("x2",x(p.y));cur.setAttribute("visibility","visible");
+    return `<span class="h">Built ${p.y}–${p.y===2025?2026:p.y+4}</span><span class="m">Median: ${num(p.med)} cu ft</span><span class="m">90th percentile: ${num(p.p90)} cu ft</span><span class="m">150,000 cu ft or more: ${pct(p.big,1)}</span><span class="m">${num(p.n)} balloons</span>`});
+  r.addEventListener("pointerleave",()=>cur.setAttribute("visibility","hidden"))}
+
+function scale(){const box=document.getElementById("c-scale"),items=D.scale,max=Math.cbrt(items[items.length-1].v),avail=Math.min(150,(box.clientWidth/(box.clientWidth<520?2:4))-16);
+  box.innerHTML=items.map((it,i)=>{const wpx=Math.max(14,avail*Math.cbrt(it.v)/max),hpx=wpx*1.35;
+    return `<figure><svg viewBox="-50 -55 100 135" width="${wpx.toFixed(1)}" height="${hpx.toFixed(1)}" role="img" aria-label="${it.t}">${balloon(PAL[[3,1,0,2][i]])}</svg><figcaption><b>${num(it.v)} cu ft</b>${it.t}</figcaption></figure>`}).join("")}
+
+function animals(){const d=D.animals.filter(a=>a.n>=4),rh=24,{svg,w,h,hit,small}=stage("c-ani",d.length*rh+10,"Bar chart of animal words in balloon names: bears 30, cats 18, ducks 15, dogs 13");
+  const L=88,R=40,x=lin(0,d[0].n,L,w-R);
+  d.forEach((a,i)=>{const y=4+i*rh,dog=a.k==="Dogs";
+    txt(svg,a.k,{x:L-10,y:y+rh/2+3,"text-anchor":"end",class:"tick",style:"font-size:12px;fill:var(--"+(dog?"fg":"second")+")"+(dog?";font-weight:600":"")});
+    el("rect",{x:L,y:y+4,width:Math.max(2,x(a.n)-L),height:rh-8,rx:3,fill:dog?C[1]:C[6]},svg);
+    txt(svg,a.n,{x:x(a.n)+6,y:y+rh/2+4,class:"lab"+(dog?" strong":"")});
+    hit(el("rect",{x:0,y,width:w,height:rh,class:"hit"},svg),`<span class="h">${a.k}: ${a.n} balloons</span><span class="m">${a.ss} are special shapes</span><span class="m">e.g. ${a.ex.slice(0,3).join(", ")}</span>`)})}
+
+function seen(){const d=D.seenYears,{svg,w,h,hit,small}=stage("c-seen",300,"Column chart of balloons seen per year: under 80 a year until 2021, 144 in 2022, 813 in 2023, then 247, 178 and 130");
+  const L=40,R=8,T=22,B=30,bw=(w-L-R)/d.length,y=lin(0,850,h-B,T);
+  [0,200,400,600,800].forEach(t=>{el("line",{x1:L,x2:w-R,y1:y(t),y2:y(t),class:"gl"},svg);txt(svg,t,{x:L-8,y:y(t)+4,"text-anchor":"end",class:"tick"})});
+  d.forEach((p,i)=>{const x0=L+i*bw+1,ww=Math.max(2,bw-2),top=y(p.n);
+    if(p.n)el("path",{d:`M${x0},${h-B}V${top+3}q0,-3 3,-3H${x0+ww-3}q3,0 3,3V${h-B}Z`,fill:C[0]},svg);
+    if(!small||i%3===0)txt(svg,small?"’"+String(p.y).slice(2):p.y,{x:x0+ww/2,y:h-8,"text-anchor":"middle",class:"tick",style:small?"":"font-size:10px"});
+    if(p.y===2023)txt(svg,p.n,{x:x0+ww/2,y:top-6,"text-anchor":"middle",class:"lab strong"});
+    if(p.y===2020||p.y===2016)txt(svg,p.n,{x:x0+ww/2,y:h-B-6,"text-anchor":"middle",class:"lab"});
+    hit(el("rect",{x:L+i*bw,y:T,width:bw,height:h-T-B,class:"hit"},svg),`<span class="h">${p.y}</span><span class="m">${p.n} balloons seen</span>`)})}
+
+function draw(){surv();makers();size();scale();animals();seen();comp()}
+draw();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(draw,120)});
+</script>
+</body>
+</html>
