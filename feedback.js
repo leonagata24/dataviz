@@ -20,7 +20,7 @@
     ".pf-t{width:100%;color:var(--pf-muted)}";
   var paw = '<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16" rx="5.5" ry="4.6"/><ellipse cx="5.2" cy="10" rx="2.2" ry="2.8"/><ellipse cx="9.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="14.5" cy="5.8" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10" rx="2.2" ry="2.8"/></svg>';
   var flat = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18v2.4H3z"/></svg>';
-  var msg = { wag: "Tail wag logged. The pug thanks you.", meh: "Noted. The pug will try harder." };
+  var msg = { wag: "Tail wag logged. The pugs thank you.", meh: "Noted. The pugs will try harder." };
   function get(k) { try { return localStorage.getItem("pugfb:" + k); } catch (e) { return null; } }
   function put(k, v) { try { localStorage.setItem("pugfb:" + k, v); } catch (e) {} }
   function mount(host, key, inline) {
