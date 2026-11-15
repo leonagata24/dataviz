@@ -229,7 +229,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
   </div>
   <div class="kicker">The first century of the U.S. Census · 1790–1900</div>
   <h1>From 3.9 million to 76 million</h1>
-  <p class="dek">Twelve censuses, 49 states and territories, and a population that grew nineteen-fold while its center of gravity walked about 500 miles west. This page checks the data, reads the 1883 original, and rebuilds it four ways.</p>
+  <p class="dek">Twelve censuses, 49 states and territories, and a population that grew nineteen-fold while its center of gravity walked about 500 miles west. This page reads the 1883 original, rebuilds it four ways, and ends with a <a href="#data">data quality audit</a>.</p>
 </header>
 
 <div class="kpis">
@@ -239,35 +239,10 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
   <div class="kpi"><div class="big num">0%<small> → </small>35%</div><div class="lbl">Midwest share of the nation. Largest region by 1900.</div></div>
 </div>
 
-<!-- DATA CHECK -->
-<section id="data">
-  <div class="sec-head col">
-    <span class="eyebrow">Step 1 · Data check</span>
-    <h2>The file is clean. The borders are not.</h2>
-    <p class="lede">Structurally, nothing needs fixing: no blanks, no duplicates, consistent names, and national totals that match the official census counts to the person. The issues are historical. The data assigns every count to <em>today’s</em> state lines, and it counts places that were not yet states. Both are kept, and both are now flagged.</p>
-  </div>
-  <div class="tbl-scroll">
-  <table class="checks">
-    <thead><tr><th>Check</th><th>Result</th><th>Finding and treatment</th></tr></thead>
-    <tbody>
-      <tr><td>Structure</td><td><span class="pill pass">Pass</span></td><td>886 rows × 3 columns (State, Year, Population). 0 missing values, 0 duplicate state-year pairs, integer populations, 51 consistently spelled names with no stray whitespace.</td></tr>
-      <tr><td>Scope</td><td><span class="pill fix">Filtered</span></td><td>The file runs to 1990 (21 censuses). The exercise covers the first century, so the page uses the 12 censuses from 1790 to 1900: <b class="num">437</b> rows.</td></tr>
-      <tr><td>Totals reconcile</td><td><span class="pill pass">Pass</span></td><td>Summed state counts equal the published national totals: 3,929,214 (1790), 23,191,876 (1850), 75,994,575 (1900).</td></tr>
-      <tr><td>Modern borders</td><td><span class="pill note">Note</span></td><td>Maine is counted apart from Massachusetts in 1790 (it separated in 1820), and West Virginia apart from Virginia (1863). Kentucky and Tennessee appear in 1790 as their later state areas. This is why ranks here differ from the 1883 plate, which put Massachusetts 2nd in 1790. Here it is 4th.</td></tr>
-      <tr><td>Not yet states</td><td><span class="pill fix">Added</span></td><td>Territories and pre-statehood areas are mixed in with states (e.g. Alabama, 1,250 people in 1800). A <code>status</code> field was added by comparing each admission date with census day. In 1790, 13 of 18 entries were states; in 1900, 45 of 49. D.C. is flagged separately.</td></tr>
-      <tr><td>Missing areas</td><td><span class="pill note">Note</span></td><td>Alaska (enumerated from 1880) and Hawaii (from 1900) are absent before 1960, so totals describe the contiguous U.S. Unorganised and Indian lands not enumerated in early censuses are also absent. That is a gap in the source, not the file.</td></tr>
-      <tr><td>Outliers</td><td><span class="pill pass">Real</span></td><td>Jumps such as Minnesota +2,731% (1850–60) or North Dakota +1,435% (1870–80) are frontier growth from tiny bases. Nevada’s fall from 62,266 (1880) to 42,335 (1900) is the silver bust. All verified as plausible, none altered.</td></tr>
-      <tr><td>Known count quality</td><td><span class="pill note">Note</span></td><td>The 1870 census is known to have undercounted the South. Published figures are used as-is; growth rates for 1860–70 and 1870–80 in Southern states should be read with that in mind.</td></tr>
-      <tr><td>Enrichment</td><td><span class="pill fix">Added</span></td><td>Rank per census, Census Bureau region (Northeast, South, Midwest, West), admission date, and a geographic centroid per state. Centroids give an <em>estimated</em> center of population; it lands within about 0.5° of the Census Bureau’s official points.</td></tr>
-    </tbody>
-  </table>
-  </div>
-</section>
-
 <!-- ORIGINAL -->
 <section id="original">
   <div class="sec-head col">
-    <span class="eyebrow">Step 2 · The original</span>
+    <span class="eyebrow">Step 1 · The original</span>
     <h2>A rank chart drawn by hand in 1883</h2>
   </div>
   <div class="orig">
@@ -303,7 +278,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
 <!-- A: BUMP -->
 <section id="rank">
   <div class="sec-head col">
-    <span class="eyebrow">Step 3 · Makeovers</span>
+    <span class="eyebrow">Step 2 · Makeovers</span>
     <h2>Four ways to evolve Plate 18</h2>
   </div>
 
@@ -383,12 +358,37 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
 
 <!-- TAKEAWAYS -->
 <section id="takeaways">
-  <div class="sec-head col"><span class="eyebrow">Step 4 · What the data says</span><h2>Four findings</h2></div>
+  <div class="sec-head col"><span class="eyebrow">Step 3 · What the data says</span><h2>Four findings</h2></div>
   <div class="take">
     <div><b>New York took the lead early</b><p>Virginia ranked 1st in 1790 and 1800. New York passed it in 1810 and held 1st for the rest of the century, reaching 7.3 million by 1900.</p></div>
     <div><b>The Old Northwest rose fastest</b><p>Illinois went from 2,458 people in 1800 (24th) to 4.8 million and 3rd place in 1900. Ohio reached 3rd by 1840.</p></div>
     <div><b>The original states slid</b><p>Virginia fell from 1st to 17th, South Carolina from 7th to 24th, and Connecticut from 8th to 29th. They kept growing, just more slowly than the West.</p></div>
     <div><b>The center walked west</b><p>The estimated center of population moved about 9.4° of longitude, roughly 500 miles, almost all of it due west along the 39th parallel.</p></div>
+  </div>
+</section>
+
+<!-- DATA QUALITY AUDIT (last section) -->
+<section id="data">
+  <div class="sec-head col">
+    <span class="eyebrow">Step 4 · Data quality audit</span>
+    <h2>The file is clean. The borders are not.</h2>
+    <p class="lede">Structurally, nothing needs fixing: no blanks, no duplicates, consistent names, and national totals that match the official census counts to the person. The issues are historical. The data assigns every count to <em>today’s</em> state lines, and it counts places that were not yet states. Both are kept, and both are now flagged.</p>
+  </div>
+  <div class="tbl-scroll">
+  <table class="checks">
+    <thead><tr><th>Check</th><th>Result</th><th>Finding and treatment</th></tr></thead>
+    <tbody>
+      <tr><td>Structure</td><td><span class="pill pass">Pass</span></td><td>886 rows × 3 columns (State, Year, Population). 0 missing values, 0 duplicate state-year pairs, integer populations, 51 consistently spelled names with no stray whitespace.</td></tr>
+      <tr><td>Scope</td><td><span class="pill fix">Filtered</span></td><td>The file runs to 1990 (21 censuses). The exercise covers the first century, so the page uses the 12 censuses from 1790 to 1900: <b class="num">437</b> rows.</td></tr>
+      <tr><td>Totals reconcile</td><td><span class="pill pass">Pass</span></td><td>Summed state counts equal the published national totals: 3,929,214 (1790), 23,191,876 (1850), 75,994,575 (1900).</td></tr>
+      <tr><td>Modern borders</td><td><span class="pill note">Note</span></td><td>Maine is counted apart from Massachusetts in 1790 (it separated in 1820), and West Virginia apart from Virginia (1863). Kentucky and Tennessee appear in 1790 as their later state areas. This is why ranks here differ from the 1883 plate, which put Massachusetts 2nd in 1790. Here it is 4th.</td></tr>
+      <tr><td>Not yet states</td><td><span class="pill fix">Added</span></td><td>Territories and pre-statehood areas are mixed in with states (e.g. Alabama, 1,250 people in 1800). A <code>status</code> field was added by comparing each admission date with census day. In 1790, 13 of 18 entries were states; in 1900, 45 of 49. D.C. is flagged separately.</td></tr>
+      <tr><td>Missing areas</td><td><span class="pill note">Note</span></td><td>Alaska (enumerated from 1880) and Hawaii (from 1900) are absent before 1960, so totals describe the contiguous U.S. Unorganized and Indian lands not enumerated in early censuses are also absent. That is a gap in the source, not the file.</td></tr>
+      <tr><td>Outliers</td><td><span class="pill pass">Real</span></td><td>Jumps such as Minnesota +2,731% (1850–60) or North Dakota +1,435% (1870–80) are frontier growth from tiny bases. Nevada’s fall from 62,266 (1880) to 42,335 (1900) is the silver bust. All verified as plausible, none altered.</td></tr>
+      <tr><td>Known count quality</td><td><span class="pill note">Note</span></td><td>The 1870 census is known to have undercounted the South. Published figures are used as-is; growth rates for 1860–70 and 1870–80 in Southern states should be read with that in mind.</td></tr>
+      <tr><td>Enrichment</td><td><span class="pill fix">Added</span></td><td>Rank per census, Census Bureau region (Northeast, South, Midwest, West), admission date, and a geographic centroid per state. Centroids give an <em>estimated</em> center of population; it lands within about 0.5° of the Census Bureau’s official points.</td></tr>
+    </tbody>
+  </table>
   </div>
 </section>
 

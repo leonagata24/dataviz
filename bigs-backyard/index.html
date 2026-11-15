@@ -41,6 +41,16 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
 @media (prefers-reduced-motion: no-preference) { .dash-skeleton:empty { animation: skel 1.4s linear infinite; } @keyframes skel { to { background-position: -200% 0; } } }
 .site-foot { max-width: 72rem; margin: 48px auto 0; padding-top: 16px; border-top: 1px solid var(--color-border-line); font-size: 13px; color: var(--color-fg-muted); }
 .site-foot a { color: var(--color-fg); }
+
+/* Data quality audit (always the last section) */
+.dqa-w{overflow-x:auto}
+.dqa-t{border-collapse:collapse;width:100%;min-width:680px;font-size:14px;line-height:1.45}
+.dqa-t th,.dqa-t td{text-align:left;vertical-align:top;padding:9px 12px 9px 0;border-top:1px solid var(--color-border-line)}
+.dqa-t thead th{border-top:0;border-bottom:2px solid var(--color-fg);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--color-fg-muted);font-weight:600;white-space:nowrap}
+.dqa-t tbody th{font-weight:700;color:var(--color-fg);width:14%;min-width:96px}
+.dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
+@media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--color-border-line);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--color-fg-muted)}}
+.dqa-r{display:inline-block;border:1px solid var(--color-fg-muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--color-fg);white-space:nowrap}
 </style>
 <script>
 /* A small stand-in for the dashboard runtime: loads the CSV datasets, runs the page's calculations and redraws on resize. */
@@ -196,7 +206,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
       <span>Article: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big's Backyard Ultra World Team Championship 2026</a></span>
       <span>Data: <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big's Backyard Ultramarathon World Team Championships</a></span>
     </div>
-    <p class="bb-disclaimer">Analysis, charts and text were produced with AI (Claude) from the MakeoverMonday dataset, and every figure is computed from that data. Check against the official results before citing.</p>
+    <p class="bb-disclaimer">Analysis, charts and text were produced with AI (Claude) from the MakeoverMonday dataset, and every figure is computed from that data. Check against the official results before citing. The last section audits the data.</p>
     <div class="bb-hero">
       <div class="bb-head">
         <p class="bb-eyebrow">Big's Backyard Ultra · World Team Championship 2026</p>
@@ -380,6 +390,13 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
       <div><dt>Team score</dt><dd>Total yards completed by a nation's 15 runners.</dd></div>
     </dl>
   </section>
+  <section class="bb-sec" id="dq">
+    <span class="bb-num">Data quality audit</span>
+    <h2>Complete and consistent, with a few honest blanks</h2>
+    <p>The files reconcile with each other almost to the yard. What they lack is lap-level detail before 2026 and a winner where the last runners stopped together.</p>
+    <div class="bb-card"><div class="dqa-w"><table class="dqa-t"><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">What was found</th><th scope="col">What was done</th></tr></thead><tbody><tr><th scope="row">Structure</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">2026 lap file: 32,827 laps for 990 runners, with no runner-and-yard pair repeated. Each runner’s last yard in the lap file equals the final yards in the results file (990 of 990). Across the four championships the results file has 2,830 rows (305 in 2020, 555 in 2022, 938 in 2024, 1,032 in 2026) and the team file 190.</td><td data-l="Done">Kept as delivered.</td></tr><tr><th scope="row">Lap times</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">Every lap is between 1,666 and 3,599 seconds, under the one hour the rules allow.</td><td data-l="Done">Used as given.</td></tr><tr><th scope="row">Did not start</th><td data-l="Result"><span class="dqa-r">Filtered</span></td><td data-l="Found">120 results across the four years are “did not start” (42 of them in 2026).</td><td data-l="Done">Left out of every count and share, so “runners” always means runners who started. That is 990 in 2026.</td></tr><tr><th scope="row">Team totals</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">A team’s yards equal the sum of its runners’ yards in 188 of 190 team rows. Two differ by one yard, both in 2024: Ireland 291 against 292, and the Philippines 260 against 259.</td><td data-l="Done">Left as published. One yard is under 0.4% of either score, and neither row is in 2026.</td></tr><tr><th scope="row">Blank fields</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">11 team rows have no national winner: 6 finished teams (the rules allow no winner when the last runners stop on the same yard), 4 nations that did not start and 1 cancelled team. 6 rows have no tenth-best runner, because fewer than 10 runners started (9, 8 and four with none).</td><td data-l="Done">Left blank, not filled with zeros.</td></tr><tr><th scope="row">Lap-by-lap years</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Lap-level data exists only for 2026. The night-shift, lap-time and rest-time charts are 2026 only; the attrition and team charts cover all four years.</td><td data-l="Done">Read the 2026-only charts as one championship, not a trend.</td></tr><tr><th scope="row">Comparing years</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">The field grew more than threefold, from 305 results in 2020 to 1,032 in 2026, and nations are not a random sample.</td><td data-l="Done">The tests describe these championships, not ultrarunning in general. Methods above lists each test.</td></tr></tbody></table></div></div>
+  </section>
+
 </div>
 
 <script>

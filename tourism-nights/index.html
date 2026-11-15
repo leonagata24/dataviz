@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Data quality audit (always the last section) */
+.dqa-w{overflow-x:auto}
+.dqa-t{border-collapse:collapse;width:100%;min-width:680px;font-size:14px;line-height:1.45}
+.dqa-t th,.dqa-t td{text-align:left;vertical-align:top;padding:9px 12px 9px 0;border-top:1px solid var(--rule)}
+.dqa-t thead th{border-top:0;border-bottom:2px solid var(--ink);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;white-space:nowrap}
+.dqa-t tbody th{font-weight:700;color:var(--ink);width:14%;min-width:96px}
+.dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
+@media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--rule);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--muted)}}
+.dqa-r{display:inline-block;border:1px solid var(--muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+</style>
 <title>Europe's Platform Nights</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="MakeoverMonday 2026 Week 41: 951.6 million nights booked through Airbnb, Booking and Expedia across EU regions in 2025, by month, season and per resident.">
@@ -177,7 +187,7 @@ footer p { margin: 0; max-width: 90ch; }
     </div>
     <div class="kicker">Short-term rentals booked via Airbnb, Booking and Expedia · 2025</div>
     <h1>Where Europe's platform nights <em>go</em></h1>
-    <p class="dek">Eurostat's article maps the last three months of 2025 (October to December, or “Q4”), when Andalucía, the Canary Islands and the Paris region (Île-de-France) led. The full year of monthly data tells a bigger story: the hot spots move with the seasons, and a quarter's map shows only one of them.</p>
+    <p class="dek">Eurostat's article maps the last three months of 2025 (October to December, or “Q4”), when Andalucía, the Canary Islands and the Paris region (Île-de-France) led. The full year of monthly data tells a bigger story: the hot spots move with the seasons, and a quarter's map shows only one of them. The <a href="#dq">data quality audit</a> at the bottom lists what the file leaves out.</p>
     <div class="stats" id="stats"></div>
     <dl class="terms">
       <div><dt>Platform nights</dt><dd>One guest staying one night in a short-term rental (a holiday flat, house or room, not a hotel) booked through Airbnb, Booking.com or Expedia.</dd></div>
@@ -291,6 +301,16 @@ footer p { margin: 0; max-width: 90ch; }
       <div><h3>Regions: most nights per resident</h3><div class="bars" id="per-reg"></div></div>
       <div><h3>Countries: nights per resident</h3><div class="bars" id="per-cty"></div></div>
     </div>
+  </section>
+
+
+  <section id="dq" aria-labelledby="h-dq">
+    <div class="sh">
+      <span class="tag">Data quality audit</span>
+      <h2 id="h-dq">Sound where it counts, with a hole in two countries</h2>
+      <p>The monthly figures add up to the EU total exactly. The weak spot is geography: Portugal and the Netherlands are partly missing at region level, so region rankings leave out about 2% of EU nights.</p>
+    </div>
+    <div class="panel"><div class="dqa-w"><table class="dqa-t"><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">What was found</th><th scope="col">What was done</th></tr></thead><tbody><tr><th scope="row">Structure</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">242 region rows (EU “NUTS 2” level) in 27 countries, plus one row per country and one for the EU. Each has twelve monthly values. No month is zero or negative; the smallest is 458 nights.</td><td data-l="Done">Kept as delivered.</td></tr><tr><th scope="row">Totals add up</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">For all 237 regions with figures, the twelve months sum exactly to the region’s total. The 27 country totals sum exactly to the EU total, 951,611,862 nights.</td><td data-l="Done">The EU Q4 share, 18.1%, uses the EU monthly totals, which include every night.</td></tr><tr><th scope="row">Missing regions</th><td data-l="Result"><span class="dqa-r">Gap</span></td><td data-l="Found">Five regions have no figures: Utrecht and Zuid-Holland (Netherlands) and Centro, the Lisbon area and Alentejo (Portugal). Their borders were redrawn in 2024, and the file lists the old borders with blank numbers. Their nights are still inside the country totals. Netherlands: 2.1 million nights (17% of the country). Portugal: 18.3 million (37%). Together that is 20.3 million nights, 2.1% of the EU, that no region row carries.</td><td data-l="Done">Drawn as “no data” on the map. Region rankings, the “typical region” and “41 of 237 regions” leave them out. Country and EU figures include them.</td></tr><tr><th scope="row">Scope</th><td data-l="Result"><span class="dqa-r">Filtered</span></td><td data-l="Found">Iceland, Liechtenstein, Norway and Switzerland are in the file.</td><td data-l="Done">Left out, as in the article’s EU figures.</td></tr><tr><th scope="row">Names and map codes</th><td data-l="Result"><span class="dqa-r">Fixed</span></td><td data-l="Found">Many regions carry local-language names (Ionia Nisia, Canarias, Ile de France). One region, the Lisbon area, has no map code, which matches its missing numbers.</td><td data-l="Done">Names are shown in English where a plain name exists, with the local name in the hover text.</td></tr><tr><th scope="row">Population</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">Every region with figures has a population on 1 January 2025 from Eurostat, so every region has a nights-per-resident value.</td><td data-l="Done">Used as given. Per-resident figures compare visitors with residents, so they run high for small islands.</td></tr><tr><th scope="row">Size and noise</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Six regions have under 100,000 nights and two under 30,000. In those, a few bookings can swing the Q4 share or the December-to-October ratio.</td><td data-l="Done">The off-season chart sizes bubbles by nights and the text points readers to the big bubbles first.</td></tr><tr><th scope="row">What it covers</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Only nights booked through Airbnb, Booking.com and Expedia Group. Hotels and other booking sites are not in it, and a night is counted where it was spent, not by who booked it.</td><td data-l="Done">Every statement on this page describes platform bookings, not all tourism.</td></tr></tbody></table></div></div>
   </section>
 
 

@@ -146,6 +146,16 @@ details.tbl td.n, details.tbl th.n { text-align: right; }
   .detail { max-height: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Data quality audit (always the last section) */
+.dqa-w{overflow-x:auto}
+.dqa-t{border-collapse:collapse;width:100%;min-width:680px;font-size:14px;line-height:1.45}
+.dqa-t th,.dqa-t td{text-align:left;vertical-align:top;padding:9px 12px 9px 0;border-top:1px solid var(--line)}
+.dqa-t thead th{border-top:0;border-bottom:2px solid var(--fg);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-muted);font-weight:600;white-space:nowrap}
+.dqa-t tbody th{font-weight:700;color:var(--fg);width:14%;min-width:96px}
+.dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
+@media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--line);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--fg-muted)}}
+.dqa-r{display:inline-block;border:1px solid var(--fg-muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--fg);white-space:nowrap}
 </style>
 <link rel="stylesheet" href="../pug-header.css">
 <script defer src="../analytics.js"></script>
@@ -173,9 +183,9 @@ details.tbl td.n, details.tbl th.n { text-align: right; }
     </div>
   </header>
 
-  <aside class="caveat" aria-labelledby="cav-h">
-    <h2 id="cav-h">What this data is, and isn’t</h2>
-    <ul id="caveat"></ul>
+  <aside class="caveat" aria-labelledby="cav-h0">
+    <h2 id="cav-h0">Read this first</h2>
+    <p style="margin:0;color:var(--fg-2)">These are reports with images, not a count of every sighting, and most of them happened in one short window. The full <a href="#dq">data quality audit</a> is the last section of the page.</p>
   </aside>
 
   <section class="sec" aria-labelledby="s1">
@@ -236,6 +246,15 @@ details.tbl td.n, details.tbl th.n { text-align: right; }
       <li><b>Report links.</b> Each report links to the NUFORC page given in the dataset. NUFORC has since rebuilt its site, so some links may no longer open.</li>
     </ul>
   </section>
+  <section class="sec" id="dq" aria-labelledby="dq-h">
+    <div class="sec-h"><span class="num">04 · DATA QUALITY AUDIT</span><h2 id="dq-h">What this data is, and isn’t</h2></div>
+    <aside class="caveat" aria-labelledby="cav-h">
+      <h2 id="cav-h">Summary</h2>
+      <ul id="caveat"></ul>
+    </aside>
+    <div class="dqa-w" style="margin-top:16px"><table class="dqa-t"><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">What was found</th><th scope="col">What was done</th></tr></thead><tbody><tr><th scope="row">Structure</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">1,317 reports, one per row. Every report has a date, time, city, state, shape, map position and witness text. No row is repeated exactly. Nine reports share a date, city and time with another report.</td><td data-l="Done">Kept. Those nine are probably separate witnesses of one event or a repost, and can’t be told apart.</td></tr><tr><th scope="row">When it happened</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Reports reach back to 1975, but 88% fall between Dec 2021 and Mar 2023 and the other 161 are late reports. 942 reports (72%) happened in 2022.</td><td data-l="Done">The page makes no claim that sightings are rising or falling.</td></tr><tr><th scope="row">Time of day</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">303 reports (23%) give a time exactly on the hour or half hour, and 182 of those are on the hour.</td><td data-l="Done">The hour chart is approximate. Witnesses round.</td></tr><tr><th scope="row">Duration</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">74 reports (6%) have no duration. The rest are free text such as “5-10 min” or “Two Minutes”.</td><td data-l="Done">Text was parsed to seconds, using the first number of a range. The 74 go in an “Unclear” bucket.</td></tr><tr><th scope="row">Reporting delay</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">546 reports were filed one to three months after the event, 92 more than a year later and 27 more than five years later.</td><td data-l="Done">Kept. Memory and timing details get less reliable with delay, and the page doesn’t correct for it.</td></tr><tr><th scope="row">Places</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">984 distinct city and state pairs across all 50 states and D.C. A dot sits at a city’s center, not where anyone saw anything.</td><td data-l="Done">Reports with the same position are drawn as one dot sized by count. Alaska and Hawaii appear in insets.</td></tr><tr><th scope="row">Rates</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">Reports per million residents use 2020 Census populations and count only this sample, which is reports with images.</td><td data-l="Done">Rates carry 90% intervals. They compare states within the sample, and are not the true rate of sightings.</td></tr><tr><th scope="row">Witness accounts</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Shape, time and duration are typed in by the witness. Some summaries already name an ordinary explanation, such as a low-flying aircraft.</td><td data-l="Done">Left as written. Nothing here says what anyone actually saw.</td></tr><tr><th scope="row">Links</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">Each report links to its NUFORC page. NUFORC has since rebuilt its site.</td><td data-l="Done">Some links may no longer open.</td></tr></tbody></table></div>
+  </section>
+
 
   <footer class="site-foot">Part of <a href="../">The Pugs’ Data Viz Studies</a>. MakeoverMonday is a community project: <a href="https://makeovermonday.vercel.app/" target="_blank" rel="noopener">makeovermonday.vercel.app</a>.</footer>
 </div>

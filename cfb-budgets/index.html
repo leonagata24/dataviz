@@ -49,6 +49,16 @@ td.n{font-variant-numeric:tabular-nums}
 .lim{font:15px/1.5 system-ui,sans-serif;padding-left:20px;max-width:46em}.lim li{margin-bottom:8px}
 #tip{position:fixed;display:none;pointer-events:none;z-index:30;background:var(--ink);color:var(--bg);padding:8px 11px;border-radius:6px;font:13px/1.4 system-ui,sans-serif}
 footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-serif}
+
+/* Data quality audit (always the last section) */
+.dqa-w{overflow-x:auto}
+.dqa-t{border-collapse:collapse;width:100%;min-width:680px;font-size:14px;line-height:1.45}
+.dqa-t th,.dqa-t td{text-align:left;vertical-align:top;padding:9px 12px 9px 0;border-top:1px solid var(--line)}
+.dqa-t thead th{border-top:0;border-bottom:2px solid var(--ink);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;white-space:nowrap}
+.dqa-t tbody th{font-weight:700;color:var(--ink);width:14%;min-width:96px}
+.dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
+@media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--line);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--muted)}}
+.dqa-r{display:inline-block;border:1px solid var(--muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
 </style>
 <link rel="stylesheet" href="../pug-header.css">
 <script defer src="../analytics.js"></script>
@@ -65,7 +75,7 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 </div></aside>
 <header class="hero"><div>
 <h1>Money gets you in the poll. It doesn’t decide where you land.</h1>
-<p>We compared estimated 2026 roster budgets for 68 programs with the AP Top 25. All ten of the biggest spenders are ranked. So are Houston, Iowa and Utah, on budgets below the median.</p>
+<p>We compared estimated 2026 roster budgets for 68 programs with the AP Top 25. All ten of the biggest spenders are ranked. So are Houston, Iowa and Utah, on budgets below the median. The last section audits the data.</p>
 </div></header>
 <div class="bar"><div><div id="chips" role="group" aria-label="Filter by conference"></div><input id="q" type="search" placeholder="Find a team" aria-label="Find a team"></div></div>
 <main>
@@ -113,6 +123,10 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 <section><h2>Budgets are estimates, so small gaps between teams don’t mean much</h2>
 <p>Bars show the low-to-high estimate on a $0–60M scale, with the midpoint marked. Texas and Florida have the widest ranges, at $10M. Click a column to sort.</p>
 <div class="tw"><table><thead><tr id="th"></tr></thead><tbody id="tb"></tbody></table></div></section>
+
+<section id="dq"><h2>Data quality audit: a small, clean file with estimated budgets</h2>
+<p>Nothing is missing or repeated, and the 25 ranks are complete. The limits are in what the numbers are: estimated ranges, 68 programs and a single poll.</p>
+<div class="tw dqa-w"><table class="dqa-t"><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">What was found</th><th scope="col">What was done</th></tr></thead><tbody><tr><th scope="row">Structure</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">68 programs: 16 SEC, 18 Big Ten, 17 ACC, 16 Big 12 and Notre Dame. No program appears twice, and every low estimate is at or below its high estimate.</td><td data-l="Done">Kept.</td></tr><tr><th scope="row">Ranks</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">25 teams have an AP rank, numbered 1 to 25 with no ties and no gaps, and each of them has a budget. The other 43 have no rank in the file.</td><td data-l="Done">Treated as unranked, and drawn as hollow dots in the band at the bottom.</td></tr><tr><th scope="row">Budgets</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Each budget is an estimated range, from $2M to $10M wide (typically $4M).</td><td data-l="Done">The midpoint is used. A gap between two teams smaller than their ranges means little, as the last chart shows.</td></tr><tr><th scope="row">Who is in the file</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Only the four power conferences and Notre Dame. Other programs aren’t in it.</td><td data-l="Done">“Unranked” and “everyone else” mean the other 43 programs here, not every team in the country.</td></tr><tr><th scope="row">One poll</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">The file holds a single AP ranking and doesn’t say which week.</td><td data-l="Done">Treated as a snapshot.</td></tr><tr><th scope="row">Cause and effect</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Budgets and ranks move together here. Richer programs also recruit, coach and win more, so spending can’t be separated from those.</td><td data-l="Done">The page reports a link and its size, and doesn’t say money causes rankings.</td></tr></tbody></table></div></section>
 </main>
 <footer>Source: cfb_roster_budgets_2026.xlsx. Budgets are estimated ranges in millions of dollars; midpoint is the average of low and high. Teams without an AP rank in the file are treated as unranked. A correlation between spending and ranking doesn’t show that spending causes it.</footer>
 <div id="tip"></div>

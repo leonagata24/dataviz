@@ -3,7 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Data quality audit (always the last section) */
+.dqa-w{overflow-x:auto}
+.dqa-t{border-collapse:collapse;width:100%;min-width:680px;font-size:14px;line-height:1.45}
+.dqa-t th,.dqa-t td{text-align:left;vertical-align:top;padding:9px 12px 9px 0;border-top:1px solid var(--rule)}
+.dqa-t thead th{border-top:0;border-bottom:2px solid var(--ink);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;white-space:nowrap}
+.dqa-t tbody th{font-weight:700;color:var(--ink);width:14%;min-width:96px}
+.dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
+@media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--rule);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--muted)}}
+.dqa-r{display:inline-block;border:1px solid var(--muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+</style>
 <title>More Cowbell</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="MakeoverMonday 2026 Week 40: 655 songs with cowbell, ranked by artist, charted by decade, plus the odd places cowbell turns up.">
@@ -228,7 +238,7 @@ footer p { margin: 0; max-width: 80ch; }
         <rect x="56" y="104" width="8" height="40" rx="4" fill="var(--ink)"/>
       </svg>
     </div>
-    <p class="dek">A fan-built list of <span data-k="songs"></span> songs that feature a cowbell. We matched each one to its release year on MusicBrainz, then asked three questions: who uses the cowbell most, when it peaked, and where it turns up when you least expect it.</p>
+    <p class="dek">A fan-built list of <span data-k="songs"></span> songs that feature a cowbell. We matched each one to its release year on MusicBrainz, then asked three questions: who uses the cowbell most, when it peaked, and where it turns up when you least expect it. The <a href="#dq">data quality audit</a> at the bottom says what is solid and what isn’t.</p>
     <div class="stats" id="stats"></div>
   </header>
 
@@ -362,9 +372,19 @@ footer p { margin: 0; max-width: 80ch; }
     </div>
   </section>
 
+  <section id="dq" aria-labelledby="h-dq">
+    <div class="sec-head">
+      <span class="tag">04 · Data quality audit</span>
+      <h2 id="h-dq">A tidy list, with a hole after 2015</h2>
+      <p>The list needed cleaning, and it is clean now. Release years are matched for 96% of songs. The real limits are that it is a fan collection and that almost nothing on it is recent.</p>
+    </div>
+    <div class="panel"><div class="dqa-w"><table class="dqa-t"><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">What was found</th><th scope="col">What was done</th></tr></thead><tbody><tr><th scope="row">Structure</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">655 songs by 443 artists. Every row has an artist and a title, and no artist-and-title pair repeats.</td><td data-l="Done">Kept.</td></tr><tr><th scope="row">Cleaning</th><td data-l="Result"><span class="dqa-r">Fixed</span></td><td data-l="Found">The fan list had repeated rows, spelling variants of the same artist, swapped artist and title columns, and a few wrong credits.</td><td data-l="Done">Fixed before anything was counted. The footer lists each fix, including crediting “Flakes” to Frank Zappa and “Kanga Roo” to Big Star.</td></tr><tr><th scope="row">Same song twice</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">Two songs appear under two titles that share one MusicBrainz recording ID: Bachman-Turner Overdrive, “You Ain’t Seen Nothing Yet!” and “Ain’t Seen Nothing Yet”; Chambers Brothers, “Time Has Come” and “Time Has Come Today”.</td><td data-l="Done">Both pairs are kept, as the list prints them. Merging them would lower the total to 653 and would not change the artist ranking, which only shows artists with four or more songs.</td></tr><tr><th scope="row">Release years</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">632 of 655 songs (96%) matched a MusicBrainz recording and a release year. Years run from 1957 to 2024, and only 3 songs are later than 2015.</td><td data-l="Done">The 23 unmatched songs count in the artist charts and are shown as “No year” in the decade charts. Each year is the earliest release of a matching recording, so covers count in the decade they were recorded.</td></tr><tr><th scope="row">Albums</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">One entry, Caravan’s “Cunning Stunts”, is an album.</td><td data-l="Done">It carries the album’s year.</td></tr><tr><th scope="row">What the list is</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">A fan-built list, not a census of cowbell in music. 334 of the 443 artists appear once, and it leans heavily to guitar rock.</td><td data-l="Done">Claims about the “most cowbell” are claims about this list.</td></tr></tbody></table></div></div>
+  </section>
+
+
   <footer>
     <p>Source list: <a href="https://cowbellsongs.com/the-list/" target="_blank" rel="noopener">cowbellsongs.com/the-list</a>, via the <a href="https://makeovermonday.vercel.app/dataset/songs-with-cowbell" target="_blank" rel="noopener">MakeoverMonday dataset</a>. Cleaned to <span data-k="songs"></span> songs by <span data-k="artists"></span> artists: duplicate rows removed, spelling variants of the same artist merged, swapped artist/title rows fixed, “Flakes” credited to Frank Zappa rather than Frank Sinatra, “Kanga Roo” credited to Big Star, and an SWV entry for En Vogue's “Free Your Mind” dropped as a duplicate. Caravan's “Cunning Stunts” is an album, so it carries the album's year.</p>
-    <p>Release years come from <a href="https://musicbrainz.org/" target="_blank" rel="noopener">MusicBrainz</a> (an open music database, free to reuse under a CC0 licence). Each year is the earliest release of a recording that matches the listed title and artist, so covers count in the decade they were recorded. Every song with a year links to its MusicBrainz record. <span data-k="unknown"></span> songs had no match and are shown as “No year”.</p>
+    <p>Release years come from <a href="https://musicbrainz.org/" target="_blank" rel="noopener">MusicBrainz</a> (an open music database, free to reuse under a CC0 license). Each year is the earliest release of a recording that matches the listed title and artist, so covers count in the decade they were recorded. Every song with a year links to its MusicBrainz record. <span data-k="unknown"></span> songs had no match and are shown as “No year”.</p>
     <p>Pugs do use AI assistants for science. Made for MakeoverMonday 2026 Week 40: data cleanup, release-year matching, analysis and page code were produced with Claude.</p>
   </footer>
 </div>
