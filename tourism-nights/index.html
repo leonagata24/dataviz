@@ -597,8 +597,8 @@ $("#codes").textContent = Object.entries(CN).map(([c, n]) => `${c} ${n}`).join("
   const tip = $("#tip-map"), panel = $("#map").closest(".panel");
   all.on("mousemove", (e, f) => {
     const r = byCode.get(f.id), v = val(r), b = panel.getBoundingClientRect();
-    const name = r ? r.label : (f.id.startsWith("PT1") ? "Lisboa area (PT)" : f.id);
-    tipAt(tip, panel, e.clientX - b.left, e.clientY - b.top, v == null ? `<b>${esc(name)}</b><br>No data in the file` :
+    const name = r ? (r.label || (r.n.endsWith(`(${r.c})`) ? r.n : `${r.n} (${r.c})`)) : (f.id.startsWith("PT1") ? "Lisboa area (PT)" : f.id);
+    tipAt(tip, panel, e.clientX - b.left, e.clientY - b.top, v == null ? `<b>${esc(name)}</b><br>No figure for this region in the file.<br><span class="k">${/^(NL|PT)/.test(r ? r.code || "" : f.id) ? "Its nights are inside the country total, not split by region." : "Nothing is shown for it."}</span>` :
       `<b>${esc(name)}</b><br>${periodName()}: ${fmtV(v)} ${S.m === "n" ? "nights" : "nights per resident"}<br><span class="k">Rank ${render.rank.get(r)} of ${render.rank.size}</span>`);
   }).on("mouseleave", () => hideTip(tip));
 
