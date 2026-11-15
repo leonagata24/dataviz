@@ -95,6 +95,8 @@ svg text.lab { font-family: var(--f-body); font-size: 13px; fill: var(--ink-2); 
 svg text.val { fill: var(--ink); font-weight: 500; }
 svg .grid { stroke: var(--grid); stroke-width: 1; }
 svg .base { stroke: var(--ink); stroke-width: 1; }
+.swipe { display: none; }
+@media (max-width: 700px) { .swipe { display: block; } }
 .chart { width: 100%; height: auto; display: block; overflow: visible; }
 .tip { position: absolute; pointer-events: none; z-index: 5; background: var(--ink); color: var(--paper); padding: 8px 10px; border-radius: 5px; font-size: 13.5px; line-height: 1.4; max-width: 260px; transform: translate(-50%, calc(-100% - 12px)); }
 .tip b { font-weight: 700; }
@@ -272,8 +274,8 @@ footer p { margin: 0; max-width: 90ch; }
   <section id="offseason" aria-labelledby="h-off">
     <div class="sh">
       <span class="tag">The off-season</span>
-      <h2 id="h-off">Who stays busy after summer</h2>
-      <p>Each dot is a region: its total nights in 2025 (across) against the share of them that fell in October–December (up). The across axis is a log scale: each gridline is ten times the one before, so small and huge regions fit on one chart. The dashed line is the EU average of <span id="eu-q4"></span>. Hover or tap a dot for details.</p>
+      <h2 id="h-off">Cities stay busy after summer. A few Christmas regions jump in December</h2>
+      <p>Each bubble is a region, sized by its 2025 nights. Up is the share of its year that fell in October to December. Across is how much busier December was than October: cities sit near 1× because they never stop, while Alsace, Northern and Eastern Finland and South-West Oltenia jump two to four times. The across axis is a log scale, so 0.5× and 2× are the same distance from 1×. The EU total is <span id="eu-q4"></span>. Hover or tap a bubble for details.</p>
     </div>
     <div class="panel"><div id="scatter"></div><div class="tip" id="tip-x" hidden></div></div>
   </section>
@@ -372,7 +374,7 @@ $("#codes").textContent = Object.entries(CN).map(([c, n]) => `${c} ${n}`).join("
 
 /* monthly columns */
 (function () {
-  const W = 1000, H = 330, m = { t: 30, r: 10, b: 30, l: 46 }, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const W = 1000, H = 352, m = { t: 30, r: 10, b: 52, l: 62 }, iw = W - m.l - m.r, ih = H - m.t - m.b;
   const top = 180e6, y = (v) => m.t + ih - (v / top) * ih, band = iw / 12, bw = Math.min(46, band - 10);
   let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="EU platform nights by month, 2025">`;
   for (let v = 0; v <= top; v += 30e6) s += `<line class="grid" x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}"/><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${v ? v / 1e6 + "M" : 0}</text>`;
@@ -381,10 +383,12 @@ $("#codes").textContent = Object.entries(CN).map(([c, n]) => `${c} ${n}`).join("
     s += `<g class="mcol" data-i="${i}"><rect x="${m.l + band * i}" y="${m.t}" width="${band}" height="${ih}" fill="transparent"/>
       <path d="M${x},${m.t + ih} V${yy + 4} Q${x},${yy} ${x + 4},${yy} H${x + bw - 4} Q${x + bw},${yy} ${x + bw},${yy + 4} V${m.t + ih} Z" fill="var(${q ? "--q4" : "--s4"})"/>
       ${i === 7 || i === 0 || i === 11 ? `<text class="val" x="${x + bw / 2}" y="${yy - 8}" text-anchor="middle">${fmtM(v)}</text>` : ""}
-      <text x="${x + bw / 2}" y="${H - 10}" text-anchor="middle">${MON[i]}</text></g>`;
+      <text x="${x + bw / 2}" y="${m.t + ih + 17}" text-anchor="middle">${MON[i]}</text></g>`;
   });
   const qx = m.l + band * 9 + 4, qw = band * 3 - 8;
   s += `<line class="base" x1="${m.l}" x2="${W - m.r}" y1="${m.t + ih}" y2="${m.t + ih}"/>
+    <text x="${m.l + iw / 2}" y="${H - 6}" text-anchor="middle" style="fill:var(--ink-2);font-weight:500">Month, 2025</text>
+    <text transform="translate(14 ${m.t + ih / 2}) rotate(-90)" text-anchor="middle" style="fill:var(--ink-2);font-weight:500">Platform nights in the EU per month</text>
     <text x="${qx + qw / 2}" y="${m.t - 12}" text-anchor="middle" style="fill:var(--q4);font-weight:500">Q4 · ${fmtM(EU.q4)}</text>
     <line x1="${qx}" x2="${qx + qw}" y1="${m.t - 6}" y2="${m.t - 6}" stroke="var(--q4)" stroke-width="2"/></svg>
     <p class="note" style="margin-top:8px">December (${fmtM(EU.m[11])}) is ${pct(EU.m[11] / EU.m[10] - 1)} above November (${fmtM(EU.m[10])}), the only month-on-month rise between August and the next spring.</p>`;
@@ -406,6 +410,7 @@ $("#codes").textContent = Object.entries(CN).map(([c, n]) => `${c} ${n}`).join("
   let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Region ranks, full year versus Q4">
     <text x="${xL}" y="${top - 16}" text-anchor="middle" style="fill:var(--ink);font-weight:500">Full year 2025</text>
     <text x="${xR}" y="${top - 16}" text-anchor="middle" style="fill:var(--q4);font-weight:500">Q4 2025</text>
+    <text transform="translate(12 ${top + 7 * rowH}) rotate(-90)" text-anchor="middle" style="fill:var(--ink-2);font-weight:500">Rank among regions (1 = most nights)</text>
     <text x="${xL - 14}" y="${top + 15 * rowH + 30}" text-anchor="end">Below 15th</text><text x="${xR + 14}" y="${top + 15 * rowH + 30}">Below 15th</text>`;
   sel.forEach((r) => {
     const up = r.rQ < r.rT, same = r.rQ === r.rT, col = same ? "var(--muted)" : up ? "var(--q4)" : "var(--s4)";
@@ -471,33 +476,37 @@ $("#codes").textContent = Object.entries(CN).map(([c, n]) => `${c} ${n}`).join("
     <div class="insight q4"><b>December, October and the cities</b>December peaks: ${named(11, 5)}. October peaks: ${named(9, 4)}. June to August is ${pct(spiky.sum)} of the year in ${spiky.n}, but only ${pct(flat.sum)} in ${flat.n}.</div>`;
 })();
 
-/* scatter */
+/* off-season bubbles: share of year in Q4 against December-to-October ratio */
 (function () {
-  const W = 1000, H = 460, m = { t: 20, r: 20, b: 46, l: 56 }, iw = W - m.l - m.r, ih = H - m.t - m.b;
-  const lx0 = Math.log10(1e4), lx1 = Math.log10(6e7), yMax = 0.36;
-  const x = (v) => m.l + ((Math.log10(Math.max(v, 1e4)) - lx0) / (lx1 - lx0)) * iw, y = (v) => m.t + ih - (v / yMax) * ih;
+  const W = 1000, H = 496, m = { t: 20, r: 20, b: 34, l: 66 }, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const yMax = 0.4, lo = 0.1, hi = 5, even = 92 / 365;
+  const x = (v) => m.l + ((Math.log(Math.min(hi, Math.max(lo, v))) - Math.log(lo)) / (Math.log(hi) - Math.log(lo))) * iw, y = (v) => m.t + ih - (v / yMax) * ih;
+  const rad = (t) => 2.5 + Math.sqrt(t / 4e7) * 12.5;
   const euS = EU.q4 / EU.t; $("#eu-q4").textContent = pct(euS, 1);
-  let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Total nights versus Q4 share by region">`;
-  for (let v = 0; v <= yMax + 1e-9; v += 0.05) s += `<line class="grid" x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}"/><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${Math.round(v * 100)}%</text>`;
-  [1e4, 1e5, 1e6, 1e7].forEach((v) => (s += `<line class="grid" x1="${x(v)}" x2="${x(v)}" y1="${m.t}" y2="${m.t + ih}"/><text x="${x(v)}" y="${H - 22}" text-anchor="middle">${fmtK(v)}</text>`));
-  s += `<text x="${m.l + iw / 2}" y="${H - 4}" text-anchor="middle">Total nights in 2025 (log scale)</text>`;
-  s += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(euS)}" y2="${y(euS)}" stroke="var(--ink)" stroke-dasharray="5 4" stroke-width="1.2"/><text x="${W - m.r}" y="${y(euS) - 6}" text-anchor="end" style="fill:var(--ink)">EU ${pct(euS, 1)}</text>`;
-  const big = R.filter((r) => r.t > 3e6);
-  const lab = new Set([...big].sort((a, b) => b.q4s - a.q4s).slice(0, 7).concat([...big].sort((a, b) => a.q4s - b.q4s).slice(0, 4)).concat(byQ.slice(0, 3)).map((r) => r.n));
-  R.forEach((r) => {
-    const hi = r.q4s > euS;
-    s += `<circle class="dot" data-n="${esc(r.n)}" cx="${x(r.t)}" cy="${y(r.q4s)}" r="${lab.has(r.n) ? 6 : 4.5}" fill="var(${hi ? "--q4" : "--s4"})" fill-opacity="${lab.has(r.n) ? 1 : .55}" stroke="var(--paper)" stroke-width="1.5"/>`;
-  });
-  R.filter((r) => lab.has(r.n)).forEach((r) => {
-    const right = x(r.t) < W - 170;
-    s += `<text class="lab" x="${x(r.t) + (right ? 10 : -10)}" y="${y(r.q4s) + 4}" text-anchor="${right ? "start" : "end"}" style="font-size:12.5px">${esc(r.n)}</text>`;
-  });
-  s += `<line class="base" x1="${m.l}" x2="${W - m.r}" y1="${m.t + ih}" y2="${m.t + ih}"/></svg>`;
-  const box = $("#scatter"); box.innerHTML = `<div style="overflow-x:auto"><div style="min-width:600px">${s}</div></div>`; const tip = $("#tip-x");
+  const med = [...R].map((r) => r.q4s).sort((a, b) => a - b)[Math.floor(R.length / 2)];
+  R.forEach((r) => { r.ratio = r.m[11] / r.m[9]; r.xmas = r.ratio >= 1.6 && r.q4s > 0.22; r.busy = !r.xmas && r.q4s > 0.22; });
+  const cls = (r) => r.xmas ? "--q4" : r.busy ? "--s5" : "--s3";
+  const nX = R.filter((r) => r.xmas).length, nB = R.filter((r) => r.busy).length, nEven = R.filter((r) => r.q4s > even).length;
+  let g = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Share of the year in October to December against how much busier December is than October, by region">`;
+  for (let v = 0; v <= yMax + 1e-9; v += 0.05) g += `<line class="grid" x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}"/><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${Math.round(v * 100)}%</text>`;
+  [0.1, 0.25, 0.5, 1, 2, 4].forEach((v) => (g += `<line class="${v === 1 ? "" : "grid"}" ${v === 1 ? 'stroke="var(--ink-2)" stroke-dasharray="4 3"' : ""} x1="${x(v)}" x2="${x(v)}" y1="${m.t}" y2="${m.t + ih}"/><text x="${x(v)}" y="${m.t + ih + 17}" text-anchor="middle">${v}×</text>`));
+  g += `<text x="${x(1) + 6}" y="${m.t + 11}" style="font-size:11px">December = October</text>`;
+  g += `<line class="base" x1="${m.l}" x2="${W - m.r}" y1="${y(0)}" y2="${y(0)}"/>`;
+  const refs = [[even, `an even year ${pct(even)}`, "var(--q4)", ""], [med, `typical region ${pct(med)}`, "var(--ink-2)", "2 3"], [euS, `EU total ${pct(euS, 1)}`, "var(--ink)", "5 4"]];
+  refs.forEach(([v, t, c, d], i) => (g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${c}" stroke-width="1.2" ${d ? `stroke-dasharray="${d}"` : ""}/><text x="${i === 0 ? W - m.r - 4 : m.l + 6}" y="${y(v) + (i === 0 ? -6 : i === 1 ? -5 : 14)}" text-anchor="${i === 0 ? "end" : "start"}" style="fill:${c};paint-order:stroke;stroke:var(--paper);stroke-width:3px">${t}</text>`));
+  [...R].sort((a, b) => b.t - a.t).forEach((r) => (g += `<circle class="dot" data-n="${esc(r.n)}" cx="${x(r.ratio)}" cy="${y(r.q4s)}" r="${rad(r.t)}" fill="var(${cls(r)})" fill-opacity=".5" stroke="var(${cls(r)})" stroke-width="1"/>`));
+  const L = [["Alsace", -1, -12, "end"], ["Northern and Eastern Finland", -1, 22, "end"], ["South-West Oltenia", -1, -8, "end"], ["Vienna", 1, -12, "start"], ["Prague", -1, -14, "end"], ["Budapest", 1, 16, "start"], ["Canary Islands", 1, -10, "start"], ["Adriatic Croatia", 1, -12, "start"], ["Ionian Islands", 1, 18, "start"], ["La Réunion", 1, -10, "start"]];
+  L.forEach(([n, dx, dy, an]) => { const r = R.find((v) => v.n === n); if (!r) return;
+    g += `<text class="lab" x="${x(r.ratio) + dx * (rad(r.t) + 3)}" y="${y(r.q4s) + dy}" text-anchor="${an}" style="font-weight:600;fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:3px">${esc(n)}</text>`; });
+  g += `<text transform="translate(15 ${m.t + ih / 2}) rotate(-90)" text-anchor="middle" style="fill:var(--ink-2);font-weight:500">Share of the year’s nights in October to December</text></svg>`;
+  const lg = (c, t) => `<span style="display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" style="flex:none" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="var(${c})" fill-opacity=".5" stroke="var(${c})"/></svg>${t}</span>`;
+  const leg = `<div class="legend" style="margin-top:10px;gap:6px 18px;padding-left:4px">${lg("--q4", `Christmas jump: December at least 1.6× October and Q4 above 22% (${nX} regions)`)}${lg("--s5", `Busy all autumn: Q4 above 22% (${nB})`)}${lg("--s3", "All other regions")}<span>Bubble area = total nights in 2025</span></div>`;
+  const note = `<p class="note" style="margin-top:8px">${nEven} of ${R.length} regions reach an even year’s share of Q4 (92 of 365 days, ${pct(even, 1)}). The EU total, ${pct(euS, 1)}, counts every night equally, so huge summer coasts such as Adriatic Croatia (39M nights, 4%) pull it below the typical region, ${pct(med, 1)}. The “Christmas jump” rule is mine, not a standard, and small regions have noisy ratios, so read the big bubbles first.</p>`;
+  const box = $("#scatter"); box.innerHTML = `<div style="overflow-x:auto"><div style="min-width:600px">${g}</div></div><p class="note" style="margin:4px 0 0;text-align:center;font-weight:600;color:var(--ink-2)">Across: how much busier December is than October (December nights ÷ October nights, log scale)</p><p class="note swipe" style="margin:2px 0 0;text-align:center">Swipe the chart sideways to see all of it.</p>${leg}${note}`; const tip = $("#tip-x");
   box.querySelectorAll(".dot").forEach((c) => {
     const r = R.find((v) => v.n === c.dataset.n);
     c.addEventListener("mousemove", (e) => { const b = box.parentElement.getBoundingClientRect();
-      tipAt(tip, box.parentElement, e.clientX - b.left, e.clientY - b.top, `<b>${esc(r.label)}</b><br>${fmtM(r.t, 2)} nights in 2025<br>Q4: ${fmtM(r.q4, 2)} · ${pct(r.q4s, 1)} of its year`); });
+      tipAt(tip, box.parentElement, e.clientX - b.left, e.clientY - b.top, `<b>${esc(r.label)}</b><br>${fmtM(r.t, 2)} nights in 2025<br>Q4: ${fmtM(r.q4, 2)} · ${pct(r.q4s, 1)} of its year<br>December is ${r.ratio.toFixed(1)}× October`); });
     c.addEventListener("mouseleave", () => hideTip(tip));
   });
 })();
