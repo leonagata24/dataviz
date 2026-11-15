@@ -121,6 +121,14 @@ select:focus-visible, input:focus-visible, button:focus-visible, a:focus-visible
 .tk { font-size: 11px; fill: var(--fg-muted); font-variant-numeric: tabular-nums; }
 .lb { font-size: 13px; fill: var(--fg); }
 .lbs { font-size: 11.5px; fill: var(--fg-muted); font-variant-numeric: tabular-nums; }
+.axt { font-size: 12.5px; fill: var(--fg-2); font-weight: 600; }
+.halo { paint-order: stroke; stroke: var(--panel); stroke-width: 3px; stroke-linejoin: round; }
+.lkb { fill: var(--fg); font-weight: 700; font-size: 12px; }
+.lkl { fill: var(--fg-2); font-size: 11.5px; }
+.rb, .rg { opacity: 0; pointer-events: none; }
+.bridge { margin: 0; font-weight: 600; color: var(--fg); max-width: 72ch; }
+.luck { margin: 0; max-width: 74ch; color: var(--fg-2); background: var(--panel-2); border-radius: 8px; padding: 10px 14px; }
+.cstat { margin: 0; font-size: 13.5px; color: var(--fg-2); min-height: 2.8em; } .cstat b { color: var(--fg); }
 .vl { font-size: 12px; fill: var(--fg-2); font-variant-numeric: tabular-nums; }
 .gl { stroke: var(--grid); }
 .ax { stroke: var(--axis); }
@@ -262,6 +270,37 @@ details.tbl .n { text-align: right; }
     </div>
   </section>
 
+
+  <section class="sec" aria-labelledby="s1b" id="luck">
+    <div class="sec-h"><span class="kick">Is it the animal, or the casting?</span><h2 id="s1b"></h2>
+      <p class="sec-p" id="s1bp"></p></div>
+    <div class="card">
+      <h3>Where the girls went: every character, with the missing ones as ghosts</h3>
+      <ul class="keyrow">
+        <li><i style="background:var(--he)"></i>he/him</li>
+        <li><i style="background:var(--she)"></i>she/her</li>
+        <li><i style="background:none;border:1.5px dashed var(--she)"></i>Missing girl, against the genre’s overall split</li>
+        <li><i style="background:var(--she);border:1.5px solid var(--fg)"></i>Extra girl</li>
+      </ul>
+      <div class="chart" id="c1b"></div>
+      <p class="note" id="c1bn"></p>
+      <p class="bridge">Some of these gaps are real, and some are just what small casts do. The next chart separates them.</p>
+    </div>
+    <div class="card">
+      <h3 id="c1ch"></h3>
+      <p class="luck"><b>What “luck” means here.</b> Imagine a weighted coin that lands “boy” about 2 times in 3 for every character, whatever the animal. Even then, a small cast would sometimes look lopsided: deal 17 frogs and you would expect about 11 boys, but 14 or more would turn up now and then. The funnel marks how lopsided a cast can get by coin flips alone. The fewer characters, the wider it swings.</p>
+      <p class="sec-p" id="c1cp"></p>
+      <div class="controls">
+        <span class="seg" id="lkseg"><button type="button" id="lkreal" aria-pressed="true">The real books</button><button type="button" id="lkcast" aria-pressed="false">Re-cast with a coin</button></span>
+      </div>
+      <p class="cstat" id="lkstat" aria-live="polite"></p>
+      <ul class="keyrow" id="lkkey"></ul>
+      <div class="chart" id="c1c"></div>
+      <p class="note" id="c1cn"></p>
+      <details class="tbl"><summary>Table: girls found and expected, by animal</summary><div class="tw" id="t1b"></div></details>
+    </div>
+  </section>
+
   <section class="sec" aria-labelledby="s2">
     <div class="sec-h"><span class="kick">Over time · and what readers think</span><h2 id="s2">The gap narrowed in the 1980s and 90s, then widened again</h2>
       <p class="sec-p" id="s2p"></p></div>
@@ -399,11 +438,12 @@ function drawC1() {
   if (s1.sort === "she") rows.sort((a, b) => sh(a) - sh(b) || b.n - a.n);
   if (s1.show === "20") rows = rows.slice(0, 20);
   else rows.push(other);
-  const cw = $("#c1").clientWidth || 760, W = Math.max(340, Math.min(cw, 980)), narrow = W < 560, L = narrow ? 112 : 150, R = narrow ? 40 : 64, rowH = 26, top = 40, H = top + rows.length * rowH + 8;
+  const cw = $("#c1").clientWidth || 760, W = Math.max(340, Math.min(cw, 980)), narrow = W < 560, L = narrow ? 128 : 166, R = narrow ? 40 : 64, rowH = 26, top = 40, H = top + rows.length * rowH + 8;
   const plotW = W - L - R, mid = L + plotW / 2;
   const mx = Math.max(...bigG.map(o => Math.max(o.h, o.s)), other.h, other.s);
   const xs = v => v / mx * (plotW / 2);
-  const svg = el("svg", {viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Animal characters by pronoun, he/him to the left and she/her to the right"});
+  const svg = el("svg", {viewBox: `0 0 ${W} ${H + 26}`, role: "img", "aria-label": "Animal characters by pronoun, he/him to the left and she/her to the right"});
+  { const xt = el("text", {x: mid, y: H + 20, "text-anchor": "middle", class: "axt"}, svg); xt.textContent = "Number of characters"; const yt = el("text", {transform: `translate(11,${(top + H) / 2}) rotate(-90)`, "text-anchor": "middle", class: "axt"}, svg); yt.textContent = "Animal"; }
   (narrow ? [0, 25, 50] : [0, 20, 40, 60]).filter(v => v <= mx).forEach(v => {
     [-1, 1].forEach(sg => { if (v === 0 && sg < 0) return; const x = mid + sg * xs(v); el("line", {x1: x, x2: x, y1: top - 6, y2: H - 6, class: v ? "gl" : "ax"}, svg); const t = el("text", {x, y: top - 10, "text-anchor": "middle", class: "tk"}, svg); t.textContent = v; });
   });
@@ -413,9 +453,9 @@ function drawC1() {
   rows.forEach((o, k) => {
     const y = top + k * rowH, g = el("g", {}, svg);
     const hit = el("rect", {x: 0, y, width: W, height: rowH, rx: 4, class: "rowhit" + (state.a === o.g ? " on" : "")}, g);
-    const lab = el("text", {x: o.other ? 4 : rowH + 6, y: y + rowH / 2 + 4.5, class: "lb"}, g);
+    const lab = el("text", {x: o.other ? 20 : rowH + 22, y: y + rowH / 2 + 4.5, class: "lb"}, g);
     lab.textContent = o.other ? `${restG.length} other animals` : `${o.g}`;
-    if (!o.other && ICONS[o.g]) el("image", {href: ICONS[o.g], x: 4, y: y + 1, width: rowH - 2, height: rowH - 2}, g);
+    if (!o.other && ICONS[o.g]) el("image", {href: ICONS[o.g], x: 20, y: y + 1, width: rowH - 2, height: rowH - 2}, g);
     const bh = 14, by = y + (rowH - bh) / 2;
     if (o.h) el("rect", {x: mid - xs(o.h), y: by, width: Math.max(xs(o.h) - 1, 1), height: bh, rx: 3, class: "he"}, g);
     if (o.s) el("rect", {x: mid + 1, y: by, width: Math.max(xs(o.s) - 1, 1), height: bh, rx: 3, class: "she"}, g);
@@ -433,16 +473,127 @@ $("#t1").innerHTML = `<table><thead><tr><th>Animal</th><th class="n">he/him</th>
 function seg(id, key, obj, fn) { $(id).addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; obj[key] = b.dataset.v; $(id).querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); fn(); }); }
 seg("#s1sort", "sort", s1, drawC1); seg("#s1show", "show", s1, drawC1);
 
+
+/* ---------- 1b. luck: ghost squares, then funnel with a coin re-cast ---------- */
+const LG = groups.map(o => ({g: o.g, h: o.h, s: o.s, i: o.i, n: o.n, hs: o.h + o.s})).filter(o => o.hs > 0);
+const sumBy = (a, f) => a.reduce((t, o) => t + f(o), 0);
+const GH = sumBy(LG, o => o.h), GS = sumBy(LG, o => o.s), P0 = GH / (GH + GS), Q0 = 1 - P0;
+LG.forEach(o => { o.eS = o.hs * Q0; o.sd = Math.sqrt(o.hs * P0 * Q0); o.z = (o.h - o.hs * P0) / o.sd; });
+const BIGL = LG.filter(o => o.n >= 10).sort((a, b) => b.n - a.n || a.g.localeCompare(b.g));
+const zcls = o => Math.abs(o.z) > 3.09 ? 2 : Math.abs(o.z) > 1.96 ? 1 : 0;
+const pc0 = v => Math.round(v * 100) + "%";
+const lk = {mode: "real", seed: 0, sim: null};
+function mulberry(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const binomDraw = (n, p, r) => { let k = 0; for (let i = 0; i < n; i++) if (r() < p) k++; return k; };
+const recast = seed => { const r = mulberry(seed * 7919 + 13); return LG.map(o => { const h = binomDraw(o.hs, P0, r); return {...o, h, s: o.hs - h, z: (h - o.hs * P0) / o.sd}; }); };
+const pastN = d => d.filter(o => o.n >= 10 && Math.abs(o.z) > 1.96).length;
+const lgData = () => lk.mode === "real" ? LG : lk.sim;
+/* exact binomial tails, and 3,000 coin casts of the same cast sizes */
+const lgam = n => { let t = 0; for (let i = 2; i <= n; i++) t += Math.log(i); return t; };
+function tails(n) { const pm = []; for (let k = 0; k <= n; k++) pm.push(Math.exp(lgam(n) - lgam(k) - lgam(n - k) + k * Math.log(P0) + (n - k) * Math.log(Q0))); const lo = [], hi = []; let a = 0; for (let k = 0; k <= n; k++) { a += pm[k]; lo.push(a); } a = 0; for (let k = n; k >= 0; k--) { a += pm[k]; hi[k] = a; } return {lo, hi}; }
+let SIMSTAT = null;
+function simStat() {
+  if (SIMSTAT) return SIMSTAT;
+  const r = mulberry(12345), T = 3000, cnt = new Array(30).fill(0), tl = BIGL.map(o => tails(o.hs));
+  const frog = BIGL.find(o => o.g === "frog"), pf = frog ? tl[BIGL.indexOf(frog)].hi[frog.h] : null; let lop = 0;
+  for (let t = 0; t < T; t++) { let k = 0, hit = false;
+    BIGL.forEach((o, i) => { const h = binomDraw(o.hs, P0, r); if (Math.abs((h - o.hs * P0) / o.sd) > 1.96) k++; if (pf !== null && Math.min(tl[i].lo[h], tl[i].hi[h]) <= pf) hit = true; });
+    cnt[Math.min(k, 29)]++; if (hit) lop++; }
+  SIMSTAT = {T, cnt, mean: cnt.reduce((a, v, i) => a + v * i, 0) / T, pf, lop: lop / T};
+  return SIMSTAT;
+}
+const lkLink = (g, on) => document.querySelectorAll("[data-g]").forEach(e => { if (e.dataset.g === g) e.style.opacity = on ? 1 : 0; });
+
+function drawGhost() {
+  const box = $("#c1b"), cw = box.clientWidth || 760, W = Math.max(600, Math.min(cw, 980)), small = false, L = 162, R = 150, rowH = 22, T = 30, B = 46;
+  const rows = BIGL.slice().sort((a, b) => (b.eS - b.s) - (a.eS - a.s) || b.n - a.n), H = T + rows.length * rowH + B;
+  const maxN = Math.max(...rows.map(o => o.hs + Math.max(0, Math.round(o.eS - o.s))));
+  const sq = Math.min(9, (W - L - R) / (maxN * 1.18)), stp = sq * 1.18;
+  const svg = el("svg", {viewBox: `0 0 ${W} ${H}`, style: W > cw ? `width:${W}px;max-width:none` : "", role: "img", "aria-label": "One square per character for each animal with ten or more characters, with hollow squares for girls missing compared with the genre's overall share"});
+  const hd = el("text", {x: L, y: 14, class: "lbs"}, svg); hd.textContent = "each square is one character →";
+  rows.forEach((o, i) => {
+    const y = T + i * rowH, gap = Math.round(o.eS - o.s), c = zcls(o), g = el("g", {}, svg);
+    el("rect", {x: 2, y, width: W - 4, height: rowH, rx: 4, fill: "var(--panel-2)", class: "rb", "data-g": o.g}, g);
+    if (ICONS[o.g]) el("image", {href: ICONS[o.g], x: 24, y: y + 1, width: rowH - 2, height: rowH - 2}, g);
+    const lab = el("text", {x: rowH + 28, y: y + rowH / 2 + 4.5, class: "lb"}, g); lab.textContent = o.g;
+    let k = 0; const put = (st) => { el("rect", {x: L + k * stp, y: y + (rowH - sq) / 2, width: sq, height: sq, rx: 1.2, ...st}, g); k++; };
+    for (let j = 0; j < o.h; j++) put({fill: "var(--he)"});
+    for (let j = 0; j < o.s; j++) put(gap < 0 && j >= o.s + gap ? {fill: "var(--she)", stroke: "var(--fg)", "stroke-width": 1} : {fill: "var(--she)"});
+    for (let j = 0; j < gap; j++) put({fill: "none", stroke: "var(--she)", "stroke-width": 1.1, "stroke-dasharray": "2 1.5"});
+    const t = el("text", {x: L + k * stp + 8, y: y + rowH / 2 + 4, class: "vl", style: "font-weight:" + (c ? 700 : 400) + ";fill:" + (c ? "var(--fg)" : "var(--fg-muted)")}, g);
+    t.textContent = gap > 0 ? `${o.s} ${o.s === 1 ? "girl" : "girls"}, ${gap} missing` : gap < 0 ? `${o.s} girls, ${-gap} extra` : `${o.s} girls`;
+    const hit = el("rect", {x: 0, y, width: W, height: rowH, fill: "transparent"}, g);
+    hit.addEventListener("mouseenter", () => lkLink(o.g, 1)); hit.addEventListener("mouseleave", () => { lkLink(o.g, 0); hideTip(); });
+    hit.addEventListener("mousemove", e => showTip(e, `<b>${o.g}</b><br>${o.h} he/him · ${o.s} she/her${o.i ? " · " + o.i + " it" : ""}<br><span class="m">The genre's overall split would give ${o.eS.toFixed(1)} girls</span>`));
+  });
+  const xt = el("text", {x: (L + W - R) / 2, y: H - 8, "text-anchor": "middle", class: "axt"}, svg); xt.textContent = small ? "Characters, one square each" : "Characters of each animal, one square each (dashed = girls missing)";
+  const yt = el("text", {transform: `translate(12,${(T + H - B) / 2}) rotate(-90)`, "text-anchor": "middle", class: "axt"}, svg); yt.textContent = small ? "Animal (10+)" : "Animal (10 or more characters)";
+  box.innerHTML = ""; box.appendChild(svg);
+  const fr = BIGL.find(o => o.g === "frog");
+  $("#s1b").textContent = fr ? `Frogs have ${fr.s} ${fr.s === 1 ? "girl" : "girls"} where the genre’s split would give ${Math.round(fr.eS)}` : "Where are the girls?";
+  $("#s1bp").textContent = `Across these books, about 1 in 3 characters with a he/him or she/her pronoun is a girl (${GS} of ${GH + GS}). If every animal matched that, each row below would have its dashed squares filled in. Rows with many ghosts are short of girls. Rows with ringed squares have extra.`;
+  $("#c1bn").textContent = `“Missing” and “extra” are measured against ${pc0(Q0)} girls among he/him and she/her characters overall, rounded to whole characters. “It” characters are not drawn. Animals with 10 or more characters, sorted by missing girls. Hover an animal to find it in the other chart.` + (W > cw ? " On a narrow screen, swipe sideways to see the longest rows." : "");
+}
+
+function drawFunnel() {
+  const box = $("#c1c"), W = Math.max(320, Math.min(box.clientWidth || 760, 980)), small = W < 620, H = small ? 400 : 470, M = {t: 16, r: small ? 10 : 98, b: 58, l: small ? 52 : 64};
+  const D = lgData(), pw = W - M.l - M.r, ph = H - M.t - M.b;
+  const x = v => M.l + v / 100 * pw, y = v => M.t + (1 - v) / 0.8 * ph;
+  const svg = el("svg", {viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Funnel plot: share of he/him characters for each animal against its number of characters, with 95% and 99.8% luck limits around the overall share"});
+  [.2, .4, .6, .8, 1].forEach(v => { el("line", {x1: M.l, x2: W - M.r, y1: y(v), y2: y(v), class: "gl"}, svg); const t = el("text", {x: M.l - 7, y: y(v) + 4, "text-anchor": "end", class: "tk"}, svg); t.textContent = pc0(v); });
+  [0, 20, 40, 60, 80, 100].forEach(v => { const t = el("text", {x: x(v), y: H - M.b + 16, "text-anchor": "middle", class: "tk"}, svg); t.textContent = v; });
+  el("line", {x1: M.l, x2: W - M.r, y1: y(.2), y2: y(.2), class: "ax"}, svg);
+  [[1.96, "none", .75], [3.09, "2 3", .55]].forEach(([z, da, op]) => [1, -1].forEach(sg => {
+    let d = ""; for (let n = 4; n <= 100; n++) { const v = Math.max(.2, Math.min(1, P0 + sg * z * Math.sqrt(P0 * Q0 / n))); d += (n === 4 ? "M" : "L") + x(n).toFixed(1) + "," + y(v).toFixed(1); }
+    el("path", {d, fill: "none", stroke: "var(--fg-2)", "stroke-width": 1.2, "stroke-dasharray": da, opacity: op}, svg); }));
+  el("line", {x1: x(0), x2: W - M.r, y1: y(P0), y2: y(P0), stroke: "var(--fg)", "stroke-dasharray": "5 4"}, svg);
+  if (!small) [["all animals " + pc0(P0), P0], ["95% limit", P0 + 1.96 * Math.sqrt(P0 * Q0 / 100)], ["99.8% limit", P0 + 3.09 * Math.sqrt(P0 * Q0 / 100)]].forEach(([t, v]) => { const e = el("text", {x: W - M.r + 6, y: y(v) + 4, class: "lkl"}, svg); e.textContent = t; });
+  D.filter(o => o.hs >= 5 && o.hs <= 100).forEach(o => {
+    const c = zcls(o), big = o.n >= 10, col = c ? (o.h / o.hs > P0 ? "var(--he)" : "var(--she)") : "var(--it)";
+    if (big) el("circle", {cx: x(o.hs), cy: y(o.h / o.hs), r: 10, fill: "none", stroke: "var(--fg)", "stroke-width": 1.6, class: "rg", "data-g": o.g}, svg);
+    const dot = el("circle", {cx: x(o.hs), cy: y(o.h / o.hs), r: big ? 5.5 : 3.2, fill: col, stroke: "var(--panel)", "stroke-width": 1.3, opacity: big ? 1 : .6}, svg);
+    dot.addEventListener("mouseenter", () => lkLink(o.g, 1)); dot.addEventListener("mouseleave", () => { lkLink(o.g, 0); hideTip(); });
+    dot.addEventListener("mousemove", e => showTip(e, `<b>${o.g}</b>${lk.mode === "coin" ? " (coin cast)" : ""}<br>${o.h} he/him · ${o.s} she/her (${pc0(o.h / o.hs)} he)<br><span class="m">The genre's split would give ${o.eS.toFixed(1)} girls</span>`));
+  });
+  const labs = [["bear", 12, -9, "start"], ["bird", -10, -2, "end"], ["duck", -10, 4, "end"], ["frog", 10, -2, "start"], ["fox", 10, 5, "start"], ["dog", -9, -8, "end"], ["cat", 10, 12, "start"], ["rabbit", 10, -8, "start"], ["mouse", -9, 4, "end"], ["pig", -9, 16, "end"]];
+  labs.forEach(([g, dx, dy, an]) => { const o = D.find(d => d.g === g); if (!o) return; if (small && g === "bear") { dx = -10; an = "end"; dy = -10; }
+    const t = el("text", {x: x(o.hs) + dx, y: y(o.h / o.hs) + dy + 4, "text-anchor": an, class: "halo " + (zcls(o) ? "lkb" : "lkl")}, svg); t.textContent = g + (zcls(o) ? " " + pc0(o.h / o.hs) : ""); });
+  const xt = el("text", {x: (M.l + W - M.r) / 2, y: H - 8, "text-anchor": "middle", class: "axt"}, svg); xt.textContent = small ? "Characters with a he/him or she/her pronoun" : "Characters per animal, he/him or she/her (bigger casts sit further right)";
+  const yt = el("text", {transform: `translate(13,${(M.t + H - M.b) / 2}) rotate(-90)`, "text-anchor": "middle", class: "axt"}, svg); yt.textContent = small ? "Share he/him" : "Share of characters who are he/him";
+  box.innerHTML = ""; box.appendChild(svg);
+
+  const ss = simStat(), real = pastN(LG), k = pastN(D), sure = LG.filter(o => o.n >= 10 && Math.abs(o.z) > 3.09).length;
+  $("#c1ch").textContent = lk.mode === "real"
+    ? `${k} of ${BIGL.length} animals stray past the luck line, where chance predicts about one${sure ? "" : ". None is a sure outlier"}`
+    : `Same books, cast by a weighted coin: ${k} ${k === 1 ? "animal strays" : "animals stray"} past the luck line`;
+  const fr = BIGL.find(o => o.g === "frog");
+  $("#c1cp").textContent = `The same animals, one dot each. A small cast like frogs can lean far from the genre’s ${pc0(P0)} boys by luck alone, so the funnel marks how far is too far. Dots outside it are the animals worth a second look.` + (fr && ss.pf ? ` For frogs alone, ${fr.h} or more boys out of ${fr.hs} would come up about 1 time in ${Math.round(1 / ss.pf)}. But with ${BIGL.length} animals in play, at least one animal that lopsided, in either direction, turns up in about ${pc0(ss.lop)} of coin casts.` : "");
+  $("#lkstat").innerHTML = lk.mode === "real"
+    ? `Real books: <b>${real}</b> animals past the line. Press “Re-cast with a coin” to deal the same animals boy or girl by coin instead.`
+    : `Coin cast #${lk.seed}: <b>${k}</b> past the line. Real books: <b>${real}</b>. Across ${fmt(ss.T)} coin casts the average was <b>${ss.mean.toFixed(1)}</b>, and ${real} or more happened in <b>${((ss.cnt.slice(real).reduce((a, v) => a + v, 0) / ss.T) * 100).toFixed(1)}%</b> of them.`;
+  $("#lkreal").setAttribute("aria-pressed", lk.mode === "real"); $("#lkcast").setAttribute("aria-pressed", lk.mode === "coin");
+  const sw = c => `<i style="background:${c};border-radius:50%"></i>`;
+  $("#lkkey").innerHTML = `<li>${sw("var(--she)")}Leans girl beyond luck</li><li>${sw("var(--he)")}Leans boy beyond luck</li><li>${sw("var(--it)")}Within luck (small dots: 5 to 9 characters)</li><li><svg width="26" height="8" aria-hidden="true"><line x1="0" x2="26" y1="4" y2="4" stroke="var(--fg-2)" stroke-width="1.4"/></svg>&nbsp;95% limit</li><li><svg width="26" height="8" aria-hidden="true"><line x1="0" x2="26" y1="4" y2="4" stroke="var(--fg-2)" stroke-width="1.4" stroke-dasharray="2 3"/></svg>&nbsp;99.8% limit</li>`;
+  $("#c1cn").textContent = lk.mode === "real"
+    ? `Overall ${GH} he/him and ${GS} she/her characters (${sumBy(groups, o => o.i)} “it” characters left out), so ${pc0(P0)} he/him. Limits are normal approximations around that rate, wider for small casts, so they are rough for the smallest animals. With ${BIGL.length} animals tested at the 95% line, about ${Math.round(BIGL.length * .05)} would stray by luck alone; only an animal past the 99.8% line is a firm outlier${sure ? "" : ", and none is"}. ${real} of ${BIGL.length} are past the 95% line, so the genre does have a pattern, but no single animal proves it. Animals with fewer than 5 characters are not drawn. Hover an animal to find it in the other chart.`
+    : `Every animal keeps its real number of he/him and she/her characters, but each character is re-dealt boy or girl by a coin weighted to the genre’s ${pc0(P0)} boy rate, so any gap from ${pc0(P0)} is luck by construction. Press the button again for a new cast. Limits and the overall rate are the same as for the real books.`;
+}
+$("#t1b").innerHTML = `<table><thead><tr><th>Animal</th><th class="n">he/him</th><th class="n">she/her</th><th class="n">Girls expected</th><th class="n">Difference</th><th>Beyond luck?</th></tr></thead><tbody>${BIGL.slice().sort((a, b) => (b.s - b.eS) - (a.s - a.eS)).map(o => `<tr><td>${esc(o.g)}</td><td class="n">${o.h}</td><td class="n">${o.s}</td><td class="n">${o.eS.toFixed(1)}</td><td class="n">${(o.s - o.eS >= 0 ? "+" : "−") + Math.abs(o.s - o.eS).toFixed(1)}</td><td>${zcls(o) ? (o.s > o.eS ? "More girls than luck explains" : "Fewer girls than luck explains") : "Within luck"}</td></tr>`).join("")}</tbody></table>`;
+$("#lkreal").addEventListener("click", () => { lk.mode = "real"; drawFunnel(); });
+$("#lkcast").addEventListener("click", () => { lk.seed++; lk.sim = recast(lk.seed); lk.mode = "coin"; drawFunnel(); });
+function drawLuck() { drawGhost(); drawFunnel(); }
+
 /* ---------- 2. by decade ---------- */
 const dec = DECADES.map(d => { const o = {d, h: 0, s: 0, i: 0, n: 0, books: 0}; CH.forEach(c => { if (c.b.dec === d) { o[c.p]++; o.n++; } }); o.books = BOOKS.filter(b => b.dec === d).length; return o; });
 function drawC2() {
-  const W = Math.max(320, Math.min($("#c2").clientWidth || 520, 640)), L = 72, R = 56, rowH = 30, top = 34, H = top + dec.length * rowH + 4, pw = W - L - R;
-  const svg = el("svg", {viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Pronoun share by decade"});
+  const W = Math.max(320, Math.min($("#c2").clientWidth || 520, 640)), L = 90, R = 56, rowH = 30, top = 34, H = top + dec.length * rowH + 4, pw = W - L - R;
+  const svg = el("svg", {viewBox: `0 0 ${W} ${H + 24}`, role: "img", "aria-label": "Pronoun share by decade"});
+  { const xt = el("text", {x: L + pw / 2, y: H + 18, "text-anchor": "middle", class: "axt"}, svg); xt.textContent = "Share of the decade’s characters (%)"; const yt = el("text", {transform: `translate(11,${(top + H) / 2}) rotate(-90)`, "text-anchor": "middle", class: "axt"}, svg); yt.textContent = "Decade published"; }
   [0, 25, 50, 75, 100].forEach(v => { const x = L + pw * v / 100; el("line", {x1: x, x2: x, y1: top - 4, y2: H - 4, class: v === 50 ? "ax" : "gl", "stroke-dasharray": v === 50 ? "3 3" : null}, svg); const t = el("text", {x, y: top - 8, "text-anchor": "middle", class: "tk"}, svg); t.textContent = v + "%"; });
   const ht = el("text", {x: W, y: 10, "text-anchor": "end", class: "tk"}, svg); ht.textContent = "% she/her";
   dec.forEach((o, k) => {
     const y = top + k * rowH + 6, bh = rowH - 12; let x = L;
-    const lab = el("text", {x: 0, y: y + bh / 2 + 4.5, class: "lb"}, svg); lab.textContent = o.d;
+    const lab = el("text", {x: 22, y: y + bh / 2 + 4.5, class: "lb"}, svg); lab.textContent = o.d;
     [["h", "he"], ["i", "itf"], ["s", "she"]].forEach(([p, cl]) => { if (!o[p]) return; const w = pw * o[p] / o.n; el("rect", {x: x + .5, y, width: Math.max(w - 1.5, 1), height: bh, rx: 2, class: cl}, svg); x += w; });
     const v = el("text", {x: W, y: y + bh / 2 + 4, "text-anchor": "end", class: "vl"}, svg); v.textContent = pct(o.s, o.n) + "%";
     const hit = el("rect", {x: 0, y: y - 6, width: W, height: rowH, fill: "transparent"}, svg);
@@ -578,8 +729,8 @@ document.addEventListener("error", e => {
 }, true);
 
 /* ---------- boot ---------- */
-drawC1(); drawC2(); drawC3();
-let rz, lastW = innerWidth; addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rz); rz = setTimeout(() => { drawC1(); drawC2(); drawC3(); }, 150); });
+drawC1(); drawC2(); drawC3(); drawLuck();
+let rz, lastW = innerWidth; addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rz); rz = setTimeout(() => { drawC1(); drawC2(); drawC3(); drawLuck(); }, 150); });
 const h0 = (location.hash.match(/^#book-(\d+)$/) || [])[1];
 renderList();
 if (h0 != null && BOOKS[+h0]) select(+h0, false);
