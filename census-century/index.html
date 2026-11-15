@@ -229,13 +229,13 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
   </div>
   <div class="kicker">The first century of the U.S. Census · 1790–1900</div>
   <h1>From 3.9 million to 76 million</h1>
-  <p class="dek">Twelve censuses, 49 states and territories, and a population that grew nineteen-fold while its centre of gravity walked about 500 miles west. This page checks the data, reads the 1883 original, and rebuilds it four ways.</p>
+  <p class="dek">Twelve censuses, 49 states and territories, and a population that grew nineteen-fold while its center of gravity walked about 500 miles west. This page checks the data, reads the 1883 original, and rebuilds it four ways.</p>
 </header>
 
 <div class="kpis">
   <div class="kpi"><div class="big num">3.9M<small> → </small>76.0M</div><div class="lbl">People counted, 1790 to 1900. Every decade added 21–36%.</div></div>
   <div class="kpi"><div class="big num">18<small> → </small>49</div><div class="lbl">States, territories and D.C. with a count (modern borders).</div></div>
-  <div class="kpi"><div class="big num">~500<small> mi</small></div><div class="lbl">Westward drift of the population’s centre, Maryland to Indiana.</div></div>
+  <div class="kpi"><div class="big num">~500<small> mi</small></div><div class="lbl">Westward drift of the population’s center, Maryland to Indiana.</div></div>
   <div class="kpi"><div class="big num">0%<small> → </small>35%</div><div class="lbl">Midwest share of the nation. Largest region by 1900.</div></div>
 </div>
 
@@ -258,7 +258,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
       <tr><td>Missing areas</td><td><span class="pill note">Note</span></td><td>Alaska (enumerated from 1880) and Hawaii (from 1900) are absent before 1960, so totals describe the contiguous U.S. Unorganised and Indian lands not enumerated in early censuses are also absent. That is a gap in the source, not the file.</td></tr>
       <tr><td>Outliers</td><td><span class="pill pass">Real</span></td><td>Jumps such as Minnesota +2,731% (1850–60) or North Dakota +1,435% (1870–80) are frontier growth from tiny bases. Nevada’s fall from 62,266 (1880) to 42,335 (1900) is the silver bust. All verified as plausible, none altered.</td></tr>
       <tr><td>Known count quality</td><td><span class="pill note">Note</span></td><td>The 1870 census is known to have undercounted the South. Published figures are used as-is; growth rates for 1860–70 and 1870–80 in Southern states should be read with that in mind.</td></tr>
-      <tr><td>Enrichment</td><td><span class="pill fix">Added</span></td><td>Rank per census, Census Bureau region (Northeast, South, Midwest, West), admission date, and a geographic centroid per state. Centroids give an <em>estimated</em> centre of population; it lands within about 0.5° of the Census Bureau’s official points.</td></tr>
+      <tr><td>Enrichment</td><td><span class="pill fix">Added</span></td><td>Rank per census, Census Bureau region (Northeast, South, Midwest, West), admission date, and a geographic centroid per state. Centroids give an <em>estimated</em> center of population; it lands within about 0.5° of the Census Bureau’s official points.</td></tr>
     </tbody>
   </table>
   </div>
@@ -285,14 +285,14 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
       <div><h3>Where it struggles</h3>
         <ul>
           <li><b>Rank hides magnitude.</b> The gap between #1 and #2 is drawn the same as #37 to #38, even when one gap is a million people and the other a few thousand.</li>
-          <li><b>One colour, hundreds of crossings.</b> Following a single state means tracing a red line through a thicket.</li>
+          <li><b>One color, hundreds of crossings.</b> Following a single state means tracing a red line through a thicket.</li>
           <li><b>Geography is implied.</b> The westward story only appears if you already know where Ohio and Iowa are.</li>
           <li><b>Growth is invisible.</b> A state can grow 50% and still drop a rank.</li>
         </ul></div>
       <div><h3>How the makeovers respond</h3>
         <ul>
-          <li>A: the same rank chart, coloured by region, with a switch to true population.</li>
-          <li>B: a map with the centre of population, so “west” is something you see.</li>
+          <li>A: the same rank chart, colored by region, with a switch to true population.</li>
+          <li>B: a map with the center of population, so “west” is something you see.</li>
           <li>C: regional shares, the balance of the country in one area chart.</li>
           <li>D: decade growth rates, showing the frontier as waves.</li>
         </ul></div>
@@ -310,7 +310,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
   <div class="plate">
     <div class="plate-head">
       <div class="t"><span class="plate-no">Makeover A</span><h3>Rank, redrawn</h3>
-        <p>Every state’s rank from 1790 to 1900, coloured by region. Hover or tap a line to follow one state. Switch to population to see the distances rank hides.</p></div>
+        <p>Every state’s rank from 1790 to 1900, colored by region. Hover or tap a line to follow one state. Switch to population to see the distances rank hides.</p></div>
       <div class="controls">
         <div class="seg" role="group" aria-label="Vertical scale">
           <button id="mRank" aria-pressed="true">Rank</button><button id="mPop" aria-pressed="false">Population (log)</button>
@@ -322,7 +322,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
     <div class="controls" id="regionChips" role="group" aria-label="Highlight a region"></div>
     <div class="chart-scroll"><svg id="bump" class="bump" role="img" aria-label="Bump chart of state population ranks 1790 to 1900"></svg></div>
     <div class="legend"><span class="sw"><svg width="14" height="14"><circle cx="7" cy="7" r="4" style="fill:var(--ink-2)"/></svg>State on census day</span><span class="sw"><svg width="14" height="14"><circle cx="7" cy="7" r="4" style="fill:var(--surface);stroke:var(--ink-2)" stroke-width="1.5"/></svg>Not yet a state (territory, part of another state, or D.C.)</span></div>
-    <p class="why"><b>Why it evolves the original:</b> it keeps the plate’s structure, which readers of the original will recognise, and adds the two things it lacked: colour that groups states by region so the Midwest’s climb stands out, and a population scale that restores magnitude.</p>
+    <p class="why"><b>Why it evolves the original:</b> it keeps the plate’s structure, which readers of the original will recognize, and adds the two things it lacked: color that groups states by region so the Midwest’s climb stands out, and a population scale that restores magnitude.</p>
   </div>
 </section>
 
@@ -331,7 +331,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
   <div class="plate">
     <div class="plate-head">
       <div class="t"><span class="plate-no">Makeover B</span><h3>How the country filled in, and where its middle went</h3>
-        <p>Each dot is 100,000 people, coloured by region. Press play or drag the slider: the dots thicken, the dark centre of population moves west, and the two charts follow the same census.</p></div>
+        <p>Each dot is 100,000 people, colored by region. Press play or drag the slider: the dots thicken, the dark center of population moves west, and the two charts follow the same census.</p></div>
     </div>
     <div class="slider"><button id="play" aria-label="Play animation">▶ Play</button><input id="yr" type="range" min="1790" max="1900" step="10" value="1900" aria-label="Census year"></div>
     <div class="ticks" aria-hidden="true"><span>1790</span><span>1820</span><span>1850</span><span>1880</span><span>1900</span></div>
@@ -339,18 +339,18 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
       <div style="display:grid;gap:10px;min-width:0">
         <div class="read"><div class="yearbig" id="mYear">1900</div>
           <div class="s"><b id="mTot">75,994,575</b><span>people counted</span></div>
-          <div class="s"><b id="mLon">86.1° W</b><span id="mCen">Estimated centre of population</span></div></div>
-        <svg id="usmap" class="map" viewBox="0 0 975 610" role="img" aria-label="Dot map of US population by region, one dot per 100,000 people, with the centre of population track"></svg>
+          <div class="s"><b id="mLon">86.1° W</b><span id="mCen">Estimated center of population</span></div></div>
+        <svg id="usmap" class="map" viewBox="0 0 975 610" role="img" aria-label="Dot map of US population by region, one dot per 100,000 people, with the center of population track"></svg>
         <div class="legend" id="dLeg"></div>
       </div>
       <div class="col2">
         <div><p class="ct">Who the people were: share of the count, by region</p><div id="dShare"></div></div>
-        <div><p class="ct" id="dPaceT">Pace of the centre, decade by decade</p><div id="dPace"></div></div>
+        <div><p class="ct" id="dPaceT">Pace of the center, decade by decade</p><div id="dPace"></div></div>
       </div>
     </div>
     <svg width="0" height="0" style="position:absolute"><defs><pattern id="hatchL" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" style="stroke:var(--hatch)" stroke-width="1.6"/></pattern></defs></svg>
-    <p class="note-s">Caveat: the centre is an estimate from state centroids weighted by population, within about half a degree of the Census Bureau’s official track, and the dots are placed at random inside each state, so they show how many people, not where in the state.</p>
-    <p class="why"><b>Why it evolves the original:</b> the plate asks you to know the map. This puts the map first, shows people as dots so the empty West and the crowded East are felt rather than read off a colour ramp, and draws the westward drift as a single track: from near Baltimore in 1790 to southern Indiana in 1900, about 500 miles. The pace chart shows it was not a steady walk, and the share chart shows why it moved: the Midwest went from no counted people to the largest region.</p>
+    <p class="note-s">Caveat: the center is an estimate from state centroids weighted by population, within about half a degree of the Census Bureau’s official track, and the dots are placed at random inside each state, so they show how many people, not where in the state.</p>
+    <p class="why"><b>Why it evolves the original:</b> the plate asks you to know the map. This puts the map first, shows people as dots so the empty West and the crowded East are felt rather than read off a color ramp, and draws the westward drift as a single track: from near Baltimore in 1790 to southern Indiana in 1900, about 500 miles. The pace chart shows it was not a steady walk, and the share chart shows why it moved: the Midwest went from no counted people to the largest region.</p>
   </div>
 </section>
 
@@ -388,7 +388,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
     <div><b>New York took the lead early</b><p>Virginia ranked 1st in 1790 and 1800. New York passed it in 1810 and held 1st for the rest of the century, reaching 7.3 million by 1900.</p></div>
     <div><b>The Old Northwest rose fastest</b><p>Illinois went from 2,458 people in 1800 (24th) to 4.8 million and 3rd place in 1900. Ohio reached 3rd by 1840.</p></div>
     <div><b>The original states slid</b><p>Virginia fell from 1st to 17th, South Carolina from 7th to 24th, and Connecticut from 8th to 29th. They kept growing, just more slowly than the West.</p></div>
-    <div><b>The centre walked west</b><p>The estimated centre of population moved about 9.4° of longitude, roughly 500 miles, almost all of it due west along the 39th parallel.</p></div>
+    <div><b>The center walked west</b><p>The estimated center of population moved about 9.4° of longitude, roughly 500 miles, almost all of it due west along the 39th parallel.</p></div>
   </div>
 </section>
 
@@ -401,7 +401,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
 
 <footer>
   <div><b>Credits.</b> Exercise: <a href="https://makeovermonday.vercel.app/dataset/the-first-century-of-the-u-s-census" target="_blank" rel="noopener">MakeoverMonday, “The First Century of the U.S. Census”</a>. Article: Meagan Snow, <a href="https://blogs.loc.gov/maps/2022/12/gannett-and-hewes-visualizations-of-the-1880-census/" target="_blank" rel="noopener">“Gannett and Hewes’ Visualizations of the 1880 Census”</a>, Worlds Revealed, Library of Congress (2022). Original: Fletcher W. Hewes and Henry Gannett, <a href="https://www.loc.gov/resource/g3701gm.gct00009/" target="_blank" rel="noopener">Scribner’s Statistical Atlas of the United States</a>, Plate 18 (Charles Scribner’s Sons, 1883). Data: U.S. Census Bureau decennial counts as compiled in the MakeoverMonday dataset. Boundaries: U.S. Census Bureau cartographic files via us-atlas.</div>
-  <div>Method notes: counts use modern state borders; regions are the Census Bureau’s current four; statehood is judged on census day; the centre of population is a centroid-weighted estimate, not the official calculation.</div>
+  <div>Method notes: counts use modern state borders; regions are the Census Bureau’s current four; statehood is judged on census day; the center of population is a centroid-weighted estimate, not the official calculation.</div>
   <div>Analysis and design by Leo Nagata.</div>
 </footer>
 </div>
@@ -560,7 +560,7 @@ function stateTip(s, y){
   const rngf = seed => () => {seed|=0; seed=seed+0x6D2B79F5|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296;};
 
   document.getElementById("dLeg").innerHTML = REGS.map(r=>`<span class="sw"><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" style="fill:${rc(r)}"/></svg>${REG[r]}</span>`).join("")
-    + `<span class="sw">One dot = 100,000 people</span><span class="sw"><svg width="18" height="14"><circle cx="9" cy="7" r="5.5" style="fill:var(--ink);stroke:var(--surface);stroke-width:2"/></svg>Centre of population</span>`
+    + `<span class="sw">One dot = 100,000 people</span><span class="sw"><svg width="18" height="14"><circle cx="9" cy="7" r="5.5" style="fill:var(--ink);stroke:var(--surface);stroke-width:2"/></svg>Center of population</span>`
     + `<span class="sw"><i class="nd"></i>No count yet</span><span class="sw"><svg width="14" height="14"><rect width="14" height="14" style="fill:var(--surface);stroke:var(--rule)"/><rect width="14" height="14" style="fill:url(#hatchL)"/></svg>Not yet a state</span>`;
 
   /* map + dots */
@@ -593,7 +593,7 @@ function stateTip(s, y){
   const track = gC.append("path").attr("class","track").attr("stroke-width",3);
   const ptsG = gC.append("g");
   const now = gC.append("circle").attr("class","cnow").attr("r",12);
-  const nowL = gC.append("text").attr("class","clab").attr("dy","-20").attr("text-anchor","middle").style("font-size","22px").text("Centre");
+  const nowL = gC.append("text").attr("class","clab").attr("dy","-20").attr("text-anchor","middle").style("font-size","22px").text("Center");
   const Ls = 500*pxPerMi, x0 = 22, y0 = 590;
   svg.append("path").attr("d",`M${x0},${y0-8}V${y0}H${x0+Ls}V${y0-8}`).style("fill","none").style("stroke","var(--ink-2)").attr("stroke-width",2);
   svg.append("text").attr("class","axt").attr("x",x0+Ls/2).attr("y",y0-12).attr("text-anchor","middle").style("font-size","22px").text("500 miles");
@@ -610,7 +610,7 @@ function stateTip(s, y){
     const mi = Math.round(hav([C[0].lat,C[0].lon],[c.lat,c.lon])/10)*10;
     d3.select("#mYear").text(year); d3.select("#mTot").text(fmt(c.tot));
     d3.select("#mLon").text(`${Math.abs(c.lon).toFixed(1)}° W`);
-    d3.select("#mCen").text(year===1790 ? "Estimated centre of population" : `Estimated centre, ~${mi} miles west of 1790`);
+    d3.select("#mCen").text(year===1790 ? "Estimated center of population" : `Estimated center, ~${mi} miles west of 1790`);
   });
 
   /* share chart */
@@ -650,8 +650,8 @@ function stateTip(s, y){
   (function(){
     const box = document.getElementById("dPace"); let upd = ()=>{};
     function draw(){
-      box.innerHTML=""; const W=Math.max(280,box.clientWidth), H=260, M={t:18,r:8,b:46,l:50};
-      const s = d3.select(box).append("svg").attr("width",W).attr("height",H).attr("viewBox",`0 0 ${W} ${H}`).attr("role","img").attr("aria-label","Bar chart of feet per day moved by the centre of population in each decade, 1790 to 1900");
+      box.innerHTML=""; const W=Math.max(280,box.clientWidth), H=260, M={t:34,r:8,b:46,l:50};
+      const s = d3.select(box).append("svg").attr("width",W).attr("height",H).attr("viewBox",`0 0 ${W} ${H}`).attr("role","img").attr("aria-label","Bar chart of feet per day moved by the center of population in each decade, 1790 to 1900");
       const x = d3.scaleBand(seg.map(d=>d.y0),[M.l,W-M.r]).padding(.2), y = d3.scaleLinear([0,130],[H-M.b,M.t]);
       y.ticks(5).forEach(t=>{ s.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",y(t)).attr("y2",y(t)).style("stroke","var(--rule-2)");
         s.append("text").attr("x",M.l-7).attr("y",y(t)+4).attr("text-anchor","end").style("font-family","var(--f-mono)").style("font-size","11px").style("fill","var(--muted)").text(t); });
@@ -660,7 +660,7 @@ function stateTip(s, y){
         .on("pointermove",(ev,d)=>showTip(`<b>${d.y0} to ${d.y1}</b>`+row("Distance",`${Math.round(d.mi)} miles`)+row("Pace",`${Math.round(d.ft)} ft a day`),ev)).on("pointerleave",hideTip);
       s.selectAll("text.t").data(W<420?seg.filter((_,i)=>i%2===0):seg).join("text").attr("class","t").attr("x",d=>x(d.y0)+x.bandwidth()/2).attr("y",y(0)+14).attr("text-anchor","middle").style("font-family","var(--f-mono)").style("font-size","8.5px").style("fill","var(--muted)").text(d=>d.y0+"s");
       s.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",y(AVG)).attr("y2",y(AVG)).style("stroke","var(--ink)").attr("stroke-dasharray","5 4");
-      s.append("text").attr("class","halo").attr("x",M.l+6).attr("y",M.t+4).style("font-size","11px").style("font-weight",600).text(`Dashed: 110-year average, ${Math.round(AVG)} ft a day`);
+      s.append("text").attr("class","halo").attr("x",M.l).attr("y",13).style("font-size","11px").style("font-weight",600).text(`Dashed line: 110-year average, ${Math.round(AVG)} ft a day`);
       s.append("text").attr("class","axt").attr("x",(M.l+W-M.r)/2).attr("y",H-8).attr("text-anchor","middle").text("Decade (from this census to the next)");
       s.append("text").attr("class","axt").attr("transform",`translate(13,${(M.t+H-M.b)/2}) rotate(-90)`).attr("text-anchor","middle").text("Feet per day");
       const val = s.append("text").attr("class","halo").attr("text-anchor","middle").style("font-size","11px").style("font-weight",700);
@@ -668,7 +668,7 @@ function stateTip(s, y){
         bars.style("fill","var(--ink)").style("opacity",d=>d.y1<year?.5:d.y1===year?1:.12);
         const cur = seg.find(d=>d.y1===year);
         if (cur) val.attr("x",x(cur.y0)+x.bandwidth()/2).attr("y",y(cur.ft)-6).text(`${Math.round(cur.mi)} mi`).attr("display",null); else val.attr("display","none");
-        d3.select("#dPaceT").text(cur ? `Pace of the centre, ${cur.y0} to ${cur.y1}: ${Math.round(cur.mi)} miles (${Math.round(cur.ft)} ft a day)` : "Pace of the centre, decade by decade");
+        d3.select("#dPaceT").text(cur ? `Pace of the center, ${cur.y0} to ${cur.y1}: ${Math.round(cur.mi)} miles (${Math.round(cur.ft)} ft a day)` : "Pace of the center, decade by decade");
       };
       upd();
     }
