@@ -585,11 +585,11 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
       // 2 milestone spikes
       const cnt = {}; y26.forEach((v) => { cnt[v] = (cnt[v] || 0) + 1; });
       [24, 48, 72].forEach((k) => { const nb = [-4, -3, -2, -1, 1, 2, 3, 4].map((d) => cnt[k + d] || 0); const mu = nb.reduce((x, y) => x + y, 0) / nb.length; const obs = cnt[k] || 0;
-        rows.push({ id: 'spike' + k, section: 'Attrition', claim: `More runners stop at exactly ${k} yards than at the yards around it`, test: 'Poisson test vs mean of the 8 neighbouring yards', a: obs, b: mu, effect: obs / mu, lo: null, hi: null, unit: 'ratio', p: poisUpper(obs, mu) }); });
+        rows.push({ id: 'spike' + k, section: 'Attrition', claim: `More runners stop at exactly ${k} yards than at the yards around it`, test: 'Poisson test vs mean of the 8 neighboring yards', a: obs, b: mu, effect: obs / mu, lo: null, hi: null, unit: 'ratio', p: poisUpper(obs, mu) }); });
       { const at24 = {}; st.filter((r) => Number(r.year) === 2026 && Number(r.yards) === 24).forEach((r) => { at24[r.nation] = (at24[r.nation] || 0) + 1; });
         const top = Object.entries(at24).sort((a, b) => b[1] - a[1])[0]; const rest = st.filter((r) => Number(r.year) === 2026 && r.nation !== top[0]).map((r) => Number(r.yards));
         const c2 = {}; rest.forEach((v) => { c2[v] = (c2[v] || 0) + 1; }); const nb2 = [-4, -3, -2, -1, 1, 2, 3, 4].map((d) => c2[24 + d] || 0); const mu2 = nb2.reduce((x, y) => x + y, 0) / nb2.length; const obs2 = c2[24] || 0;
-        rows.push({ id: 'spike24ns', section: 'Attrition', claim: `The 24-yard pile-up survives without the biggest stop-together team (${top[0]})`, test: 'Poisson test vs mean of the 8 neighbouring yards, that team left out', a: obs2, b: mu2, effect: obs2 / mu2, lo: null, hi: null, unit: 'ratio', p: poisUpper(obs2, mu2), team: top[1], teamName: top[0] }); }
+        rows.push({ id: 'spike24ns', section: 'Attrition', claim: `The 24-yard pile-up survives without the biggest stop-together team (${top[0]})`, test: 'Poisson test vs mean of the 8 neighboring yards, that team left out', a: obs2, b: mu2, effect: obs2 / mu2, lo: null, hi: null, unit: 'ratio', p: poisUpper(obs2, mu2), team: top[1], teamName: top[0] }); }
       // 3 night vs day, adjusted for race stage (logistic regression, milestone yards left out)
       const nb = 13; const data = laps.filter((r) => Number(r.yard) % 24 !== 0);
       const P = nb + 1; let beta = new Array(P).fill(0);
