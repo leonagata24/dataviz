@@ -1,4 +1,6 @@
-/* Pug-flavored thumbs feedback ("Wag" / "Meh") for The Pugs' Data Viz Studies.
+/* Counting: first vote logs <key>/wag or /meh; undo logs undo-<vote>; a switch logs switch-<from>-to-<to>.
+   Net wags = wag - undo-wag - switch-wag-to-meh + switch-meh-to-wag (same for meh).
+   Pug-flavored thumbs feedback ("Wag" / "Meh") for The Pugs' Data Viz Studies.
    Study pages: auto-mounts at the end of the page. Home page: window.pugFeedback(container, key).
    Counts go to GoatCounter as events (feedback/<key>/wag or /meh). No cookies; one vote per
    study per browser is remembered in localStorage (casual repeat guard only). */
@@ -31,21 +33,26 @@
     box.innerHTML = '<span class="pf-q">Did this one earn a tail wag?</span><span class="pf-b"><button type="button" data-v="wag" aria-pressed="false">' + paw + 'Wag wag</button><button type="button" data-v="meh" aria-pressed="false">' + flat + 'Meh</button></span><span class="pf-t" role="status" aria-live="polite"></span>';
     var note = box.querySelector(".pf-t");
     function show(v) {
-      box.classList.add("pf-done");
-      box.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.v === v ? "true" : "false"); b.disabled = true; });
-      note.textContent = msg[v];
+      box.classList.toggle("pf-done", !!v);
+      box.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.v === v ? "true" : "false"); });
+      note.textContent = v ? msg[v] + " Tap again to undo or switch." : "";
     }
-    var prev = get(key);
-    if (prev) show(prev);
-    box.addEventListener("click", function (e) {
-      var b = e.target.closest("button[data-v]");
-      if (!b || b.disabled) return;
-      var v = b.dataset.v;
-      put(key, v); show(v);
+    function log(name, label) {
       try {
         if (window.goatcounter && window.goatcounter.count)
-          window.goatcounter.count({ path: "feedback/" + key + "/" + v, title: (v === "wag" ? "Wag: " : "Meh: ") + key, event: true });
+          window.goatcounter.count({ path: "feedback/" + key + "/" + name, title: label + ": " + key, event: true });
       } catch (err) {}
+    }
+    var cur = get(key) || "";
+    if (cur) show(cur);
+    box.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-v]");
+      if (!b) return;
+      var v = b.dataset.v, prev = cur;
+      if (prev === v) { cur = ""; put(key, ""); show(""); log("undo-" + v, "Undo " + v); return; }
+      cur = v; put(key, v); show(v);
+      if (!prev) log(v, v === "wag" ? "Wag" : "Meh");
+      else log("switch-" + prev + "-to-" + v, "Switch " + prev + " to " + v);
     });
     host.appendChild(box);
   }
