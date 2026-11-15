@@ -122,6 +122,19 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
 .bb-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; line-height: 1.5; }
 .bb-chart { position: relative; width: 100%; min-width: 0; }
 .bb-chart svg { display: block; overflow: visible; }
+.bb-chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.bb-chip { display: inline-flex; gap: 8px; align-items: center; font: inherit; font-size: var(--cds-font-size-caption); font-weight: 600; color: var(--color-fg); background: transparent; border: 1px solid var(--color-border-line); border-radius: 999px; padding: 5px 12px; cursor: pointer; font-variant-numeric: tabular-nums; }
+.bb-chip i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; border: 1.5px solid var(--c); }
+.bb-chip[aria-pressed="true"] { border-color: var(--color-fg); } .bb-chip[aria-pressed="true"] i { background: var(--c); }
+.bb-chip[aria-pressed="false"] { color: var(--color-fg-muted); }
+.bb-chip:focus-visible, .bb-chk input:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+.bb-chk { display: inline-flex; gap: 6px; align-items: center; margin-left: 8px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.bb-read { display: flex; flex-wrap: wrap; gap: 6px 24px; }
+.bb-read div { display: grid; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.bb-read b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 1.6rem; line-height: 1.15; color: var(--color-fg); font-variant-numeric: tabular-nums; }
+.bb-axt { font-size: 12px; fill: var(--color-fg); font-weight: 500; }
+.halo { paint-order: stroke; stroke: var(--color-panel); stroke-width: 3px; stroke-linejoin: round; }
+.bb-h450 { min-height: 450px; }
 .bb-h300 { min-height: 300px; } .bb-h180 { min-height: 180px; } .bb-h220 { min-height: 220px; } .bb-h220 { min-height: 220px; } .bb-h240 { min-height: 240px; } .bb-h260 { min-height: 260px; } .bb-h320 { min-height: 320px; }
 .bb-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; padding: 0; list-style: none; }
 .bb-legend li { display: inline-flex; align-items: center; gap: 6px; }
@@ -222,9 +235,19 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
         <div class="bb-chart bb-h300 dash-skeleton" id="chart-attrition" data-draw="attrition" data-source="attrition"></div>
       </div>
       <div class="bb-card wide">
-        <h3>Where 2026 runners stopped</h3>
-        <p class="bb-note">Runners by final yards. The 100-mile mark is a magnet: <b data-draw="num" data-source="finalHist" data-where="yards=24" data-field="runners">—</b> runners stopped at exactly 24 yards, <b data-draw="num" data-source="tests" data-where="id=spike24" data-field="effect" data-fmt="x">—</b> the average of the yards around it <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike24" data-field="result">—</span>. A smaller peak follows at 48 yards <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike48" data-field="result">—</span>. The bump at 72 yards is within noise <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike72" data-field="result">—</span>.</p>
-        <div class="bb-chart bb-h220 dash-skeleton" id="chart-hist" data-draw="hist" data-source="finalHist"></div>
+        <h3>Where runners stopped, one dot per runner</h3>
+        <p class="bb-note">Pick the championships to stack. Each dot is one runner, placed on the yard where they stopped. Hover a dot for the name and nation.</p>
+        <div class="bb-chips" id="yard-chips" role="group" aria-label="Championships to show"></div>
+        <div class="bb-read" id="yard-read" aria-live="polite"></div>
+        <div class="bb-chart bb-h450 dash-skeleton" id="chart-yarddots" data-draw="yardDots" data-source="runners" role="img" aria-label="One dot per runner, stacked by the yard where they stopped, for the chosen championships"></div>
+        <ul class="bb-legend" id="yard-leg"></ul>
+        <p class="bb-note">The 100-mile mark is a magnet. In 2026, <b data-draw="num" data-source="tests" data-where="id=spike24" data-field="a" data-fmt="int">—</b> of <b data-draw="num" data-source="headline" data-field="runners">—</b> starters stopped at exactly 24 yards, and <b data-draw="num" data-source="tests" data-where="id=spike24ns" data-field="team" data-fmt="int">—</b> of them were <span data-draw="num" data-source="tests" data-where="id=spike24ns" data-field="teamName" data-fmt="text">—</span>'s team, who stopped together. The other <b data-draw="num" data-source="tests" data-where="id=spike24ns" data-field="a" data-fmt="int">—</b> are still <b data-draw="num" data-source="tests" data-where="id=spike24ns" data-field="effect" data-fmt="x">—</b> the average of the yards around them <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike24ns" data-field="result">—</span>. A smaller peak follows at 48 yards <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike48" data-field="result">—</span>. The bump at 72 yards is within noise <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike72" data-field="result">—</span>. Counts are runners, not shares, so a bigger field makes a taller pile.</p>
+      </div>
+      <div class="bb-card wide">
+        <h3>The same yards as a chance: among runners still going, how likely is a stop here?</h3>
+        <p class="bb-note">The pile above grows partly because the field shrinks as the race goes on. This chart takes that out. Each line is an edition's typical chance of stopping at an ordinary yard. Each dot is the actual chance at the 24 or 48-yard milestone, standing above its line. Lines run while at least 25 runners are still going. The 72-yard milestone is left out because under 100 runners remain, so one runner moves it by a point. Same horizontal axis as the chart above.</p>
+        <div class="bb-chart bb-h300 dash-skeleton" id="chart-yardhaz" data-draw="yardHazard" data-source="runners" role="img" aria-label="Chance of stopping at each yard among runners still going, one line per chosen championship, with spikes at the 24 and 48-yard milestones"></div>
+        <ul class="bb-legend" id="yard-hleg"></ul>
       </div>
     </div>
   </section>
@@ -401,16 +424,6 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
     }
   });
 
-  dash.calc('finalHist', {
-    inputs: ['runners'], title: '2026 runners by final yards',
-    description: 'How many 2026 starters finished on each yard count.',
-    fn: (runners) => {
-      const c = {}; let mx = 0;
-      runners.filter((r) => Number(r.year) === 2026 && r.result !== 'DNS').forEach((r) => { const y = Number(r.yards); c[y] = (c[y] || 0) + 1; if (y > mx) mx = y; });
-      const out = []; for (let y = 0; y <= mx; y++) out.push({ yards: y, runners: c[y] || 0 }); return out;
-    }
-  });
-
   dash.calc('hazard', {
     inputs: ['laps'], title: 'Stops by local hour',
     description: 'For each local hour, runners eligible to start that hour\'s yard and how many stopped then, by how they stopped. National winners are counted as eligible, never as stops.',
@@ -573,6 +586,10 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
       const cnt = {}; y26.forEach((v) => { cnt[v] = (cnt[v] || 0) + 1; });
       [24, 48, 72].forEach((k) => { const nb = [-4, -3, -2, -1, 1, 2, 3, 4].map((d) => cnt[k + d] || 0); const mu = nb.reduce((x, y) => x + y, 0) / nb.length; const obs = cnt[k] || 0;
         rows.push({ id: 'spike' + k, section: 'Attrition', claim: `More runners stop at exactly ${k} yards than at the yards around it`, test: 'Poisson test vs mean of the 8 neighbouring yards', a: obs, b: mu, effect: obs / mu, lo: null, hi: null, unit: 'ratio', p: poisUpper(obs, mu) }); });
+      { const at24 = {}; st.filter((r) => Number(r.year) === 2026 && Number(r.yards) === 24).forEach((r) => { at24[r.nation] = (at24[r.nation] || 0) + 1; });
+        const top = Object.entries(at24).sort((a, b) => b[1] - a[1])[0]; const rest = st.filter((r) => Number(r.year) === 2026 && r.nation !== top[0]).map((r) => Number(r.yards));
+        const c2 = {}; rest.forEach((v) => { c2[v] = (c2[v] || 0) + 1; }); const nb2 = [-4, -3, -2, -1, 1, 2, 3, 4].map((d) => c2[24 + d] || 0); const mu2 = nb2.reduce((x, y) => x + y, 0) / nb2.length; const obs2 = c2[24] || 0;
+        rows.push({ id: 'spike24ns', section: 'Attrition', claim: `The 24-yard pile-up survives without the biggest stop-together team (${top[0]})`, test: 'Poisson test vs mean of the 8 neighbouring yards, that team left out', a: obs2, b: mu2, effect: obs2 / mu2, lo: null, hi: null, unit: 'ratio', p: poisUpper(obs2, mu2), team: top[1], teamName: top[0] }); }
       // 3 night vs day, adjusted for race stage (logistic regression, milestone yards left out)
       const nb = 13; const data = laps.filter((r) => Number(r.yard) % 24 !== 0);
       const P = nb + 1; let beta = new Array(P).fill(0);
@@ -756,6 +773,8 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
     svg.append('line').attr('class', 'bb-axis-l').attr('x1', x.range()[0]).attr('x2', x.range()[1]).attr('y1', yb).attr('y2', yb);
     ticks.forEach((v) => svg.append('text').attr('class', 'bb-tick').attr('x', x(v)).attr('y', yb + 16).attr('text-anchor', 'middle').text(fmt(v)));
   };
+  const yTitle = (svg, t, top, bot) => svg.append('text').attr('class', 'bb-lab').attr('transform', `translate(11,${(top + bot) / 2}) rotate(-90)`).attr('text-anchor', 'middle').text(t);
+  const xTitle = (svg, W, mr, H, t) => svg.append('text').attr('class', 'bb-lab').attr('x', W - mr).attr('y', H - 2).attr('text-anchor', 'end').text(t);
   const yearIdx = { 2026: 0, 2024: 1, 2022: 2, 2020: 3 };
   const statusIdx = { RTC: 0, INC: 1, OVER: 3, Winner: 2 };
   const statusName = { RTC: "Didn't start next yard", INC: 'Stopped mid-yard', OVER: 'Over 60 minutes', Winner: 'National winners' };
@@ -764,7 +783,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
   dash.draw('attrition', (el) => {
     const got = state(el, ['attrition']); if (!got) return; const [rows] = got;
     const H = 300; const { svg, W } = frame(el, H);
-    const m = { t: 12, r: 12, b: 34, l: 0 }; m.l = textW(svg, ['100%', '75%']) + 12;
+    const m = { t: 12, r: 12, b: 34, l: 0 }; m.l = textW(svg, ['100%', '75%']) + 30; yTitle(svg, 'Share of starters still running', m.t, H - m.b);
     const maxY = d3.max(rows, (r) => r.yard);
     const x = d3.scaleLinear([0, maxY], [m.l, W - m.r]); const y = d3.scaleLinear([0, 1], [H - m.b, m.t]);
     yGrid(svg, y, [0, .25, .5, .75, 1], m.l, W - m.r, pct0);
@@ -794,29 +813,76 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
       .on('pointerleave', () => { rule.style('opacity', 0); dots.selectAll('*').remove(); tt.hide(); });
   });
 
-  // ---------- 1b histogram ----------
-  dash.draw('hist', (el) => {
-    const got = state(el, ['finalHist']); if (!got) return; const rows = got[0].filter((r) => r.yards > 0);
-    const H = 220; const { svg, W } = frame(el, H);
-    const maxC = d3.max(rows, (r) => r.runners); const m = { t: 10, r: 8, b: 34, l: 0 }; m.l = textW(svg, [f0(maxC)]) + 12;
-    const maxY = d3.max(rows, (r) => r.yards);
-    const x = d3.scaleBand(rows.map((r) => r.yards), [m.l, W - m.r]).paddingInner(0.2);
-    const y = d3.scaleLinear([0, maxC], [H - m.b, m.t]).nice();
-    yGrid(svg, y, y.ticks(4), m.l, W - m.r, f0);
-    svg.selectAll('rect.b').data(rows).join('rect').attr('class', 'b').attr('x', (d) => x(d.yards)).attr('width', Math.max(1, x.bandwidth()))
-      .attr('y', (d) => y(d.runners)).attr('height', (d) => y(0) - y(d.runners)).attr('rx', Math.min(2, x.bandwidth() / 2))
-      .attr('fill', (d) => (d.yards % 24 === 0 ? col(0) : muted));
-    const xs = d3.scaleLinear([0.5, maxY + 0.5], [m.l, W - m.r]);
-    svg.append('line').attr('class', 'bb-axis-l').attr('x1', m.l).attr('x2', W - m.r).attr('y1', H - m.b).attr('y2', H - m.b);
-    d3.range(24, maxY + 1, 24).forEach((v) => svg.append('text').attr('class', 'bb-tick').attr('x', x(v) + x.bandwidth() / 2).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text(v));
-    svg.append('text').attr('class', 'bb-tick').attr('x', x(1)).attr('y', H - m.b + 16).attr('text-anchor', 'start').text('1');
-    svg.append('text').attr('class', 'bb-lab').attr('x', W - m.r).attr('y', H - 2).attr('text-anchor', 'end').text('Final yards');
-    const tt = tip(el); const step = x.step();
-    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
-      .on('pointermove', (ev) => { const [px] = d3.pointer(ev); const i = Math.max(0, Math.min(rows.length - 1, Math.floor((px - m.l) / step)));
-        const r = rows[i]; const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, `${r.yards} yards · ${f0(Math.round(r.yards * 4.167))} miles`, [{ t: `${f0(r.runners)} runners stopped here` }]); })
-      .on('pointerleave', () => tt.hide());
-    void xs;
+  // ---------- 1b one dot per runner, with edition chips, and the matching chance-of-stopping chart ----------
+  const EDS = [2020, 2022, 2024, 2026]; const edOn = new Set(EDS); let edTeam = true;
+  const edRows = (all) => all.filter((r) => r.result !== 'DNS').map((r) => ({ y: Number(r.year), yd: Number(r.yards), nat: r.nation, name: r.runner_name }));
+  const edTop = (rows) => { const o = {}; EDS.forEach((y) => { const c = d3.rollups(rows.filter((r) => r.y === y && r.yd === 24), (v) => v.length, (r) => r.nat).sort((a, b) => b[1] - a[1])[0]; o[y] = c ? c[0] : null; }); return o; };
+  const geo = (el) => { const W = Math.max(300, el.clientWidth || 600), small = W < 620; const L = small ? 54 : 66, R = 14; return { W, small, L, R, band: (W - L - R) / 124 }; };
+  const MS = (k) => k % 24 === 0;
+  const axTitles = (svg, g, T, base, H, ytxt, ytxtS) => {
+    svg.append('text').attr('class', 'bb-axt').attr('x', (g.L + g.W - g.R) / 2).attr('y', H - 6).attr('text-anchor', 'middle').text(g.small ? 'Final yard (24 = 100 miles)' : 'Final yard (each yard is a 4.167-mile loop; 24 yards = 100 miles)');
+    svg.append('text').attr('class', 'bb-axt').attr('transform', `translate(13,${(T + base) / 2}) rotate(-90)`).attr('text-anchor', 'middle').text(g.small ? ytxtS : ytxt);
+    [1, 24, 48, 72, 96, 120].forEach((k) => { const cx = g.L + (k - 0.5) * g.band;
+      svg.append('text').attr('class', 'bb-tick').attr('x', cx).attr('y', base + 16).attr('text-anchor', 'middle').text(k);
+      if (k > 1) svg.append('text').attr('class', 'bb-lab').attr('x', cx).attr('y', base + 29).attr('text-anchor', 'middle').style('font-size', '10px').text(Math.round(k * 4.167) + ' mi'); });
+  };
+  const chips = () => {
+    const box = document.getElementById('yard-chips'); if (!box || box.childElementCount) return;
+    EDS.forEach((y) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'bb-chip'; b.dataset.y = y; b.setAttribute('aria-pressed', 'true');
+      b.innerHTML = `<i style="--c:${col(yearIdx[y])}"></i>${y}`; b.addEventListener('click', () => { if (edOn.has(y)) { if (edOn.size === 1) return; edOn.delete(y); } else edOn.add(y); b.setAttribute('aria-pressed', edOn.has(y)); dash.draw('yardDots'); dash.draw('yardHazard'); }); box.appendChild(b); });
+    const l = document.createElement('label'); l.className = 'bb-chk'; l.innerHTML = '<input type="checkbox" checked> Mark the biggest stop-together team'; l.querySelector('input').addEventListener('change', (e) => { edTeam = e.target.checked; dash.draw('yardDots'); dash.draw('yardHazard'); }); box.appendChild(l);
+  };
+  window.bbSetEditions = (list) => { edOn.clear(); list.forEach((y) => edOn.add(y)); document.querySelectorAll('#yard-chips .bb-chip').forEach((b) => b.setAttribute('aria-pressed', edOn.has(Number(b.dataset.y)))); dash.draw('yardDots'); dash.draw('yardHazard'); };
+  dash.draw('yardDots', (el) => {
+    const got = state(el, ['runners']); if (!got) return; chips();
+    const all = edRows(got[0]); const TOP = edTop(all); const sel = EDS.filter((y) => edOn.has(y)); const rows = all.filter((r) => edOn.has(r.y));
+    const g = geo(el); const { W, small, L, R, band } = g; const T = 22, B = 62, H = small ? 380 : 450, base = H - B, avail = base - T - 6;
+    const stacks = d3.group(rows, (r) => r.yd); const mx = d3.max([...stacks.values()], (v) => v.length) || 1;
+    const cand = d3.range(1, 7).map((c) => ({ c, d: Math.min(band / c, avail / Math.ceil(mx / c)) })); const dmax = d3.max(cand, (o) => o.d); const pk = cand.find((o) => o.d >= 0.8 * dmax);
+    const c = pk.c, d = Math.min(pk.d, small ? 6 : 8), r = Math.max(0.9, d / 2 - 0.35);
+    const ymax = Math.ceil(mx / 20) * 20 || 20; const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    const xc = (k) => L + (k - 0.5) * band, y = (n) => base - n / c * d; const step = ymax > 120 ? 40 : ymax > 60 ? 20 : 10;
+    d3.range(0, ymax + 1, step).forEach((t) => { svg.append('line').attr('class', 'bb-grid-l').attr('x1', L).attr('x2', W - R).attr('y1', y(t)).attr('y2', y(t)); svg.append('text').attr('class', 'bb-tick').attr('x', L - 7).attr('y', y(t)).attr('dy', '0.32em').attr('text-anchor', 'end').text(t); });
+    [24, 48, 72, 96, 120].forEach((k) => svg.append('rect').attr('class', 'bb-band').attr('x', xc(k) - band * (c > 1 ? 0.55 : 0.5)).attr('y', T).attr('width', band * (c > 1 ? 1.1 : 1)).attr('height', base - T));
+    svg.append('line').attr('class', 'bb-axis-l').attr('x1', L).attr('x2', W - R).attr('y1', base).attr('y2', base);
+    const isTeam = (o, k) => edTeam && o.y === 2026 && k === 24 && o.nat === TOP[2026];
+    stacks.forEach((v, k) => { v.sort((p, q) => p.y - q.y || isTeam(q, k) - isTeam(p, k) || p.nat.localeCompare(q.nat));
+      v.forEach((o, i) => { const row = Math.floor(i / c), cl = i % c;
+        svg.append('circle').attr('cx', xc(k) + (cl - (c - 1) / 2) * d).attr('cy', base - (row + 0.5) * d).attr('r', r).attr('fill', isTeam(o, k) ? 'var(--color-fg)' : col(yearIdx[o.y])).append('title').text(`${o.name} · ${o.nat} · ${o.y} · stopped at ${k} yards`); }); });
+    axTitles(svg, g, T, base, H, 'Runners who stopped here (one dot = one runner)', 'Runners (one dot each)');
+    const n24 = (stacks.get(24) || []).length, n48 = (stacks.get(48) || []).length;
+    if (n24) svg.append('text').attr('class', 'bb-labstrong').attr('x', xc(24) + (c * d) / 2 + 8).attr('y', Math.max(T + 12, y(n24) + 4)).style('font-weight', 600).text(`24 yards: ${n24} runners`);
+    document.getElementById('yard-read').innerHTML = `<div><b>${f0(rows.length)}</b>runners shown</div><div><b>${n24}</b>stopped at 24 yards (${pct1(n24 / rows.length)})</div><div><b>${n48}</b>stopped at 48 yards (${pct1(n48 / rows.length)})</div>`;
+    const lg = document.getElementById('yard-leg'); const tn = TOP[2026]; const tc = all.filter((o) => o.y === 2026 && o.yd === 24 && o.nat === tn).length;
+    lg.innerHTML = sel.map((yy) => `<li><span class="bb-sw" style="background:${col(yearIdx[yy])};border-radius:50%"></span>${yy} (${f0(all.filter((o) => o.y === yy).length)} runners)</li>`).join('') + (edTeam && sel.includes(2026) ? `<li><span class="bb-sw" style="background:var(--color-fg);border-radius:50%"></span>${tn}'s team, 2026 (${tc} stopped together at 24)</li>` : '') + '<li><span class="bb-sw" style="background:var(--cds-chart-grid)"></span>Milestone yards (24, 48, 72…)</li>';
+  });
+  dash.draw('yardHazard', (el) => {
+    const got = state(el, ['runners']); if (!got) return;
+    const all = edRows(got[0]); const TOP = edTop(all); const sel = EDS.filter((y) => edOn.has(y));
+    const g = geo(el); const { W, small, L, R, band } = g; const T = 16, B = 60, H = small ? 290 : 330, base = H - B; const xc = (k) => L + (k - 0.5) * band; const y = d3.scaleLinear([0, 0.14], [base, T]);
+    const hz = (a, k) => { const ar = a.filter((v) => v >= k).length, st = a.filter((v) => v === k).length; return { k, ar, h: ar ? st / ar : NaN }; };
+    const expected = (a, mk) => { const Hh = d3.range(1, mk + 1).map((k) => hz(a, k)); return Hh.map((dd) => { const nb = Hh.filter((e) => Math.abs(e.k - dd.k) <= 6 && e.k !== dd.k && !MS(e.k) && e.ar > 0); return { ...dd, m: d3.median(nb, (e) => e.h) }; }); };
+    const sw = { 2020: 1.8, 2022: 2, 2024: 2.2, 2026: 3.2 };
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    yGrid(svg, y, y.ticks(7), L, W - R, d3.format('.0%'));
+    [24, 48, 72, 96, 120].forEach((k) => svg.append('rect').attr('class', 'bb-band').attr('x', xc(k) - band * 0.55).attr('y', T).attr('width', band * 1.1).attr('height', base - T));
+    svg.append('rect').attr('x', xc(73)).attr('y', T).attr('width', W - R - xc(73)).attr('height', base - T).attr('fill', 'var(--cds-chart-grid)').attr('opacity', 0.45);
+    [['fewer than 25', 12], ['runners left', 25]].forEach(([t, dy]) => svg.append('text').attr('class', 'bb-lab').attr('x', (xc(73) + W - R) / 2).attr('y', T + dy).attr('text-anchor', 'middle').text(t));
+    svg.append('line').attr('class', 'bb-axis-l').attr('x1', L).attr('x2', W - R).attr('y1', base).attr('y2', base);
+    const info = {}; const tt = tip(el);
+    sel.forEach((yr) => { const a = all.filter((o) => o.y === yr).map((o) => o.yd); const E = expected(a, 72).filter((dd) => dd.ar >= 25 && dd.k >= 4);
+      const Bs = E.map((dd, i) => ({ k: dd.k, m: d3.mean(E.slice(Math.max(0, i - 3), i + 4), (e) => e.m) })); info[yr] = {};
+      svg.append('path').datum(Bs).attr('d', d3.line().x((dd) => xc(dd.k)).y((dd) => y(dd.m)).curve(d3.curveMonotoneX)).attr('fill', 'none').attr('stroke', col(yearIdx[yr])).attr('stroke-width', sw[yr]).attr('stroke-linecap', 'round');
+      const last = Bs[Bs.length - 1]; svg.append('text').attr('class', 'bb-labstrong halo').attr('x', xc(last.k) + 7).attr('y', y(last.m) + (yr === 2022 ? -5 : yr === 2020 ? 9 : 4)).style('fill', col(yearIdx[yr])).style('font-weight', 700).text(yr);
+      [24, 48].forEach((k) => { const dd = E.find((e) => e.k === k); if (!dd || dd.ar < 100) return; const b = Bs.find((e) => e.k === k).m, dx = (yr - 2023) * (small ? 1.2 : 2); if (k === 24) info[yr].h24 = dd.h;
+        svg.append('line').attr('x1', xc(k) + dx).attr('x2', xc(k) + dx).attr('y1', y(b)).attr('y2', y(dd.h)).attr('stroke', col(yearIdx[yr])).attr('stroke-width', 1.6);
+        svg.append('circle').attr('cx', xc(k) + dx).attr('cy', y(dd.h)).attr('r', yr === 2026 ? 5.6 : 4.6).attr('fill', col(yearIdx[yr])).attr('stroke', 'var(--color-panel)').attr('stroke-width', 1.6)
+          .on('pointermove', (ev) => { const [ex, ey] = d3.pointer(ev, el); tt.show(ex, ey, `${yr} · yard ${k}`, [{ c: col(yearIdx[yr]), t: `${pct1(dd.h)} of the ${f0(dd.ar)} runners still going stopped here` }, { t: `Typical for nearby ordinary yards: ${pct1(b)}` }]); }).on('pointerleave', () => tt.hide()); }); });
+    if (edTeam && sel.includes(2026)) { const tn = TOP[2026]; const aNS = all.filter((o) => o.y === 2026 && o.nat !== tn).map((o) => o.yd); const hNS = hz(aNS, 24).h; const dx = 3 * (small ? 1.2 : 2) + (sel.length > 1 ? (small ? 9 : 12) : 0);
+      svg.append('circle').attr('cx', xc(24) + dx).attr('cy', y(hNS)).attr('r', 6).attr('fill', 'var(--color-panel)').attr('stroke', col(yearIdx[2026])).attr('stroke-width', 2);
+      svg.append('text').attr('class', 'bb-labstrong halo').attr('x', xc(24) + dx + 11).attr('y', y(hNS)).attr('dy', '0.32em').style('font-size', '11.5px').text(small ? `${pct1(hNS)} without ${tn}` : `2026 without ${tn}'s team: ${pct1(hNS)}`); }
+    axTitles(svg, g, T, base, H, 'Chance of stopping, among those still running', 'Chance of stopping');
+    document.getElementById('yard-hleg').innerHTML = sel.map((yr) => `<li><span class="bb-sw line" style="background:${col(yearIdx[yr])};height:${sw[yr]}px"></span>${yr}: ${pct1(info[yr].h24)} quit at 24</li>`).join('') + '<li>Line = typical chance at ordinary yards. Dot = actual chance at a milestone.</li>' + (edTeam && sel.includes(2026) ? `<li><span class="bb-sw" style="border:2px solid ${col(yearIdx[2026])};border-radius:50%;background:transparent"></span>2026 without ${TOP[2026]}'s team</li>` : '');
   });
 
   // ---------- 2a hazard ----------
@@ -828,7 +894,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
     const got = state(el, ['hazard']); if (!got) return; const [rows] = got;
     const H = 240; const { svg, W } = frame(el, H);
     const maxR = d3.max(rows, (r) => r.rate); const y = d3.scaleLinear([0, maxR], [H - 34, 16]).nice();
-    const m = { t: 16, r: 8, b: 34, l: textW(svg, y.ticks(4).map(pct0)) + 12 };
+    const m = { t: 16, r: 8, b: 34, l: textW(svg, y.ticks(4).map(pct0)) + 30 }; yTitle(svg, 'Share still going who stopped', m.t, H - m.b); xTitle(svg, W, m.r, H, 'Start hour of the yard (local time)');
     const x = d3.scaleLinear([0, 24], [m.l, W - m.r]); const bw = (x(1) - x(0)) * 0.7;
     nightBand(svg, x, m.t, H - m.b);
     yGrid(svg, y, y.ticks(4), m.l, W - m.r, d3.format('.0%'));
@@ -849,7 +915,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
     const H = 240; const { svg, W } = frame(el, H);
     const ext = d3.extent(rows, (r) => r.rel); const y = d3.scaleLinear([Math.min(-10, ext[0]), Math.max(10, ext[1])], [H - 34, 16]).nice();
     const sfmt = (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + 's';
-    const m = { t: 16, r: 10, b: 34, l: textW(svg, y.ticks(5).map(sfmt)) + 12 };
+    const m = { t: 16, r: 10, b: 34, l: textW(svg, y.ticks(5).map(sfmt)) + 30 }; yTitle(svg, 'Lap time vs own median', m.t, H - m.b); xTitle(svg, W, m.r, H, 'Start hour of the lap (local time)');
     const x = d3.scaleLinear([0, 24], [m.l, W - m.r]); const cx = (h) => x(h + 0.5);
     nightBand(svg, x, m.t, H - m.b);
     yGrid(svg, y, y.ticks(5), m.l, W - m.r, sfmt);
@@ -868,7 +934,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
   // ---------- 3 stops by stage ----------
   dash.draw('stops', (el) => {
     const got = state(el, ['stopStage']); if (!got) return; const [rows] = got;
-    const keys = ['RTC', 'INC', 'OVER']; const rowH = 30; const H = rows.length * rowH + 30;
+    const keys = ['RTC', 'INC', 'OVER']; const rowH = 30; const H = rows.length * rowH + 46;
     const { svg, W } = frame(el, H);
     const labels = rows.map((r) => `Yards ${r.stage}`); const lw = textW(svg, labels) + 12; const rw = textW(svg, rows.map((r) => `${f0(r.total)} runners`)) + 12;
     const x = d3.scaleLinear([0, 1], [lw, W - rw]); const tt = tip(el);
@@ -882,7 +948,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
         acc += share; });
       svg.append('text').attr('class', 'bb-tick').attr('x', W - rw + 8).attr('y', yy + 11).attr('dy', '0.32em').text(`${f0(r.total)} runners`);
     });
-    [0, .5, 1].forEach((v) => svg.append('text').attr('class', 'bb-tick').attr('x', x(v)).attr('y', H - 4).attr('text-anchor', v === 0 ? 'start' : v === 1 ? 'end' : 'middle').text(pct0(v)));
+    xTitle(svg, W, rw, H, 'Share of stops at that stage of the race'); [0, .5, 1].forEach((v) => svg.append('text').attr('class', 'bb-tick').attr('x', x(v)).attr('y', H - 20).attr('text-anchor', v === 0 ? 'start' : v === 1 ? 'end' : 'middle').text(pct0(v)));
   });
 
   // ---------- 4a depth scatter ----------
@@ -913,7 +979,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
       const cell = document.createElement('div'); cell.style.minWidth = '0'; wrap.appendChild(cell);
       const svg = d3.select(cell).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${pw} ${H}`).attr('height', H);
       const y = d3.scaleLinear([0, maxTeam], [H - 36, 24]).nice();
-      const m = { l: textW(svg, y.ticks(4).map(f0)) + 12, r: 10 };
+      const m = { l: textW(svg, y.ticks(4).map(f0)) + 30, r: 10 }; yTitle(svg, 'Team total yards', 24, H - 36);
       const maxX = d3.max(rows, (r) => r[key]); const x = d3.scaleLinear([0, maxX], [m.l, pw - m.r]).nice();
       svg.append('text').attr('class', 'bb-labstrong').attr('x', m.l).attr('y', 12).text(`${name} · ${yr} · r² ${r2 === null ? '—' : d3.format('.2f')(r2)}`);
       yGrid(svg, y, y.ticks(4), m.l, pw - m.r, f0);
@@ -930,13 +996,13 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
   dash.draw('gap', (el) => {
     const got = state(el, ['gapStats', 'gapChange']); if (!got) return;
     const rows = got[0].slice().sort((a, b) => a.year - b.year); const ch = got[1][0];
-    const H = 220; const { svg, W } = frame(el, H); const yf = d3.format('.2f');
-    const y = d3.scaleLinear([Math.min(0, d3.min(rows, (r) => r.lo)), d3.max(rows, (r) => r.hi)], [H - 30, 40]).nice();
-    const m = { t: 40, r: 24, b: 30, l: textW(svg, y.ticks(4).map(yf)) + 12 };
+    const H = 250; const { svg, W } = frame(el, H); const yf = d3.format('.2f');
+    const y = d3.scaleLinear([Math.min(0, d3.min(rows, (r) => r.lo)), d3.max(rows, (r) => r.hi)], [H - 44, 40]).nice();
+    const m = { t: 40, r: 24, b: 44, l: textW(svg, y.ticks(4).map(yf)) + 30 }; yTitle(svg, 'Depth minus stars (r² gap)', m.t, H - m.b); xTitle(svg, W, m.r, H, 'Championship year');
     const x = d3.scalePoint(rows.map((r) => r.year), [m.l + 40, W - m.r - 40]);
     yGrid(svg, y, y.ticks(4), m.l, W - m.r, yf);
     svg.append('line').attr('class', 'bb-axis-l').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0));
-    rows.forEach((r) => svg.append('text').attr('class', 'bb-tick').attr('x', x(r.year)).attr('y', H - 8).attr('text-anchor', 'middle').text(r.year));
+    rows.forEach((r) => svg.append('text').attr('class', 'bb-tick').attr('x', x(r.year)).attr('y', H - 26).attr('text-anchor', 'middle').text(r.year));
     rows.forEach((r) => { svg.append('line').attr('x1', x(r.year)).attr('x2', x(r.year)).attr('y1', y(r.lo)).attr('y2', y(r.hi)).attr('stroke', col(0)).attr('stroke-opacity', 0.45).attr('stroke-width', 6).attr('stroke-linecap', 'round'); });
     svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col(0)).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
       .attr('d', d3.line().x((d) => x(d.year)).y((d) => y(d.gap)));
@@ -1056,11 +1122,12 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
   dash.draw('strip', (el) => {
     const got = state(el, ['teamStrip']); if (!got) return; const [rows] = got;
     const teams = d3.groups(rows, (r) => r.nation).sort((a, b) => a[1][0].rank - b[1][0].rank);
-    const rowH = 28; const H = teams.length * rowH + 30; const { svg, W } = frame(el, H);
+    const rowH = 28; const H = teams.length * rowH + 46; const { svg, W } = frame(el, H);
     const lw = textW(svg, teams.map((t) => t[0])) + 12; const rw = textW(svg, teams.map((t) => f0(t[1][0].team))) + 14;
     const x = d3.scaleLinear([0, d3.max(rows, (r) => r.yards)], [lw, W - rw]).nice(); const tt = tip(el);
-    x.ticks(W < 500 ? 4 : 8).forEach((v) => { svg.append('line').attr('class', 'bb-grid-l').attr('x1', x(v)).attr('x2', x(v)).attr('y1', 0).attr('y2', H - 24);
-      svg.append('text').attr('class', 'bb-tick').attr('x', x(v)).attr('y', H - 8).attr('text-anchor', 'middle').text(v); });
+    x.ticks(W < 500 ? 4 : 8).forEach((v) => { svg.append('line').attr('class', 'bb-grid-l').attr('x1', x(v)).attr('x2', x(v)).attr('y1', 0).attr('y2', H - 40);
+      svg.append('text').attr('class', 'bb-tick').attr('x', x(v)).attr('y', H - 24).attr('text-anchor', 'middle').text(v); });
+    xTitle(svg, W, rw, H, 'Final yards of each runner (right: team total yards)');
     teams.forEach(([nation, rs], i) => {
       const cy = i * rowH + rowH / 2;
       svg.append('text').attr('class', 'bb-tick').attr('x', lw - 8).attr('y', cy).attr('dy', '0.32em').attr('text-anchor', 'end').text(nation);
@@ -1078,7 +1145,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
     const got = state(el, ['restToEnd']); if (!got) return; const [rows] = got;
     const H = 260; const { svg, W } = frame(el, H);
     const y = d3.scaleLinear([0, d3.max(rows, (r) => r.rest)], [H - 34, 12]).nice();
-    const m = { t: 12, r: 12, b: 34, l: textW(svg, y.ticks(5).map((v) => v + ' min')) + 12 };
+    const m = { t: 12, r: 12, b: 34, l: textW(svg, y.ticks(5).map((v) => v + ' min')) + 30 }; yTitle(svg, 'Rest left in the hour', 12, H - 34);
     const x = d3.scaleLinear([24, 0], [m.l, W - m.r]);
     yGrid(svg, y, y.ticks(5), m.l, W - m.r, (v) => v + ' min');
     xTicks(svg, x, [24, 18, 12, 6, 0], H - m.b, (v) => (v === 0 ? 'Last' : `−${v}`));
@@ -1108,7 +1175,7 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
     el.appendChild(ul);
     const H = 230; const { svg, W } = frame(el, H);
     const y = d3.scaleLinear([0, d3.max(rows, (r) => r.rest)], [H - 34, 10]).nice();
-    const m = { t: 10, r: 12, b: 34, l: textW(svg, y.ticks(4).map((v) => v + ' min')) + 12 };
+    const m = { t: 10, r: 12, b: 34, l: textW(svg, y.ticks(4).map((v) => v + ' min')) + 30 }; yTitle(svg, 'Rest left in the hour', 10, H - 34);
     const maxY = d3.max(rows, (r) => r.yard); const x = d3.scaleLinear([1, maxY], [m.l, W - m.r]);
     yGrid(svg, y, y.ticks(4), m.l, W - m.r, (v) => v + ' min');
     xTicks(svg, x, d3.range(24, maxY + 1, 24), H - m.b, f0);
