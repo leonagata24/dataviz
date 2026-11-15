@@ -56,10 +56,11 @@ b, strong { font-weight: 600; }
 .legend li { display: inline-flex; align-items: center; gap: 6px; }
 .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex: none; }
 .sw.hollow { background: transparent; border: 2px solid var(--muted); }
+.sw.fan { width: 18px; height: 10px; border-radius: 2px; background: color-mix(in srgb, var(--ref) 28%, transparent); }
 .sw.dash { width: 16px; height: 0; border-radius: 0; border-top: 2px dashed var(--ref); }
 .tick { font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
 .lab { font-size: 11px; fill: var(--second); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
-.axl { font-size: 11.5px; fill: var(--muted); }
+.axl { font-size: 12px; font-weight: 600; fill: var(--second); }
 .gl { stroke: var(--grid); stroke-width: 1; }
 .al { stroke: var(--axis); stroke-width: 1; }
 .rf { stroke: var(--ref); stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
@@ -150,9 +151,9 @@ th { position: sticky; top: 0; background: var(--panel); font-weight: 600; }
     <p>"Blame" is about change, not level, so the fairer test is AI use against the 2022-to-2025 change in maths: <b data-f="rAiCh"></b> across <b data-f="nAiCh"></b> countries <span class="badge" data-b="aiChange"></span>. Science (the main subject of PISA 2025), reading and computational problem solving give the same answer: <b data-f="rAiSci"></b>, <b data-f="rAiRead"></b> and <b data-f="rAiCps"></b>. Split by group the sign differs, <b data-f="rAiO"></b> among the 38 OECD members and <b data-f="rAiN"></b> among partners, but neither can be told apart from zero. Singapore and Viet Nam both have about two-thirds of students using AI at least weekly and sit 120 points apart; Japan and Ireland use it least and both sit above the 38 OECD members' mean of <b data-f="oecdMath"></b>.</p>
     <div class="card">
       <h3>Weekly AI use against maths score</h3>
-      <ul class="legend"><li><span class="sw" style="background:var(--s1)"></span>OECD member</li><li><span class="sw" style="background:var(--s2)"></span>Partner country or economy</li><li><span class="sw hollow"></span>Sampling caution flagged by the OECD</li><li><span class="sw dash"></span>Straight-line fit</li></ul>
+      <ul class="legend"><li><span class="sw" style="background:var(--s1)"></span>OECD member</li><li><span class="sw" style="background:var(--s2)"></span>Partner country or economy</li><li><span class="sw hollow"></span>Sampling caution flagged by the OECD</li><li><span class="sw fan"></span>200 resampled trend lines</li><li><span class="sw dash"></span>Straight-line fit on all dots</li></ul>
       <div class="chart" id="c-ai"></div>
-      <p class="note">Each dot is one country or economy. Share of students who say they use AI at least once a week to help them learn. Six systems did not report the AI questions and are left out.</p>
+      <p class="note">Each dot is one country or economy. Share of students who say they use AI at least once a week to help them learn. Six systems did not report the AI questions and are left out. The y-axis starts at 300, not zero. The faint grey lines are straight-line fits to 200 resamples of the countries: they lean up and down about equally, which is what no detectable link looks like. Hover a dot for details.</p>
     </div>
   </section>
 
@@ -256,7 +257,7 @@ document.querySelectorAll("[data-b]").forEach(e=>{const o=B[e.dataset.b];e.textC
 function tipFor(el){let t=el.querySelector(".tip");if(!t){t=document.createElement("div");t.className="tip";t.hidden=true;el.appendChild(t)}return t}
 function scatter(id,o){
   const el=document.getElementById(id);el.querySelectorAll("svg").forEach(s=>s.remove());
-  const W=el.clientWidth,Ht=o.h||Math.max(300,Math.min(460,W*.56)),m={t:12,r:16,b:42,l:46};
+  const W=el.clientWidth,Ht=o.h||Math.max(300,Math.min(460,W*.56)),m={t:o.stat?48:12,r:o.bracket?(W<560?62:158):16,b:42,l:60};
   const rows=D.filter(d=>d[o.x]!=null&&d[o.y]!=null);
   const x=d3.scaleLinear().domain(o.xd).range([m.l,W-m.r]),y=d3.scaleLinear().domain(o.yd).range([Ht-m.b,m.t]);
   const svg=d3.select(el).append("svg").attr("width",W).attr("height",Ht).attr("role","img").attr("aria-label",o.aria);
@@ -265,8 +266,11 @@ function scatter(id,o){
     svg.append("text").attr("class","tick").attr("x",m.l-8).attr("y",y(t)+4).attr("text-anchor","end").text(yf(t))});
   x.ticks(W<480?4:6).forEach(t=>svg.append("text").attr("class","tick").attr("x",x(t)).attr("y",Ht-m.b+16).attr("text-anchor","middle").text(xf(t)));
   svg.append("line").attr("class","al").attr("x1",m.l).attr("x2",W-m.r).attr("y1",Ht-m.b).attr("y2",Ht-m.b);
-  svg.append("text").attr("class","axl").attr("x",(m.l+W-m.r)/2).attr("y",Ht-6).attr("text-anchor","middle").text(o.xl);
-  svg.append("text").attr("class","axl").attr("x",m.l-38).attr("y",m.t-2).text(o.yl);
+  {const xt=svg.append("text").attr("class","axl").attr("x",(m.l+W-m.r)/2).attr("y",Ht-6).attr("text-anchor","middle").text(o.xl);if(xt.node().getBBox().width>W-8)xt.text(o.xl.replace("at least weekly to help them learn","weekly to learn"))}
+  svg.append("text").attr("class","axl").attr("transform",`translate(13,${(m.t+Ht-m.b)/2}) rotate(-90)`).attr("text-anchor","middle").text(o.yl);
+  if(o.fan){let sd=7;const rnd=()=>{sd|=0;sd=sd+0x6D2B79F5|0;let t=Math.imul(sd^sd>>>15,1|sd);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296},n=rows.length,x0=d3.min(rows,d=>d[o.x]),x1=d3.max(rows,d=>d[o.x]);
+    for(let k=0;k<200;k++){const idx=Array.from({length:n},()=>Math.floor(rnd()*n)),mx=d3.mean(idx,i=>rows[i][o.x]),my=d3.mean(idx,i=>rows[i][o.y]),dn=d3.sum(idx,i=>(rows[i][o.x]-mx)**2);if(!dn)continue;
+      const b=d3.sum(idx,i=>(rows[i][o.x]-mx)*(rows[i][o.y]-my))/dn,a=my-b*mx;svg.append("line").attr("x1",x(x0)).attr("y1",y(a+b*x0)).attr("x2",x(x1)).attr("y2",y(a+b*x1)).attr("stroke","var(--muted)").attr("stroke-opacity",.13).attr("stroke-width",1)}}
   if(o.diag){const a=Math.max(o.xd[0],o.yd[0]),b=Math.min(o.xd[1],o.yd[1]);svg.append("line").attr("class","rf").attr("x1",x(a)).attr("y1",y(a)).attr("x2",x(b)).attr("y2",y(b))}
   else{const mx=d3.mean(rows,d=>d[o.x]),my=d3.mean(rows,d=>d[o.y]);const b=d3.sum(rows,d=>(d[o.x]-mx)*(d[o.y]-my))/d3.sum(rows,d=>(d[o.x]-mx)**2),a=my-b*mx;
     const x0=d3.min(rows,d=>d[o.x]),x1=d3.max(rows,d=>d[o.x]);svg.append("line").attr("class","rf").attr("x1",x(x0)).attr("y1",y(a+b*x0)).attr("x2",x(x1)).attr("y2",y(a+b*x1))}
@@ -275,7 +279,14 @@ function scatter(id,o){
   g.selectAll("circle").data(rows).join("circle").attr("cx",d=>x(d[o.x])).attr("cy",d=>y(d[o.y])).attr("r",5)
     .attr("fill",d=>d.caution==="Yes"?"var(--panel)":col(d)).attr("stroke",d=>d.caution==="Yes"?col(d):"var(--panel)").attr("stroke-width",2);
   (o.labels||[]).forEach(([c,dx,dy,anc,txt])=>{const d=rows.find(r=>r.country===c);if(!d)return;
-    svg.append("text").attr("class","lab").attr("x",x(d[o.x])+dx).attr("y",y(d[o.y])+dy).attr("text-anchor",anc||"start").text(txt||c)});
+    const t=svg.append("text").attr("class","lab").attr("x",x(d[o.x])+dx).attr("y",y(d[o.y])+dy).attr("text-anchor",anc||"start").text(txt||c),bb=t.node().getBBox();
+    if(bb.x+bb.width>W-m.r-2){t.attr("text-anchor","end").attr("x",x(d[o.x])-Math.max(8,Math.abs(dx))).attr("y",y(d[o.y])+Math.max(dy,12))}
+    else if(bb.x<m.l-2){t.attr("text-anchor","start").attr("x",x(d[o.x])+Math.max(8,Math.abs(dx)))}});
+  if(o.stat){svg.append("text").attr("class","lab").style("fill","var(--fg)").style("font-weight",600).style("font-size","12.5px").attr("x",m.l+6).attr("y",m.t-32).text(o.stat[0]);svg.append("text").attr("class","lab").attr("x",m.l+6).attr("y",m.t-17).text(o.stat[1])}
+  if(o.bracket){const a=rows.find(r=>r.country===o.bracket[0]),b=rows.find(r=>r.country===o.bracket[1]),bx=W-m.r+14,ya=y(a[o.y]),yb=y(b[o.y]),gap=Math.round(Math.abs(a[o.y]-b[o.y])),
+      lines=W<560?[gap+" points","apart"]:[o.bracket[0]+" and "+o.bracket[1]+":","about the same AI use,",gap+" maths points apart"];
+    svg.append("path").attr("d",`M${bx-5},${ya}H${bx}V${yb}H${bx-5}`).attr("fill","none").attr("stroke","var(--pen)").attr("stroke-width",1.6);
+    lines.forEach((ln,i)=>svg.append("text").attr("class","lab").style("fill","var(--pen)").style("font-weight",600).attr("x",bx+8).attr("y",(ya+yb)/2-(lines.length-1)*7+i*14+4).text(ln))}
   const tip=tipFor(el),del=d3.Delaunay.from(rows,d=>x(d[o.x]),d=>y(d[o.y]));let cur=null;
   svg.on("pointermove",ev=>{const [px,py]=d3.pointer(ev);const i=del.find(px,py),d=rows[i];
     if(Math.hypot(x(d[o.x])-px,y(d[o.y])-py)>28){hide();return}
@@ -287,15 +298,17 @@ function scatter(id,o){
 }
 function corr(id){
   const el=document.getElementById(id);el.querySelectorAll("svg").forEach(s=>s.remove());
-  const W=el.clientWidth,rows=S.vsMath,narrow=W<560,rh=narrow?52:38,m={t:22,r:20,b:28,l:narrow?12:330},Ht=m.t+rows.length*rh+m.b;
+  const W=el.clientWidth,rows=S.vsMath,narrow=W<560,rh=narrow?52:38,m={t:narrow?46:36,r:20,b:52,l:narrow?12:330},Ht=m.t+rows.length*rh+m.b;
   const x=d3.scaleLinear().domain([-.5,1]).range([m.l,W-m.r]);
   const svg=d3.select(el).append("svg").attr("width",W).attr("height",Ht).attr("role","img").attr("aria-label","Rank correlation of six digital measures with maths score; only school digital capacity is clearly above zero");
   [-.5,0,.5,1].forEach(t=>{svg.append("line").attr("class",t===0?"al":"gl").attr("x1",x(t)).attr("x2",x(t)).attr("y1",m.t-6).attr("y2",Ht-m.b);
     svg.append("text").attr("class","tick").attr("x",x(t)).attr("y",Ht-m.b+16).attr("text-anchor","middle").text(t===0?"0":sg(t))});
-  svg.append("text").attr("class","axl").attr("x",x(0)).attr("y",10).attr("text-anchor","middle").text("no relationship");
+  svg.append("text").attr("class","axl").attr("x",x(0)).attr("y",m.t-12).attr("text-anchor","middle").text("no relationship");
+  svg.append("text").attr("class","axl").style("font-weight",600).attr("x",0).attr("y",12).text("Digital measure");
+  svg.append("text").attr("class","axl").style("font-weight",600).attr("x",(m.l+W-m.r)/2).attr("y",Ht-8).attr("text-anchor","middle").text("Rank correlation with maths score (95% range)");
   const tip=tipFor(el);
   rows.forEach((r,i)=>{const cy=m.t+i*rh+(narrow?32:rh/2),g=svg.append("g");
-    svg.append("text").attr("class","tick").style("font-size","12.5px").style("fill","var(--fg)").attr("x",narrow?m.l:m.l-14).attr("y",narrow?cy-14:cy+4).attr("text-anchor",narrow?"start":"end").text(r.name);
+    svg.append("text").attr("class","tick").style("font-size","12.5px").style("fill","var(--fg)").attr("x",narrow?m.l:m.l-14).attr("y",narrow?cy-14:cy+4).attr("text-anchor",narrow?"start":"end").text(narrow?r.name.replace("Students in schools where","Schools where"):r.name);
     g.append("line").attr("x1",x(r.lo)).attr("x2",x(r.hi)).attr("y1",cy).attr("y2",cy).attr("stroke",r.sig?"var(--s1)":"var(--ref)").attr("stroke-width",2).attr("stroke-linecap","round");
     g.append("circle").attr("cx",x(r.r)).attr("cy",cy).attr("r",6).attr("fill",r.sig?"var(--s1)":"var(--ref)").attr("stroke","var(--panel)").attr("stroke-width",2);
     svg.append("text").attr("class","lab").style("fill","var(--fg)").attr("x",x(r.hi)+8).attr("y",cy+4).text(sg(r.r));
@@ -306,9 +319,10 @@ function corr(id){
 }
 function draw(){
   const n=document.getElementById("c-ai").clientWidth<560;
-  scatter("c-ai",{x:"ai",y:"math",xd:[.22,.72],yd:[300,630],xl:"Students using AI at least weekly to help them learn",yl:"Maths score",xt:"Weekly AI use",yt:"Maths",
-    aria:"Scatter of weekly AI use against maths score for 85 countries, showing no relationship",
-    labels:[["Ireland",0,-10,"middle"],["Japan",8,4],["Viet Nam",0,-10,"middle"],["Singapore",-8,4,"end"],["Macao (China)",8,4,null,"Macao"],["B-S-J-Z (China)",8,4],["United Arab Emirates",0,16,"middle",n?"UAE":null],["Finland",0,16,"middle"],["El Salvador",8,4],["Estonia",0,-10,"middle"]]});
+  scatter("c-ai",{x:"ai",y:"math",h:n?400:null,xd:[.22,.72],yd:[300,630],xl:"Students using AI at least weekly to help them learn",yl:"Maths score",xt:"Weekly AI use",yt:"Maths",fan:true,bracket:["Singapore","Viet Nam"],
+    stat:["Rank correlation "+sg(S.aiMath.r)+(n?"":" (95% range "+ci(S.aiMath)+")"),n?"95% range "+ci(S.aiMath)+": zero":"Cannot be told apart from zero"],
+    aria:"Scatter of weekly AI use against maths score for 85 countries with 200 resampled trend lines pointing in both directions: no relationship",
+    labels:(n?[["Japan",8,4],["Viet Nam",0,19,"middle"],["Singapore",-8,4,"end"],["B-S-J-Z (China)",8,4],["El Salvador",8,4]]:[["Ireland",0,-10,"middle"],["Japan",8,4],["Viet Nam",0,19,"middle"],["Singapore",-8,4,"end"],["Macao (China)",-8,15,"end"],["B-S-J-Z (China)",8,4],["United Arab Emirates",0,16,"middle"],["Finland",0,16,"middle"],["El Salvador",8,4],["Estonia",0,-10,"middle"],["Chinese Taipei",8,4],["Hong Kong (China)",0,-11,"middle"],["Korea",-8,4,"end"]])});
   scatter("c-bd",{x:"ban",y:"nodist",h:340,xd:[0,1],yd:[.1,.82],yf:v=>Math.round(v*100)+"%",xl:"Students in schools that don't allow phones",yl:"No distraction",xt:"Phones not allowed",yt:"No distraction",
     aria:"Scatter of phone bans against students reporting no digital distraction, showing a moderate positive relationship",
     labels:[["Japan",8,-4],["Korea",-8,4,"end"],["Australia",-8,4,"end"],["Uruguay",8,4],["Saudi Arabia",-8,-6,"end"],["Finland",8,4],["Greece",0,-10,"end"]]});
