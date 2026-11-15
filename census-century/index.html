@@ -153,12 +153,24 @@ svg .grid line{stroke:var(--rule-2)}
 /* Map */
 .mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:20px;align-items:start}
 @media (max-width:860px){.mapgrid{grid-template-columns:1fr}}
-.map path.state{stroke:var(--surface);stroke-width:.8}
+.map path.state{fill:var(--surface);stroke:var(--rule);stroke-width:.8}
+.map path.state.nd{fill:var(--nodata);stroke:var(--surface)}
 .map path.state:hover{stroke:var(--ink);stroke-width:1.5}
-.map .track{fill:none;stroke:var(--accent);stroke-width:2}
-.map .cpt{fill:var(--accent);stroke:var(--surface);stroke-width:2}
-.map .cnow{fill:var(--accent);stroke:var(--surface);stroke-width:2.5}
+.map .track{fill:none;stroke:var(--ink);stroke-width:2}
+.map .cpt{fill:var(--ink);stroke:var(--surface);stroke-width:2}
+.map .cnow{fill:var(--ink);stroke:var(--surface);stroke-width:2.5}
 .map .clab{font-family:var(--f-display);font-weight:700;font-size:15px;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px}
+.dg{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:860px){.dg{grid-template-columns:1fr}}
+.dg .col2{display:grid;gap:18px;min-width:0}
+.read{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end}
+.read .s{display:grid;gap:2px;font-size:.82rem;color:var(--ink-2)}
+.read .s b{font-family:var(--f-display);font-size:1.6rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1;color:var(--ink)}
+.ct{font:600 .92rem var(--f-body);margin:0 0 4px}
+svg text.axt{fill:var(--ink-2);font-weight:600;font-size:12px;font-family:var(--f-body)}
+svg text.halo{paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round;fill:var(--ink)}
+.map .dot{transition:opacity .45s}
+@media (prefers-reduced-motion:reduce){.map .dot{transition:none}}
 .yearbig{font-family:var(--f-display);font-weight:700;font-size:4rem;line-height:.9;font-variant-numeric:tabular-nums}
 .side{display:grid;gap:14px;align-content:start}
 .side .stat{display:grid;gap:2px;border-top:1px solid var(--rule);padding-top:10px}
@@ -318,27 +330,27 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
 <section id="map">
   <div class="plate">
     <div class="plate-head">
-      <div class="t"><span class="plate-no">Makeover B</span><h3>Where the people were</h3>
-        <p>Population by state at each census, on today’s borders, with the estimated centre of population tracking west. Press play or drag the slider.</p></div>
+      <div class="t"><span class="plate-no">Makeover B</span><h3>How the country filled in, and where its middle went</h3>
+        <p>Each dot is 100,000 people, coloured by region. Press play or drag the slider: the dots thicken, the dark centre of population moves west, and the two charts follow the same census.</p></div>
     </div>
-    <div class="mapgrid">
+    <div class="slider"><button id="play" aria-label="Play animation">▶ Play</button><input id="yr" type="range" min="1790" max="1900" step="10" value="1900" aria-label="Census year"></div>
+    <div class="ticks" aria-hidden="true"><span>1790</span><span>1820</span><span>1850</span><span>1880</span><span>1900</span></div>
+    <div class="dg">
       <div style="display:grid;gap:10px;min-width:0">
-        <svg id="usmap" class="map" viewBox="0 0 975 610" role="img" aria-label="Choropleth map of state populations with centre of population track"></svg>
-        <div class="slider"><button id="play" aria-label="Play animation">▶ Play</button><input id="yr" type="range" min="1790" max="1900" step="10" value="1900" aria-label="Census year"></div>
-        <div class="ticks" aria-hidden="true"><span>1790</span><span>1820</span><span>1850</span><span>1880</span><span>1900</span></div>
+        <div class="read"><div class="yearbig" id="mYear">1900</div>
+          <div class="s"><b id="mTot">75,994,575</b><span>people counted</span></div>
+          <div class="s"><b id="mLon">86.1° W</b><span id="mCen">Estimated centre of population</span></div></div>
+        <svg id="usmap" class="map" viewBox="0 0 975 610" role="img" aria-label="Dot map of US population by region, one dot per 100,000 people, with the centre of population track"></svg>
+        <div class="legend" id="dLeg"></div>
       </div>
-      <div class="side">
-        <div class="yearbig" id="mYear">1900</div>
-        <div class="stat"><b id="mTot">75,994,575</b><span>people counted</span></div>
-        <div class="stat"><b id="mN">49</b><span id="mNlbl">areas with a count</span></div>
-        <div class="stat"><b id="mLon">86.1° W</b><span id="mCen">Estimated centre of population</span></div>
-        <div style="display:grid;gap:6px"><span class="eyebrow">Population</span><div class="ramp" id="mapRamp"></div>
-          <div class="legend"><span class="sw"><i class="nd"></i>No count yet</span><span class="sw"><svg width="14" height="14"><rect width="14" height="14" style="fill:var(--seq3)"/><rect width="14" height="14" style="fill:url(#hatchL)"/></svg>Not yet a state</span><span class="sw"><svg width="14" height="14"><circle cx="7" cy="7" r="5" style="fill:var(--accent)"/></svg>Centre of population</span></div>
-        </div>
+      <div class="col2">
+        <div><p class="ct">Who the people were: share of the count, by region</p><div id="dShare"></div></div>
+        <div><p class="ct" id="dPaceT">Pace of the centre, decade by decade</p><div id="dPace"></div></div>
       </div>
     </div>
     <svg width="0" height="0" style="position:absolute"><defs><pattern id="hatchL" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" style="stroke:var(--hatch)" stroke-width="1.6"/></pattern></defs></svg>
-    <p class="why"><b>Why it evolves the original:</b> the plate asks you to know the map. This puts the map first and draws the westward shift as a single line: the centre moves from near Baltimore in 1790 to southern Indiana in 1900. The centre is estimated from state centroids weighted by population; it follows the Census Bureau’s official track to within about half a degree.</p>
+    <p class="note-s">Caveat: the centre is an estimate from state centroids weighted by population, within about half a degree of the Census Bureau’s official track, and the dots are placed at random inside each state, so they show how many people, not where in the state.</p>
+    <p class="why"><b>Why it evolves the original:</b> the plate asks you to know the map. This puts the map first, shows people as dots so the empty West and the crowded East are felt rather than read off a colour ramp, and draws the westward drift as a single track: from near Baltimore in 1790 to southern Indiana in 1900, about 500 miles. The pace chart shows it was not a steady walk, and the share chart shows why it moved: the Midwest went from no counted people to the largest region.</p>
   </div>
 </section>
 
@@ -458,6 +470,10 @@ function stateTip(s, y){
   const grid = svg.append("g").attr("class","grid");
   YEARS.forEach(y=>grid.append("line").attr("x1",x(y)).attr("x2",x(y)).attr("y1",M.t-8).attr("y2",H-M.b));
   const logAxis = svg.append("g").attr("class","axis").attr("transform",`translate(${W-M.r+118},0)`);
+  svg.append("text").attr("class","axt").attr("x",M.l-22).attr("y",16).attr("text-anchor","end").style("font-size","11px").text("Census year");
+  svg.append("text").attr("class","axt").attr("x",M.l-22).attr("y",30).attr("text-anchor","end").style("font-size","11px").style("font-weight",400).text("Census number");
+  const yT = svg.append("text").attr("class","axt").attr("transform",`translate(12,${(M.t+M.t+rowH*48)/2}) rotate(-90)`).attr("text-anchor","middle");
+  const yT2 = svg.append("text").attr("class","axt").attr("x",W-2).attr("y",M.t-14).attr("text-anchor","end").style("font-size","11px");
 
   const line = d3.line().x(d=>x(d.y)).y(yv).curve(d3.curveBumpX);
   const g = svg.append("g");
@@ -495,6 +511,8 @@ function stateTip(s, y){
     sg.select("path.hit").attr("d", d=>line(d.v.map(([y,p,k,t])=>({y,p,k,t}))));
     sel(sg.selectAll("circle")).attr("cx",d=>x(d.y)).attr("cy",yv);
     logAxis.selectAll("*").remove();
+    yT.text(mode==="rank" ? "Rank by population (1 = most people)" : "Vertical position = population (log scale, right)");
+    yT2.text(mode==="pop" ? "People (log scale)" : "");
     if (mode==="pop"){
       logAxis.call(d3.axisRight(yP).tickValues([1e3,1e4,1e5,1e6,5e6]).tickFormat(fmtS).tickSize(4));
       logAxis.select(".domain").remove();
@@ -526,64 +544,155 @@ function stateTip(s, y){
     allB.attr("aria-pressed", regionOn===null); rb.forEach(([k,b])=>b.attr("aria-pressed", k===regionOn)); applyFocus(null); }
 })();
 
-/* ---------- B: map ---------- */
+/* ---------- B: map, shares and pace, one year ---------- */
 (function(){
   const svg = d3.select("#usmap");
   const feats = topojson.feature(TOPO, TOPO.objects.states).features.filter(f=>byFips.has(f.id) && !["02","15"].includes(f.id));
   const path = d3.geoPath();
   const proj = d3.geoAlbersUsa().scale(1300).translate([487.5,305]);
-  const TH = [25e3,100e3,250e3,500e3,1e6,2e6];
-  const LBL = ["<25k","25k","100k","250k","500k","1M","2M+"];
-  const cls = p => "q"+(d3.bisectRight(TH,p)+1);
-  const ramp = d3.select("#mapRamp");
-  LBL.forEach((l,i)=>{ const s=ramp.append("span"); s.append("i").attr("class","q"+(i+1)); s.append("b").style("font-weight",400).text(l); });
+  const C = DATA.center.map(([y,lat,lon,tot,n])=>({y,lat,lon,tot,n,xy:proj([lon,lat])}));
+  const pxPerMi = (()=>{const a=proj([-90,39]),b=proj([-90,40]);return Math.hypot(a[0]-b[0],a[1]-b[1])/69.0})();
+  const hav=(a,b)=>{const R=3958.8,r=Math.PI/180,p1=a[0]*r,p2=b[0]*r,dl=(b[1]-a[1])*r,dp=p2-p1,h=Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2;return 2*R*Math.asin(Math.sqrt(h))};
+  const seg=[]; for(let k=0;k<C.length-1;k++){const mi=hav([C[k].lat,C[k].lon],[C[k+1].lat,C[k+1].lon]); seg.push({y0:C[k].y,y1:C[k+1].y,mi,ft:mi*5280/3652.5});}
+  const AVG = d3.sum(seg,d=>d.mi)*5280/(110*365.25);
+  const shares = YEARS.map(y=>{const o={y}; REGS.forEach(r=>o[r]=0); let t=0; states.forEach(s=>{const d=s.byY.get(y); if(d){o[s.r]+=d.p; t+=d.p;}}); REGS.forEach(r=>o[r]/=t); return o;});
+  let year = 1900; const listeners = [];
+  const rngf = seed => () => {seed|=0; seed=seed+0x6D2B79F5|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296;};
 
+  document.getElementById("dLeg").innerHTML = REGS.map(r=>`<span class="sw"><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" style="fill:${rc(r)}"/></svg>${REG[r]}</span>`).join("")
+    + `<span class="sw">One dot = 100,000 people</span><span class="sw"><svg width="18" height="14"><circle cx="9" cy="7" r="5.5" style="fill:var(--ink);stroke:var(--surface);stroke-width:2"/></svg>Centre of population</span>`
+    + `<span class="sw"><i class="nd"></i>No count yet</span><span class="sw"><svg width="14" height="14"><rect width="14" height="14" style="fill:var(--surface);stroke:var(--rule)"/><rect width="14" height="14" style="fill:url(#hatchL)"/></svg>Not yet a state</span>`;
+
+  /* map + dots */
   const gS = svg.append("g");
   const paths = gS.selectAll("path").data(feats).join("path").attr("class","state").attr("d",path);
   const gH = svg.append("g").attr("pointer-events","none");
   const hatches = gH.selectAll("path").data(feats).join("path").attr("d",path).style("fill","url(#hatchL)");
   svg.append("path").style("fill","none").style("stroke","var(--rule)").attr("stroke-width",.6).attr("pointer-events","none")
     .attr("d", path(topojson.mesh(TOPO, TOPO.objects.states, (a,b)=>a!==b)));
+  const polys = f => f.geometry.type==="Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
+  const info = new Map(feats.map(f=>[f.id, polys(f).map(r=>({rings:r, area:Math.abs(d3.polygonArea(r[0])), bb:[d3.extent(r[0],p=>p[0]), d3.extent(r[0],p=>p[1])]}))]));
+  const inside = (P,pt) => d3.polygonContains(P.rings[0],pt) && !P.rings.slice(1).some(h=>d3.polygonContains(h,pt));
+  const R = rngf(11), dots = [];
+  feats.forEach(f=>{
+    const st = byFips.get(f.id), mx = Math.round(d3.max([...st.byY.values()],d=>d.p)/1e5), P = info.get(f.id), tot = d3.sum(P,p=>p.area), out = [];
+    for (let i=0;i<mx;i++){
+      let best=null, bd=-1;
+      for (let c=0;c<24;c++){
+        let u=R()*tot, q=P[0]; for (const p of P){ if((u-=p.area)<=0){q=p;break;} }
+        let pt=null; for (let tr=0;tr<60;tr++){ const cand=[q.bb[0][0]+R()*(q.bb[0][1]-q.bb[0][0]), q.bb[1][0]+R()*(q.bb[1][1]-q.bb[1][0])]; if(inside(q,cand)){pt=cand;break;} }
+        if(!pt) continue;
+        const dm = out.length ? d3.min(out,o=>Math.hypot(o[0]-pt[0],o[1]-pt[1])) : 1e9; if(dm>bd){bd=dm;best=pt;}
+      }
+      if(best){ out.push(best); dots.push({f:f.id,i:out.length-1,x:best[0],y:best[1],r:st.r}); }
+    }
+  });
+  const gD = svg.append("g").attr("pointer-events","none");
+  const dsel = gD.selectAll("circle").data(dots).join("circle").attr("class","dot").attr("cx",d=>d.x).attr("cy",d=>d.y).attr("r",4.3).style("fill",d=>rc(d.r)).style("opacity",0);
   const gC = svg.append("g").attr("pointer-events","none");
-  const track = gC.append("path").attr("class","track");
+  const track = gC.append("path").attr("class","track").attr("stroke-width",3);
   const ptsG = gC.append("g");
-  const now = gC.append("circle").attr("class","cnow").attr("r",8);
-  const nowL = gC.append("text").attr("class","clab").attr("dy","-14").attr("text-anchor","middle");
-
-  const C = DATA.center.map(([y,lat,lon,tot,n])=>({y,lat,lon,tot,n,xy:proj([lon,lat])}));
-  let year = 1900;
-  function render(){
-    paths.attr("class", f=>{ const d=byFips.get(f.id).byY.get(year); return "state " + (d? cls(d.p) : "nd"); });
-    hatches.attr("display", f=>{ const d=byFips.get(f.id).byY.get(year); return d && d.t!=="S" ? null : "none"; });
-    const upto = C.filter(c=>c.y<=year);
-    track.attr("d", d3.line().x(c=>c.xy[0]).y(c=>c.xy[1])(upto));
-    ptsG.selectAll("circle").data(upto.slice(0,-1)).join("circle").attr("class","cpt").attr("r",4).attr("cx",c=>c.xy[0]).attr("cy",c=>c.xy[1]);
-    const c = upto[upto.length-1];
-    now.attr("cx",c.xy[0]).attr("cy",c.xy[1]); nowL.attr("x",c.xy[0]).attr("y",c.xy[1]).text(year);
-    const nS = states.filter(s=>{const d=s.byY.get(year); return d && d.t==="S";}).length;
-    d3.select("#mYear").text(year); d3.select("#mTot").text(fmt(c.tot));
-    d3.select("#mN").text(c.n); d3.select("#mNlbl").text(`areas with a count, ${nS} of them states`);
-    d3.select("#mLon").text(`${Math.abs(c.lon).toFixed(1)}° W`);
-    const moved = (C[0].lon - c.lon) * 69.17 * Math.cos(39.3*Math.PI/180);
-    d3.select("#mCen").text(year===1790 ? "Estimated centre of population" : `Estimated centre, ~${Math.round(Math.abs(moved)/10)*10} mi west of 1790`);
-  }
-  render();
+  const now = gC.append("circle").attr("class","cnow").attr("r",12);
+  const nowL = gC.append("text").attr("class","clab").attr("dy","-20").attr("text-anchor","middle").style("font-size","22px").text("Centre");
+  const Ls = 500*pxPerMi, x0 = 22, y0 = 590;
+  svg.append("path").attr("d",`M${x0},${y0-8}V${y0}H${x0+Ls}V${y0-8}`).style("fill","none").style("stroke","var(--ink-2)").attr("stroke-width",2);
+  svg.append("text").attr("class","axt").attr("x",x0+Ls/2).attr("y",y0-12).attr("text-anchor","middle").style("font-size","22px").text("500 miles");
   paths.on("pointermove",(ev,f)=>showTip(stateTip(byFips.get(f.id),year),ev)).on("pointerleave",hideTip);
+
+  listeners.push(()=>{
+    paths.attr("class", f=>{ const d=byFips.get(f.id).byY.get(year); return "state " + (d? "" : "nd"); });
+    hatches.attr("display", f=>{ const d=byFips.get(f.id).byY.get(year); return d && d.t!=="S" ? null : "none"; });
+    dsel.style("opacity", d=>{ const v=byFips.get(d.f).byY.get(year); return v && d.i<Math.round(v.p/1e5) ? .9 : 0; });
+    const up = C.filter(c=>c.y<=year), c = up[up.length-1];
+    track.attr("d", d3.line().x(o=>o.xy[0]).y(o=>o.xy[1])(up));
+    ptsG.selectAll("circle").data(up.slice(0,-1)).join("circle").attr("class","cpt").attr("r",4.6).attr("cx",o=>o.xy[0]).attr("cy",o=>o.xy[1]);
+    now.attr("cx",c.xy[0]).attr("cy",c.xy[1]); nowL.attr("x",c.xy[0]).attr("y",c.xy[1]);
+    const mi = Math.round(hav([C[0].lat,C[0].lon],[c.lat,c.lon])/10)*10;
+    d3.select("#mYear").text(year); d3.select("#mTot").text(fmt(c.tot));
+    d3.select("#mLon").text(`${Math.abs(c.lon).toFixed(1)}° W`);
+    d3.select("#mCen").text(year===1790 ? "Estimated centre of population" : `Estimated centre, ~${mi} miles west of 1790`);
+  });
+
+  /* share chart */
+  (function(){
+    const box = document.getElementById("dShare"); let upd = ()=>{};
+    function draw(){
+      box.innerHTML=""; const W=Math.max(280,box.clientWidth), H=250, sm=W<420, M={t:10,r:sm?78:108,b:46,l:50};
+      const s = d3.select(box).append("svg").attr("width",W).attr("height",H).attr("viewBox",`0 0 ${W} ${H}`).attr("role","img").attr("aria-label","Stacked area chart of each region's share of the counted population, 1790 to 1900");
+      const x = d3.scaleLinear([1790,1900],[M.l,W-M.r]), y = d3.scaleLinear([0,1],[H-M.b,M.t]);
+      const stack = d3.stack().keys(REGS)(shares), area = d3.area().x(d=>x(d.data.y)).y0(d=>y(d[0])).y1(d=>y(d[1])).curve(d3.curveMonotoneX);
+      s.append("defs").html(`<clipPath id="dcp"><rect id="dcpr" x="${M.l}" y="0" width="0" height="${H}"/></clipPath><clipPath id="dcf"><rect id="dcfr" x="0" y="0" width="0" height="${H}"/></clipPath>`);
+      [0,.25,.5,.75,1].forEach(t=>{ s.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",y(t)).attr("y2",y(t)).style("stroke","var(--rule-2)");
+        s.append("text").attr("x",M.l-7).attr("y",y(t)+4).attr("text-anchor","end").style("font-family","var(--f-mono)").style("font-size","11px").style("fill","var(--muted)").text(Math.round(t*100)+"%"); });
+      const mk = (clip,op)=>s.append("g").attr("clip-path",`url(#${clip})`).selectAll("path").data(stack).join("path").attr("d",area).style("fill",d=>rc(d.key)).style("opacity",op).style("stroke","var(--surface)").attr("stroke-width",1.5);
+      mk("dcf",.22); mk("dcp",1);
+      YEARS.filter((_,i)=>sm?i%5===0:i%2===0).forEach(yy=>s.append("text").attr("x",x(yy)).attr("y",H-M.b+16).attr("text-anchor","middle").style("font-family","var(--f-mono)").style("font-size","11px").style("fill","var(--muted)").text(yy));
+      s.append("text").attr("class","axt").attr("x",(M.l+W-M.r)/2).attr("y",H-8).attr("text-anchor","middle").text("Census year");
+      s.append("text").attr("class","axt").attr("transform",`translate(13,${(M.t+H-M.b)/2}) rotate(-90)`).attr("text-anchor","middle").text("Share of people counted");
+      const cur = s.append("line").attr("y1",M.t).attr("y2",H-M.b).style("stroke","var(--ink)").attr("stroke-width",1.5);
+      const lg = s.append("g");
+      upd = ()=>{
+        const xx=x(year); s.select("#dcpr").attr("width",xx-M.l); s.select("#dcfr").attr("x",xx).attr("width",W-M.r-xx); cur.attr("x1",xx).attr("x2",xx);
+        const row=shares.find(o=>o.y===year), i=YEARS.indexOf(year);
+        const ys=stack.map(sr=>{const d=sr[i]; return {k:sr.key,m:y((d[0]+d[1])/2),v:row[sr.key]};}).sort((p,q)=>p.m-q.m);
+        const G=sm?24:15; ys[0].m=Math.max(ys[0].m,M.t+8); for(let j=1;j<ys.length;j++) ys[j].m=Math.max(ys[j].m,ys[j-1].m+G);
+        lg.selectAll("g").data(ys).join("g").attr("transform",d=>`translate(${W-M.r+8},${d.m})`).html(d=>{
+          const pc=(d.v*100).toFixed(d.v<.1?1:0)+"%";
+          return sm ? `<circle cx="4" cy="-3" r="4" style="fill:${rc(d.k)}"/><text x="12" y="-3" style="fill:var(--ink);font-size:10.5px">${REG[d.k]}</text><text x="12" y="9" style="fill:var(--ink);font-size:11px;font-weight:700">${pc}</text>`
+                    : `<circle cx="4" cy="-3" r="4" style="fill:${rc(d.k)}"/><text x="13" y="0" style="fill:var(--ink);font-size:11.5px">${REG[d.k]} <tspan style="font-weight:700">${pc}</tspan></text>`; });
+      };
+      upd();
+    }
+    draw(); listeners.push(()=>upd()); let rt; addEventListener("resize",()=>{clearTimeout(rt); rt=setTimeout(draw,120);});
+  })();
+
+  /* pace chart */
+  (function(){
+    const box = document.getElementById("dPace"); let upd = ()=>{};
+    function draw(){
+      box.innerHTML=""; const W=Math.max(280,box.clientWidth), H=260, M={t:18,r:8,b:46,l:50};
+      const s = d3.select(box).append("svg").attr("width",W).attr("height",H).attr("viewBox",`0 0 ${W} ${H}`).attr("role","img").attr("aria-label","Bar chart of feet per day moved by the centre of population in each decade, 1790 to 1900");
+      const x = d3.scaleBand(seg.map(d=>d.y0),[M.l,W-M.r]).padding(.2), y = d3.scaleLinear([0,130],[H-M.b,M.t]);
+      y.ticks(5).forEach(t=>{ s.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",y(t)).attr("y2",y(t)).style("stroke","var(--rule-2)");
+        s.append("text").attr("x",M.l-7).attr("y",y(t)+4).attr("text-anchor","end").style("font-family","var(--f-mono)").style("font-size","11px").style("fill","var(--muted)").text(t); });
+      s.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",y(0)).attr("y2",y(0)).style("stroke","var(--ink-2)");
+      const bars = s.selectAll("rect.b").data(seg).join("rect").attr("class","b").attr("x",d=>x(d.y0)).attr("y",d=>y(d.ft)).attr("width",x.bandwidth()).attr("height",d=>y(0)-y(d.ft)).attr("rx",2)
+        .on("pointermove",(ev,d)=>showTip(`<b>${d.y0} to ${d.y1}</b>`+row("Distance",`${Math.round(d.mi)} miles`)+row("Pace",`${Math.round(d.ft)} ft a day`),ev)).on("pointerleave",hideTip);
+      s.selectAll("text.t").data(W<420?seg.filter((_,i)=>i%2===0):seg).join("text").attr("class","t").attr("x",d=>x(d.y0)+x.bandwidth()/2).attr("y",y(0)+14).attr("text-anchor","middle").style("font-family","var(--f-mono)").style("font-size","8.5px").style("fill","var(--muted)").text(d=>d.y0+"s");
+      s.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",y(AVG)).attr("y2",y(AVG)).style("stroke","var(--ink)").attr("stroke-dasharray","5 4");
+      s.append("text").attr("class","halo").attr("x",M.l+6).attr("y",M.t+4).style("font-size","11px").style("font-weight",600).text(`Dashed: 110-year average, ${Math.round(AVG)} ft a day`);
+      s.append("text").attr("class","axt").attr("x",(M.l+W-M.r)/2).attr("y",H-8).attr("text-anchor","middle").text("Decade (from this census to the next)");
+      s.append("text").attr("class","axt").attr("transform",`translate(13,${(M.t+H-M.b)/2}) rotate(-90)`).attr("text-anchor","middle").text("Feet per day");
+      const val = s.append("text").attr("class","halo").attr("text-anchor","middle").style("font-size","11px").style("font-weight",700);
+      upd = ()=>{
+        bars.style("fill","var(--ink)").style("opacity",d=>d.y1<year?.5:d.y1===year?1:.12);
+        const cur = seg.find(d=>d.y1===year);
+        if (cur) val.attr("x",x(cur.y0)+x.bandwidth()/2).attr("y",y(cur.ft)-6).text(`${Math.round(cur.mi)} mi`).attr("display",null); else val.attr("display","none");
+        d3.select("#dPaceT").text(cur ? `Pace of the centre, ${cur.y0} to ${cur.y1}: ${Math.round(cur.mi)} miles (${Math.round(cur.ft)} ft a day)` : "Pace of the centre, decade by decade");
+      };
+      upd();
+    }
+    draw(); listeners.push(()=>upd()); let rt; addEventListener("resize",()=>{clearTimeout(rt); rt=setTimeout(draw,120);});
+  })();
+
+  function setYear(y){ year=y; document.getElementById("yr").value=y; listeners.forEach(f=>f()); }
   const yr = document.getElementById("yr");
-  yr.addEventListener("input",()=>{ year=+yr.value; render(); });
+  yr.addEventListener("input",()=>setYear(+yr.value));
   let timer=null; const play=document.getElementById("play");
   play.addEventListener("click",()=>{
     if (timer){ clearInterval(timer); timer=null; play.textContent="▶ Play"; return; }
-    if (year>=1900){ year=1790; yr.value=1790; render(); }
+    if (year>=1900) setYear(1790);
     play.textContent="❚❚ Pause";
-    timer=setInterval(()=>{ year+=10; yr.value=year; render(); if(year>=1900){clearInterval(timer);timer=null;play.textContent="▶ Play";} }, 900);
+    timer=setInterval(()=>{ setYear(year+10); if(year>=1900){clearInterval(timer);timer=null;play.textContent="▶ Play";} }, 1000);
   });
+  window.__setYear = setYear;
+  setYear(1900);
 })();
 
 /* ---------- C: area ---------- */
 (function(){
   const svg = d3.select("#area");
-  const W=1060,H=400,M={t:36,r:120,b:30,l:44};
+  const W=1060,H=400,M={t:36,r:120,b:54,l:64};
   svg.attr("viewBox",`0 0 ${W} ${H}`).attr("width",W).attr("height",H).style("min-width","640px").style("width","100%").style("height","auto").style("display","block");
   const rows = YEARS.map(y=>{ const o={y}; REGS.forEach(r=>o[r]=0); let t=0;
     states.forEach(s=>{const d=s.byY.get(y); if(d){o[s.r]+=d.p; t+=d.p;}}); REGS.forEach(r=>{o[r+"_n"]=o[r]; o[r]=o[r]/t;}); o.t=t; return o; });
@@ -594,6 +703,8 @@ function stateTip(s, y){
   svg.append("g").selectAll("path").data(stack).join("path").attr("d",area).style("fill",d=>rc(d.key)).style("stroke","var(--surface)").attr("stroke-width",2);
   svg.append("g").attr("class","axis").attr("transform",`translate(0,${H-M.b})`).call(d3.axisBottom(x).tickValues(YEARS).tickFormat(d3.format("d")).tickSize(0).tickPadding(8)).select(".domain").remove();
   svg.append("g").attr("class","axis").attr("transform",`translate(${M.l},0)`).call(d3.axisLeft(y).tickValues([0,.25,.5,.75,1]).tickFormat(d3.format(".0%")).tickSize(0).tickPadding(6)).select(".domain").remove();
+  svg.append("text").attr("class","axt").attr("x",(M.l+W-M.r)/2).attr("y",H-10).attr("text-anchor","middle").text("Census year");
+  svg.append("text").attr("class","axt").attr("transform",`translate(14,${(M.t+H-M.b)/2}) rotate(-90)`).attr("text-anchor","middle").text("Share of the counted population");
   const last=rows[rows.length-1];
   stack.forEach(s=>{ const d=s[s.length-1]; const mid=(d[0]+d[1])/2;
     const t=svg.append("text").attr("x",W-M.r+10).attr("y",y(mid)).attr("dy","0.32em").style("font-size","12px");
@@ -634,12 +745,14 @@ function stateTip(s, y){
   const x=d3.scaleBand(dec,[M.l,M.l+cw*dec.length]);
   dec.forEach(y=>svg.append("text").attr("x",x(y)+cw/2).attr("y",14).attr("text-anchor","middle").style("font-family","var(--f-mono)").style("font-size","10px").style("fill","var(--muted)").text(`${String(y-10).slice(2)}–${String(y).slice(2)}`));
   svg.append("text").attr("x",M.l+cw*dec.length/2).attr("y",28).attr("text-anchor","middle").style("font-size","10.5px").style("fill","var(--muted)").text("Decade (17xx–19xx)");
+  const rowT = svg.append("text").attr("class","axt").attr("x",M.l-8).attr("y",28).attr("text-anchor","end").style("font-size","11px");
   const order={
     first:states.slice().sort((a,b)=>d3.ascending(a.v[0][0],b.v[0][0])||d3.descending(a.v[0][1],b.v[0][1])),
     region:states.slice().sort((a,b)=>d3.ascending(REGS.indexOf(a.r),REGS.indexOf(b.r))||d3.ascending(a.v[0][0],b.v[0][0])||d3.descending(a.v[0][1],b.v[0][1]))
   };
   const gR=svg.append("g");
   function draw(o){
+    rowT.text(o==="first" ? "State, by first census" : "State, by region");
     const ix=new Map(order[o].map((s,i)=>[s,i]));
     const yy=s=>M.t+ix.get(s)*chh;
     const rows=gR.selectAll("g.row").data(states,d=>d.n).join(en=>{
