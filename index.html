@@ -108,7 +108,7 @@ header p{color:var(--muted);margin:0}
 footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:14px;color:var(--muted)}
 footer a{color:var(--ink)}
 </style>
-<script defer src="analytics.js"></script>
+<script defer src="analytics.js"></script><script defer src="feedback.js"></script>
 </head>
 <body>
 <div class="w">
@@ -175,7 +175,7 @@ const q="q"+(Math.floor(p.mo/3)+1),el=document.getElementById("potd");el.classNa
 document.getElementById("potd-date").textContent=now.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
 el.innerHTML=`<div class="potd-lead"><h3>${f.t}</h3><p class="potd-obs">${f.o}</p></div>
 <figure class="potd-fig"><div class="potd-mat"><picture><source media="(prefers-color-scheme: dark)" srcset="feature/${f.k}-dark.webp"><img src="feature/${f.k}-light.webp" width="${f.w}" height="${f.h}" alt="Chart: ${f.t}, from ${p.t}"></picture></div>
-<figcaption class="potd-ctx"><div class="potd-src"><span class="m">${p.m}</span><p>From <b>${p.t}</b>. ${p.d}</p></div><a class="potd-go" href="${p.u}" target="_blank" rel="noopener">Open the full page →</a></figcaption></figure>`})();
+<figcaption class="potd-ctx"><div class="potd-src"><span class="m">${p.m}</span><p>From <b>${p.t}</b>. ${p.d}</p></div><a class="potd-go" href="${p.u}" target="_blank" rel="noopener">Open the full page →</a></figcaption></figure>`;const fb=()=>window.pugFeedback&&window.pugFeedback(el.querySelector(".potd-fig"),"potd-"+f.k);window.pugFeedback?fb():addEventListener("load",fb)})();
 {const t=document.getElementById("tl");t.scrollLeft=t.scrollWidth}
 </script>
 </body>
