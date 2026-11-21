@@ -120,9 +120,11 @@ select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); o
 .star { fill: #fff; }
 .star.tw { animation: tw 3.2s ease-in-out infinite alternate; }
 @keyframes tw { from { opacity: .12; } to { opacity: .7; } }
+.drift { animation-name: drift; animation-timing-function: linear; animation-iteration-count: infinite; }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(var(--dx)); } }
 .fd { transition: transform .15s; transform-box: fill-box; transform-origin: center; }
 .fd:hover { transform: scale(1.25); }
-@media (prefers-reduced-motion: reduce) { .star.tw { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .star.tw, .drift { animation: none; } }
 .luck { margin: 0; max-width: 74ch; color: var(--fg-2); background: var(--panel-2); border-radius: 8px; padding: 10px 14px; font-size: 14.5px; }
 .luck b { color: var(--fg); }
 .cstat { margin: 0; font-size: 14px; color: var(--fg-2); }
@@ -571,13 +573,22 @@ const SAUCER_SYM = `<symbol id="saucer" overflow="visible">
   <circle cx="-4.6" cy="0.9" r=".75" fill="var(--panel)"/><circle cx="0" cy="1.5" r=".75" fill="var(--panel)"/><circle cx="4.6" cy="0.9" r=".75" fill="var(--panel)"/>
 </symbol>`;
 document.body.insertAdjacentHTML('afterbegin', `<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>${SAUCER_SYM}</defs></svg>`);
-// stars: decoration only, seeded so they stay put when the chart redraws or re-casts
+// stars: decoration only. Three depth layers drift slowly left and wrap around; seeded, so they
+// stay put across redraws, and timed off the clock, so a coin re-cast does not restart the drift
 function starfield(x0, y0, w, h) {
-  const r = mulberry(2026), n = Math.round(w * h / 1700); let s = '<g aria-hidden="true">';
-  for (let i = 0; i < n; i++) {
-    const big = r() < 0.08, rad = big ? 1.1 + r() * 0.5 : 0.35 + r() * 0.5, op = big ? 0.55 : 0.12 + r() * 0.35, tw = r() < 0.12;
-    s += `<circle class="star${tw ? ' tw' : ''}" cx="${(x0 + r() * w).toFixed(1)}" cy="${(y0 + r() * h).toFixed(1)}" r="${rad.toFixed(2)}" opacity="${op.toFixed(2)}"${tw ? ` style="animation-delay:-${(r() * 3.2).toFixed(1)}s"` : ''}/>`;
-  }
+  const r = mulberry(2026), LAYERS = [[1 / 900, 240, 0.3, 0.12, 0.3], [1 / 1500, 150, 0.55, 0.18, 0.4], [1 / 3200, 95, 0.9, 0.3, 0.45]];
+  const now = performance.now() / 1000;
+  let s = `<defs><clipPath id="skyclip"><rect x="${x0}" y="${y0}" width="${w}" height="${h}"/></clipPath></defs><g aria-hidden="true" clip-path="url(#skyclip)">`;
+  LAYERS.forEach(([dens, dur, size, op0, opv], li) => {
+    let one = '';
+    const n = Math.round(w * h * dens);
+    for (let i = 0; i < n; i++) {
+      const big = li === 2 && r() < 0.15, rad = big ? 1.2 + r() * 0.4 : size * (0.6 + r() * 0.7), op = big ? 0.6 : op0 + r() * opv, tw = r() < 0.12;
+      one += `<circle class="star${tw ? ' tw' : ''}" cx="${(r() * w).toFixed(1)}" cy="${(y0 + r() * h).toFixed(1)}" r="${rad.toFixed(2)}" opacity="${op.toFixed(2)}"${tw ? ` style="animation-delay:-${(r() * 3.2).toFixed(1)}s"` : ''}/>`;
+    }
+    // two copies side by side; the layer slides one plot-width left, then loops seamlessly
+    s += `<g class="drift" style="--dx:${(-w).toFixed(1)}px;animation-duration:${dur}s;animation-delay:-${(now % dur).toFixed(2)}s"><g transform="translate(${x0},0)">${one}</g><g transform="translate(${x0 + w},0)">${one}</g></g>`;
+  });
   return s + '</g>';
 }
 function drawFunnel() {
