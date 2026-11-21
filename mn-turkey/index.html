@@ -149,7 +149,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .tgl { display: flex; flex-wrap: wrap; gap: 8px 20px; font: 500 13px var(--sans); }
 .tgl label { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
 .tgl input { accent-color: var(--rust); width: 16px; height: 16px; }
-.leg { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: 13px; }
+.leg { align-content: space-between; list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: 13px; }
 .leg li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 2px 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line); }
 .leg li:last-child { border-bottom: 0; }
 .leg .bd { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 700 11px var(--mono); color: #fff; }
@@ -421,9 +421,9 @@ function hbar(host,rows,o){
   host.innerHTML="";
   const W=Math.max(260,host.clientWidth||640),narrow=W<520;
   const L=narrow?108:172,R=narrow?(o.Rn||o.R):o.R,top=6,bh=narrow?22:24,gap=narrow?14:11,axisH=narrow?74:46;
-  const H0=top+rows.length*(bh+gap)+axisH,sl=wrapTxt(o.src,W-8,11),H=H0+sl.length*14+10,pw=W-L-R,xs=v=>L+v/o.max*pw;
+  const H0=top+rows.length*(bh+gap)+axisH,sl=wrapTxt(o.src,W-8,11),H=H0+sl.length*14+12,pw=W-L-R,xs=v=>L+v/o.max*pw;
   const svg=el("svg",{width:W,height:H,viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":o.aria},host);
-  sl.forEach((t,k)=>txt(svg,t,{x:2,y:H0+8+k*14,class:"srcl"}));
+  sl.forEach((t,k)=>txt(svg,t,{x:2,y:H0+20+k*14,class:"srcl"}));
   for(let t=0;t<=o.max;t+=(narrow&&o.stepn)||o.step){el("line",{x1:xs(t),x2:xs(t),y1:top,y2:H0-axisH+2,class:"gl"},svg);txt(svg,t+"%",{x:xs(t),y:H0-axisH+18,"text-anchor":"middle",class:"tick"})}
   el("line",{x1:L,x2:L,y1:top,y2:H0-axisH+2,stroke:"var(--axis)"},svg);
   rows.forEach((r,i)=>{
@@ -479,9 +479,9 @@ const SRC_MAP="Sources: Minnesota Dept. of Agriculture, Minnesota Turkey Fact Sh
 function buildFlow(){
   const host=document.getElementById("c-flow");host.innerHTML="";
   const side=Math.max(280,Math.min(host.clientWidth||600,640)),cx=side/2,cy=side/2+2,rr=side/2-4,sc=rr/U,narrow=side<480;
-  const sl=wrapTxt(SRC_MAP,side-8,11),HH=side+sl.length*14+12;
+  const sl=wrapTxt(SRC_MAP,side-8,11),HH=side+sl.length*14+22;
   const svg=el("svg",{width:side,height:HH,viewBox:`0 0 ${side} ${HH}`},host);
-  sl.forEach((t,k)=>txt(svg,t,{x:2,y:side+8+k*14,class:"srcl"}));
+  sl.forEach((t,k)=>txt(svg,t,{x:2,y:side+24+k*14,class:"srcl"}));
   el("circle",{cx,cy,r:rr,fill:"color-mix(in srgb, var(--navy) 9%, var(--panel))",stroke:"var(--axis)"},svg);
   const g=el("g",{transform:`translate(${cx} ${cy}) scale(${sc})`},svg);
   el("path",{d:GEO.land,fill:"var(--neutral)",opacity:.8},g);
@@ -500,7 +500,7 @@ function buildFlow(){
   txt(svg,"Minnesota",{x:cx-9,y:cy-9,"text-anchor":"end",class:"vl hot",style:"font-size:11.5px"});
   DEST.forEach((d,i)=>{const X=cx+d.ux*sc,Y=cy+d.uy*sc;el("circle",{cx:X,cy:Y,r:8,fill:col(i),stroke:"var(--panel)","stroke-width":1.5},svg);txt(svg,String(i+1),{x:X,y:Y+3.5,class:"mkn"},svg)});
   FL.parts=[];FL.acc=DEST.map(()=>0);
-  const lg=document.getElementById("legend");
+  const lg=document.getElementById("legend");lg.style.minHeight=window.matchMedia("(min-width:861px)").matches?side+"px":"";
   lg.innerHTML='<li><span class="bd" style="background:var(--stamp)">★</span><span class="nm"><b>Minnesota</b><span>starting point: Minneapolis–St. Paul</span></span><span class="vv"><span>$104M a year</span></span></li>'+
     DEST.map((d,i)=>`<li><span class="bd" style="background:${col(i)}">${i+1}</span><span class="nm"><b>${d.n}</b><span>${d.cap} · ${fmi(d.mi)} (${(Math.round(d.km/10)*10).toLocaleString("en-US")} km)</span></span><span class="vv"><em id="lv${i}">${d.s}% · ${fm(d.s*TOTAL/100)}</em><span id="ls${i}"></span></span></li>`).join("")+
     `<li><span class="bd" style="background:var(--neutral-ink)">?</span><span class="nm"><b>All other</b><span>many countries · not mapped</span></span><span class="vv"><em id="lv7">15% · ${fm(15*TOTAL/100)}</em><span id="ls7"></span></span></li>`;
