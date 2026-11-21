@@ -149,15 +149,10 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .tgl { display: flex; flex-wrap: wrap; gap: 8px 20px; font: 500 13px var(--sans); }
 .tgl label { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
 .tgl input { accent-color: var(--rust); width: 16px; height: 16px; }
-.lens { display: flex; width: fit-content; justify-self: start; gap: 0; border: 1.5px solid var(--fg); border-radius: 99px; overflow: hidden; margin: 0 0 12px; }
+.lens { display: flex; width: fit-content; justify-self: start; gap: 0; border: 1.5px solid var(--fg); border-radius: 99px; overflow: hidden; margin: 4px 0 6px; }
 .lens button { font: 600 13px var(--disp); background: transparent; color: var(--fg); border: 0; padding: 8px 16px; cursor: pointer; min-height: 38px; }
 .lens button[aria-pressed=true] { background: var(--fg); color: var(--panel); }
 .lens button:focus-visible { outline: 3px solid var(--rust); outline-offset: -3px; }
-.card[data-lens=dist] .read #w1, .card[data-lens=dist] .read #w2, .card[data-lens=dist] .read #w3 { order: 2; opacity: .6; border-top-color: var(--axis); }
-.card[data-lens=dist] .read #w4, .card[data-lens=dist] .read #w5 { order: 1; }
-.card[data-lens=who] .read #w4, .card[data-lens=who] .read #w5 { order: 2; opacity: .6; border-top-color: var(--axis); }
-.card[data-lens=who] .read #w3, .card[data-lens=who] .read #w1, .card[data-lens=who] .read #w2 { order: 1; }
-.card[data-lens=who] .ringc { opacity: .3; }
 .leg { align-content: space-between; list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: 13px; }
 .leg li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 2px 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line); }
 .leg li:last-child { border-bottom: 0; }
@@ -327,10 +322,9 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 
   <section class="sec" id="stress">
     <div class="fh"><span class="fb">Stress<br>test</span><span class="qn">What if the gate closes?</span><h2>The Mexico stress test: how far would the turkeys have to go?</h2></div>
-    <div class="ans"><span class="stamp">Arithmetic, not a forecast</span><span id="ansD">Mexico takes 71% of Minnesota's turkey export dollars from about <b id="k-mx">1,800 mi</b> away, and <b id="k-n0">75%</b> of all export dollars go to markets within 2,000 miles. If Mexico bought nothing and the other markets refilled the gap, the average mapped export dollar would travel about <b id="k-a1">2,500 mi</b> instead of <b id="k-a0">1,910 mi</b>, and only <b id="k-n1">14%</b> of all export dollars would stay within 2,000 miles. Distances are straight lines to capitals, and the dollars are estimates.</span><span id="ansW" hidden>Mexico takes an estimated $73.8 million of Minnesota's $104 million in turkey exports. To refill that gap, every other market would need to buy about <b>3.5 times</b> as much (3.3 to 3.6 once rounding is allowed for), and the new customers would be farther away. It is arithmetic, not a forecast, on data about three years old.</span></div>
-    <div class="card" data-lens="dist">
+    <div class="ans"><span class="stamp">Arithmetic, not a forecast</span><div class="lens" role="group" aria-label="Choose an insight"><button type="button" data-lens="dist" aria-pressed="true">How far?</button><button type="button" data-lens="who" aria-pressed="false">Who refills?</button></div><span id="ansD">Mexico takes 71% of Minnesota's turkey export dollars from about <b id="k-mx">1,800 mi</b> away, and <b id="k-n0">75%</b> of all export dollars go to markets within 2,000 miles. If Mexico bought nothing and the other markets refilled the gap, the average mapped export dollar would travel about <b id="k-a1">2,500 mi</b> instead of <b id="k-a0">1,910 mi</b>, and only <b id="k-n1">14%</b> of all export dollars would stay within 2,000 miles. Distances are straight lines to capitals, and the dollars are estimates.</span><span id="ansW" hidden>Mexico takes an estimated $73.8 million of Minnesota's $104 million in turkey exports. To refill that gap, every other market would need to buy about <b>3.5 times</b> as much (3.3 to 3.6 once rounding is allowed for), and the new customers would be farther away. It is arithmetic, not a forecast, on data about three years old.</span></div>
+    <div class="card">
       <h3>Where Minnesota's turkey export dollars went, and how far (2023-era data)</h3>
-      <div class="lens" role="group" aria-label="Choose a view"><button type="button" data-lens="dist" aria-pressed="true">How far?</button><button type="button" data-lens="who" aria-pressed="false">Who refills?</button></div>
       <div class="ctrl">
         <label for="sl">Mexico buys <input id="sl" type="range" min="0" max="100" step="5" value="0" aria-describedby="slnote"><output id="slo" for="sl">0%</output> less</label>
         <div class="pre" role="group" aria-label="Presets">
@@ -525,9 +519,7 @@ function setLeg(i,w,w0,sh,grows,mi){
   const lv=document.getElementById("lv"+i),ls=document.getElementById("ls"+i);if(!lv)return;
   const same=Math.abs(w-w0)<.005,rg=FL.range?"range "+fm(Math.max(0,(sh-.5)*TOTAL/100))+" to "+fm((sh+.5)*TOTAL/100):"";
   const money=same?sh+"% · "+fm(w0):fm(w),sub=same?rg:"was "+fm(w0)+(grows?" (+"+Math.round((w/w0-1)*100)+"%)":"");
-  const lc=document.getElementById("lc"+i);if(lc)lc.textContent=FL.lens==="dist"?lc.dataset.cap:lc.dataset.cap+" · "+fmi(mi)+" ("+lc.dataset.km+" km)";
-  if(FL.lens==="dist"){lv.textContent=mi==null?"not mapped":fmi(mi);ls.textContent=money+(sub?" · "+sub:"")}
-  else{lv.textContent=money;ls.textContent=sub}
+  lv.textContent=money;ls.textContent=sub;
 }
 function applyFlow(){
   const x=FL.x/100,S=scen(SH0,x,FL.refill),S0=scen(SH0,0,FL.refill);FL.S=S;
@@ -547,9 +539,9 @@ function applyFlow(){
   document.getElementById("slo").textContent=FL.x+"%";document.getElementById("sl").value=FL.x;
   document.querySelectorAll(".pre button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.v===FL.x)));
 }
-function setLens(l){FL.lens=l;const c=document.querySelector("#stress .card");c.dataset.lens=l;
+function setLens(l){FL.lens=l;
   document.querySelectorAll(".lens button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lens===l)));
-  document.getElementById("ansD").hidden=l!=="dist";document.getElementById("ansW").hidden=l!=="who";applyFlow()}
+  document.getElementById("ansD").hidden=l!=="dist";document.getElementById("ansW").hidden=l!=="who"}
 function setX(v){FL.x=v;applyFlow()}
 function tick(t){
   if(!FL.run){FL.last=0;return}
