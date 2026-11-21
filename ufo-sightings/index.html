@@ -35,12 +35,12 @@ b, strong { font-weight: 600; }
 .credits .home { color: var(--fg); font-weight: 600; text-decoration: none; white-space: nowrap; }
 .credits b { color: var(--fg); font-weight: 500; }
 .ai { background: var(--fg); color: var(--bg); padding: 2px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: .1em; font-size: 11px; }
-.disclaimer { margin: 0; font-size: 12.5px; color: var(--fg-muted); max-width: 90ch; }
+.disclaimer { margin: 0; font-size: 12.5px; color: var(--fg-muted); }
 .hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
 .eyebrow { font-size: 12.5px; color: var(--fg-muted); letter-spacing: .06em; text-transform: uppercase; margin: 0; }
 h1 { font-family: var(--font-sans); font-weight: 800; color: var(--accent); font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.05; margin: 6px 0 4px; letter-spacing: -.01em; }
 .sub { margin: 0 0 14px; color: var(--fg-2); font-size: 16px; }
-.lede { margin: 0; max-width: 64ch; }
+.lede { margin: 0; }
 .lede b { font-variant-numeric: tabular-nums; }
 .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
 .tile { border-top: 1px solid var(--line); padding-top: 8px; display: grid; gap: 2px; }
@@ -59,7 +59,7 @@ h1 { font-family: var(--font-sans); font-weight: 800; color: var(--accent); font
 .sec-h { display: grid; gap: 4px; }
 .num { font-size: 12.5px; color: var(--fg-muted); letter-spacing: .04em; font-variant-numeric: tabular-nums; }
 .sec h2 { font-family: var(--font-serif); font-weight: 400; font-size: 24px; margin: 0; text-wrap: balance; }
-.sec-p { margin: 0; max-width: 72ch; color: var(--fg-2); }
+.sec-p { margin: 0; color: var(--fg-2); }
 .sec-p b { color: var(--fg); }
 .note { font-size: 12.5px; color: var(--fg-muted); margin: 0; }
 .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr)); gap: var(--gap); }
@@ -125,7 +125,7 @@ select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); o
 .fd { transition: transform .15s; transform-box: fill-box; transform-origin: center; }
 .fd:hover { transform: scale(1.25); }
 @media (prefers-reduced-motion: reduce) { .star.tw, .drift { animation: none; } }
-.luck { margin: 0; max-width: 74ch; color: var(--fg-2); background: var(--panel-2); border-radius: 8px; padding: 10px 14px; font-size: 14.5px; }
+.luck { margin: 0; color: var(--fg-2); background: var(--panel-2); border-radius: 8px; padding: 10px 14px; font-size: 14.5px; }
 .luck b { color: var(--fg); }
 .cstat { margin: 0; font-size: 14px; color: var(--fg-2); }
 .cstat b { color: var(--fg); }
