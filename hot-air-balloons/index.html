@@ -46,6 +46,13 @@ a { color: inherit; }
 .title { font-family: var(--disp); font-weight: 700; font-size: clamp(2rem, 5.2vw, 3.3rem); line-height: 1.03; letter-spacing: -.035em; margin: 0; text-wrap: balance; }
 .lede { line-height: 1.55; margin: 0; font-size: 15.5px; }
 .lede a { font-weight: 600; }
+.hero-photo { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 40%; opacity: 0; transition: opacity .4s; }
+.hero.has-photo .hero-photo { opacity: 1; -webkit-mask-image: linear-gradient(90deg, transparent 46%, #000 72%); mask-image: linear-gradient(90deg, transparent 46%, #000 72%); }
+.hero.has-photo .hero-art svg, .hero.has-photo .ground { display: none; }
+.photo-credit { position: absolute; right: 14px; bottom: 10px; z-index: 3; font: 500 10.5px var(--mono); color: var(--second); background: color-mix(in srgb, var(--panel) 80%, transparent); border-radius: 99px; padding: 3px 9px; display: none; }
+.photo-credit a { color: inherit; }
+.hero.has-photo .photo-credit { display: block; }
+@media (max-width: 760px) { .photo-credit { bottom: auto; top: 10px; } .hero.has-photo .hero-photo { -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 20%, transparent 40%); mask-image: linear-gradient(180deg, #000 0%, #000 20%, transparent 40%); } .hero.has-photo::before { background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--sky-b) 70%, transparent) 40%, color-mix(in srgb, var(--sky-b) 92%, transparent) 100%); } }
 .hero-art { position: relative; min-height: 220px; }
 .hero-art svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; z-index: 1; pointer-events: none; }
@@ -140,7 +147,8 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     <p class="disclaimer">Analysis, charts and text were produced with AI (Claude) from the MakeoverMonday data file. Every figure is computed from that file after the repairs listed in the sniff test at the bottom, and was recomputed a second time with separate code. The archive is a volunteer project and not an official aircraft register; this page is not affiliated with it.</p>
   </div>
 
-  <header class="hero">
+  <header class="hero" id="hero">
+    <img class="hero-photo" id="hero-photo" src="hero-sky.webp" alt="" aria-hidden="true">
     <div class="hero-t">
       <p class="eyebrow">Sky patrol · 7,235 balloons · observer altitude 30 cm</p>
       <h1 class="title">Things in the Sky That Are Not Squirrels</h1>
@@ -148,6 +156,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     </div>
     <div class="hero-art" id="hero-art" aria-hidden="true"></div>
     <div class="ground" aria-hidden="true"><svg viewBox="0 0 1200 84" preserveAspectRatio="none"><path d="M0,52 C200,18 380,60 600,40 C820,20 1010,58 1200,30 V84 H0Z" fill="var(--hill)"/><path d="M0,70 C260,44 520,80 800,58 C980,46 1100,66 1200,56 V84 H0Z" fill="var(--hill2)"/></svg></div>
+    <p class="photo-credit" id="photo-credit">Photo: <a href="https://unsplash.com/@whereiskylenow?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noopener">Kyle Hinkson</a> on <a href="https://unsplash.com/photos/hot-air-balloons-in-blue-sky-xyXcGADvAwE?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noopener">Unsplash</a></p>
     <div class="spotter" aria-hidden="true"><img src="../pug-head.png" alt=""><span>Not a squirrel. Logging it anyway.</span></div>
   </header>
 
@@ -415,5 +424,6 @@ function seen(){const d=D.seenYears,{svg,w,h,hit,small}=stage("c-seen",322,"Colu
 function draw(){surv();makers();size();scale();animals();seen();comp()}
 draw();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(draw,120)});
 </script>
+<script>(function(){var i=document.getElementById("hero-photo");if(!i)return;function ok(){if(i.naturalWidth)document.getElementById("hero").classList.add("has-photo")}i.addEventListener("load",ok);i.addEventListener("error",function(){i.remove()});if(i.complete)ok()})();</script>
 </body>
 </html>
