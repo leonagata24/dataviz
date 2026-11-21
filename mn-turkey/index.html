@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>¿Por qué México? · Minnesota Turkey Exports</title>
+<meta name="description" content="MakeoverMonday 2026 Week 46: the Minnesota Turkey Fact Sheet. Why 71% of Minnesota's turkey export dollars go to Mexico, three pug hypotheses with sourced verdicts, an animated stress test, and a full data quality audit.">
+<style>
+:root {
+  color-scheme: light;
+  --disp: "Sora", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --fg: #2b2118; --muted: #6a5b4b; --second: #4a3d30; --bg: #efe3cb; --panel: #fffaf0; --line: #e2d3b6;
+  --grid: #eee2cb; --axis: #c9b794; --ref: #8a7a64; --neutral: #c8b595; --neutral-ink: #8d7a5c;
+  --rust: #b5482a; --cran: #8f1d3a; --gold: #d99a1e; --pine: #2f6b4c; --navy: #1f4e9c; --stamp: #1f3a5f;
+  --dot: #2b2118; --pop: #ffffff; --bd: rgba(43,33,24,.14); --shadow: 0 6px 20px rgba(60,40,10,.16);
+  --kraft-a: #f6e8c9; --kraft-b: #ecd8b0; --pen: #a03c20; --ok: #1f6b2f; --warn: #8a5800;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --fg: #f3e8d9; --muted: #c3ae95; --second: #dccbb3; --bg: #1a130e; --panel: #241b15; --line: #3a2e24;
+  --grid: #30261d; --axis: #5b4a38; --ref: #a39078; --neutral: #5a4a38; --neutral-ink: #b9a487;
+  --rust: #e07a55; --cran: #e0687f; --gold: #e8b23d; --pine: #5fb98a; --navy: #7fa6e6; --stamp: #9ec0ec;
+  --dot: #f3e8d9; --pop: #2f241c; --bd: rgba(255,255,255,.14); --shadow: 0 6px 20px rgba(0,0,0,.55);
+  --kraft-a: #2d2218; --kraft-b: #241b13; --pen: #f0a583; --ok: #6fd07f; --warn: #e0a020;
+} }
+[hidden] { display: none !important; }
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 15px; line-height: 1.45; }
+b, strong { font-weight: 600; }
+a { color: inherit; }
+.wrap { max-width: 70rem; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.top { padding-top: 16px; display: grid; gap: 10px; }
+.credits { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; align-items: center; }
+.credits span { display: inline-flex; gap: 6px; align-items: center; }
+.disclaimer { margin: 0; font-size: 12.5px; color: var(--muted); max-width: 100ch; line-height: 1.5; }
+
+/* Cargo manifest hero with an airmail border */
+.hero { position: relative; margin-top: 14px; border-radius: 22px; overflow: hidden; background: linear-gradient(180deg, var(--kraft-a), var(--kraft-b)); display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); border: 2px solid var(--axis); }
+.hero::before, .sec::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 9px; background: repeating-linear-gradient(-45deg, var(--cran) 0 12px, var(--panel) 12px 18px, var(--navy) 18px 30px, var(--panel) 30px 36px); }
+.hero-t { padding: clamp(22px, 4vw, 44px); padding-top: clamp(28px, 4.4vw, 50px); display: grid; gap: 14px; align-content: start; position: relative; z-index: 2; }
+.eyebrow { font: 500 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; margin: 0; color: var(--second); }
+.title { font-family: var(--disp); font-weight: 700; font-size: clamp(2.2rem, 6vw, 3.9rem); line-height: 1.02; letter-spacing: -.035em; margin: 0; text-wrap: balance; }
+.lede { line-height: 1.55; max-width: 58ch; margin: 0; font-size: 15.5px; }
+.lede a { font-weight: 600; }
+.form { display: grid; grid-template-columns: auto 1fr; gap: 3px 14px; font: 500 12px var(--mono); max-width: 34rem; border-top: 1.5px dashed var(--axis); padding-top: 10px; color: var(--second); }
+.form dt { text-transform: uppercase; letter-spacing: .08em; color: var(--muted); } .form dd { margin: 0; color: var(--fg); }
+.hero-art { position: relative; min-height: 240px; display: grid; place-items: center; padding: 28px 18px 18px; }
+.hero-art svg { width: 100%; max-width: 440px; height: auto; overflow: visible; }
+@media (prefers-reduced-motion: no-preference) { .bob { animation: bob 5s ease-in-out infinite alternate; } }
+@keyframes bob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+@media (max-width: 760px) { .hero { grid-template-columns: minmax(0, 1fr); } .hero-art { order: -1; min-height: 200px; padding-top: 34px; } .hero-t { padding-top: 6px; } }
+
+main { display: grid; gap: 22px; padding-block: 22px 64px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr)); gap: 12px; }
+.tile { display: grid; align-content: start; gap: 4px; background: var(--panel); border-radius: 16px; padding: 16px 16px 14px; border-top: 5px solid var(--tc, var(--rust)); }
+.tile-l, .tile-s { font-size: 12.5px; color: var(--muted); }
+.tile-v { font-family: var(--disp); font-weight: 700; letter-spacing: -.03em; font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+
+.sec { display: grid; gap: 16px; background: var(--panel); border-radius: 22px; padding: clamp(18px, 3.5vw, 36px); padding-top: clamp(24px, 4vw, 42px); position: relative; overflow: hidden; border: 1px solid var(--line); }
+.sec > p { margin: 0; max-width: 68ch; line-height: 1.55; }
+.fh { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; align-items: center; }
+.fh .fb { width: 64px; height: 64px; grid-row: span 2; display: grid; place-items: center; border: 2.5px solid var(--stamp); color: var(--stamp); border-radius: 50%; font: 700 9.5px/1.2 var(--mono); letter-spacing: .04em; text-transform: uppercase; text-align: center; transform: rotate(-8deg); box-shadow: inset 0 0 0 3px var(--panel), inset 0 0 0 4.5px var(--stamp); }
+.fh .qn { font: 500 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); align-self: end; }
+.fh h2 { font: 700 clamp(21px, 3vw, 27px)/1.15 var(--disp); letter-spacing: -.03em; margin: 0; text-wrap: balance; align-self: start; }
+.ans { border-radius: 14px; background: color-mix(in srgb, var(--gold) 16%, var(--panel)); padding: 14px 18px 16px; max-width: 68ch; line-height: 1.5; display: grid; gap: 6px; justify-items: start; }
+.stamp { font: 600 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; background: var(--fg); color: var(--panel); padding: 3px 10px; border-radius: 99px; }
+.pen { display: flex; gap: 10px; align-items: center; font: 500 14.5px/1.4 var(--disp); color: var(--pen); margin: 0; max-width: 60ch; }
+.pen::before { content: ""; flex: none; width: 30px; height: 28px; background: url("../pug-head.png") center/contain no-repeat; }
+.card { border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: grid; gap: 8px; align-content: start; min-width: 0; background: var(--panel); }
+.card h3 { font: 600 16px var(--disp); letter-spacing: -.01em; margin: 0; }
+.note { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.5; max-width: 90ch; }
+.chart { position: relative; width: 100%; min-width: 0; }
+.chart svg { display: block; overflow: visible; max-width: 100%; height: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 12.5px; color: var(--muted); margin: 0; padding: 0; list-style: none; }
+.legend li { display: inline-flex; align-items: center; gap: 6px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.tick { font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+.rl { font-size: 12px; fill: var(--second); }
+.rl.hot { fill: var(--fg); font-weight: 600; }
+.vl { font-size: 12px; fill: var(--second); font-variant-numeric: tabular-nums; paint-order: stroke; stroke: var(--panel); stroke-width: 3px; stroke-linejoin: round; }
+.vl.hot { fill: var(--fg); font-weight: 600; }
+.axt { font-size: 12px; font-weight: 600; fill: var(--second); }
+.gl { stroke: var(--grid); stroke-width: 1; }
+.wh { stroke: var(--fg); stroke-width: 1.3; opacity: .75; }
+
+/* Hypothesis cards */
+.hyp-grid { display: grid; gap: 14px; }
+.hyp { border: 1.5px solid var(--line); border-radius: 16px; padding: 18px 18px 16px; display: grid; gap: 10px; background: color-mix(in srgb, var(--kraft-a) 40%, var(--panel)); position: relative; }
+.hyp-k { font: 500 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.hyp h3 { margin: 0; font: 700 clamp(18px, 2.4vw, 22px)/1.2 var(--disp); letter-spacing: -.02em; text-wrap: balance; }
+.hyp p { margin: 0; max-width: 70ch; line-height: 1.55; }
+.hyp .guess { font-style: italic; color: var(--second); }
+.reveal { justify-self: start; font: 600 13px var(--disp); background: var(--fg); color: var(--panel); border: 0; border-radius: 99px; padding: 9px 16px; cursor: pointer; min-height: 38px; }
+.reveal:hover, .reveal:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
+.verdict { display: none; gap: 10px; border-top: 1.5px dashed var(--axis); padding-top: 12px; position: relative; }
+.hyp.open .verdict { display: grid; }
+.hyp.open .reveal { display: none; }
+.vstamp { justify-self: start; font: 700 15px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--cran); border: 3px solid var(--cran); border-radius: 8px; padding: 4px 12px; transform: rotate(-4deg); background: color-mix(in srgb, var(--cran) 7%, transparent); }
+.vstamp.ok { color: var(--pine); border-color: var(--pine); background: color-mix(in srgb, var(--pine) 8%, transparent); }
+.vstamp.mid { color: var(--gold); border-color: var(--gold); background: color-mix(in srgb, var(--gold) 10%, transparent); }
+@media (prefers-reduced-motion: no-preference) { .hyp.open .vstamp { animation: slam .45s cubic-bezier(.2, 1.4, .4, 1) both; } }
+@keyframes slam { from { transform: rotate(-16deg) scale(2.3); opacity: 0; } to { transform: rotate(-4deg) scale(1); opacity: 1; } }
+.verdict ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; max-width: 70ch; line-height: 1.5; }
+.src { font: 11.5px var(--mono); color: var(--muted); }
+.src a { color: var(--fg); }
+
+/* Stress test */
+.ctrl { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; background: color-mix(in srgb, var(--kraft-a) 55%, var(--panel)); border-radius: 14px; padding: 12px 14px; }
+.ctrl label { font: 600 13px var(--disp); display: flex; gap: 10px; align-items: center; flex: 1 1 320px; }
+.ctrl input[type=range] { flex: 1 1 160px; accent-color: var(--rust); min-width: 120px; height: 28px; }
+.ctrl output { font: 700 15px var(--mono); min-width: 4.2ch; text-align: right; font-variant-numeric: tabular-nums; }
+.pre { display: flex; flex-wrap: wrap; gap: 8px; }
+.pre button, .play { font: 600 12.5px var(--disp); background: transparent; color: var(--fg); border: 1.5px solid var(--axis); border-radius: 99px; padding: 7px 13px; cursor: pointer; min-height: 34px; }
+.pre button:hover, .pre button:focus-visible, .play:hover, .play:focus-visible { border-color: var(--rust); outline: none; }
+.pre button[aria-pressed=true] { background: var(--fg); color: var(--panel); border-color: var(--fg); }
+.play { background: var(--rust); color: #fff; border-color: var(--rust); }
+.read { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 12px; }
+.read > div { border-top: 3px solid var(--rust); background: var(--panel); padding: 8px 2px 0; display: grid; gap: 2px; align-content: start; }
+.read .rv { font: 700 1.6rem/1.1 var(--disp); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.read .rn { font-size: 12.5px; color: var(--muted); }
+.fl-name { font-size: 12px; font-weight: 600; fill: var(--fg); }
+.fl-val { font-size: 11.5px; fill: var(--second); font-variant-numeric: tabular-nums; }
+
+.mini { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 16px; }
+.sec ul.cav { margin: 0; padding-left: 18px; display: grid; gap: 6px; max-width: 76ch; line-height: 1.5; }
+.tbl-wrap { overflow: auto; border: 1px solid var(--line); border-radius: 14px; }
+table { border-collapse: collapse; font-size: 13px; width: 100%; }
+th, td { padding: 10px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); line-height: 1.5; }
+th { font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+.ledger td:first-child { white-space: normal; min-width: 14rem; }
+.v { font: 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+.v.ok { color: var(--ok); } .v.warn { color: var(--warn); } .v.bad { color: var(--pen); }
+@media (max-width: 720px) { thead { display: none; } tr { display: block; padding: 10px 12px; border-bottom: 1px solid var(--line); } tr:last-child { border-bottom: 0; } td { display: block; padding: 2px 0; border: 0; } td:first-child { white-space: normal; } }
+.pug-note { display: flex; gap: 14px; align-items: center; background: var(--panel); border-radius: 22px; padding: 18px 22px; max-width: 46rem; border: 1px solid var(--line); }
+.pug-note img { width: 48px; height: auto; flex: none; }
+.pug-note p { margin: 0; font: 500 15px/1.5 var(--disp); color: var(--pen); }
+.pug-note b { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; display: block; color: var(--muted); font-weight: 500; }
+.foot { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+.sq { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) { .waffle:not(.on) .sq { opacity: 0; } .waffle.on .sq { transition: opacity .35s ease; transition-delay: calc(var(--i) * 9ms); } }
+</style>
+<link rel="stylesheet" href="../pug-header.css">
+<script defer src="../analytics.js"></script><script defer src="../feedback.js?v=2"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="credits pug-hdr">
+      <a class="home pug-home" href="https://leonagata24.github.io/dataviz/">The Pugs’ Data Viz Studies</a>
+      <span class="pug-ai">Pugs do use AI assistants for science.</span>
+      <span><b>MakeoverMonday 2026 · Week 46</b></span>
+      <span>Project: <a href="https://makeovermonday.vercel.app/dataset/mn-turkey-fact-sheet" target="_blank" rel="noopener">MakeoverMonday</a></span>
+      <span>Article: <a href="https://www.mda.state.mn.us/sites/default/files/inline-files/MN%20turkey%20fact%20sheet%20%282023%29.pdf" target="_blank" rel="noopener">Minnesota Turkey Fact Sheet (2023), MDA</a></span>
+      <span>Data: <a href="https://www.mda.state.mn.us/sites/default/files/inline-files/MN%20turkey%20fact%20sheet%20%282023%29.pdf" target="_blank" rel="noopener">Minnesota Turkey Fact Sheet (2023)</a></span>
+    </div>
+    <p class="disclaimer">Analysis, charts and text were produced with AI (Claude) from the MakeoverMonday data file. Every figure is computed from that file, was recomputed a second time with separate code, and was matched against the original fact sheet PDF. The reasons behind the numbers come from outside sources, which are labeled and graded in the evidence ledger. This page is not affiliated with the Minnesota Department of Agriculture.</p>
+  </div>
+
+  <header class="hero">
+    <div class="hero-t">
+      <p class="eyebrow">Customs inspection · 39 million birds · inspector height 30 cm</p>
+      <h1 class="title">¿Por qué México?</h1>
+      <p class="lede">Minnesota raises more turkeys than any other state: <b>39 million</b> in 2023. Its export ledger has one very loud line: <b>71%</b> of the export dollars go to Mexico. The pugs framed three guesses, then checked each one against the data and the evidence. The source is a one-page <a href="https://www.mda.state.mn.us/sites/default/files/inline-files/MN%20turkey%20fact%20sheet%20%282023%29.pdf" target="_blank" rel="noopener">state fact sheet</a>, so this page shows snapshots, not trends. The full <a href="#audit">data quality audit</a> is at the bottom.</p>
+      <dl class="form">
+        <dt>Shipper</dt><dd>State of Minnesota, No. 1 in U.S. turkeys</dd>
+        <dt>Consignee</dt><dd>Mexico, mostly</dd>
+        <dt>Declared value</dt><dd>$104 million a year in exports</dd>
+        <dt>Inspector</dt><dd>The pugs. Treats accepted as payment.</dd>
+      </dl>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 440 330" role="img" aria-label="Illustration of a cargo crate with a pug peeking out and an airmail stamp">
+        <g class="bob">
+          <rect x="70" y="140" width="300" height="160" rx="6" fill="#c8985a" stroke="#7b5628" stroke-width="3"/>
+          <rect x="70" y="140" width="300" height="26" fill="#b98748" stroke="#7b5628" stroke-width="3"/>
+          <path d="M70 200 H370 M70 250 H370" stroke="#7b5628" stroke-width="3" opacity=".55"/>
+          <path d="M70 140 L370 300 M370 140 L70 300" stroke="#7b5628" stroke-width="3" opacity=".25"/>
+          <rect x="230" y="190" width="112" height="62" rx="4" fill="#fffaf0" stroke="#1f3a5f" stroke-width="2.5" transform="rotate(-6 286 221)"/>
+          <text x="286" y="216" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="17" fill="#8f1d3a" transform="rotate(-6 286 221)">MN → MX</text>
+          <text x="286" y="238" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="500" font-size="10.5" fill="#1f3a5f" transform="rotate(-6 286 221)">71% OF VALUE</text>
+          <rect x="82" y="150" width="30" height="10" fill="#8f1d3a" opacity=".9"/><rect x="116" y="150" width="30" height="10" fill="#1f4e9c" opacity=".9"/>
+          <image href="../pug-head.png" x="108" y="48" width="118" height="118" preserveAspectRatio="xMidYMid meet"/>
+        </g>
+        <g transform="translate(330 70)">
+          <g class="bob"><path d="M-46,10 A52,52 0 0 1 46,10" fill="none" stroke="#b5482a" stroke-width="10" stroke-linecap="round"/><path d="M-36,16 A42,42 0 0 1 36,16" fill="none" stroke="#d99a1e" stroke-width="9" stroke-linecap="round"/><path d="M-26,22 A32,32 0 0 1 26,22" fill="none" stroke="#2f6b4c" stroke-width="8" stroke-linecap="round"/>
+          <ellipse cx="0" cy="34" rx="26" ry="22" fill="#8a5a36"/><circle cx="22" cy="14" r="11" fill="#8a5a36"/><circle cx="25" cy="12" r="2.2" fill="#fff"/><circle cx="25.6" cy="12" r="1" fill="#1b1410"/><path d="M32,15 L42,19 L32,22Z" fill="#d99a1e"/><path d="M30,24 q4,9 -1,13 q-3,-6 1,-13Z" fill="#c0392b"/><path d="M-6,55 v10 M8,55 v10" stroke="#d99a1e" stroke-width="3" stroke-linecap="round"/></g>
+        </g>
+      </svg>
+    </div>
+  </header>
+
+  <main>
+  <div class="tiles">
+    <div class="tile" style="--tc:var(--rust)"><span class="tile-l">Turkeys raised in Minnesota, 2023</span><span class="tile-v">39 million</span><span class="tile-s">up from 37 million in 2022: +5.4%</span></div>
+    <div class="tile" style="--tc:var(--gold)"><span class="tile-l">Share of U.S. turkeys</span><span class="tile-v">18%</span><span class="tile-s">No. 1 state, ahead of North Carolina and Arkansas at 13% each</span></div>
+    <div class="tile" style="--tc:var(--pine)"><span class="tile-l">Turkey exports, per year</span><span class="tile-v">$104M</span><span class="tile-s">about 13% of Minnesota's production is exported</span></div>
+    <div class="tile" style="--tc:var(--cran)"><span class="tile-l">Of those export dollars, to Mexico</span><span class="tile-v">71%</span><span class="tile-s">estimated at $73.8 million, the next market is 4%</span></div>
+    <div class="tile" style="--tc:var(--navy)"><span class="tile-l">Turkey farms and cash receipts</span><span class="tile-v">600</span><span class="tile-s">farms, with more than $1 billion a year in cash receipts</span></div>
+  </div>
+
+  <section class="sec">
+    <div class="fh"><span class="fb">Exhibit<br>A</span><span class="qn">Is the barn all turkey?</span><h2>What fraction of Minnesota's poultry is turkey?</h2></div>
+    <div class="ans"><span class="stamp">Mostly</span><span>Turkeys are <b>61%</b> of Minnesota's poultry production, eggs are <b>26%</b>, and broiler chickens are <b>13%</b>. The sheet does not say whether that is by birds, weight or value, so read it as a rough proportion.</span></div>
+    <div class="card">
+      <h3>Minnesota poultry production, by sector</h3>
+      <div class="chart waffle" id="c-waffle"></div>
+      <p class="note">Each square is 1% of Minnesota's poultry production. The measure behind the percentages (birds, pounds or dollars) is not stated in the source.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="fh"><span class="fb">Exhibit<br>B</span><span class="qn">Is Minnesota just showing off?</span><h2>Minnesota leads, by a nose and a half</h2></div>
+    <div class="ans"><span class="stamp">Yes, clearly</span><span>Minnesota raises <b>18%</b> of U.S. turkeys. North Carolina and Arkansas follow at <b>13%</b> each. The shares are whole percents, so the real lead over second place is somewhere between <b>4 and 6 points</b>. The 39 million birds at an 18% share imply about <b>217 million</b> U.S. turkeys, anywhere from 211 million to 223 million after rounding. That is a consistency check, not a reported figure.</span></div>
+    <p class="pen">The pugs would like it noted that 39 million turkeys is a lot of drumsticks to guard.</p>
+    <div class="card">
+      <h3>Share of U.S. turkey production, by state</h3>
+      <div class="chart" id="c-states"></div>
+      <p class="note">By number of turkeys. Whiskers show the ±0.5-point rounding range. Ties are rounding ties: the source ranks North Carolina and Arkansas equal second, and California and Pennsylvania equal eighth. The shares add up to 101% in the source, which says so itself. “All other” (17%) combines every remaining state.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="fh"><span class="fb">Exhibit<br>C</span><span class="qn">Who gets the drumsticks?</span><h2>One customer is doing most of the shopping</h2></div>
+    <div class="ans"><span class="stamp">Lopsided</span><span>Mexico takes <b>71%</b> of Minnesota's turkey export value, about <b>$73.8 million</b> of $104 million. Canada, the runner-up country, takes <b>4%</b>. Mexico's share is roughly <b>18 times</b> Canada's (16 to 20 times after rounding). Five other markets sit at 2% each. The largest bucket after Mexico, at 15%, is “all other”: many countries combined.</span></div>
+    <div class="card">
+      <h3>Minnesota turkey exports by destination, share of export value</h3>
+      <div class="chart" id="c-markets"></div>
+      <p class="note">Share of the $104 million in annual exports. Dollar values are estimates, share times $104 million, not reported figures; the source sheet computes them the same way. Whiskers show the ±0.5-point rounding range, about ±$0.5 million.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="why">
+    <div class="fh"><span class="fb">Exhibit<br>D</span><span class="qn">The pugs make three guesses</span><h2>¿Por qué México?</h2></div>
+    <p>The fact sheet says <i>who</i> buys Minnesota's turkey but not <i>why</i>. The pugs framed three funny hypotheses and then checked each against sources. Press a button to reveal each verdict. Everything in the verdicts comes from outside the dataset, so each claim is linked to its source and graded in the <a href="#ledger">evidence ledger</a> below.</p>
+    <div class="hyp-grid">
+      <article class="hyp" id="h1">
+        <span class="hyp-k">Hypothesis 1 of 3</span>
+        <h3>“The turkeys are going home.”</h3>
+        <p class="guess">Turkeys are native to Mexico (and the United States), where they are called <i>guajolotes</i>. The pugs figure the birds are simply returning to their roots, like a very large, very feathered family reunion.</p>
+        <button class="reveal" type="button" aria-expanded="false" aria-controls="v1">Reveal the verdict</button>
+        <div class="verdict" id="v1">
+          <span class="vstamp mid">Funny, but backwards</span>
+          <p>Mexico buys its turkey instead of raising it. Per-person turkey consumption there is only about <b>1.25 kg</b> a year, roughly <b>90%</b> of it eaten around Christmas, and only about <b>6%</b> of the birds on Mexican tables are raised in Mexico (<a href="https://www.tridge.com/news/only-6-of-turkeys-consumed-at-christmas-are--cqfiyg" target="_blank" rel="noopener">Tridge, relaying a UNAM statement reported by Milenio, Dec. 2024</a>). A separate report calls turkey farming in Mexico <b>nearly nonexistent</b> and says more than <b>90%</b> of the turkey Mexicans eat comes from the United States (<a href="https://thefern.org/ag_insider/made-u-s-mexico-turkey-trade/amp" target="_blank" rel="noopener">FERN</a>, undated). A native bird, mostly imported.</p>
+        </div>
+      </article>
+      <article class="hyp" id="h2">
+        <span class="hyp-k">Hypothesis 2 of 3</span>
+        <h3>“Mexico is buying millions of whole holiday birds.”</h3>
+        <p class="guess">The pugs picture a giant Christmas-dinner pipeline: 39 million turkeys in, roast dinners out, and a lot of gravy.</p>
+        <button class="reveal" type="button" aria-expanded="false" aria-controls="v2">Reveal the verdict</button>
+        <div class="verdict" id="v2">
+          <span class="vstamp">Busted</span>
+          <p>The big business is not the roast. In a USDA Economic Research Service briefing, fewer than <b>1%</b> of U.S. turkey exports were whole birds. Most shipments were lower-valued parts or ground and mechanically deboned meat, which importers mix with other meats in sausage (<a href="https://webarchive.library.unt.edu/eot2008/20081204184837/http://www.ers.usda.gov/Briefing/Poultry/Trade.htm" target="_blank" rel="noopener">USDA ERS briefing, web-archived Dec. 2008</a>). A USDA report from November 2007 says Mexico's processing industry imports turkey cuts and mechanically separated turkey for its cold cuts industry, because domestic production cannot meet demand (<a href="https://thepoultrysite.com/news/2007/11/international-egg-and-poultry-review-2" target="_blank" rel="noopener">republished by The Poultry Site</a>). Pug summary, with the dating caveat below: Mexico's turkey imports have mainly fed its sausage and cold-cut makers, not a market for roast birds.</p>
+          <p class="src">Both sources are old (2007 and 2008), and the ERS figure covers all U.S. exports, not only Mexico. A USDA attaché report on Mexico, whose page shows no date, says Mexico will continue sourcing mechanically deboned turkey from the United States (<a href="https://www.fas.usda.gov/data/mexico-poultry-and-products-annual-1" target="_blank" rel="noopener">USDA FAS GAIN</a>).</p>
+        </div>
+      </article>
+      <article class="hyp" id="h3">
+        <span class="hyp-k">Hypothesis 3 of 3</span>
+        <h3>“It is just the neighbor with the open gate.”</h3>
+        <p class="guess">Mexico is close, the paperwork is easy, and nobody has to carry anything across an ocean. The pugs call this the shortest walk to a customer.</p>
+        <button class="reveal" type="button" aria-expanded="false" aria-controls="v3">Reveal the verdict</button>
+        <div class="verdict" id="v3">
+          <span class="vstamp ok">Mostly confirmed</span>
+          <ul>
+            <li><b>The gate is open by treaty, for now.</b> NAFTA moved Mexico from strictly administered imports to tariff- and quota-free trade with the United States and Canada, and the USMCA, in force since July 1, 2020, largely continues those market access provisions (<a href="https://primary.ers.usda.gov/amber-waves/2024/august/meat-consumption-in-mexico-led-by-poultry-will-continue-rising-over-next-decade-usda-projections-show" target="_blank" rel="noopener">USDA ERS, 2024</a>, on agricultural trade in general; it does not mention turkey). The National Turkey Federation calls the USMCA critical to maintaining U.S. turkey access and puts Mexico at 79% of U.S. turkey exports, citing a USDA outlook (<a href="https://www.eatturkey.org/?p=353" target="_blank" rel="noopener">NTF</a>, year of the figure not stated). The treaty is under review: on July 1, 2026 the United States did not agree to renew it in its current form (<a href="https://ustr.gov/about/policy-offices/press-office/press-releases/2026/july/ambassador-greer-issues-statement-usmca-joint-review" target="_blank" rel="noopener">USTR</a>), which starts annual reviews, while the agreement stays in force until July 1, 2036 (<a href="https://www.iisd.org/itn/?p=17443" target="_blank" rel="noopener">IISD</a>).</li>
+            <li><b>Few others can fill the order.</b> The president of the U.S. poultry export council has said the United States is the only country producing enough mechanically separated poultry to meet Mexican processors' demand (<a href="https://poultryworld.net/poultry/mexico-and-us-celebrate-poultry-trade-success" target="_blank" rel="noopener">Poultry World</a>, date not confirmed). That is an industry voice with a stake in the answer.</li>
+            <li><b>Rivals exist, and they are gaining in cuts.</b> Chile, the only competing supplier then, held about 6% of Mexico's market in 2015 (<a href="https://thefern.org/ag_insider/made-u-s-mexico-turkey-trade/amp" target="_blank" rel="noopener">FERN</a>, undated). Mexican producer-association data reported in January 2023 show Brazil's share of Mexico's turkey meat imports, excluding mechanically deboned meat, rising from 0.2% in 2021 to 8.2% in 2022 (through October), and Chile's from 10.5% to 15.5% (<a href="https://www.wattagnet.com/blogs/blog/15537126/how-brazil-is-taking-over-mexicos-turkey-meat-imports" target="_blank" rel="noopener">WATTAgNet</a>). That suggests the neighbor's edge is strongest in mechanically deboned meat and weaker in cuts.</li>
+          </ul>
+          <p>Bonus twist: this is a stable niche, not a boom. Apparent turkey consumption in Mexico fell 21.5% between 2014 and 2023, to about 136,000 metric tons, and the advisory group GCMA attributes it to changing consumer preferences (<a href="https://www.thepoultrysite.com/news/2023/12/mexican-turkey-consumption-falls-21-5" target="_blank" rel="noopener">The Poultry Site</a>). Mexico has also been the leading buyer for years: a July 2018 USDA ERS note says more than half of U.S. turkey exports went there for most of the preceding decade, peaking at 74% in July 2014 (<a href="https://www.ers.usda.gov/data-products/charts-of-note/89638" target="_blank" rel="noopener">USDA ERS</a>).</p>
+        </div>
+      </article>
+    </div>
+    <p class="pen">Verdict from the pugs: not homesick, not a holiday roast, and not an accident. A neighbor with a trade agreement and a taste for sausage.</p>
+    <div class="card" id="ledger">
+      <h3>Evidence ledger: where each “why” comes from</h3>
+      <div class="tbl-wrap"><table class="ledger">
+        <thead><tr><th>Claim</th><th>Source type</th><th>How firm</th></tr></thead>
+        <tbody>
+          <tr><td>Mexico raises about 6% of its Christmas turkeys; 1.25 kg per person</td><td>UNAM statement, reported by Milenio, relayed by Tridge (Dec. 2024)</td><td><span class="v warn">Moderate</span> second-hand</td></tr>
+          <tr><td>Turkey farming in Mexico is nearly nonexistent; over 90% of turkey eaten comes from the U.S.</td><td>FERN news report (undated)</td><td><span class="v warn">Moderate</span> undated</td></tr>
+          <tr><td>Under 1% of U.S. turkey exports are whole birds</td><td>USDA ERS briefing, web-archived Dec. 2008 (all U.S. exports)</td><td><span class="v warn">Official, dated</span></td></tr>
+          <tr><td>Mexican processors import cuts and mechanically separated meat</td><td>USDA AMS report (Nov. 2007), republished by The Poultry Site; undated USDA attaché report on mechanically deboned turkey</td><td><span class="v warn">Consistent, partly dated</span></td></tr>
+          <tr><td>Tariff- and quota-free agricultural trade under NAFTA, largely continued by the USMCA</td><td>USDA ERS (2024), general agriculture, not turkey-specific</td><td><span class="v ok">Firm</span> for ag in general</td></tr>
+          <tr><td>USMCA not renewed in current form on July 1, 2026; in force to 2036</td><td>USTR statement; IISD summary</td><td><span class="v ok">Firm</span></td></tr>
+          <tr><td>U.S. is the only supplier with enough mechanically separated poultry</td><td>Industry association president, quoted by Poultry World (date not confirmed)</td><td><span class="v warn">Interested party</span></td></tr>
+          <tr><td>Chile held about 6% in 2015; Brazil rose from 0.2% to 8.2% of cut imports (2021 to 2022)</td><td>FERN (undated); WATTAgNet blog, Jan. 2023, citing Mexican producers' data</td><td><span class="v warn">Moderate</span></td></tr>
+          <tr><td>Mexican turkey consumption fell 21.5% from 2014 to 2023</td><td>Market advisory group (GCMA), via The Poultry Site</td><td><span class="v warn">Moderate</span></td></tr>
+          <tr><td>More than half of U.S. turkey exports go to Mexico (74% peak, July 2014)</td><td>USDA ERS note, July 2018</td><td><span class="v ok">Firm</span></td></tr>
+          <tr><td>Mexico is 79% of U.S. turkey exports</td><td>National Turkey Federation page, citing a USDA outlook; year not stated</td><td><span class="v warn">Interested party</span></td></tr>
+        </tbody></table></div>
+      <p class="note">Not used as proof: a 2024 market-research aggregator puts Mexico at 76% of U.S. turkey export volume. It is a different base (national, volume) from the fact sheet's 71% (Minnesota, value), so the two numbers are not expected to match.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="stress">
+    <div class="fh"><span class="fb">Stress<br>test</span><span class="qn">What if the gate closes?</span><h2>The Mexico stress test</h2></div>
+    <div class="ans"><span class="stamp">Arithmetic, not a forecast</span><span>If Mexico bought nothing, the other markets would need to buy about <b>3.4 to 3.5 times</b> as much (3.45 at the stated shares) just to keep Minnesota's export total where it is. Drag the slider to see the stream shrink. Stream widths are in proportion to dollars, and more dots flow where more money does.</span></div>
+    <div class="card">
+      <h3>Where $104 million of Minnesota turkey exports flows</h3>
+      <div class="ctrl">
+        <label for="sl">Mexico buys <input id="sl" type="range" min="0" max="100" step="5" value="0" aria-describedby="slnote"><output id="slo" for="sl">0%</output> less</label>
+        <div class="pre" role="group" aria-label="Presets">
+          <button type="button" data-v="0" aria-pressed="true">Today</button><button type="button" data-v="25" aria-pressed="false">−25%</button><button type="button" data-v="50" aria-pressed="false">−50%</button><button type="button" data-v="100" aria-pressed="false">Mexico gone</button>
+        </div>
+        <button type="button" class="play" id="play">Play the shock</button>
+      </div>
+      <div class="chart" id="c-flow" role="img" aria-label="Flow diagram of Minnesota turkey export value to eight destinations. Mexico is by far the widest stream. The slider shrinks Mexico's stream."></div>
+      <div class="read" aria-live="polite">
+        <div><span class="rv" id="r1">$73.8M</span><span class="rn">Mexico's purchases, estimated</span></div>
+        <div><span class="rv" id="r2">$104M</span><span class="rn" id="r2n">Minnesota turkey exports</span></div>
+        <div><span class="rv" id="r3">+0%</span><span class="rn">growth the other markets would need to fully replace the loss</span></div>
+      </div>
+      <p class="note" id="slnote">The other markets together are about $30.2 million today (29% of the total). Replacing Mexico entirely would take about +245% growth from them, with a rounding range of +239% to +251%. Dollar values are share times $104 million, so every figure here inherits the ±0.5-point rounding of the shares. The fact sheet gives no price, volume or time dimension, so this says nothing about how likely any shift is, or how quickly other markets could grow. Mexican import demand, tariffs, trade-agreement reviews and avian flu are outside this dataset.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="fh"><span class="fb">Fine<br>print</span><span class="qn">Before you quote any of this</span><h2>What this can and can't tell you</h2></div>
+    <ul class="cav">
+      <li><b>It is one fact sheet, not a time series.</b> Only 2022 and 2023 production are given. The sheet notes that exports fluctuated over the past decade because of avian flu but gives no numbers, so nothing here describes a trend in exports.</li>
+      <li><b>The “why” is outside evidence.</b> The three verdicts rest on linked sources of uneven age and independence, graded in the ledger. They explain the pattern; they do not prove cause from this dataset.</li>
+      <li><b>Different measures, different bases.</b> 13% of production exported (the measure is not stated), $104 million in export value, and “more than $1 billion” in cash receipts describe different things at different stages. The pugs did not divide one by another.</li>
+      <li><b>Shares are rounded to whole percents.</b> A 2% market is anywhere from 1.5% to 2.5%. Every ranking among the 2% markets and between ties is noise.</li>
+      <li><b>Estimated dollars.</b> Dollar values by country are share times $104 million, not reported trade statistics.</li>
+      <li><b>The stress test is a what-if.</b> It scales one stream and holds the rest fixed; it does not model prices, quantities, substitutes or time.</li>
+    </ul>
+  </section>
+
+  <section class="sec" id="audit">
+    <div class="fh"><span class="fb">Audit<br>✓</span><span class="qn">Data quality audit · 3 sheets, one page of facts</span><h2>Does this data smell right?</h2></div>
+    <div class="ans"><span class="stamp">Edible, with care</span><span>The sheet is tidy and its arithmetic checks out. Its limits are scope and precision: a single fact sheet, whole-percent shares, a few approximate values, and no time dimension for exports.</span></div>
+    <p class="pen">Smells like a very well-organized brochure. A good brochure. Still a brochure.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Check</th><th>Result</th><th>What was found</th><th>What was done</th></tr></thead>
+      <tbody>
+      <tr><td>Match to the PDF</td><td><span class="v ok">Matches</span></td><td>The extract was compared with the original MDA fact sheet: production, shares, farms, receipts, exports and every state and market percentage match. The PDF also holds U.S.-level figures (production, prices, per-person consumption) that are not in the dataset.</td><td>Only the dataset figures were used. U.S.-level figures were left out.</td></tr>
+      <tr><td>Structure</td><td><span class="v ok">Clean</span></td><td>Three sheets with title rows above clean headers: key metrics, top producing states, and export markets. No hidden sheets and no merged cells. Totals are Excel formulas.</td><td>Read all sheets; recomputed every formula separately.</td></tr>
+      <tr><td>Internal consistency</td><td><span class="v ok">Good</span></td><td>39 million vs 37 million birds gives +5.4%, as stated. Poultry shares sum to 100% (61 + 26 + 13). Export market shares sum to 100%. State shares sum to 101%, which the sheet itself attributes to rounding. The original PDF also says the top ten states account for 83%, while its ten listed shares add to 84%: the same rounding signature.</td><td>Left as recorded; the 101% is shown and explained instead of being rescaled.</td></tr>
+      <tr><td>Cross-check</td><td><span class="v ok">Plausible</span></td><td>39 million birds at an 18% share implies about 217 million U.S. turkeys (211 to 223 million with rounding).</td><td>Reported as a consistency check only, not as a U.S. total.</td></tr>
+      <tr><td>Precision</td><td><span class="v warn">Coarse</span></td><td>All shares are whole percents. A 2% market could be 1.5% to 2.5%, which is 1.56 to 2.60 million dollars. Ties in the rank column (2nd, 3rd and 8th) are rounding ties.</td><td>Whiskers show ±0.5 points on both bar charts; no ranking among tied rows.</td></tr>
+      <tr><td>Derived values</td><td><span class="v warn">Estimated</span></td><td>Export value by country is not reported. The sheet computes it as share times $104 million.</td><td>Labeled “estimated” everywhere; rounding ranges carried through the stress test.</td></tr>
+      <tr><td>Approximate inputs</td><td><span class="v warn">Floors and tildes</span></td><td>“More than $1 billion” in cash receipts is a lower bound. “About 13%” exported and “600 farms” are rounded.</td><td>Never used in a calculation; shown as stated.</td></tr>
+      <tr><td>Units and bases</td><td><span class="v warn">Unclear</span></td><td>The poultry mix does not say whether it is by birds, weight or value. The 13% exported share does not say whether it is by birds, weight or value, and $104 million is value.</td><td>Stated in the chart notes; the pugs did not mix these bases in one calculation.</td></tr>
+      <tr><td>Time coverage</td><td><span class="v bad">Thin</span></td><td>Production for 2022 and 2023 only. The export figure, state shares and market shares are one snapshot, with no year labels on the export sheets. The sheet notes only that exports fluctuated over the decade due to avian flu.</td><td>No trend claims. Treated all snapshots as describing the fact sheet's year (2023).</td></tr>
+      <tr><td>Provenance</td><td><span class="v warn">Secondary</span></td><td>A state agency fact sheet prepared in 2023. The PDF cites USDA, MDA, the Minnesota Turkey Growers Association and FAO, but does not say which source feeds which chart, and “All other” hides many states and countries.</td><td>No state or country comparisons beyond the listed rows. Original PDF linked in the header.</td></tr>
+      <tr><td>Outside evidence</td><td><span class="v warn">Mixed</span></td><td>The three “why” verdicts use external sources from 2007 to 2026, some undated, from industry groups, or secondary summaries. Each was opened and checked against the wording used here.</td><td>Graded in the evidence ledger; no outside number is mixed into a chart.</td></tr>
+      <tr><td>Second opinion</td><td><span class="v ok" id="so">Matches</span></td><td>Every figure on this page was recomputed from the raw file with separately written code, including the rounding ranges and the stress-test arithmetic, and checked against the PDF.</td><td>Both computations agree on every number shown.</td></tr>
+      </tbody></table></div>
+  </section>
+
+  <div class="pug-note"><img src="../pug-head.png" alt=""><p><b>Closing entry</b>Inspected 39 million turkeys by smell. Going by the sources, much of the cargo headed south is sausage and sandwich material. The pugs support sandwiches and request a representative sample.</p></div>
+
+  <footer class="foot">
+    <span>Source: <a href="https://www.mda.state.mn.us/sites/default/files/inline-files/MN%20turkey%20fact%20sheet%20%282023%29.pdf" target="_blank" rel="noopener">Minnesota Turkey Fact Sheet (2023)</a>, Minnesota Department of Agriculture, for <a href="https://makeovermonday.vercel.app/dataset/mn-turkey-fact-sheet" target="_blank" rel="noopener">MakeoverMonday</a> 2026 Week 46.</span>
+    <span>Pug art by the daughter of the human we own.</span>
+  </footer>
+  </main>
+</div>
+<script>
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const txt=(p,s,a)=>{const e=el("text",a,p);e.textContent=s;return e};
+const RM=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const TOTAL=104;
+const STATES=[{n:"Minnesota",s:18,f:1,r:"1"},{n:"North Carolina",s:13,r:"T-2"},{n:"Arkansas",s:13,r:"T-2"},{n:"Indiana",s:9,r:"4"},{n:"Missouri",s:8,r:"5"},{n:"Virginia",s:7,r:"6"},{n:"Iowa",s:5,r:"7"},{n:"Pennsylvania",s:4,r:"T-8"},{n:"California",s:4,r:"T-8"},{n:"Ohio",s:3,r:"10"},{n:"All other",s:17,o:1}];
+const MK=[{n:"Mexico",s:71,f:1},{n:"Canada",s:4},{n:"Panama",s:2},{n:"Guatemala",s:2},{n:"Costa Rica",s:2},{n:"Dominican Republic",short:"Dominican Rep.",s:2},{n:"China",s:2},{n:"All other",s:15,o:1}];
+const fm=v=>"$"+v.toFixed(1)+"M";
+
+/* Waffle: 100 squares, 1 square = 1% */
+function waffle(){
+  const host=document.getElementById("c-waffle"); host.innerHTML="";
+  const parts=[["Turkeys",61,"var(--rust)"],["Eggs",26,"var(--gold)"],["Broilers",13,"var(--navy)"]];
+  const cell=22,gap=3,size=10*cell+9*gap;
+  const wrap=document.createElement("div"); wrap.style.cssText="display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center";
+  const svg=el("svg",{width:size,height:size,viewBox:`0 0 ${size} ${size}`,role:"img","aria-label":"Waffle chart: 61 squares turkeys, 26 eggs, 13 broilers"});
+  let i=0;
+  parts.forEach(([n,v,c])=>{for(let k=0;k<v;k++,i++){const x=(i%10)*(cell+gap),y=Math.floor(i/10)*(cell+gap);el("rect",{x,y,width:cell,height:cell,rx:3,fill:c,class:"sq",style:"--i:"+i},svg)}});
+  wrap.appendChild(svg);
+  const lg=document.createElement("ul"); lg.className="legend"; lg.style.cssText="flex-direction:column;gap:8px;font-size:14px;color:var(--fg)";
+  parts.forEach(([n,v,c])=>{const li=document.createElement("li");li.innerHTML=`<span class="sw" style="background:${c};width:14px;height:14px"></span><b>${n}</b> ${v}% (${v} squares)`;lg.appendChild(li)});
+  wrap.appendChild(lg); host.appendChild(wrap);
+  if(RM||!("IntersectionObserver" in window)) host.classList.add("on");
+  else new IntersectionObserver((es,ob)=>{if(es[0].isIntersecting){host.classList.add("on");ob.disconnect()}},{threshold:.3}).observe(host);
+}
+
+/* Horizontal bars with rounding whiskers */
+function hbar(host,rows,o){
+  host.innerHTML="";
+  const W=Math.max(260,host.clientWidth||640),narrow=W<520;
+  const L=narrow?108:172,R=narrow?(o.Rn||o.R):o.R,top=6,bh=narrow?22:24,gap=narrow?14:11,axisH=narrow?74:46;
+  const H=top+rows.length*(bh+gap)+axisH,pw=W-L-R,xs=v=>L+v/o.max*pw;
+  const svg=el("svg",{width:W,height:H,viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":o.aria},host);
+  for(let t=0;t<=o.max;t+=(narrow&&o.stepn)||o.step){el("line",{x1:xs(t),x2:xs(t),y1:top,y2:H-axisH+2,class:"gl"},svg);txt(svg,t+"%",{x:xs(t),y:H-axisH+18,"text-anchor":"middle",class:"tick"})}
+  el("line",{x1:L,x2:L,y1:top,y2:H-axisH+2,stroke:"var(--axis)"},svg);
+  rows.forEach((r,i)=>{
+    const y=top+i*(bh+gap)+gap/2,cy=y+bh/2;
+    txt(svg,(narrow&&r.short)||r.n,{x:L-8,y:cy+4,"text-anchor":"end",class:"rl"+(r.f?" hot":"")});
+    el("rect",{x:L,y,width:Math.max(1,xs(r.s)-L),height:bh,rx:3,fill:r.f?"var(--rust)":(r.o?"var(--neutral)":"var(--neutral-ink)"),opacity:r.o?.8:1},svg);
+    const lo=r.s-.5,hi=r.s+.5;
+    el("line",{x1:xs(lo),x2:xs(hi),y1:cy,y2:cy,class:"wh"},svg);el("line",{x1:xs(lo),x2:xs(lo),y1:cy-5,y2:cy+5,class:"wh"},svg);el("line",{x1:xs(hi),x2:xs(hi),y1:cy-5,y2:cy+5,class:"wh"},svg);
+    if(narrow&&o.label2){txt(svg,o.label(r,1),{x:xs(hi)+7,y:cy-1,class:"vl"+(r.f?" hot":"")});txt(svg,o.label2(r),{x:xs(hi)+7,y:cy+12,class:"vl",style:"font-size:11px"})}else txt(svg,o.label(r),{x:xs(hi)+8,y:cy+4,class:"vl"+(r.f?" hot":"")});
+  });
+  const lines=narrow&&o.xtn?o.xtn:[o.xt],ty=H-(lines.length>1?30:12);
+  lines.forEach((t,k)=>txt(svg,t,{x:L+pw/2,y:ty+k*16,"text-anchor":"middle",class:"axt"}));
+  const yt=txt(svg,o.yt,{x:0,y:0,"text-anchor":"middle",class:"axt",transform:`translate(12 ${top+(H-axisH-top)/2}) rotate(-90)`});
+}
+function charts(){
+  waffle();
+  hbar(document.getElementById("c-states"),STATES,{max:20,step:5,R:56,Rn:44,aria:"Bar chart of each state's share of U.S. turkey production, Minnesota first at 18 percent",label:r=>r.s+"%",xt:"Share of U.S. turkeys raised, by number of birds (%)",xtn:["Share of U.S. turkeys raised,","by number of birds (%)"],yt:"State"});
+  hbar(document.getElementById("c-markets"),MK,{max:80,step:10,stepn:20,R:124,Rn:58,aria:"Bar chart of each destination's share of Minnesota turkey export value, Mexico first at 71 percent",label:(r,n)=>n?r.s+"%":r.s+"% · "+fm(r.s*TOTAL/100),label2:r=>fm(r.s*TOTAL/100),xt:"Share of Minnesota turkey export value (%)",xtn:["Share of Minnesota turkey","export value (%)"],yt:"Destination"});
+}
+
+/* Stress test: Sankey-style flow with particles */
+const FL={x:0,run:false,parts:[],acc:[],last:0,svg:null,paths:[],ghost:[],lab:[],geo:null,T:4.2};
+const RATE=0.3; // dots per second per $M
+function buildFlow(){
+  const host=document.getElementById("c-flow"); host.innerHTML="";
+  const W=Math.max(260,host.clientWidth||700),narrow=W<560,H=narrow?520:470,k=narrow?.9:1.1;
+  const labW=narrow?110:196,x0=18,bw=26,x1=W-labW-14,xm=(x0+bw+x1)/2;
+  const widths=MK.map(m=>m.s*k),totalW=widths.reduce((a,b)=>a+b,0),top=(H-totalW)/2+6;
+  const svg=el("svg",{width:W,height:H,viewBox:`0 0 ${W} ${H}`},host);
+  const ends=[64,160,210,248,286,324,362,418].map(v=>v*H/470);
+  txt(svg,"Minnesota turkey exports, $104M a year",{x:x0,y:16,class:"axt"});
+  el("rect",{x:x0,y:top,width:bw,height:totalW,rx:4,fill:"var(--stamp)",opacity:.9},svg);
+  FL.paths=[];FL.ghost=[];FL.lab=[];FL.geo={W,H,top,k};
+  let cum=0;
+  MK.forEach((m,i)=>{
+    const sw=widths[i],ys=top+cum+sw/2,ye=ends[i];cum+=sw;
+    const d=`M${x0+bw},${ys} C${xm},${ys} ${xm},${ye} ${x1},${ye}`;
+    const col=m.f?"var(--rust)":"var(--gold)";
+    FL.ghost.push(el("path",{d,fill:"none",stroke:col,"stroke-width":sw,opacity:.13},svg));
+    const p=el("path",{d,fill:"none",stroke:col,"stroke-width":sw,opacity:.5},svg);
+    FL.paths.push(p);
+    el("rect",{x:x1,y:ye-Math.max(sw,2)/2,width:4,height:Math.max(sw,2),fill:col},svg);
+    const nm=txt(svg,(narrow&&m.short)||m.n,{x:x1+12,y:ye-2,class:"fl-name"});
+    const vl=txt(svg,m.s+"% · "+fm(m.s*TOTAL/100),{x:x1+12,y:ye+13,class:"fl-val"});
+    FL.lab.push(vl);
+  });
+  FL.dots=el("g",{},svg);FL.svg=svg;FL.parts=[];FL.acc=MK.map(()=>0);
+  FL.len=FL.paths.map(p=>p.getTotalLength());
+  applyFlow();
+  if(!RM&&"IntersectionObserver" in window){
+    FL.paths.forEach((p,i)=>{p.style.strokeDasharray=FL.len[i];p.style.strokeDashoffset=FL.len[i]});
+    new IntersectionObserver((es,ob)=>{if(es[0].isIntersecting){FL.paths.forEach(p=>{p.style.transition="stroke-dashoffset 1.6s ease";p.style.strokeDashoffset=0});setTimeout(()=>FL.paths.forEach(p=>{p.style.strokeDasharray="none";p.style.transition="none"}),1700);ob.disconnect()}},{threshold:.25}).observe(host);
+  }
+}
+function applyFlow(){
+  const x=FL.x/100,mx=MK[0].s*TOTAL/100;
+  const w=MK[0].s*FL.geo.k*(1-x);
+  FL.paths[0].setAttribute("stroke-width",Math.max(0,w));
+  FL.lab[0].textContent=x===0?MK[0].s+"% · "+fm(mx):fm(mx*(1-x))+" (was "+fm(mx)+")";
+  const lost=mx*x,others=TOTAL*(1-MK[0].s/100);
+  document.getElementById("r1").textContent=fm(mx*(1-x));
+  document.getElementById("r2").textContent=fm(TOTAL-lost);
+  document.getElementById("r2n").textContent=x===0?"Minnesota turkey exports":"Minnesota turkey exports ("+(-Math.round(lost/TOTAL*1000)/10)+"%)";
+  document.getElementById("r3").textContent="+"+Math.round(lost/others*100)+"%";
+  document.getElementById("slo").textContent=FL.x+"%";
+  document.getElementById("sl").value=FL.x;
+  document.querySelectorAll(".pre button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.v===FL.x)));
+}
+function setX(v){FL.x=v;applyFlow()}
+function tick(t){
+  if(!FL.run){FL.last=0;return}
+  if(!FL.last)FL.last=t;const dt=Math.min(.1,(t-FL.last)/1000);FL.last=t;
+  MK.forEach((m,i)=>{
+    const rate=RATE*m.s*TOTAL/100*(i===0?(1-FL.x/100):1);
+    FL.acc[i]+=rate*dt;
+    while(FL.acc[i]>=1){FL.acc[i]-=1;if(FL.parts.length<140){const c=el("circle",{r:i===0?2.8:2.2,fill:"var(--dot)",opacity:0},FL.dots);FL.parts.push({i,t:Math.random()*.02,c,o:(Math.random()-.5)*.8})}}
+  });
+  for(let n=FL.parts.length-1;n>=0;n--){
+    const p=FL.parts[n];p.t+=dt/FL.T;
+    if(p.t>=1){p.c.remove();FL.parts.splice(n,1);continue}
+    const L=FL.len[p.i],pa=FL.paths[p.i],a=p.t*L,pt=pa.getPointAtLength(a),pt2=pa.getPointAtLength(Math.min(L,a+2)),dx=pt2.x-pt.x,dy=pt2.y-pt.y,dl=Math.hypot(dx,dy)||1,sw=+pa.getAttribute("stroke-width")||0,off=p.o*sw;
+    p.c.setAttribute("cx",pt.x-dy/dl*off);p.c.setAttribute("cy",pt.y+dx/dl*off);p.c.setAttribute("opacity",(.85*Math.min(1,p.t*10,(1-p.t)*10)).toFixed(2));
+  }
+  requestAnimationFrame(tick);
+}
+function startFlow(){if(RM||FL.run)return;FL.run=true;requestAnimationFrame(tick)}
+function stopFlow(){FL.run=false}
+let playId=0;
+function playShock(){
+  cancelPlay();const t0=performance.now(),dur=7000,id=++playId;
+  const step=n=>{if(id!==playId)return;const p=Math.min(1,(n-t0)/dur);setX(Math.round(p*20)*5);if(p<1)requestAnimationFrame(step)};
+  requestAnimationFrame(step);
+}
+function cancelPlay(){playId++}
+function wire(){
+  document.getElementById("sl").addEventListener("input",e=>{cancelPlay();setX(+e.target.value)});
+  document.querySelectorAll(".pre button").forEach(b=>b.addEventListener("click",()=>{cancelPlay();setX(+b.dataset.v)}));
+  const pb=document.getElementById("play");
+  if(RM)pb.hidden=true;else pb.addEventListener("click",()=>{setX(0);playShock()});
+  document.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>{const h=b.closest(".hyp");h.classList.add("open");b.setAttribute("aria-expanded","true")}));
+  const host=document.getElementById("c-flow");
+  if("IntersectionObserver" in window)new IntersectionObserver(es=>{es[0].isIntersecting?startFlow():stopFlow()},{threshold:.1}).observe(host);else startFlow();
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)stopFlow()});
+}
+function all(){charts();const x=FL.x;buildFlow();if(x)setX(x)}
+const hostIds=["c-states","c-markets","c-flow"],lastW={};
+function redraw(){stopFlow();all();const r=document.getElementById("c-flow").getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)startFlow()}
+let rz;
+all();wire();hostIds.forEach(id=>lastW[id]=Math.round(document.getElementById(id).clientWidth));
+if("ResizeObserver" in window)new ResizeObserver(()=>{if(hostIds.some(id=>Math.abs(document.getElementById(id).clientWidth-lastW[id])>1)){clearTimeout(rz);rz=setTimeout(()=>{hostIds.forEach(id=>lastW[id]=Math.round(document.getElementById(id).clientWidth));redraw()},120)}}).observe(document.body);{const q=+new URLSearchParams(location.search).get('mexico');if(q>=0&&q<=100)setX(Math.round(q/5)*5)}
+</script>
+</body>
+</html>
