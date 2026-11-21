@@ -9,13 +9,13 @@
 <style>
 /* Pug palette: very light fawn ground; cards matted in the quarter's coat color (Q1 cream fawn, Q2 fawn, Q3 brown, Q4 black mask) */
 :root{--bg:#FBF5EC;--card:#FFFCF7;--ink:#241B16;--muted:#76624E;--line:#EADCC8;--acc:#8A5A36;--th:#F3E7D5;
---q1:#EAD3AE;--q2:#C99A60;--q3:#7C4F30;--q4:#241B16;--qline:transparent;
+--q1:#EAD3AE;--q2:#C99A60;--q3:#7C4F30;--q4:#241B16;--q4s:#241B16;--qline:transparent;
 --f-disp:"Sora",system-ui,sans-serif;--f-body:"Sora",system-ui,sans-serif;--f-mono:"JetBrains Mono",ui-monospace,monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17120E;--card:#211A15;--ink:#F3E8D9;--muted:#B9A48D;--line:#3A2F26;--acc:#DDB07A;--th:#2A211B;--q1:#E3C99E;--q2:#C0915A;--q3:#8E5F3C;--q4:#050403;--qline:#4A3C31;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#17120E;--card:#211A15;--ink:#F3E8D9;--muted:#B9A48D;--line:#3A2F26;--acc:#DDB07A;--th:#2A211B;--q1:#E3C99E;--q2:#C0915A;--q3:#8E5F3C;--q4:#050403;--qline:#4A3C31;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17120E;--card:#211A15;--ink:#F3E8D9;--muted:#B9A48D;--line:#3A2F26;--acc:#DDB07A;--th:#2A211B;--q1:#E3C99E;--q2:#C0915A;--q3:#8E5F3C;--q4:#050403;--q4s:#85766A;--qline:#4A3C31;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17120E;--card:#211A15;--ink:#F3E8D9;--muted:#B9A48D;--line:#3A2F26;--acc:#DDB07A;--th:#2A211B;--q1:#E3C99E;--q2:#C0915A;--q3:#8E5F3C;--q4:#050403;--q4s:#85766A;--qline:#4A3C31;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 var(--f-body)}
-.q1{--qc:var(--q1)}.q2{--qc:var(--q2)}.q3{--qc:var(--q3)}.q4{--qc:var(--q4)}
+.q1{--qc:var(--q1);--qs:var(--q1)}.q2{--qc:var(--q2);--qs:var(--q2)}.q3{--qc:var(--q3);--qs:var(--q3)}.q4{--qc:var(--q4);--qs:var(--q4s)}/* --qs: swatch tone for legend and month cells (Q4 lightened in dark so it stays visible) */
 .ttl{display:flex;align-items:flex-end;gap:14px;margin:0 0 10px}
 .ttl img{height:clamp(104px,13vw,150px);width:auto;flex:0 0 auto}
 .tt{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1 1 0;container-type:inline-size}
@@ -28,7 +28,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 var(--f-body
 .paws svg:nth-child(odd){transform:translateY(5px) rotate(-12deg)}.paws svg:nth-child(even){transform:rotate(12deg)}
 .lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted);margin:0}
 .lg span{display:inline-flex;align-items:center;gap:6px}
-.lg i{width:12px;height:12px;border-radius:3px;background:var(--qc);box-shadow:inset 0 0 0 1px var(--qline)}
+.lg i{width:12px;height:12px;border-radius:3px;background:var(--qs);box-shadow:inset 0 0 0 1px var(--qline)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
 .w{max-width:1040px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
 header{padding:56px 0 10px}
@@ -66,9 +66,9 @@ header p{color:var(--muted);margin:0}
 .mc{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;padding:0;cursor:pointer;font:inherit}
 .mc i{display:block;width:22px;height:22px;border-radius:4px;background:var(--th);border:1.5px solid transparent;box-sizing:border-box}
 .mc[data-n="0"] i{background:transparent;border-color:var(--line)}
-.mc[data-l="1"] i{background:color-mix(in srgb,var(--qc) 50%,var(--card))}
-.mc[data-l="2"] i{background:color-mix(in srgb,var(--qc) 76%,var(--card))}
-.mc[data-l="3"] i{background:var(--qc)}
+.mc[data-l="1"] i{background:color-mix(in srgb,var(--qs) 50%,var(--card))}
+.mc[data-l="2"] i{background:color-mix(in srgb,var(--qs) 76%,var(--card))}
+.mc[data-l="3"] i{background:var(--qs)}
 .mc b{font-family:var(--f-mono);font-size:10px;font-weight:400;color:var(--muted);line-height:1}
 .mc[aria-pressed=true] i{border-color:var(--ink)}
 .tl.sel .mc[aria-pressed=false] i{opacity:.35}
