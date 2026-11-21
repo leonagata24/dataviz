@@ -350,7 +350,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <div id="w4"><span class="rv" id="r4">1,910 mi</span><span class="rn" id="rn4">average distance of a mapped export dollar</span></div>
         <div id="w5"><span class="rv" id="r5">75%</span><span class="rn" id="rn5">of export dollars go to markets within 2,000 mi</span></div>
       </div>
-      <p class="note" id="slnote">How to read it: streams run in a straight line from Minnesota, and their width is proportional to estimated dollars. Rings show true distance from Minneapolis, because this map is centered there. Dots move at the same speed everywhere, so a farther market takes longer to reach: that shows distance, not real transit times. <b>Distances are straight lines from Minneapolis to each country's capital,</b> not shipping routes; the fact sheet does not say where the turkey is shipped from or which ports it uses, and Minnesota's farms are spread across the state. “All other” (15% of dollars, many countries) cannot be placed, so the average distance and the within-2,000-miles share cover the named markets only. The other markets together are about $30.2 million today (29% of the total); replacing Mexico entirely takes about +245% growth from them (90% of the simulated roundings fall between +234% and +256%). The ranges on the readouts come from 3,000 simulated roundings, each share varied by up to ±0.5 point and rescaled to 100%; they show the 5th to 95th percentile. The fact sheet gives no price, volume or time dimension, so none of this says how likely a shift is or how quickly other markets could grow. Trade-agreement reviews, tariffs and avian flu are outside this dataset.</p>
+      <p class="note" id="slnote">How to read it: streams run in a straight line from Minnesota, and their width is proportional to estimated dollars. The number of little turkeys is only for show, so small markets still get a few. Rings show true distance from Minneapolis, because this map is centered there. The little turkeys move at the same speed everywhere, so a farther market takes longer to reach: that shows distance, not real transit times. <b>Distances are straight lines from Minneapolis to each country's capital,</b> not shipping routes; the fact sheet does not say where the turkey is shipped from or which ports it uses, and Minnesota's farms are spread across the state. “All other” (15% of dollars, many countries) cannot be placed, so the average distance and the within-2,000-miles share cover the named markets only. The other markets together are about $30.2 million today (29% of the total); replacing Mexico entirely takes about +245% growth from them (90% of the simulated roundings fall between +234% and +256%). The ranges on the readouts come from 3,000 simulated roundings, each share varied by up to ±0.5 point and rescaled to 100%; they show the 5th to 95th percentile. The fact sheet gives no price, volume or time dimension, so none of this says how likely a shift is or how quickly other markets could grow. Trade-agreement reviews, tariffs and avian flu are outside this dataset.</p>
     </div>
   </section>
 
@@ -484,13 +484,14 @@ function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a
 const MC=(()=>{const r=mulberry(46),out=[];for(let n=0;n<3000;n++){const s=SH0.map(b=>b+(r()-.5)),t=s.reduce((a,b)=>a+b,0);out.push(s.map(a=>a*100/t))}return out})();
 function rng(x,key){const a=MC.map(s=>scen(s,x,true)[key]).sort((p,q)=>p-q);return [a[Math.floor(a.length*.05)],a[Math.floor(a.length*.95)]]}
 const FL={lens:"dist",x:0,refill:true,range:false,run:false,parts:[],acc:[],last:0,S:null};
-const RATE=0.3; // dots per second per $M
+const RATE=0.028; // turkeys per second per $M, with a floor so small markets stay visible
 const SRC_MAP="Sources: Minnesota Dept. of Agriculture, Minnesota Turkey Fact Sheet (2023): export shares and the $104M total; year not labeled, 2023-era data, about three years old. Dollars = share × $104M (pug estimate). Distances: straight line from Minneapolis to each country's capital, not shipping routes. Map: Natural Earth land (via world-atlas), azimuthal equidistant projection centered on Minneapolis. The stress test is arithmetic by the pugs, not a forecast.";
 function buildFlow(){
   const host=document.getElementById("c-flow");host.innerHTML="";
   const side=Math.max(280,Math.min(host.clientWidth||600,640)),cx=side/2,cy=side/2+2,rr=side/2-4,sc=rr/U,narrow=side<480;
   const sl=wrapTxt(SRC_MAP,side-8,11),HH=side+sl.length*14+22;
   const svg=el("svg",{width:side,height:HH,viewBox:`0 0 ${side} ${HH}`},host);
+svg.insertAdjacentHTML("afterbegin",'<defs><symbol id="tk" viewBox="0 0 24 22" overflow="visible"><g stroke="#2b1d12" stroke-width="1" stroke-linejoin="round"><path d="M9 12 L1.5 6 L3 10.5 L0.8 11 L3.4 14.2 L1.6 16.5 L5 17 Z M9 12 L4 2.5 L7 3 L10 .8 L11 8 Z" fill="#e0a43a"/><circle cx="9" cy="11" r="7.6" fill="#e0a43a"/><circle cx="9" cy="11" r="4.8" fill="#c9622f"/><ellipse cx="12" cy="14.5" rx="6.4" ry="5" fill="#7a4a2b"/><path d="M14.5 17.5 L14 21 M11 18.5 L10.6 21.4" fill="none" stroke="#c9922f" stroke-width="1.4"/><circle cx="18.2" cy="8" r="2.7" fill="#7a4a2b"/><path d="M16.6 10.6 Q16.2 12.8 17.6 13 Q18.8 12 18.4 10.4Z" fill="#d12f2f"/><path d="M20.4 7.2 L23.4 8.4 L20.4 9.4Z" fill="#f2b632"/></g><circle cx="18.6" cy="7.3" r=".7" fill="#fff"/></symbol></defs>');
   sl.forEach((t,k)=>txt(svg,t,{x:2,y:side+24+k*14,class:"srcl"}));
   el("circle",{cx,cy,r:rr,fill:"color-mix(in srgb, var(--navy) 9%, var(--panel))",stroke:"var(--axis)"},svg);
   const g=el("g",{transform:`translate(${cx} ${cy}) scale(${sc})`},svg);
@@ -498,7 +499,7 @@ function buildFlow(){
   el("path",{d:GEO.c.US,fill:"var(--neutral-ink)",opacity:.3},g);
   DEST.forEach((d,i)=>{if(GEO.c[d.k])el("path",{d:GEO.c[d.k],fill:i===0?"var(--rust)":"var(--pine)",opacity:i===0?.5:.55},g)});
   RING_MI.forEach(m=>{const r=m*MI*U/KMX*sc;el("circle",{cx,cy,r,fill:"none",stroke:"var(--ref)","stroke-dasharray":"3 4","stroke-width":1,class:"ringc"},svg);txt(svg,m.toLocaleString("en-US")+" mi",{x:cx,y:cy-r-3,"text-anchor":"middle",class:"ringl ringc"})});
-  FL.kpx=narrow?.26:.34;FL.cx=cx;FL.cy=cy;FL.pxs=1000*(U/KMX)*sc;
+  FL.kpx=narrow?.26:.34;FL.cx=cx;FL.cy=cy;FL.pxs=1600*(U/KMX)*sc;
   FL.hi=[];FL.base=[];FL.lo=[];FL.len=[];FL.ux=[];FL.uy=[];
   const col=i=>i===0?"var(--rust)":"var(--pine)";
   DEST.forEach((d,i)=>{const X=cx+d.ux*sc,Y=cy+d.uy*sc,L=Math.hypot(X-cx,Y-cy);FL.len.push(L);FL.ux.push((X-cx)/L);FL.uy.push((Y-cy)/L);
@@ -553,13 +554,13 @@ function setX(v){FL.x=v;applyFlow()}
 function tick(t){
   if(!FL.run){FL.last=0;return}
   if(!FL.last)FL.last=t;const dt=Math.min(.1,(t-FL.last)/1000);FL.last=t;
-  DEST.forEach((d,i)=>{FL.acc[i]+=RATE*FL.S.w[i]*dt;
-    while(FL.acc[i]>=1){FL.acc[i]-=1;if(FL.parts.length<260){const c=el("circle",{r:i===0?2.8:2.3,fill:"#fffaf0",stroke:"var(--dot)","stroke-width":.7,opacity:0},FL.dots);FL.parts.push({i,d:0,c,o:(Math.random()-.5)*.7})}}});
+  DEST.forEach((d,i)=>{FL.acc[i]+=(FL.S.w[i]>0.05?Math.max(RATE*FL.S.w[i],0.2):0)*dt;
+    while(FL.acc[i]>=1){FL.acc[i]-=1;if(FL.parts.length<260){const w=i===0?15:13,c=el("use",{href:"#tk",x:-w/2,y:-w*11/24,width:w,height:w*22/24,opacity:0},FL.dots);FL.parts.push({i,d:0,c,o:(Math.random()-.5)*.7})}}});
   for(let n=FL.parts.length-1;n>=0;n--){
     const p=FL.parts[n];p.d+=FL.pxs*dt;const L=FL.len[p.i];
     if(p.d>=L){p.c.remove();FL.parts.splice(n,1);continue}
     const w=+FL.base[p.i].getAttribute("stroke-width")||0,off=p.o*w,ux=FL.ux[p.i],uy=FL.uy[p.i],t2=p.d/L;
-    p.c.setAttribute("cx",FL.cx+ux*p.d-uy*off);p.c.setAttribute("cy",FL.cy+uy*p.d+ux*off);p.c.setAttribute("opacity",(.9*Math.min(1,p.d/14,(L-p.d)/14)).toFixed(2));
+    p.c.setAttribute("transform","translate("+(FL.cx+ux*p.d-uy*off).toFixed(1)+" "+(FL.cy+uy*p.d+ux*off).toFixed(1)+") scale("+(ux<0?-1:1)+" 1)");p.c.setAttribute("opacity",(.9*Math.min(1,p.d/14,(L-p.d)/14)).toFixed(2));
   }
   requestAnimationFrame(tick);
 }
