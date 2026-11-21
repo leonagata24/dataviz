@@ -67,6 +67,9 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 .dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
 @media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--line);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--muted)}}
 .dqa-r{display:inline-block;border:1px solid var(--muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+.chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); max-width: 90ch; }
+.chart-src b { font-weight: 600; }
+.chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 </style>
 <link rel="stylesheet" href="../pug-header.css">
 <script src="../embed.js"></script><script defer src="../analytics.js"></script><script defer src="../feedback.js?v=2"></script>
@@ -91,18 +94,21 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 <p>Each dot is a program: further right means a bigger budget, higher up means a better AP rank. Hollow dots are unranked and sit in the band at the bottom.</p>
 <div class="tg"><label><input type="checkbox" id="tr" checked> Show trendline</label><span>Line: least-squares fit among the 25 ranked teams. Dark band: 95% confidence interval for the line (13 of the 25 dots fall inside it). Light band: 95% prediction band, where a ranked team is expected to land (24 of 25 fall inside).</span></div>
 <div class="key ck"></div>
-<svg id="sc" viewBox="0 0 820 540" role="img" aria-label="Scatter plot of budget against AP rank"></svg></section>
+<svg id="sc" viewBox="0 0 820 540" role="img" aria-label="Scatter plot of budget against AP rank"></svg><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
+</section>
 <section id="flip"><h2>Twenty-five teams spend the most. Seven of them are not in the poll</h2>
 <p>One line per team, from its spending rank on the left (1 = biggest budget, of 68) to its AP rank on the right. Of the 25 biggest spenders, 18 are ranked and 7 are not. Pick a team you know, or click any line, to follow it.</p>
 <div class="fp"><label for="ft">Follow a team</label><select id="ft"></select><button type="button" id="fr">Back to the seven</button></div>
 <div class="key"><span><i class="o" style="background:var(--up)"></i>Top-25 spender, ranked</span><span><i class="o" style="background:var(--dn)"></i>Top-25 spender, not ranked</span><span><i class="o" style="background:var(--muted);opacity:.5"></i>Everyone else</span><span><i class="h"></i>Hollow dot: no AP rank</span></div>
 <svg id="fl" role="img" aria-label="Spending rank of each team against its AP rank, with the seven top-25 spenders that are not ranked highlighted"></svg>
 <p class="rd" id="fread" aria-live="polite"></p>
-<p style="font-size:13px">Spending rank follows each team’s budget midpoint. Teams with the same midpoint are ranked in file order, so a rank can be off by a place or two. The last section has the details.</p></section>
+<p style="font-size:13px">Spending rank follows each team’s budget midpoint. Teams with the same midpoint are ranked in file order, so a rank can be off by a place or two. The last section has the details.</p><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
+</section>
 <section><h2>A $10M bigger budget goes with about five times the odds of being ranked</h2>
 <p>The trendline above only covers teams that made the poll. This curve uses all 68 teams: ranked teams are the dots along the top, unranked teams along the bottom, and the line is the fitted chance of being ranked at each budget. Dots are nudged up or down so they don’t overlap. Houston, on about $17M, had a fitted chance of about 8% and made the poll. Florida, on about $36M, had about 70% and didn’t.</p>
 <div class="key ck"></div>
-<svg id="pr" viewBox="0 0 820 250" role="img" aria-label="Estimated chance of being ranked by budget"></svg></section>
+<svg id="pr" viewBox="0 0 820 250" role="img" aria-label="Estimated chance of being ranked by budget"></svg><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
+</section>
 <section><h2>Budget and ranking are linked beyond chance, but budget alone says little about any one team</h2>
 <p>These figures use all 68 teams and don’t change with the filters. Negative correlations mean a bigger budget goes with a lower, better rank number.</p>
 <div class="tw"><table class="st"><thead><tr><th>Measure</th><th>Estimate</th><th>95% interval</th><th>In plain terms</th></tr></thead><tbody>
@@ -133,11 +139,13 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 <section><h2>Georgia, Indiana and BYU ranked far above their budgets. Oregon ranked far below.</h2>
 <p>Each team’s gap is its rank by spending among the 25 ranked teams minus its AP rank, so the average gap is zero. Georgia is the 15th-biggest spender of the 25 and ranks 2nd. Oregon is the 2nd-biggest and ranks 21st.</p>
 <div class="key"><span><i style="background:var(--up)"></i>Ranked higher than spending suggests</span><span><i style="background:var(--dn)"></i>Ranked lower</span></div>
-<svg id="gp" role="img" aria-label="Gap between spend rank and AP rank"></svg></section>
+<svg id="gp" role="img" aria-label="Gap between spend rank and AP rank"></svg><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
+</section>
 <section><h2>The SEC spends the most and puts the most teams in the poll</h2>
 <p>Nine of 16 SEC teams are ranked, against 7 of 18 in the Big Ten, and 4 each in the ACC and Big 12. The Big 12 ranks as often as the ACC on about $3M less per team. Solid dots are ranked; the tick marks the conference average.</p>
 <div class="key ck"></div>
-<svg id="cf" role="img" aria-label="Budget by conference"></svg></section>
+<svg id="cf" role="img" aria-label="Budget by conference"></svg><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
+</section>
 <section><h2>Budgets are estimates, so small gaps between teams don’t mean much</h2>
 <p>Bars show the low-to-high estimate on a $0–60M scale, with the midpoint marked. Texas and Florida have the widest ranges, at $10M. Click a column to sort.</p>
 <div class="tw"><table><thead><tr id="th"></tr></thead><tbody id="tb"></tbody></table></div></section>

@@ -51,6 +51,9 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
 .dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
 @media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--color-border-line);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--color-fg-muted)}}
 .dqa-r{display:inline-block;border:1px solid var(--color-fg-muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--color-fg);white-space:nowrap}
+.chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--color-fg-muted); max-width: 90ch; }
+.chart-src b { font-weight: 600; }
+.chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 </style>
 <script>
 /* A small stand-in for the dashboard runtime: loads the CSV datasets, runs the page's calculations and redraws on resize. */
@@ -216,7 +219,8 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
       <figure class="bb-hero-fig">
         <div class="bb-chart bb-h400 dash-skeleton" id="chart-hero" data-draw="hero" data-source="heroRunners" role="img" aria-label="Runners of the top 20 teams of 2026, one row per nation, placed by yards run, with each national winner carrying the flag"></div>
         <figcaption class="bb-note">The top 20 teams of 2026, ranked top to bottom by combined team yards, the score that decides the title. Along each row, each figure is one runner, placed where they stopped: a runner just past Day 2 kept going for a little over two days, or about 200 miles. That is why Belgium's two runners sit farthest right while the United States tops the table. Each nation's winner carries its flag; Belgium's two runners who stopped together share it. AIN (Individual Neutral Athletes) runners compete without a national flag, so their leader carries a plain white one.</figcaption>
-      </figure>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</figure>
     </div>
   </header>
 
@@ -243,7 +247,8 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
           <li><span class="bb-sw line" data-sw="3"></span>2020</li>
         </ul>
         <div class="bb-chart bb-h300 dash-skeleton" id="chart-attrition" data-draw="attrition" data-source="attrition"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
       <div class="bb-card wide">
         <h3>Where runners stopped, one dot per runner</h3>
         <p class="bb-note">Pick the championships to stack. Each dot is one runner, placed on the yard where they stopped. Hover a dot for the name and nation.</p>
@@ -252,13 +257,15 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
         <div class="bb-chart bb-h450 dash-skeleton" id="chart-yarddots" data-draw="yardDots" data-source="runners" role="img" aria-label="One dot per runner, stacked by the yard where they stopped, for the chosen championships"></div>
         <ul class="bb-legend" id="yard-leg"></ul>
         <p class="bb-note">The 100-mile mark is a magnet. In 2026, <b data-draw="num" data-source="tests" data-where="id=spike24" data-field="a" data-fmt="int">—</b> of <b data-draw="num" data-source="headline" data-field="runners">—</b> starters stopped at exactly 24 yards, and <b data-draw="num" data-source="tests" data-where="id=spike24ns" data-field="team" data-fmt="int">—</b> of them were <span data-draw="num" data-source="tests" data-where="id=spike24ns" data-field="teamName" data-fmt="text">—</span>'s team, who stopped together. The other <b data-draw="num" data-source="tests" data-where="id=spike24ns" data-field="a" data-fmt="int">—</b> are still <b data-draw="num" data-source="tests" data-where="id=spike24ns" data-field="effect" data-fmt="x">—</b> the average of the yards around them <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike24ns" data-field="result">—</span>. A smaller peak follows at 48 yards <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike48" data-field="result">—</span>. The bump at 72 yards is within noise <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=spike72" data-field="result">—</span>. Counts are runners, not shares, so a bigger field makes a taller pile.</p>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
       <div class="bb-card wide">
         <h3>The same yards as a chance: among runners still going, how likely is a stop here?</h3>
         <p class="bb-note">The pile above grows partly because the field shrinks as the race goes on. This chart takes that out. Each line is an edition's typical chance of stopping at an ordinary yard. Each dot is the actual chance at the 24 or 48-yard milestone, standing above its line. Lines run while at least 25 runners are still going. The 72-yard milestone is left out because under 100 runners remain, so one runner moves it by a point. Same horizontal axis as the chart above.</p>
         <div class="bb-chart bb-h300 dash-skeleton" id="chart-yardhaz" data-draw="yardHazard" data-source="runners" role="img" aria-label="Chance of stopping at each yard among runners still going, one line per chosen championship, with spikes at the 24 and 48-yard milestones"></div>
         <ul class="bb-legend" id="yard-hleg"></ul>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
     </div>
   </section>
 
@@ -271,12 +278,14 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
         <h3>Chance of stopping, by local hour</h3>
         <p class="bb-note">Runners who stop at each hour, divided by runners eligible to start that hour's yard. Most nations started in the afternoon, so the 14:00 spike is mostly runners stopping at 24 yards.</p>
         <div class="bb-chart bb-h240 dash-skeleton" id="chart-hazard" data-draw="hazard" data-source="hazard"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
       <div class="bb-card">
         <h3>Lap time against each runner's own typical lap</h3>
         <p class="bb-note">Median seconds slower (+) or faster (−) than the runner's own median lap, by local start hour. The slowest hour is <b data-draw="num" data-source="lapPeak" data-field="hour" data-fmt="hour">—</b>, at <b data-draw="num" data-source="lapPeak" data-field="rel" data-fmt="sec">—</b> seconds. Comparing each runner's night and day laps within the same 24-yard day, night laps are a median <b data-draw="num" data-source="tests" data-where="id=nightLaps" data-field="effect" data-fmt="int">—</b> seconds slower <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=nightLaps" data-field="result">—</span>.</p>
         <div class="bb-chart bb-h240 dash-skeleton" id="chart-lap" data-draw="lap" data-source="lapByHour"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
     </div>
   </section>
 
@@ -293,7 +302,8 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
         <li><span class="bb-sw" data-sw="3"></span>Finished over 60 minutes (OVER)</li>
       </ul>
       <div class="bb-chart bb-h260 dash-skeleton" id="chart-stops" data-draw="stops" data-source="stopStage"></div>
-    </div>
+    <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
   </section>
 
   <section class="bb-sec" id="depth">
@@ -320,17 +330,20 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
         <p class="bb-note">Depth r² minus stars r², with 95% bootstrap intervals. Above zero, the 10th-best runner explains team yards better than the farthest runner. The gap shrank from <b data-draw="num" data-source="depthWinner" data-where="year=2020" data-field="margin" data-fmt="r2">—</b> in 2020 to <b data-draw="num" data-source="depthWinner" data-where="year=2026" data-field="margin" data-fmt="r2">—</b> in 2026.</p>
         <div class="bb-chart bb-h220 dash-skeleton" id="chart-gap" data-draw="gap" data-source="gapStats gapChange"></div>
         <p class="bb-note"><b>The last two years are level.</b> The gap moved by <b data-draw="num" data-source="tests" data-where="id=change" data-field="effect" data-fmt="r2s">—</b> from 2024 to 2026 (95% range <b data-draw="num" data-source="tests" data-where="id=change" data-field="lo" data-fmt="r2s">—</b> to <b data-draw="num" data-source="tests" data-where="id=change" data-field="hi" data-fmt="r2s">—</b>) <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=change" data-field="result">—</span>. Depth's lead holds up in 2026 <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=lead2026" data-field="result">—</span>, but not in 2024 once corrected for the number of tests <span class="bb-badge" data-draw="badge" data-source="tests" data-where="id=lead2024" data-field="result">—</span>. Both runners' yards are part of the team total, and nations aren't a random sample, so read these as descriptive tests.</p>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
       <div class="bb-card wide">
         <h3>Team yards against the farthest and the 10th-best runner</h3>
         <p class="bb-note">One dot per nation, for the year selected in the table. r² is the share of variation in team yards that a straight line through each panel explains.</p>
         <div class="bb-chart bb-h260 dash-skeleton" id="chart-depth" data-draw="depth" data-source="depth depthFit"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
       <div class="bb-card wide">
         <h3>The top 10 teams of 2026, runner by runner</h3>
         <p class="bb-note">Each dot is one runner's final yards. Team total at right.</p>
         <div class="bb-chart bb-h320 dash-skeleton" id="chart-strip" data-draw="strip" data-source="teamStrip"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
     </div>
   </section>
 
@@ -349,12 +362,14 @@ body { background: var(--color-bg); color: var(--color-fg); font-family: var(--f
           <li><span class="bb-sw line" data-sw="2"></span>National winners</li>
         </ul>
         <div class="bb-chart bb-h260 dash-skeleton" id="chart-rest" data-draw="rest" data-source="restToEnd"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
       <div class="bb-card">
         <h3>The longest races of 2026, yard by yard</h3>
         <p class="bb-note">Rest after every lap for the three runners who went farthest.</p>
         <div class="bb-chart bb-h260 dash-skeleton" id="chart-resttop" data-draw="restTop" data-source="restTop"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/big-s-backyard-ultramarathon-world-team-championships" target="_blank" rel="noopener">Big’s Backyard Ultramarathon World Team Championships</a> (MakeoverMonday dataset), race results from the World Team Championships. Official site: <a href="https://wtc2026.bigsbackyardultra.com/" target="_blank" rel="noopener">Big’s Backyard Ultra</a>.</p>
+</div>
     </div>
   </section>
 

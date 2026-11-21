@@ -111,6 +111,9 @@ th { position: sticky; top: 0; background: var(--panel); font-weight: 600; }
 @media (max-width: 560px) { .qh { grid-template-columns: auto minmax(0, 1fr); } .qh .mk { grid-column: 2; } .stamp { right: 8px; } }
 .foot { border-top: 1px solid var(--line); padding-top: 16px; font-size: 13px; color: var(--muted); }
 .foot a { color: var(--fg); }
+.chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); max-width: 90ch; }
+.chart-src b { font-weight: 600; }
+.chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 </style>
 <link rel="stylesheet" href="../pug-header.css">
 <script src="../embed.js"></script><script defer src="../analytics.js"></script><script defer src="../feedback.js?v=2"></script>
@@ -154,7 +157,8 @@ th { position: sticky; top: 0; background: var(--panel); font-weight: 600; }
       <ul class="legend"><li><span class="sw" style="background:var(--s1)"></span>OECD member</li><li><span class="sw" style="background:var(--s2)"></span>Partner country or economy</li><li><span class="sw hollow"></span>Sampling caution flagged by the OECD</li><li><span class="sw fan"></span>200 resampled trend lines</li><li><span class="sw dash"></span>Straight-line fit on all dots</li></ul>
       <div class="chart" id="c-ai"></div>
       <p class="note">Each dot is one country or economy. Share of students who say they use AI at least once a week to help them learn. Six systems did not report the AI questions and are left out. The y-axis starts at 300, not zero. The faint gray lines are straight-line fits to 200 resamples of the countries: they lean up and down about equally, which is what no detectable link looks like. Hover a dot for details.</p>
-    </div>
+    <p class="chart-src"><b>Source:</b> OECD (2026), <a href="https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en.html" target="_blank" rel="noopener">PISA 2025 Results (Volume I)</a>, Tables I.1 and I.6 (CC BY 4.0), via the <a href="https://makeovermonday.vercel.app/dataset/pisa-2025" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</div>
   </section>
 
   <section class="sec">
@@ -168,11 +172,13 @@ th { position: sticky; top: 0; background: var(--panel); font-weight: 600; }
       <div class="card">
         <h3>Phone bans against students reporting no distraction</h3>
         <div class="chart" id="c-bd"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> OECD (2026), <a href="https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en.html" target="_blank" rel="noopener">PISA 2025 Results (Volume I)</a>, Tables I.1 and I.6 (CC BY 4.0), via the <a href="https://makeovermonday.vercel.app/dataset/pisa-2025" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</div>
       <div class="card">
         <h3>Phone bans against math score</h3>
         <div class="chart" id="c-bm"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> OECD (2026), <a href="https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en.html" target="_blank" rel="noopener">PISA 2025 Results (Volume I)</a>, Tables I.1 and I.6 (CC BY 4.0), via the <a href="https://makeovermonday.vercel.app/dataset/pisa-2025" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</div>
     </div>
     <p class="note">Horizontal axis in both panels: share of students whose principal says cell phones are not allowed at school. Colors as in the first chart.</p>
   </section>
@@ -188,7 +194,8 @@ th { position: sticky; top: 0; background: var(--panel); font-weight: 600; }
       <h3>Rank correlation of each digital measure with math score</h3>
       <div class="chart" id="c-cor"></div>
       <p class="note">Spearman rank correlation across countries, with 95% bootstrap ranges. A range that crosses the zero line cannot be told apart from no relationship.</p>
-    </div>
+    <p class="chart-src"><b>Source:</b> OECD (2026), <a href="https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en.html" target="_blank" rel="noopener">PISA 2025 Results (Volume I)</a>, Tables I.1 and I.6 (CC BY 4.0), via the <a href="https://makeovermonday.vercel.app/dataset/pisa-2025" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</div>
   </section>
 
   <section class="sec">
@@ -201,7 +208,8 @@ th { position: sticky; top: 0; background: var(--panel); font-weight: 600; }
       <h3>Weekly AI use against being taught to assess AI output</h3>
       <div class="chart" id="c-aa"></div>
       <p class="note">Dots above the dashed line are countries where the share taught to assess AI is larger than the share using it weekly. Every country is above it.</p>
-    </div>
+    <p class="chart-src"><b>Source:</b> OECD (2026), <a href="https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en.html" target="_blank" rel="noopener">PISA 2025 Results (Volume I)</a>, Tables I.1 and I.6 (CC BY 4.0), via the <a href="https://makeovermonday.vercel.app/dataset/pisa-2025" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</div>
   </section>
 
   <section class="caveat">

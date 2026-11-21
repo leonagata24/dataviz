@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}.chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); max-width: 90ch; }
+.chart-src b { font-weight: 600; }
+.chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+</style>
 <title>The Census Century</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -298,7 +301,8 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
     <div class="chart-scroll"><svg id="bump" class="bump" role="img" aria-label="Bump chart of state population ranks 1790 to 1900"></svg></div>
     <div class="legend"><span class="sw"><svg width="14" height="14"><circle cx="7" cy="7" r="4" style="fill:var(--ink-2)"/></svg>State on census day</span><span class="sw"><svg width="14" height="14"><circle cx="7" cy="7" r="4" style="fill:var(--surface);stroke:var(--ink-2)" stroke-width="1.5"/></svg>Not yet a state (territory, part of another state, or D.C.)</span></div>
     <p class="why"><b>Why it evolves the original:</b> it keeps the plate’s structure, which readers of the original will recognize, and adds the two things it lacked: color that groups states by region so the Midwest’s climb stands out, and a population scale that restores magnitude.</p>
-  </div>
+  <p class="chart-src"><b>Source:</b> U.S. Census Bureau decennial counts, 1790–1900, via the <a href="https://makeovermonday.vercel.app/dataset/the-first-century-of-the-u-s-census" target="_blank" rel="noopener">MakeoverMonday dataset</a>. Original chart: Hewes and Gannett, <a href="https://www.loc.gov/resource/g3701gm.gct00009/" target="_blank" rel="noopener">Scribner’s Statistical Atlas of the United States</a>, Plate 18 (1883).</p>
+</div>
 </section>
 
 <!-- B: MAP -->
@@ -326,7 +330,8 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
     <svg width="0" height="0" style="position:absolute"><defs><pattern id="hatchL" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" style="stroke:var(--hatch)" stroke-width="1.6"/></pattern></defs></svg>
     <p class="note-s">Caveat: the center is an estimate from state centroids weighted by population, within about half a degree of the Census Bureau’s official track, and the dots are placed at random inside each state, so they show how many people, not where in the state.</p>
     <p class="why"><b>Why it evolves the original:</b> the plate asks you to know the map. This puts the map first, shows people as dots so the empty West and the crowded East are felt rather than read off a color ramp, and draws the westward drift as a single track: from near Baltimore in 1790 to southern Indiana in 1900, about 500 miles. The pace chart shows it was not a steady walk, and the share chart shows why it moved: the Midwest went from no counted people to the largest region.</p>
-  </div>
+  <p class="chart-src"><b>Source:</b> U.S. Census Bureau decennial counts, 1790–1900, via the <a href="https://makeovermonday.vercel.app/dataset/the-first-century-of-the-u-s-census" target="_blank" rel="noopener">MakeoverMonday dataset</a>. Map outlines: U.S. Census Bureau cartographic boundaries, via us-atlas. Center of population: state-centroid estimate from these counts.</p>
+</div>
 </section>
 
 <!-- C: SHARE -->
@@ -339,7 +344,8 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
     <div class="chart-scroll"><svg id="area" role="img" aria-label="Stacked area chart of regional population share 1790 to 1900"></svg></div>
     <div class="legend" id="areaLegend"></div>
     <p class="why"><b>Why it evolves the original:</b> 49 lines collapse into four bands that sum to 100%. The Northeast and South start level at 50% each. By 1900 the Midwest, which had no counted people in 1790, is the largest region at 34.7%.</p>
-  </div>
+  <p class="chart-src"><b>Source:</b> U.S. Census Bureau decennial counts, 1790–1900, via the <a href="https://makeovermonday.vercel.app/dataset/the-first-century-of-the-u-s-census" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</div>
 </section>
 
 <!-- D: HEAT -->
@@ -353,7 +359,8 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
     <div class="ramp" id="heatRamp"></div>
     <div class="chart-scroll"><svg id="heat" class="heat" role="img" aria-label="Heatmap of decade growth rates per state"></svg></div>
     <p class="why"><b>Why it evolves the original:</b> the plate shows position; this shows speed. The diagonal staircase is the frontier. Each new group of states arrives with very fast growth, then cools to the 10–25% pace of the older East.</p>
-  </div>
+  <p class="chart-src"><b>Source:</b> U.S. Census Bureau decennial counts, 1790–1900, via the <a href="https://makeovermonday.vercel.app/dataset/the-first-century-of-the-u-s-census" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</div>
 </section>
 
 <!-- TAKEAWAYS -->

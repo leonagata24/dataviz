@@ -13,6 +13,9 @@
 .dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
 @media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--rule);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--muted)}}
 .dqa-r{display:inline-block;border:1px solid var(--muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+.chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); max-width: 90ch; }
+.chart-src b { font-weight: 600; }
+.chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 </style>
 <title>Europe's Platform Nights</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -237,7 +240,8 @@ footer p { margin: 0; max-width: 90ch; }
       </div>
       <div class="legend" id="map-legend" style="margin-top:12px"></div>
       <div class="tip" id="tip-map" hidden></div>
-    </div>
+    <p class="chart-src"><b>Source:</b> Eurostat, tourism nights booked through online platforms (Airbnb, Booking, Expedia), 2025, via the <a href="https://makeovermonday.vercel.app/dataset/tourism-nights-booked-through-platforms" target="_blank" rel="noopener">MakeoverMonday dataset</a>. Population: <a href="https://ec.europa.eu/eurostat/databrowser/view/demo_r_pjanaggr3/default/table" target="_blank" rel="noopener">Eurostat</a>, 1 January 2025. Region borders: Eurostat NUTS 2024 (© EuroGeographics).</p>
+</div>
   </section>
 
 
@@ -248,7 +252,8 @@ footer p { margin: 0; max-width: 90ch; }
       <p>Nights booked through Airbnb, Booking.com and Expedia across the EU, by month in 2025. October to December (Q4), the period the article maps, is shown in amber.</p>
     </div>
     <div class="panel"><div id="monthly"></div><div class="tip" id="tip-m" hidden></div></div>
-  </section>
+  <p class="chart-src"><b>Source:</b> Eurostat, tourism nights booked through online platforms (Airbnb, Booking, Expedia), 2025, via the <a href="https://makeovermonday.vercel.app/dataset/tourism-nights-booked-through-platforms" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</section>
 
   <section id="ranks" aria-labelledby="h-ranks">
     <div class="sh">
@@ -257,7 +262,8 @@ footer p { margin: 0; max-width: 90ch; }
       <p>Rank of each region for the full year (left) and for Q4 alone (right). Regions in the top 15 of either list are shown. Lines rising to the right do better in Q4.</p>
     </div>
     <div class="panel"><div id="slope"></div><div class="tip" id="tip-s" hidden></div></div>
-  </section>
+  <p class="chart-src"><b>Source:</b> Eurostat, tourism nights booked through online platforms (Airbnb, Booking, Expedia), 2025, via the <a href="https://makeovermonday.vercel.app/dataset/tourism-nights-booked-through-platforms" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</section>
 
   <section id="season" aria-labelledby="h-season">
     <div class="sh">
@@ -279,7 +285,8 @@ footer p { margin: 0; max-width: 90ch; }
       <div class="legend" style="margin-top:12px" id="hm-legend"></div>
     </div>
     <div class="insights" id="season-ins"></div>
-  </section>
+  <p class="chart-src"><b>Source:</b> Eurostat, tourism nights booked through online platforms (Airbnb, Booking, Expedia), 2025, via the <a href="https://makeovermonday.vercel.app/dataset/tourism-nights-booked-through-platforms" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</section>
 
   <section id="offseason" aria-labelledby="h-off">
     <div class="sh">
@@ -288,7 +295,8 @@ footer p { margin: 0; max-width: 90ch; }
       <p>Each bubble is a region, sized by its 2025 nights. Up is the share of its year that fell in October to December. Across is how much busier December was than October: cities sit near 1× because they never stop, while Alsace, Northern and Eastern Finland and South-West Oltenia jump two to four times. The across axis is a log scale, so 0.5× and 2× are the same distance from 1×. The EU total is <span id="eu-q4"></span>. Hover or tap a bubble for details.</p>
     </div>
     <div class="panel"><div id="scatter"></div><div class="tip" id="tip-x" hidden></div></div>
-  </section>
+  <p class="chart-src"><b>Source:</b> Eurostat, tourism nights booked through online platforms (Airbnb, Booking, Expedia), 2025, via the <a href="https://makeovermonday.vercel.app/dataset/tourism-nights-booked-through-platforms" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</section>
 
     <section id="perres" aria-labelledby="h-per">
     <div class="sh">
@@ -301,7 +309,8 @@ footer p { margin: 0; max-width: 90ch; }
       <div><h3>Regions: most nights per resident</h3><div class="bars" id="per-reg"></div></div>
       <div><h3>Countries: nights per resident</h3><div class="bars" id="per-cty"></div></div>
     </div>
-  </section>
+  <p class="chart-src"><b>Source:</b> Eurostat, tourism nights booked through online platforms (Airbnb, Booking, Expedia), 2025, via the <a href="https://makeovermonday.vercel.app/dataset/tourism-nights-booked-through-platforms" target="_blank" rel="noopener">MakeoverMonday dataset</a>. Population: <a href="https://ec.europa.eu/eurostat/databrowser/view/demo_r_pjanaggr3/default/table" target="_blank" rel="noopener">Eurostat</a>, 1 January 2025.</p>
+</section>
 
 
   <section id="dq" aria-labelledby="h-dq">

@@ -13,6 +13,9 @@
 .dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
 @media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--rule);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--muted)}}
 .dqa-r{display:inline-block;border:1px solid var(--muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+.chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); max-width: 90ch; }
+.chart-src b { font-weight: 600; }
+.chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 </style>
 <title>More Cowbell</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -249,7 +252,8 @@ footer p { margin: 0; max-width: 80ch; }
       <p>Artists with four or more cowbell songs on the list. Each block in a bar is one song; the songs are listed under each bar with their release year.</p>
     </div>
     <div class="panel"><div class="rhead" aria-hidden="true"><span class="c1">#</span><span class="c2">Artist</span><span class="c3">Songs on the list (each block is one song)</span></div><div class="rank" id="rank"></div></div>
-  </section>
+  <p class="chart-src"><b>Source:</b> <a href="https://cowbellsongs.com/the-list/" target="_blank" rel="noopener">Cowbell Songs, “The List”</a>, via the <a href="https://makeovermonday.vercel.app/dataset/songs-with-cowbell" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</section>
 
   <section id="trend" aria-labelledby="h-trend">
     <div class="sec-head">
@@ -263,7 +267,8 @@ footer p { margin: 0; max-width: 80ch; }
         <div class="tip" id="tip" hidden></div>
       </div>
       <div class="detail" id="detail" aria-live="polite"></div>
-    </div>
+    <p class="chart-src"><b>Source:</b> <a href="https://cowbellsongs.com/the-list/" target="_blank" rel="noopener">Cowbell Songs, “The List”</a>, via the <a href="https://makeovermonday.vercel.app/dataset/songs-with-cowbell" target="_blank" rel="noopener">MakeoverMonday dataset</a>. Release years: <a href="https://musicbrainz.org/" target="_blank" rel="noopener">MusicBrainz</a> (CC0).</p>
+</div>
   </section>
 
   <section id="odd" aria-labelledby="h-odd">
@@ -348,7 +353,8 @@ footer p { margin: 0; max-width: 80ch; }
           <p class="quote">The list owes its fame to one sketch. In April 2000, <a href="https://en.wikipedia.org/wiki/More_cowbell" target="_blank" rel="noopener">Saturday Night Live</a> imagined the recording of Blue Öyster Cult's “Don't Fear the Reaper”, with Will Ferrell on cowbell and Christopher Walken as the producer who kept asking for more.</p>
           <p class="quote" id="reaper"></p>
         </div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://cowbellsongs.com/the-list/" target="_blank" rel="noopener">Cowbell Songs, “The List”</a>, via the <a href="https://makeovermonday.vercel.app/dataset/songs-with-cowbell" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</div>
       <div class="panel">
         <h3>Comedians and actors on cowbell</h3>
         <p>People better known for comedy, film or TV, who still made the list.</p>
@@ -359,12 +365,14 @@ footer p { margin: 0; max-width: 80ch; }
         <p>Top words across all titles, leaving out small words such as “the”, “you” and “me”.</p>
         <div class="whead" aria-hidden="true"><span class="c1">Word</span><span class="c2">Song titles containing it</span></div>
         <div class="words" id="words"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://cowbellsongs.com/the-list/" target="_blank" rel="noopener">Cowbell Songs, “The List”</a>, via the <a href="https://makeovermonday.vercel.app/dataset/songs-with-cowbell" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</div>
       <div class="panel">
         <h3>Songs that ring a bell in the title</h3>
         <p>Titles that mention a bell or a cow, including one that only sounds like it does.</p>
         <div class="bells" id="bells"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://cowbellsongs.com/the-list/" target="_blank" rel="noopener">Cowbell Songs, “The List”</a>, via the <a href="https://makeovermonday.vercel.app/dataset/songs-with-cowbell" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
+</div>
       <div class="panel">
         <h3>The longest title on the list</h3>
         <p id="longest"></p>

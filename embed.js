@@ -41,6 +41,14 @@
     if (el && t[1]) el = el.closest(t[1]);
     if (!el) { post(-1); return; } // the home page keeps its snapshot image
     el.classList.add("pug-embed-target");
+    // the chart's source line may sit just outside the card (at the end of its section): bring it in
+    if (!el.querySelector(".chart-src")) {
+      for (var a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+        var srcs = a.querySelectorAll(".chart-src"), hit = null;
+        for (var j = 0; j < srcs.length; j++) if (el.compareDocumentPosition(srcs[j]) & Node.DOCUMENT_POSITION_FOLLOWING) { hit = srcs[j]; break; }
+        if (hit) { el.appendChild(hit.cloneNode(true)); break; }
+      }
+    }
     // hide everything that is not on the path from <body> to the chart's card
     for (var n = el; n && n !== document.body; n = n.parentElement) {
       var p = n.parentElement;
