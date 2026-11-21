@@ -222,6 +222,9 @@ details.tbl .n { text-align: right; }
 .dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
 @media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--line);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--fg-muted)}}
 .dqa-r{display:inline-block;border:1px solid var(--fg-muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--fg);white-space:nowrap}
+.chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--fg-muted); max-width: 90ch; }
+.chart-src b { font-weight: 600; }
+.chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 </style>
 <link rel="stylesheet" href="../pug-header.css">
 <script src="../embed.js"></script><script defer src="../analytics.js"></script><script defer src="../feedback.js?v=2"></script>
@@ -249,7 +252,8 @@ details.tbl .n { text-align: right; }
         <div class="splitbar" id="splitbar" role="img"></div>
         <div class="splitkey" id="splitkey"></div>
         <div class="tiles" id="tiles"></div>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/bears-will-be-boys" target="_blank" rel="noopener">Kids book animals</a> (MakeoverMonday dataset), compiled by <a href="https://pudding.cool/2025/07/kids-books/" target="_blank" rel="noopener">The Pudding</a> for “Bears Will Be Boys.”</p>
+</div>
     </div>
   </header>
 
@@ -279,7 +283,8 @@ details.tbl .n { text-align: right; }
       <div class="chart" id="c1"></div>
       <details class="tbl"><summary>Table: characters by animal</summary><div class="tw" id="t1"></div></details>
     </div>
-  </section>
+  <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/bears-will-be-boys" target="_blank" rel="noopener">Kids book animals</a> (MakeoverMonday dataset), compiled by <a href="https://pudding.cool/2025/07/kids-books/" target="_blank" rel="noopener">The Pudding</a> for “Bears Will Be Boys.”</p>
+</section>
 
 
   <section class="sec" aria-labelledby="s1b" id="luck">
@@ -296,7 +301,8 @@ details.tbl .n { text-align: right; }
       <div class="chart" id="c1b"></div>
       <p class="note" id="c1bn"></p>
       <p class="bridge">Some of these gaps are real, and some are just what small casts do. The next chart separates them.</p>
-    </div>
+    <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/bears-will-be-boys" target="_blank" rel="noopener">Kids book animals</a> (MakeoverMonday dataset), compiled by <a href="https://pudding.cool/2025/07/kids-books/" target="_blank" rel="noopener">The Pudding</a> for “Bears Will Be Boys.”</p>
+</div>
     <div class="card">
       <h3 id="c1ch"></h3>
       <p class="luck"><b>What “luck” means here.</b> Imagine a weighted coin that lands “boy” about 2 times in 3 for every character, whatever the animal. Even then, a small cast would sometimes look lopsided: deal 17 frogs and you would expect about 11 boys, but 14 or more would turn up now and then. The funnel marks how lopsided a cast can get by coin flips alone. The fewer characters, the wider it swings.</p>
@@ -309,7 +315,8 @@ details.tbl .n { text-align: right; }
       <div class="chart" id="c1c"></div>
       <p class="note" id="c1cn"></p>
       <details class="tbl"><summary>Table: girls found and expected, by animal</summary><div class="tw" id="t1b"></div></details>
-    </div>
+    <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/bears-will-be-boys" target="_blank" rel="noopener">Kids book animals</a> (MakeoverMonday dataset), compiled by <a href="https://pudding.cool/2025/07/kids-books/" target="_blank" rel="noopener">The Pudding</a> for “Bears Will Be Boys.”</p>
+</div>
   </section>
 
   <section class="sec" aria-labelledby="s2">
@@ -321,13 +328,15 @@ details.tbl .n { text-align: right; }
         <ul class="keyrow"><li><i style="background:var(--he)"></i>he/him</li><li><i style="background:var(--it)"></i>it</li><li><i style="background:var(--she)"></i>she/her</li></ul>
         <div class="chart" id="c2"></div>
         <p class="note">Decade comes from the publication year. Books before 1950 are grouped together.</p>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/bears-will-be-boys" target="_blank" rel="noopener">Kids book animals</a> (MakeoverMonday dataset), compiled by <a href="https://pudding.cool/2025/07/kids-books/" target="_blank" rel="noopener">The Pudding</a> for “Bears Will Be Boys.”</p>
+</div>
       <div class="card">
         <h3>Goodreads rating and popularity, one dot per book</h3>
         <ul class="keyrow"><li><i class="dot" style="background:var(--he)"></i>Only male animals</li><li><i class="dot" style="background:var(--she)"></i>Only female animals</li><li><i class="ring"></i>Both, or only “it”</li></ul>
         <div class="chart" id="c3"></div>
         <p class="note" id="c3n"></p>
-      </div>
+      <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/bears-will-be-boys" target="_blank" rel="noopener">Kids book animals</a> (MakeoverMonday dataset), compiled by <a href="https://pudding.cool/2025/07/kids-books/" target="_blank" rel="noopener">The Pudding</a> for “Bears Will Be Boys.” Ratings and rating counts: Goodreads, as collected by The Pudding.</p>
+</div>
     </div>
   </section>
 

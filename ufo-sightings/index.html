@@ -175,6 +175,9 @@ details.tbl td.n, details.tbl th.n { text-align: right; }
 .dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
 @media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--line);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--fg-muted)}}
 .dqa-r{display:inline-block;border:1px solid var(--fg-muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--fg);white-space:nowrap}
+.chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--fg-muted); max-width: 90ch; }
+.chart-src b { font-weight: 600; }
+.chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 </style>
 <link rel="stylesheet" href="../pug-header.css">
 <script src="../embed.js"></script><script defer src="../analytics.js"></script><script defer src="../feedback.js?v=2"></script>
@@ -223,7 +226,8 @@ details.tbl td.n, details.tbl th.n { text-align: right; }
       </div>
       <div class="detail" id="detail" aria-live="polite"></div>
     </div>
-  </section>
+  <p class="chart-src"><b>Source:</b> NUFORC reports with images, via the <a href="https://makeovermonday.vercel.app/dataset/2026-wk25-ufo-sightings" target="_blank" rel="noopener">MakeoverMonday 2026 Week 25 dataset</a>. Map outlines: U.S. Census Bureau cartographic boundaries, via us-atlas. Per-million view: U.S. Census Bureau, 2020 Census populations.</p>
+</section>
 
   <section class="sec" aria-labelledby="s2">
     <div class="sec-h"><span class="num">02 · ADJUSTED FOR POPULATION</span><h2 id="s2">The raw leaders mostly reflect where people live</h2>
@@ -237,7 +241,8 @@ details.tbl td.n, details.tbl th.n { text-align: right; }
       <ul class="keyrow" id="lkkey"></ul>
       <div class="chart" id="cFun"></div>
       <p class="note" id="cFn"></p>
-    </div>
+    <p class="chart-src"><b>Source:</b> NUFORC reports with images, via the <a href="https://makeovermonday.vercel.app/dataset/2026-wk25-ufo-sightings" target="_blank" rel="noopener">MakeoverMonday 2026 Week 25 dataset</a>. State populations: U.S. Census Bureau, 2020 Census.</p>
+</div>
     <div class="card" style="margin-top:var(--gap)">
       <h3>The same 51 states, ranked by reports per million residents</h3>
       <ul class="keyrow">
@@ -249,17 +254,22 @@ details.tbl td.n, details.tbl th.n { text-align: right; }
       <div class="chart" id="cRate"></div>
       <p class="note">Rate = reports in this dataset ÷ 2020 Census population × 1,000,000. Whiskers are 90% Poisson intervals. Small states with a handful of reports have wide intervals, so their rank is not stable. The funnel above shows how many of the 51 could land outside it by luck alone.</p>
       <details class="tbl"><summary>Show as a table</summary><div id="tRate"></div></details>
-    </div>
+    <p class="chart-src"><b>Source:</b> NUFORC reports with images, via the <a href="https://makeovermonday.vercel.app/dataset/2026-wk25-ufo-sightings" target="_blank" rel="noopener">MakeoverMonday 2026 Week 25 dataset</a>. State populations: U.S. Census Bureau, 2020 Census.</p>
+</div>
   </section>
 
   <section class="sec" aria-labelledby="s3">
     <div class="sec-h"><span class="num">03 · WHEN, WHAT, HOW LONG</span><h2 id="s3">Mostly after dark, mostly round or just a light, mostly a few minutes</h2>
       <p class="sec-p">These four charts follow the State and City filters above.</p></div>
     <div class="grid2">
-      <div class="card"><h3>Time of day</h3><p class="scope" data-scope></p><div class="chart" id="cHour"></div><p class="note" id="nHour"></p></div>
-      <div class="card"><h3>Reported shape</h3><p class="scope" data-scope></p><div class="chart" id="cShape"></div><p class="note">NUFORC’s 22 shape labels grouped into 7. Each bar lists the labels inside it.</p></div>
-      <div class="card"><h3>How long it lasted</h3><p class="scope" data-scope></p><div class="chart" id="cDur"></div><p class="note" id="nDur"></p></div>
-      <div class="card"><h3>Time from sighting to posting</h3><p class="scope" data-scope></p><div class="chart" id="cLag"></div><p class="note" id="nLag"></p></div>
+      <div class="card"><h3>Time of day</h3><p class="scope" data-scope></p><div class="chart" id="cHour"></div><p class="note" id="nHour"></p><p class="chart-src"><b>Source:</b> NUFORC reports with images, via the <a href="https://makeovermonday.vercel.app/dataset/2026-wk25-ufo-sightings" target="_blank" rel="noopener">MakeoverMonday 2026 Week 25 dataset</a>.</p>
+</div>
+      <div class="card"><h3>Reported shape</h3><p class="scope" data-scope></p><div class="chart" id="cShape"></div><p class="note">NUFORC’s 22 shape labels grouped into 7. Each bar lists the labels inside it.</p><p class="chart-src"><b>Source:</b> NUFORC reports with images, via the <a href="https://makeovermonday.vercel.app/dataset/2026-wk25-ufo-sightings" target="_blank" rel="noopener">MakeoverMonday 2026 Week 25 dataset</a>.</p>
+</div>
+      <div class="card"><h3>How long it lasted</h3><p class="scope" data-scope></p><div class="chart" id="cDur"></div><p class="note" id="nDur"></p><p class="chart-src"><b>Source:</b> NUFORC reports with images, via the <a href="https://makeovermonday.vercel.app/dataset/2026-wk25-ufo-sightings" target="_blank" rel="noopener">MakeoverMonday 2026 Week 25 dataset</a>.</p>
+</div>
+      <div class="card"><h3>Time from sighting to posting</h3><p class="scope" data-scope></p><div class="chart" id="cLag"></div><p class="note" id="nLag"></p><p class="chart-src"><b>Source:</b> NUFORC reports with images, via the <a href="https://makeovermonday.vercel.app/dataset/2026-wk25-ufo-sightings" target="_blank" rel="noopener">MakeoverMonday 2026 Week 25 dataset</a>.</p>
+</div>
     </div>
   </section>
 
