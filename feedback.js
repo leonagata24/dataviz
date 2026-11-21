@@ -59,7 +59,7 @@
   window.pugFeedback = function (host, key) { mount(host, key, true); };
   var m = location.pathname.match(/\/dataviz\/([^\/]+)\/?(?:index\.html)?$/) || location.pathname.match(/^\/([^\/]+)\/?(?:index\.html)?$/);
   var slug = m && m[1] !== "dataviz" ? m[1] : null;
-  if (slug && !document.getElementById("potd")) {
+  if (slug && !document.getElementById("potd") && !/[?&]potd=/.test(location.search)) {
     var go = function () { mount(document.body, slug, false); };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go); else go();
   }
