@@ -46,6 +46,28 @@ a { color: inherit; }
 .title { font-family: var(--disp); font-weight: 700; font-size: clamp(2rem, 5.2vw, 3.3rem); line-height: 1.03; letter-spacing: -.035em; margin: 0; text-wrap: balance; }
 .lede { line-height: 1.55; margin: 0; font-size: 15.5px; }
 .lede a { font-weight: 600; }
+.skywrap { position: relative; border-radius: 14px; overflow: hidden; isolation: isolate; background: linear-gradient(180deg, #3f86dd 0%, #7fb7ee 52%, #cfe5f8 100%); }
+.skyph { position: absolute; inset: 0; overflow: hidden; z-index: 0; background: #4aa3e3; }
+.skyph img { position: absolute; display: block; max-width: none; height: auto; will-change: transform; }
+.skyph .sk1 { width: 140%; height: 300%; object-fit: cover; left: -20%; top: 0; transform: translate3d(-4%, -43%, 0); animation: skA 70s ease-in-out infinite alternate; }
+.skyph .sk2 { width: 190%; height: 380%; object-fit: cover; left: -45%; top: 0; transform: translate3d(5%, -36%, 0) scaleX(-1); mix-blend-mode: lighten; opacity: .6; animation: skB 46s ease-in-out infinite alternate; }
+@keyframes skA { to { transform: translate3d(4%, -35%, 0); } }
+@keyframes skB { to { transform: translate3d(-5%, -42%, 0) scaleX(-1); } }
+@media (prefers-reduced-motion: reduce) { .sk1, .sk2 { animation: none; } }
+.sky-credit { position: absolute; left: 10px; bottom: 6px; z-index: 3; margin: 0; font: 500 10px var(--mono); color: #0b2947; background: rgba(255,255,255,.8); border-radius: 99px; padding: 2px 9px; }
+.sky-credit a { color: inherit; }
+.skywrap .chart { z-index: 1; }
+.skywrap .tick { fill: #10304f; paint-order: stroke; stroke: rgba(255,255,255,.85); stroke-width: 3px; stroke-linejoin: round; }
+.skywrap .axt { fill: #0b2947; paint-order: stroke; stroke: rgba(255,255,255,.9); stroke-width: 3.5px; stroke-linejoin: round; }
+.skywrap .lab { fill: #0b2947; stroke: rgba(255,255,255,.92); stroke-width: 3.5px; opacity: 0; transition: opacity .5s; }
+.skywrap .lab.on { opacity: 1; }
+.skywrap .gl { stroke: rgba(255,255,255,.55); }
+.skywrap .rf { stroke: rgba(11,41,71,.8); }
+.skywrap .sd { opacity: 0; transition: opacity .25s; }
+.skywrap .sd.on { opacity: 1; }
+.skywrap .replay { position: absolute; right: 10px; bottom: 4px; z-index: 3; font: 600 12px var(--mono); letter-spacing: .04em; background: rgba(255,255,255,.88); color: #0b2947; border: 0; border-radius: 99px; padding: 4px 10px; cursor: pointer; }
+.skywrap .replay:hover { background: #fff; }
+.skywrap .replay:focus-visible { outline: 2px solid #0b2947; outline-offset: 2px; }
 .hero-photo { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 40%; opacity: 0; transition: opacity .4s; }
 .hero.has-photo .hero-photo { opacity: 1; -webkit-mask-image: linear-gradient(90deg, transparent 46%, #000 72%); mask-image: linear-gradient(90deg, transparent 46%, #000 72%); }
 .hero.has-photo .hero-art svg, .hero.has-photo .ground { display: none; }
@@ -175,9 +197,9 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     <p class="pen">Our toys last four minutes. Respect.</p>
     <p>Group the balloons by the year they were built and count how many the archive still lists as in service. The share falls steadily with age and crosses one half between the 1991 and 1992 builds, roughly 35 years old today. For the 1,052 balloons built from 1990 to 1994 it is <b>52%</b>, with a 95% range of 49% to 55%, so "half" is a fair reading and not a rounding trick. There is no cliff: <b>34%</b> of late-1980s builds and <b>74%</b> of early-2000s builds are still flying, so retirement looks gradual rather than tied to a fixed lifespan.</p>
     <p>This is a snapshot, not a true survival curve. An old balloon scrapped decades ago is less likely to have been entered at all, which would make old balloons look more durable than they were, and "in service" is the archive's label with no date attached. The result does not hinge on the oddities in the file: leaving out rebuilt envelopes gives 50% for 1990 to 1994, and US-based balloons alone give 54%.</p>
-    <div class="card">
+    <div class="card" id="card-surv">
       <h3>Share of balloons still listed as in service, by year built</h3>
-      <div class="chart" id="c-surv"></div>
+      <div class="skywrap" id="skywrap"><div class="skyph" aria-hidden="true"><img class="sk1" src="sky-clouds.webp" alt=""><img class="sk2" src="sky-clouds.webp" alt=""></div><p class="sky-credit">Photo: <a href="https://unsplash.com/@iccup?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noopener">iccup</a> on <a href="https://unsplash.com/photos/white-clouds-and-blue-sky-during-daytime-xNtwmcRP-gw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noopener">Unsplash</a></p><div class="chart" id="c-surv"></div><button type="button" class="replay" id="replay" aria-label="Replay the line build-up">&#8635; Replay</button></div>
       <p class="note">Each point is one build year, 1970 to 2026. Hollow points are build years with fewer than 80 balloons, which bounce around accordingly. Dashed line: half in service.</p>
     <p class="chart-src"><b>Source:</b> <a href="https://thehabdatabase.com/" target="_blank" rel="noopener">The Hot Air Balloon Database</a>, via the <a href="https://www.kaggle.com/datasets/matthuff4/hot-air-balloon" target="_blank" rel="noopener">Hot Air Balloon dataset on Kaggle</a> (MakeoverMonday 2026 Week 45).</p>
 </div>
@@ -337,22 +359,58 @@ function comp(){const rows=D.comp,rh=30,{svg,w,h,hit,small}=stage("c-comp",rows.
     keys.forEach((k,j)=>el("circle",{cx:x(r[k]),cy:y,r:5.5,fill:C[j],stroke:"var(--panel)","stroke-width":2},svg));
     hit(el("rect",{x:0,y:y-rh/2,width:w,height:rh,class:"hit"},svg),`<span class="h">${r.f}</span>`+keys.map(k=>`<span class="m">${nm[k]}: ${pct(r[k],1)}</span>`).join("")+`<span class="m">All balloons: ${pct(r.all,1)}</span>`)})}
 
-function surv(){const d=D.surv,{svg,w,h,hit,small}=stage("c-surv",352,"Line chart: share of balloons still in service rises from about 15 percent for 1970s builds to nearly 100 percent for 2020s builds, crossing one half around 1991");
-  const L=44,R=20,T=34,B=52,x=lin(1970,2026,L,w-R),y=lin(0,1,h-B,T);
-  txt(svg,"Share still in service",{x:0,y:12,class:"axt"});txt(svg,"Year built",{x:(L+w-R)/2,y:h-6,"text-anchor":"middle",class:"axt"});
+const SV={t0:null,vis:false,raf:0,frame:null,sway:null,reduced:matchMedia("(prefers-reduced-motion: reduce)").matches,DUR:8000};
+const easeIO=t=>.5-.5*Math.cos(Math.PI*t);
+function skyBalloon(parent,s){
+  const INK="#0b3a82",g=el("g",{"pointer-events":"none"},parent),k=el("g",{transform:`scale(${s})`,fill:INK,stroke:"#fff","stroke-width":2.4,"paint-order":"stroke","stroke-linejoin":"round","stroke-linecap":"round"},g);
+  el("path",{d:"M-5,-35 C-7,-42 -22,-52 -21,-67 C-20,-80 -8,-85 0,-85 C8,-85 20,-80 21,-67 C22,-52 7,-42 5,-35 Z"},k);
+  el("rect",{x:-5.5,y:-14,width:11,height:8,rx:1.4},k);
+  [[-4,-14,-6.2,-36],[4,-14,6.2,-36]].forEach(q=>el("line",{x1:q[0],y1:q[1],x2:q[2],y2:q[3],stroke:INK,"stroke-width":1.7},k));
+  el("line",{x1:0,y1:-6,x2:0,y2:0,stroke:INK,"stroke-width":1.2},k);
+  return{g,flame:el("g",{},k)}}
+
+function surv(){const d=D.surv,{svg,w,h,hit,small}=stage("c-surv",456,"Animated line chart: share of balloons still in service rises from about 15 percent for 1970s builds to nearly 100 percent for 2020s builds, crossing one half around 1991");
+  const L=44,R=26,T=122,B=78,x=lin(1970,2026,L,w-R),y=lin(0,1,h-B,T),INK="#0b3a82";
+  txt(svg,"Share still in service",{x:10,y:20,class:"axt"});txt(svg,"Year built",{x:(L+w-R)/2,y:h-B+44,"text-anchor":"middle",class:"axt"});
   [0,.25,.5,.75,1].forEach(t=>{el("line",{x1:L,x2:w-R,y1:y(t),y2:y(t),class:"gl"},svg);txt(svg,pct(t),{x:L-8,y:y(t)+4,"text-anchor":"end",class:"tick"})});
   (small?[1970,1990,2010,2026]:[1970,1980,1990,2000,2010,2020,2026]).forEach(t=>txt(svg,t,{x:x(t),y:h-B+18,"text-anchor":"middle",class:"tick"}));
   el("line",{x1:L,x2:w-R,y1:y(.5),y2:y(.5),class:"rf"},svg);
-  el("path",{d:d.map((p,i)=>(i?"L":"M")+x(p.y)+","+y(p.in/p.n)).join(""),fill:"none",stroke:C[0],"stroke-width":2,"stroke-linejoin":"round"},svg);
-  d.forEach(p=>el("circle",{cx:x(p.y),cy:y(p.in/p.n),r:p.n<80?2.5:3.5,fill:p.n<80?"var(--panel)":C[0],stroke:C[0],"stroke-width":1.5},svg));
-  const lab=(yr,s,dx,dy,a)=>{const p=d.find(q=>q.y===yr);txt(svg,s.replace("%",pct(p.in/p.n)),{x:x(yr)+dx,y:y(p.in/p.n)+dy,"text-anchor":a,class:"lab"})};
-  lab(1991,small?"1991: %":"Built 1991: % still in service",10,16,"start");lab(1973,"1973: 0 of 20",8,-8,"start");lab(2015,"2015: %",-6,-12,"end");
-  const cur=el("line",{y1:T,y2:h-B,stroke:"var(--axis)","stroke-width":1,visibility:"hidden"},svg);
+  const dd=d.map((p,i)=>(i?"L":"M")+x(p.y)+","+y(p.in/p.n)).join("");
+  const casing=el("path",{d:dd,fill:"none",stroke:"rgba(255,255,255,.9)","stroke-width":6,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
+  const line=el("path",{d:dd,fill:"none",stroke:INK,"stroke-width":2.6,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
+  const len=line.getTotalLength();
+  const dots=d.map(p=>el("circle",{cx:x(p.y),cy:y(p.in/p.n),r:p.n<80?3:4,fill:p.n<80?"#fff":INK,stroke:p.n<80?INK:"#fff","stroke-width":p.n<80?1.8:1.4,class:"sd"},svg));
+  const labs=[];const lab=(yr,s,dx,dy,a)=>{const p=d.find(q=>q.y===yr);const t=txt(svg,s.replace("%",pct(p.in/p.n)),{x:x(yr)+dx,y:y(p.in/p.n)+dy,"text-anchor":a,class:"lab"});labs.push([x(yr),t])};
+  lab(1991,small?"1991: %":"Built 1991: % still in service",10,18,"start");lab(1973,"1973: 0 of 20",8,-8,"start");lab(2015,"2015: %",-6,-14,"end");
+  const bl=skyBalloon(svg,small?.85:1.2);
+  const cur=el("line",{y1:T,y2:h-B,stroke:"rgba(11,41,71,.55)","stroke-width":1,visibility:"hidden"},svg);
   const r=el("rect",{x:L,y:T,width:w-L-R,height:h-T-B,class:"hit"},svg);
   hit(r,e=>{const bx=svg.getBoundingClientRect(),yr=Math.round(1970+(e.clientX-bx.left-L)/(w-L-R)*56),p=d.reduce((a,b)=>Math.abs(b.y-yr)<Math.abs(a.y-yr)?b:a);
     cur.setAttribute("x1",x(p.y));cur.setAttribute("x2",x(p.y));cur.setAttribute("visibility","visible");
     return `<span class="h">Built ${p.y}</span><span class="m">${pct(p.in/p.n)} in service</span><span class="m">${p.in} of ${p.n} balloons</span>`});
-  r.addEventListener("pointerleave",()=>cur.setAttribute("visibility","hidden"))}
+  r.addEventListener("pointerleave",()=>cur.setAttribute("visibility","hidden"));
+  SV.frame=p=>{const Lp=len*p;[casing,line].forEach(e=>{e.style.strokeDasharray=len+" "+(len+2);e.style.strokeDashoffset=len-Lp});
+    const pt=line.getPointAtLength(Math.max(.01,Lp));dots.forEach((c,i)=>c.classList.toggle("on",d.length&&x(d[i].y)<=pt.x+.5));
+    labs.forEach(q=>q[1].classList.toggle("on",q[0]<=pt.x+.5));SV.pt=pt};
+  SV.sway=t=>{const pt=SV.pt||line.getPointAtLength(.01),a=3.2*Math.sin(t/520)+1.2*Math.sin(t/230),by=1.6*Math.sin(t/340);
+    bl.g.setAttribute("transform",`translate(${pt.x},${pt.y+by}) rotate(${a})`);0};
+  const now=performance.now(),p=SV.reduced?1:(SV.t0==null?0:Math.min(1,(now-SV.t0)/SV.DUR));
+  SV.frame(SV.reduced||p>=1?1:easeIO(p));SV.sway(now)}
+
+(function skyInit(){
+  const wrap=document.getElementById("skywrap"),rep=document.getElementById("replay");if(!wrap)return;
+    const start=()=>{SV.t0=performance.now();if(SV.reduced){SV.frame&&SV.frame(1)}loop0()};
+  const loop0=()=>{if(!SV.raf&&SV.vis&&!document.hidden)SV.raf=requestAnimationFrame(loop)};
+  const loop=now=>{SV.raf=0;if(!SV.vis||document.hidden)return;
+    if(SV.frame){const p=SV.reduced?1:(SV.t0==null?0:Math.min(1,(now-SV.t0)/SV.DUR));SV.frame(p>=1?1:easeIO(p))}
+    if(SV.sway)SV.sway(now);
+    if(!SV.reduced)SV.raf=requestAnimationFrame(loop)};
+  rep.addEventListener("click",()=>{SV.t0=performance.now();SV.reduced=false;SV.vis=true;loop0()});
+  document.addEventListener("visibilitychange",loop0);
+  const go=()=>{SV.vis=true;if(SV.t0==null)SV.t0=performance.now()+(SV.reduced?-SV.DUR:350);loop0()};
+  if("IntersectionObserver"in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go();else SV.vis=false}),{threshold:.3}).observe(wrap);else go();
+  if(SV.reduced)rep.hidden=true;
+  setTimeout(()=>{if(SV.vis&&SV.reduced){loop0()}},0)})();
 
 function makers(){const d=D.makers,ks=D.mk,{svg,w,h,hit,small}=stage("c-mk",384,"Stacked columns: Aerostar/Raven and Firefly/Balloon Works shrink to nothing by the 2020s while Lindstrand US, Kubicek and Ultramagic grow");
   document.getElementById("lg-mk").innerHTML=ks.map((k,i)=>`<li><span class="sw" style="background:${C[i]}"></span>${k}</li>`).join("");

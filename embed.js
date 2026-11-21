@@ -13,7 +13,7 @@
   // key -> [selector, closest container to show]
   var T = {
     "mn-dist": ["#stress .card"],
-    "hb-size": ["#card-size"],
+    "hb-surv": ["#card-surv"],
     "pz-ai": ["#c-ai", ".card"],
     "mc-trend": ["#trend .panel"],
     "cc-map": ["#map .plate"],
