@@ -49,10 +49,10 @@ a { color: inherit; }
 .skywrap { position: relative; border-radius: 14px; overflow: hidden; isolation: isolate; background: linear-gradient(180deg, #3f86dd 0%, #7fb7ee 52%, #cfe5f8 100%); }
 .skyph { position: absolute; inset: 0; overflow: hidden; z-index: 0; background: #4aa3e3; }
 .skyph img { position: absolute; display: block; max-width: none; height: auto; will-change: transform; }
-.skyph .sk1 { width: 140%; height: 300%; object-fit: cover; left: -20%; top: 0; transform: translate3d(-4%, -43%, 0); animation: skA 105s ease-in-out infinite alternate; }
-.skyph .sk2 { width: 190%; height: 380%; object-fit: cover; left: -45%; top: 0; transform: translate3d(5%, -36%, 0) scaleX(-1); mix-blend-mode: lighten; opacity: .6; animation: skB 70s ease-in-out infinite alternate; }
-@keyframes skA { to { transform: translate3d(4%, -35%, 0); } }
-@keyframes skB { to { transform: translate3d(-5%, -42%, 0) scaleX(-1); } }
+.skyph .sk1 { width: 140%; height: 300%; object-fit: cover; left: -20%; top: 0; transform: translate3d(-7%, -43%, 0); animation: skA 24s ease-in-out infinite alternate; }
+.skyph .sk2 { width: 190%; height: 380%; object-fit: cover; left: -45%; top: 0; transform: translate3d(9%, -36%, 0) scaleX(-1); mix-blend-mode: lighten; opacity: .6; animation: skB 24s ease-in-out infinite alternate; }
+@keyframes skA { to { transform: translate3d(7%, -36%, 0); } }
+@keyframes skB { to { transform: translate3d(-9%, -42%, 0) scaleX(-1); } }
 @media (prefers-reduced-motion: reduce) { .sk1, .sk2 { animation: none; } }
 .sky-credit { position: absolute; left: 10px; bottom: 6px; z-index: 3; margin: 0; font: 500 10px var(--mono); color: #0b2947; background: rgba(255,255,255,.8); border-radius: 99px; padding: 2px 9px; }
 .sky-credit a { color: inherit; }
