@@ -3,7 +3,8 @@
    (the "mycode" part of mycode.goatcounter.com). Empty = analytics off. */
 (function () {
   var CODE = "pugdataviz";
-  if (!CODE || location.hostname !== "leonagata24.github.io") return; // live site only: no local or preview hits
+  if (!CODE || location.hostname !== "leonagata24.github.io") return;
+  if (/[?&]potd=/.test(location.search)) return; // chart embedded on the home page: not a page view // live site only: no local or preview hits
   var s = document.createElement("script");
   s.async = true;
   s.dataset.goatcounter = "https://" + CODE + ".goatcounter.com/count";

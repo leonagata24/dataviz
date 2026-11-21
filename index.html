@@ -86,7 +86,9 @@ header p{color:var(--muted);margin:0}
 .potd-hd h2{margin:0;font-family:var(--f-mono);font-size:12px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 .potd-date{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
 .potd-fig{margin:0;display:flex;flex-direction:column;gap:16px}
-.potd-mat{background:var(--th);border-radius:14px;padding:clamp(10px,2vw,16px);display:flex;justify-content:center;box-shadow:inset 0 0 0 1px var(--line)}
+.potd-mat{position:relative;background:var(--th);border-radius:14px;padding:clamp(10px,2vw,16px);display:flex;flex-direction:column;align-items:center;box-shadow:inset 0 0 0 1px var(--line);overflow:hidden}
+.potd-live{position:absolute;left:0;top:0;width:100%;height:640px;border:0;opacity:0;pointer-events:none}
+.potd-live.on{position:static;align-self:stretch;opacity:1;pointer-events:auto;border-radius:6px;display:block}
 .potd-mat img{display:block;max-width:100%;width:auto;height:auto;max-height:min(480px,70vh);border-radius:6px;background:var(--card)}
 .potd-body{display:flex;flex-direction:column;gap:18px}
 .potd-lead{display:flex;flex-direction:column;gap:10px}
@@ -175,14 +177,23 @@ const FEAT=[{"k": "mn-dist", "u": "mn-turkey/", "t": "How far would the turkeys 
 (function potd(){const now=new Date(),day=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/864e5),f=FEAT[day%FEAT.length],p=P.find(x=>x.u===f.u);if(!p)return;
 const q="q"+(Math.floor(p.mo/3)+1),el=document.getElementById("potd");el.className="potd-body "+q;
 document.getElementById("potd-date").textContent=now.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
-const alts=f.alt||null;let cur=0;
-const paint=()=>{const v=alts?alts[cur]:f;
-el.innerHTML=(alts?`<div class="potd-tg" role="group" aria-label="Choose a view">${alts.map((a,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===cur}">${a.l}</button>`).join("")}</div>`:"")+`<div class="potd-lead"><h3>${v.t}</h3><p class="potd-obs">${v.o}</p></div>
-<figure class="potd-fig"><div class="potd-mat"><picture><source media="(prefers-color-scheme: dark)" srcset="feature/${v.k}-dark.webp"><img src="feature/${v.k}-light.webp" width="${f.w}" height="${f.h}" alt="Chart: ${v.t}, from ${p.t}"></picture></div>
+const alts=f.alt||null;let cur=0;const V=()=>alts?alts[cur]:f;
+/* the snapshot shows first; the live chart (an iframe of the study page, ?potd=key) replaces it once it reports its height */
+const pic=v=>`<picture class="potd-pic"><source media="(prefers-color-scheme: dark)" srcset="feature/${v.k}-dark.webp"><img src="feature/${v.k}-light.webp" width="${f.w}" height="${f.h}" alt="Chart: ${v.t}, from ${p.t}"></picture>`;
+el.innerHTML=(alts?`<div class="potd-tg" role="group" aria-label="Choose a view">${alts.map((a,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===cur}">${a.l}</button>`).join("")}</div>`:"")+`<div class="potd-lead"><h3></h3><p class="potd-obs"></p></div>
+<figure class="potd-fig"><div class="potd-mat">${pic(V())}</div>
 <figcaption class="potd-ctx"><div class="potd-src"><span class="m">${p.m}</span><p>From <b>${p.t}</b>. ${p.d}</p></div><a class="potd-go" href="${p.u}" target="_blank" rel="noopener">Open the full page →</a></figcaption></figure>`;
-el.querySelectorAll(".potd-tg button").forEach(b=>b.addEventListener("click",()=>{cur=+b.dataset.i;paint();el.querySelector(".potd-tg button[aria-pressed=true]").focus();mount()}))};
-const mount=()=>window.pugFeedback&&window.pugFeedback(el.querySelector(".potd-fig"),"potd-"+f.k+(alts?"-"+alts[cur].k:""));
-paint();window.pugFeedback?mount():addEventListener("load",mount)})();
+const mat=el.querySelector(".potd-mat"),fig=el.querySelector(".potd-fig");let live=false,shownK=V().k;
+const fr=document.createElement("iframe");fr.className="potd-live";fr.title="Interactive chart: "+f.t;fr.setAttribute("scrolling","no");fr.src=p.u+"?potd="+f.k;mat.appendChild(fr);
+const drop=()=>{if(!live&&fr.parentNode)fr.remove()};setTimeout(drop,12000);
+addEventListener("message",e=>{const d=e.data;if(e.source!==fr.contentWindow||!d||d.type!=="pug-embed"||d.key!==f.k)return;
+if(d.h<0){drop();return}fr.style.height=d.h+"px";if(!live){live=true;fr.classList.add("on");const pc=mat.querySelector(".potd-pic");if(pc)pc.remove()}});
+const mount=()=>{if(!window.pugFeedback)return;const old=fig.querySelector(".pf");if(old)old.remove();window.pugFeedback(fig,"potd-"+f.k+(alts?"-"+alts[cur].k:""))};
+const text=()=>{const v=V();el.querySelector(".potd-lead h3").textContent=v.t;el.querySelector(".potd-obs").textContent=v.o;
+if(!live&&v.k!==shownK){shownK=v.k;const pc=mat.querySelector(".potd-pic");if(pc)pc.outerHTML=pic(v)}};
+text();
+el.querySelectorAll(".potd-tg button").forEach(b=>b.addEventListener("click",()=>{cur=+b.dataset.i;el.querySelectorAll(".potd-tg button").forEach(x=>x.setAttribute("aria-pressed",x===b));text();mount()}));
+window.pugFeedback?mount():addEventListener("load",mount)})();
 {const t=document.getElementById("tl");t.scrollLeft=t.scrollWidth}
 </script>
 </body>

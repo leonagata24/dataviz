@@ -175,7 +175,7 @@ details.tbl td.n, details.tbl th.n { text-align: right; }
 .dqa-r{display:inline-block;border:1px solid var(--fg-muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--fg);white-space:nowrap}
 </style>
 <link rel="stylesheet" href="../pug-header.css">
-<script defer src="../analytics.js"></script><script defer src="../feedback.js?v=2"></script>
+<script src="../embed.js"></script><script defer src="../analytics.js"></script><script defer src="../feedback.js?v=2"></script>
 </head>
 <body>
 <div class="w">
@@ -609,7 +609,7 @@ function drawFunnel() {
   box.querySelectorAll('.fd').forEach(c => { const o = D[+c.dataset.i], f = fl(o);
     c.addEventListener('mousemove', e => showTip(`<b>${o.n}</b>${lk.mode === 'coin' ? ' (coin cast)' : ''}<br>${rate(o).toFixed(1)} per million <span class="m">(${o.k} report${o.k === 1 ? '' : 's'}, ${fmt(o.pop)} residents)</span><br><span class="m">The national rate would give ${o.E.toFixed(1)} reports</span><br>${f > 0 ? 'Above the national rate' : f < 0 ? 'Below the national rate' : 'Within luck of the national rate'}`, e));
     c.addEventListener('mouseleave', hideTip);
-    if (lk.mode === 'real') { c.style.cursor = 'pointer'; c.addEventListener('click', () => { setState(o.ab); $('#s1').scrollIntoView({ behavior: 'smooth' }); }); } });
+    if (lk.mode === 'real') { c.style.cursor = 'pointer'; c.addEventListener('click', () => { hideTip(); if (window.PUG_EMBED) return window.pugOpenFull('state=' + o.ab); setState(o.ab); $('#s1').scrollIntoView({ behavior: 'smooth' }); }); } });
   const ss = simStat(), real = outN(SL), k = outN(D), up = SL.filter(o => flagOf(o, o.k) > 0).length, dn = real - up;
   const atLeast = ss.cnt.slice(real).reduce((a, v) => a + v, 0);
   $('#cFh').textContent = lk.mode === 'real'
@@ -623,7 +623,7 @@ function drawFunnel() {
   const sw = c => `<svg width="20" height="12" viewBox="-10 -6.5 20 12" aria-hidden="true" style="vertical-align:-1px;margin-right:6px"><use href="#saucer" style="color:${c}"/></svg>`;
   $('#lkkey').innerHTML = `<li>${sw('var(--accent)')}Above the national rate</li><li>${sw('var(--accent-soft)')}Within luck of it</li><li>${sw('var(--accent-dim)')}Below it</li><li><svg width="26" height="8" aria-hidden="true"><line x1="0" x2="26" y1="4" y2="4" stroke="var(--fg-2)" stroke-width="1.4"/></svg>&nbsp;90% limit</li><li><svg width="26" height="8" aria-hidden="true"><line x1="0" x2="26" y1="4" y2="4" stroke="var(--fg-2)" stroke-width="1.4" stroke-dasharray="3 3"/></svg>&nbsp;99% limit</li>`;
   $('#cFn').textContent = lk.mode === 'real'
-    ? `Rate = reports in this dataset ÷ 2020 Census population × 1,000,000. Limits are exact Poisson 90% and 99% limits around the national rate of ${NAT.toFixed(1)} per million, wider for small states. A saucer outside the 90% limit is what the ranked chart below colors orange or gray. Click a saucer to filter the map to that state.`
+    ? `Rate = reports in this dataset ÷ 2020 Census population × 1,000,000. Limits are exact Poisson 90% and 99% limits around the national rate of ${NAT.toFixed(1)} per million, wider for small states. ${window.PUG_EMBED ? '' : 'A saucer outside the 90% limit is what the ranked chart below colors orange or gray. '}${window.PUG_EMBED ? 'Click a saucer to open the full page with the map filtered to that state.' : 'Click a saucer to filter the map to that state.'}`
     : `Every state keeps its real population, but the ${fmt(R.length)} reports are re-dealt among states by a coin weighted to each state’s share of residents, so any gap from ${NAT.toFixed(1)} per million is luck by construction. Press the button again for a new cast.`;
 }
 $('#lkreal').addEventListener('click', () => { lk.mode = 'real'; drawFunnel(); });
@@ -726,6 +726,7 @@ function update(refit) {
 }
 drawInsets();
 update(true);
+{ const q = (location.search.match(/[?&]state=([A-Z]{2})\b/) || [])[1]; if (q && ST[q] && !window.PUG_EMBED) { setState(q); setTimeout(() => $('#s1').scrollIntoView(), 50); } }
 let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => update(false), 120); });
 })();
 </script>
