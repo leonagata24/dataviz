@@ -149,6 +149,15 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .tgl { display: flex; flex-wrap: wrap; gap: 8px 20px; font: 500 13px var(--sans); }
 .tgl label { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
 .tgl input { accent-color: var(--rust); width: 16px; height: 16px; }
+.lens { display: flex; width: fit-content; justify-self: start; gap: 0; border: 1.5px solid var(--fg); border-radius: 99px; overflow: hidden; margin: 0 0 12px; }
+.lens button { font: 600 13px var(--disp); background: transparent; color: var(--fg); border: 0; padding: 8px 16px; cursor: pointer; min-height: 38px; }
+.lens button[aria-pressed=true] { background: var(--fg); color: var(--panel); }
+.lens button:focus-visible { outline: 3px solid var(--rust); outline-offset: -3px; }
+.card[data-lens=dist] .read #w1, .card[data-lens=dist] .read #w2, .card[data-lens=dist] .read #w3 { order: 2; opacity: .6; border-top-color: var(--axis); }
+.card[data-lens=dist] .read #w4, .card[data-lens=dist] .read #w5 { order: 1; }
+.card[data-lens=who] .read #w4, .card[data-lens=who] .read #w5 { order: 2; opacity: .6; border-top-color: var(--axis); }
+.card[data-lens=who] .read #w3, .card[data-lens=who] .read #w1, .card[data-lens=who] .read #w2 { order: 1; }
+.card[data-lens=who] .ringc { opacity: .3; }
 .leg { align-content: space-between; list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: 13px; }
 .leg li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 2px 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line); }
 .leg li:last-child { border-bottom: 0; }
@@ -318,9 +327,10 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 
   <section class="sec" id="stress">
     <div class="fh"><span class="fb">Stress<br>test</span><span class="qn">What if the gate closes?</span><h2>The Mexico stress test: how far would the turkeys have to go?</h2></div>
-    <div class="ans"><span class="stamp">Arithmetic, not a forecast</span><span>Minnesota sits at the center of this map, and each ring is a distance. Mexico takes 71% of the export dollars and sits about <b id="k-mx">1,800 mi</b> away. If Mexico bought nothing and the other markets refilled the gap, they would need to buy about <b>about 3.5 times</b> as much (3.3 to 3.6 once rounding is allowed for), and the average mapped export dollar would travel about <b id="k-a1">2,500 mi</b> instead of <b id="k-a0">1,900 mi</b>. Only <b id="k-n1">14%</b> of export dollars would go to markets within 2,000 miles, down from <b id="k-n0">75%</b>.</span></div>
-    <div class="card">
+    <div class="ans"><span class="stamp">Arithmetic, not a forecast</span><span id="ansD">Mexico takes 71% of Minnesota's turkey export dollars from about <b id="k-mx">1,800 mi</b> away, and <b id="k-n0">75%</b> of all export dollars go to markets within 2,000 miles. If Mexico bought nothing and the other markets refilled the gap, the average mapped export dollar would travel about <b id="k-a1">2,500 mi</b> instead of <b id="k-a0">1,910 mi</b>, and only <b id="k-n1">14%</b> of all export dollars would stay within 2,000 miles. Distances are straight lines to capitals, and the dollars are estimates.</span><span id="ansW" hidden>Mexico takes an estimated $73.8 million of Minnesota's $104 million in turkey exports. To refill that gap, every other market would need to buy about <b>3.5 times</b> as much (3.3 to 3.6 once rounding is allowed for), and the new customers would be farther away. It is arithmetic, not a forecast, on data about three years old.</span></div>
+    <div class="card" data-lens="dist">
       <h3>Where Minnesota's turkey export dollars went, and how far (2023-era data)</h3>
+      <div class="lens" role="group" aria-label="Choose a view"><button type="button" data-lens="dist" aria-pressed="true">How far?</button><button type="button" data-lens="who" aria-pressed="false">Who refills?</button></div>
       <div class="ctrl">
         <label for="sl">Mexico buys <input id="sl" type="range" min="0" max="100" step="5" value="0" aria-describedby="slnote"><output id="slo" for="sl">0%</output> less</label>
         <div class="pre" role="group" aria-label="Presets">
@@ -334,11 +344,11 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <ul class="leg" id="legend" aria-label="Destinations, distances and export dollars"></ul>
       </div>
       <div class="read" aria-live="polite">
-        <div><span class="rv" id="r1">$73.8M</span><span class="rn" id="rn1">Mexico's purchases, estimated</span></div>
-        <div><span class="rv" id="r2">$104M</span><span class="rn" id="rn2">Minnesota turkey exports</span></div>
-        <div><span class="rv" id="r3">+0%</span><span class="rn" id="rn3">growth the other markets need to refill the loss</span></div>
-        <div><span class="rv" id="r4">1,910 mi</span><span class="rn" id="rn4">average distance of a mapped export dollar</span></div>
-        <div><span class="rv" id="r5">75%</span><span class="rn" id="rn5">of export dollars go to markets within 2,000 mi</span></div>
+        <div id="w1"><span class="rv" id="r1">$73.8M</span><span class="rn" id="rn1">Mexico's purchases, estimated</span></div>
+        <div id="w2"><span class="rv" id="r2">$104M</span><span class="rn" id="rn2">Minnesota turkey exports</span></div>
+        <div id="w3"><span class="rv" id="r3">+0%</span><span class="rn" id="rn3">growth the other markets need to refill the loss</span></div>
+        <div id="w4"><span class="rv" id="r4">1,910 mi</span><span class="rn" id="rn4">average distance of a mapped export dollar</span></div>
+        <div id="w5"><span class="rv" id="r5">75%</span><span class="rn" id="rn5">of export dollars go to markets within 2,000 mi</span></div>
       </div>
       <p class="note" id="slnote">How to read it: streams run in a straight line from Minnesota, and their width is proportional to estimated dollars. Rings show true distance from Minneapolis, because this map is centered there. Dots move at the same speed everywhere, so a farther market takes longer to reach: that shows distance, not real transit times. <b>Distances are straight lines from Minneapolis to each country's capital,</b> not shipping routes; the fact sheet does not say where the turkey is shipped from or which ports it uses, and Minnesota's farms are spread across the state. “All other” (15% of dollars, many countries) cannot be placed, so the average distance and the within-2,000-miles share cover the named markets only. The other markets together are about $30.2 million today (29% of the total); replacing Mexico entirely takes about +245% growth from them (90% of the simulated roundings fall between +234% and +256%). The ranges on the readouts come from 3,000 simulated roundings, each share varied by up to ±0.5 point and rescaled to 100%; they show the 5th to 95th percentile. The fact sheet gives no price, volume or time dimension, so none of this says how likely a shift is or how quickly other markets could grow. Trade-agreement reviews, tariffs and avian flu are outside this dataset.</p>
     </div>
@@ -473,7 +483,7 @@ function scen(sh,x,refill){
 function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 const MC=(()=>{const r=mulberry(46),out=[];for(let n=0;n<3000;n++){const s=SH0.map(b=>b+(r()-.5)),t=s.reduce((a,b)=>a+b,0);out.push(s.map(a=>a*100/t))}return out})();
 function rng(x,key){const a=MC.map(s=>scen(s,x,true)[key]).sort((p,q)=>p-q);return [a[Math.floor(a.length*.05)],a[Math.floor(a.length*.95)]]}
-const FL={x:0,refill:true,range:false,run:false,parts:[],acc:[],last:0,S:null};
+const FL={lens:"dist",x:0,refill:true,range:false,run:false,parts:[],acc:[],last:0,S:null};
 const RATE=0.3; // dots per second per $M
 const SRC_MAP="Sources: Minnesota Dept. of Agriculture, Minnesota Turkey Fact Sheet (2023): export shares and the $104M total; year not labeled, 2023-era data, about three years old. Dollars = share × $104M (pug estimate). Distances: straight line from Minneapolis to each country's capital, not shipping routes. Map: Natural Earth land (via world-atlas), azimuthal equidistant projection centered on Minneapolis. The stress test is arithmetic by the pugs, not a forecast.";
 function buildFlow(){
@@ -487,7 +497,7 @@ function buildFlow(){
   el("path",{d:GEO.land,fill:"var(--neutral)",opacity:.8},g);
   el("path",{d:GEO.c.US,fill:"var(--neutral-ink)",opacity:.3},g);
   DEST.forEach((d,i)=>{if(GEO.c[d.k])el("path",{d:GEO.c[d.k],fill:i===0?"var(--rust)":"var(--pine)",opacity:i===0?.5:.55},g)});
-  RING_MI.forEach(m=>{const r=m*MI*U/KMX*sc;el("circle",{cx,cy,r,fill:"none",stroke:"var(--ref)","stroke-dasharray":"3 4","stroke-width":1},svg);txt(svg,m.toLocaleString("en-US")+" mi",{x:cx,y:cy-r-3,"text-anchor":"middle",class:"ringl"})});
+  RING_MI.forEach(m=>{const r=m*MI*U/KMX*sc;el("circle",{cx,cy,r,fill:"none",stroke:"var(--ref)","stroke-dasharray":"3 4","stroke-width":1,class:"ringc"},svg);txt(svg,m.toLocaleString("en-US")+" mi",{x:cx,y:cy-r-3,"text-anchor":"middle",class:"ringl ringc"})});
   FL.kpx=narrow?.26:.34;FL.cx=cx;FL.cy=cy;FL.pxs=1000*(U/KMX)*sc;
   FL.hi=[];FL.base=[];FL.lo=[];FL.len=[];FL.ux=[];FL.uy=[];
   const col=i=>i===0?"var(--rust)":"var(--pine)";
@@ -502,7 +512,7 @@ function buildFlow(){
   FL.parts=[];FL.acc=DEST.map(()=>0);
   const lg=document.getElementById("legend");lg.style.minHeight=window.matchMedia("(min-width:861px)").matches?side+"px":"";
   lg.innerHTML='<li><span class="bd" style="background:var(--stamp)">★</span><span class="nm"><b>Minnesota</b><span>starting point: Minneapolis–St. Paul</span></span><span class="vv"><span>$104M a year</span></span></li>'+
-    DEST.map((d,i)=>`<li><span class="bd" style="background:${col(i)}">${i+1}</span><span class="nm"><b>${d.n}</b><span>${d.cap} · ${fmi(d.mi)} (${(Math.round(d.km/10)*10).toLocaleString("en-US")} km)</span></span><span class="vv"><em id="lv${i}">${d.s}% · ${fm(d.s*TOTAL/100)}</em><span id="ls${i}"></span></span></li>`).join("")+
+    DEST.map((d,i)=>`<li><span class="bd" style="background:${col(i)}">${i+1}</span><span class="nm"><b>${d.n}</b><span id="lc${i}" data-km="${(Math.round(d.km/10)*10).toLocaleString('en-US')}" data-cap="${d.cap}">${d.cap} · ${fmi(d.mi)} (${(Math.round(d.km/10)*10).toLocaleString("en-US")} km)</span></span><span class="vv"><em id="lv${i}">${d.s}% · ${fm(d.s*TOTAL/100)}</em><span id="ls${i}"></span></span></li>`).join("")+
     `<li><span class="bd" style="background:var(--neutral-ink)">?</span><span class="nm"><b>All other</b><span>many countries · not mapped</span></span><span class="vv"><em id="lv7">15% · ${fm(15*TOTAL/100)}</em><span id="ls7"></span></span></li>`;
   if(!RM&&"IntersectionObserver" in window){
     FL.base.forEach((l,i)=>{l.style.strokeDasharray=FL.len[i];l.style.strokeDashoffset=FL.len[i]});
@@ -510,17 +520,22 @@ function buildFlow(){
   }
   applyFlow();
 }
+function setLeg(i,w,w0,sh,grows,mi){
+  const lv=document.getElementById("lv"+i),ls=document.getElementById("ls"+i);if(!lv)return;
+  const same=Math.abs(w-w0)<.005,rg=FL.range?"range "+fm(Math.max(0,(sh-.5)*TOTAL/100))+" to "+fm((sh+.5)*TOTAL/100):"";
+  const money=same?sh+"% · "+fm(w0):fm(w),sub=same?rg:"was "+fm(w0)+(grows?" (+"+Math.round((w/w0-1)*100)+"%)":"");
+  const lc=document.getElementById("lc"+i);if(lc)lc.textContent=FL.lens==="dist"?lc.dataset.cap:lc.dataset.cap+" · "+fmi(mi)+" ("+lc.dataset.km+" km)";
+  if(FL.lens==="dist"){lv.textContent=mi==null?"not mapped":fmi(mi);ls.textContent=money+(sub?" · "+sub:"")}
+  else{lv.textContent=money;ls.textContent=sub}
+}
 function applyFlow(){
   const x=FL.x/100,S=scen(SH0,x,FL.refill),S0=scen(SH0,0,FL.refill);FL.S=S;
   DEST.forEach((d,i)=>{const m=i===0?1-x:S.f,k=FL.kpx,base=S.w[i]*k,hi=(d.s+.5)*TOTAL/100*m*k,lo=Math.max(0,(d.s-.5)*TOTAL/100*m*k);
     FL.base[i].setAttribute("stroke-width",base>0?Math.max(1.2,base):0);
     FL.hi[i].setAttribute("stroke-width",FL.range&&base>0?Math.max(hi,base+1):0);
     FL.lo[i].setAttribute("stroke-width",FL.range&&base>0?Math.max(.8,lo):0);
-    const lv=document.getElementById("lv"+i),ls=document.getElementById("ls"+i),w0=d.s*TOTAL/100;
-    if(lv){if(Math.abs(S.w[i]-w0)<.005){lv.textContent=d.s+"% · "+fm(w0);ls.textContent=FL.range?"range "+fm((d.s-.5)*TOTAL/100)+" to "+fm((d.s+.5)*TOTAL/100):""}
-      else{lv.textContent=fm(S.w[i]);ls.textContent="was "+fm(w0)+(i>0?" (+"+Math.round((S.w[i]/w0-1)*100)+"%)":"")}}});
-  const lv7=document.getElementById("lv7"),ls7=document.getElementById("ls7"),o0=15*TOTAL/100;
-  if(Math.abs(S.w[7]-o0)<.005){lv7.textContent="15% · "+fm(o0);ls7.textContent=FL.range?"range "+fm(14.5*TOTAL/100)+" to "+fm(15.5*TOTAL/100):""}else{lv7.textContent=fm(S.w[7]);ls7.textContent="was "+fm(o0)+" (+"+Math.round((S.w[7]/o0-1)*100)+"%)"}
+    setLeg(i,S.w[i],d.s*TOTAL/100,d.s,i>0,d.mi)});
+  setLeg(7,S.w[7],15*TOTAL/100,15,true,null);
   const gR=rng(x,"g"),aR=rng(x,"avg"),nR=rng(x,"near");
   const mx0=SH0[0]*TOTAL/100;
   document.getElementById("r1").textContent=fm(S.w[0]);document.getElementById("rn1").textContent=x===0?"Mexico's purchases, estimated":"Mexico's purchases, estimated (was "+fm(mx0)+")";
@@ -531,6 +546,9 @@ function applyFlow(){
   document.getElementById("slo").textContent=FL.x+"%";document.getElementById("sl").value=FL.x;
   document.querySelectorAll(".pre button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.v===FL.x)));
 }
+function setLens(l){FL.lens=l;const c=document.querySelector("#stress .card");c.dataset.lens=l;
+  document.querySelectorAll(".lens button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lens===l)));
+  document.getElementById("ansD").hidden=l!=="dist";document.getElementById("ansW").hidden=l!=="who";applyFlow()}
 function setX(v){FL.x=v;applyFlow()}
 function tick(t){
   if(!FL.run){FL.last=0;return}
@@ -559,6 +577,7 @@ function wire(){
   document.querySelectorAll(".pre button").forEach(b=>b.addEventListener("click",()=>{cancelPlay();setX(+b.dataset.v)}));
   document.getElementById("refill").addEventListener("change",e=>{FL.refill=e.target.checked;applyFlow()});
   document.getElementById("rngt").addEventListener("change",e=>{FL.range=e.target.checked;applyFlow()});
+  document.querySelectorAll(".lens button").forEach(b=>b.addEventListener("click",()=>setLens(b.dataset.lens)));
   const pb=document.getElementById("play");
   if(RM)pb.hidden=true;else pb.addEventListener("click",()=>{setX(0);playShock()});
   document.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>{const h=b.closest(".hyp");h.classList.add("open");b.setAttribute("aria-expanded","true")}));
@@ -573,7 +592,7 @@ const hostIds=["c-states","c-markets","c-flow"],lastW={};
 function redraw(){stopFlow();all();const r=document.getElementById("c-flow").getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)startFlow()}
 let rz;
 all();wire();hostIds.forEach(id=>lastW[id]=Math.round(document.getElementById(id).clientWidth));
-if("ResizeObserver" in window)new ResizeObserver(()=>{if(hostIds.some(id=>Math.abs(document.getElementById(id).clientWidth-lastW[id])>1)){clearTimeout(rz);rz=setTimeout(()=>{hostIds.forEach(id=>lastW[id]=Math.round(document.getElementById(id).clientWidth));redraw()},120)}}).observe(document.body);{const q=+new URLSearchParams(location.search).get('mexico');if(q>=0&&q<=100)setX(Math.round(q/5)*5)}
+if("ResizeObserver" in window)new ResizeObserver(()=>{if(hostIds.some(id=>Math.abs(document.getElementById(id).clientWidth-lastW[id])>1)){clearTimeout(rz);rz=setTimeout(()=>{hostIds.forEach(id=>lastW[id]=Math.round(document.getElementById(id).clientWidth));redraw()},120)}}).observe(document.body);{const q=+new URLSearchParams(location.search).get('mexico');if(q>=0&&q<=100)setX(Math.round(q/5)*5);const L=new URLSearchParams(location.search).get('lens');if(L==='who'||L==='dist')setLens(L)}
 </script>
 </body>
 </html>
