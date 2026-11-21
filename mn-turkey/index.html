@@ -142,6 +142,9 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .pug-note b { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; display: block; color: var(--muted); font-weight: 500; }
 .foot { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
 .sq { opacity: 1; }
+.vint { display: flex; gap: 12px; align-items: flex-start; background: color-mix(in srgb, var(--gold) 18%, var(--panel)); border: 1.5px solid var(--gold); border-radius: 14px; padding: 12px 16px; font-size: 13.5px; line-height: 1.5; }
+.vint b.tag { font: 700 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; background: var(--fg); color: var(--panel); border-radius: 99px; padding: 3px 10px; white-space: nowrap; margin-top: 1px; }
+.srcl { font-size: 11px; fill: var(--muted); }
 @media (prefers-reduced-motion: no-preference) { .waffle:not(.on) .sq { opacity: 0; } .waffle.on .sq { transition: opacity .35s ease; transition-delay: calc(var(--i) * 9ms); } }
 </style>
 <link rel="stylesheet" href="../pug-header.css">
@@ -165,7 +168,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     <div class="hero-t">
       <p class="eyebrow">Customs inspection · 39 million birds · inspector height 30 cm</p>
       <h1 class="title">¿Por qué México?</h1>
-      <p class="lede">Minnesota raises more turkeys than any other state: <b>39 million</b> in 2023. Its export ledger has one very loud line: <b>71%</b> of the export dollars go to Mexico. The pugs framed three guesses, then checked each one against the data and the evidence. The source is a one-page <a href="https://www.mda.state.mn.us/sites/default/files/inline-files/MN%20turkey%20fact%20sheet%20%282023%29.pdf" target="_blank" rel="noopener">state fact sheet</a>, so this page shows snapshots, not trends. The full <a href="#audit">data quality audit</a> is at the bottom.</p>
+      <p class="lede">Minnesota raises more turkeys than any other state: <b>39 million</b> in 2023. Its export ledger has one very loud line: <b>71%</b> of the export dollars go to Mexico. The pugs framed three guesses, then checked each one against the data and the evidence. The source is a one-page <a href="https://www.mda.state.mn.us/sites/default/files/inline-files/MN%20turkey%20fact%20sheet%20%282023%29.pdf" target="_blank" rel="noopener">state fact sheet</a>, so this page shows a 2023 snapshot, about three years old, not trends and not today. The full <a href="#audit">data quality audit</a> is at the bottom.</p>
       <dl class="form">
         <dt>Shipper</dt><dd>State of Minnesota, No. 1 in U.S. turkeys</dd>
         <dt>Consignee</dt><dd>Mexico, mostly</dd>
@@ -195,12 +198,13 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   </header>
 
   <main>
+  <div class="vint"><b class="tag">Data vintage</b><span><b>This is a 2023 picture, about three years old.</b> The fact sheet was prepared in 2023. Only the production figures carry explicit years (2022 and 2023). The state shares, export shares, export total and poultry mix are not labeled with a year, so they are treated as 2023-era data. Nothing here describes 2024, 2025 or 2026.</span></div>
   <div class="tiles">
-    <div class="tile" style="--tc:var(--rust)"><span class="tile-l">Turkeys raised in Minnesota, 2023</span><span class="tile-v">39 million</span><span class="tile-s">up from 37 million in 2022: +5.4%</span></div>
-    <div class="tile" style="--tc:var(--gold)"><span class="tile-l">Share of U.S. turkeys</span><span class="tile-v">18%</span><span class="tile-s">No. 1 state, ahead of North Carolina and Arkansas at 13% each</span></div>
-    <div class="tile" style="--tc:var(--pine)"><span class="tile-l">Turkey exports, per year</span><span class="tile-v">$104M</span><span class="tile-s">about 13% of Minnesota's production is exported</span></div>
-    <div class="tile" style="--tc:var(--cran)"><span class="tile-l">Of those export dollars, to Mexico</span><span class="tile-v">71%</span><span class="tile-s">estimated at $73.8 million, the next market is 4%</span></div>
-    <div class="tile" style="--tc:var(--navy)"><span class="tile-l">Turkey farms and cash receipts</span><span class="tile-v">600</span><span class="tile-s">farms, with more than $1 billion a year in cash receipts</span></div>
+    <div class="tile" style="--tc:var(--rust)"><span class="tile-l">Turkeys raised in Minnesota, 2023 (three years ago)</span><span class="tile-v">39 million</span><span class="tile-s">up from 37 million in 2022: +5.4%</span></div>
+    <div class="tile" style="--tc:var(--gold)"><span class="tile-l">Share of U.S. turkeys · 2023 fact sheet</span><span class="tile-v">18%</span><span class="tile-s">No. 1 state, ahead of North Carolina and Arkansas at 13% each</span></div>
+    <div class="tile" style="--tc:var(--pine)"><span class="tile-l">Turkey exports, per year · 2023 fact sheet</span><span class="tile-v">$104M</span><span class="tile-s">about 13% of Minnesota's production is exported</span></div>
+    <div class="tile" style="--tc:var(--cran)"><span class="tile-l">Of those export dollars, to Mexico · 2023 fact sheet</span><span class="tile-v">71%</span><span class="tile-s">estimated at $73.8 million, the next market is 4%</span></div>
+    <div class="tile" style="--tc:var(--navy)"><span class="tile-l">Turkey farms and cash receipts · 2023 fact sheet</span><span class="tile-v">600</span><span class="tile-s">farms, with more than $1 billion a year in cash receipts</span></div>
   </div>
 
   <section class="sec">
@@ -210,6 +214,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <h3>Minnesota poultry production, by sector</h3>
       <div class="chart waffle" id="c-waffle"></div>
       <p class="note">Each square is 1% of Minnesota's poultry production. The measure behind the percentages (birds, pounds or dollars) is not stated in the source.</p>
+      <p class="note"><b>Source:</b> Minnesota Department of Agriculture (MDA), <i>Minnesota Turkey Fact Sheet (2023)</i>, poultry sector shares (dataset sheet “Overview &amp; Key Metrics”). The year of these shares is not labeled; the fact sheet is from 2023, so this data is about three years old.</p>
     </div>
   </section>
 
@@ -301,7 +306,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     <div class="fh"><span class="fb">Stress<br>test</span><span class="qn">What if the gate closes?</span><h2>The Mexico stress test</h2></div>
     <div class="ans"><span class="stamp">Arithmetic, not a forecast</span><span>If Mexico bought nothing, the other markets would need to buy about <b>3.4 to 3.5 times</b> as much (3.45 at the stated shares) just to keep Minnesota's export total where it is. Drag the slider to see the stream shrink. Stream widths are in proportion to dollars, and more dots flow where more money does.</span></div>
     <div class="card">
-      <h3>Where $104 million of Minnesota turkey exports flows</h3>
+      <h3>Where $104 million of Minnesota turkey exports flowed (2023-era data)</h3>
       <div class="ctrl">
         <label for="sl">Mexico buys <input id="sl" type="range" min="0" max="100" step="5" value="0" aria-describedby="slnote"><output id="slo" for="sl">0%</output> less</label>
         <div class="pre" role="group" aria-label="Presets">
@@ -346,7 +351,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
       <tr><td>Derived values</td><td><span class="v warn">Estimated</span></td><td>Export value by country is not reported. The sheet computes it as share times $104 million.</td><td>Labeled “estimated” everywhere; rounding ranges carried through the stress test.</td></tr>
       <tr><td>Approximate inputs</td><td><span class="v warn">Floors and tildes</span></td><td>“More than $1 billion” in cash receipts is a lower bound. “About 13%” exported and “600 farms” are rounded.</td><td>Never used in a calculation; shown as stated.</td></tr>
       <tr><td>Units and bases</td><td><span class="v warn">Unclear</span></td><td>The poultry mix does not say whether it is by birds, weight or value. The 13% exported share does not say whether it is by birds, weight or value, and $104 million is value.</td><td>Stated in the chart notes; the pugs did not mix these bases in one calculation.</td></tr>
-      <tr><td>Time coverage</td><td><span class="v bad">Thin</span></td><td>Production for 2022 and 2023 only. The export figure, state shares and market shares are one snapshot, with no year labels on the export sheets. The sheet notes only that exports fluctuated over the decade due to avian flu.</td><td>No trend claims. Treated all snapshots as describing the fact sheet's year (2023).</td></tr>
+      <tr><td>Time coverage</td><td><span class="v bad">Thin</span></td><td>Production for 2022 and 2023 only. The fact sheet was prepared in 2023, so as of November 2026 everything here is about three years old. The export figure, state shares and market shares are one snapshot, with no year labels on the export sheets. The sheet notes only that exports fluctuated over the decade due to avian flu.</td><td>No trend claims. Treated all snapshots as describing the fact sheet's year (2023).</td></tr>
       <tr><td>Provenance</td><td><span class="v warn">Secondary</span></td><td>A state agency fact sheet prepared in 2023. The PDF cites USDA, MDA, the Minnesota Turkey Growers Association and FAO, but does not say which source feeds which chart, and “All other” hides many states and countries.</td><td>No state or country comparisons beyond the listed rows. Original PDF linked in the header.</td></tr>
       <tr><td>Outside evidence</td><td><span class="v warn">Mixed</span></td><td>The three “why” verdicts use external sources from 2007 to 2026, some undated, from industry groups, or secondary summaries. Each was opened and checked against the wording used here.</td><td>Graded in the evidence ledger; no outside number is mixed into a chart.</td></tr>
       <tr><td>Second opinion</td><td><span class="v ok" id="so">Matches</span></td><td>Every figure on this page was recomputed from the raw file with separately written code, including the rounding ranges and the stress-test arithmetic, and checked against the PDF.</td><td>Both computations agree on every number shown.</td></tr>
@@ -370,6 +375,10 @@ const TOTAL=104;
 const STATES=[{n:"Minnesota",s:18,f:1,r:"1"},{n:"North Carolina",s:13,r:"T-2"},{n:"Arkansas",s:13,r:"T-2"},{n:"Indiana",s:9,r:"4"},{n:"Missouri",s:8,r:"5"},{n:"Virginia",s:7,r:"6"},{n:"Iowa",s:5,r:"7"},{n:"Pennsylvania",s:4,r:"T-8"},{n:"California",s:4,r:"T-8"},{n:"Ohio",s:3,r:"10"},{n:"All other",s:17,o:1}];
 const MK=[{n:"Mexico",s:71,f:1},{n:"Canada",s:4},{n:"Panama",s:2},{n:"Guatemala",s:2},{n:"Costa Rica",s:2},{n:"Dominican Republic",short:"Dominican Rep.",s:2},{n:"China",s:2},{n:"All other",s:15,o:1}];
 const fm=v=>"$"+v.toFixed(1)+"M";
+function wrapTxt(t,maxPx,fs){const cw=fs*.56,max=Math.max(20,Math.floor(maxPx/cw)),out=[];let cur="";t.split(" ").forEach(w=>{if((cur+" "+w).trim().length>max){out.push(cur.trim());cur=w}else cur+=" "+w});if(cur.trim())out.push(cur.trim());return out}
+const SRC_STATES="Source: Minnesota Dept. of Agriculture, Minnesota Turkey Fact Sheet (2023), chart “%-share by turkey numbers.” Year not labeled; 2023-era data, about three years old.";
+const SRC_MARKETS="Source: Minnesota Dept. of Agriculture, Minnesota Turkey Fact Sheet (2023), chart “%-share by value,” and the $104M export total. Dollars = share × $104M (pug estimate). Year not labeled; 2023-era data, about three years old.";
+const SRC_FLOW="Source: Minnesota Dept. of Agriculture, Minnesota Turkey Fact Sheet (2023): export shares and the $104M total. Dollars = share × $104M (pug estimate). Year not labeled; 2023-era data, about three years old. The stress test is arithmetic by the pugs, not a forecast.";
 
 /* Waffle: 100 squares, 1 square = 1% */
 function waffle(){
@@ -393,10 +402,11 @@ function hbar(host,rows,o){
   host.innerHTML="";
   const W=Math.max(260,host.clientWidth||640),narrow=W<520;
   const L=narrow?108:172,R=narrow?(o.Rn||o.R):o.R,top=6,bh=narrow?22:24,gap=narrow?14:11,axisH=narrow?74:46;
-  const H=top+rows.length*(bh+gap)+axisH,pw=W-L-R,xs=v=>L+v/o.max*pw;
+  const H0=top+rows.length*(bh+gap)+axisH,sl=wrapTxt(o.src,W-8,11),H=H0+sl.length*14+10,pw=W-L-R,xs=v=>L+v/o.max*pw;
   const svg=el("svg",{width:W,height:H,viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":o.aria},host);
-  for(let t=0;t<=o.max;t+=(narrow&&o.stepn)||o.step){el("line",{x1:xs(t),x2:xs(t),y1:top,y2:H-axisH+2,class:"gl"},svg);txt(svg,t+"%",{x:xs(t),y:H-axisH+18,"text-anchor":"middle",class:"tick"})}
-  el("line",{x1:L,x2:L,y1:top,y2:H-axisH+2,stroke:"var(--axis)"},svg);
+  sl.forEach((t,k)=>txt(svg,t,{x:2,y:H0+8+k*14,class:"srcl"}));
+  for(let t=0;t<=o.max;t+=(narrow&&o.stepn)||o.step){el("line",{x1:xs(t),x2:xs(t),y1:top,y2:H0-axisH+2,class:"gl"},svg);txt(svg,t+"%",{x:xs(t),y:H0-axisH+18,"text-anchor":"middle",class:"tick"})}
+  el("line",{x1:L,x2:L,y1:top,y2:H0-axisH+2,stroke:"var(--axis)"},svg);
   rows.forEach((r,i)=>{
     const y=top+i*(bh+gap)+gap/2,cy=y+bh/2;
     txt(svg,(narrow&&r.short)||r.n,{x:L-8,y:cy+4,"text-anchor":"end",class:"rl"+(r.f?" hot":"")});
@@ -405,14 +415,14 @@ function hbar(host,rows,o){
     el("line",{x1:xs(lo),x2:xs(hi),y1:cy,y2:cy,class:"wh"},svg);el("line",{x1:xs(lo),x2:xs(lo),y1:cy-5,y2:cy+5,class:"wh"},svg);el("line",{x1:xs(hi),x2:xs(hi),y1:cy-5,y2:cy+5,class:"wh"},svg);
     if(narrow&&o.label2){txt(svg,o.label(r,1),{x:xs(hi)+7,y:cy-1,class:"vl"+(r.f?" hot":"")});txt(svg,o.label2(r),{x:xs(hi)+7,y:cy+12,class:"vl",style:"font-size:11px"})}else txt(svg,o.label(r),{x:xs(hi)+8,y:cy+4,class:"vl"+(r.f?" hot":"")});
   });
-  const lines=narrow&&o.xtn?o.xtn:[o.xt],ty=H-(lines.length>1?30:12);
+  const lines=narrow&&o.xtn?o.xtn:[o.xt],ty=H0-(lines.length>1?30:12);
   lines.forEach((t,k)=>txt(svg,t,{x:L+pw/2,y:ty+k*16,"text-anchor":"middle",class:"axt"}));
-  const yt=txt(svg,o.yt,{x:0,y:0,"text-anchor":"middle",class:"axt",transform:`translate(12 ${top+(H-axisH-top)/2}) rotate(-90)`});
+  const yt=txt(svg,o.yt,{x:0,y:0,"text-anchor":"middle",class:"axt",transform:`translate(12 ${top+(H0-axisH-top)/2}) rotate(-90)`});
 }
 function charts(){
   waffle();
-  hbar(document.getElementById("c-states"),STATES,{max:20,step:5,R:56,Rn:44,aria:"Bar chart of each state's share of U.S. turkey production, Minnesota first at 18 percent",label:r=>r.s+"%",xt:"Share of U.S. turkeys raised, by number of birds (%)",xtn:["Share of U.S. turkeys raised,","by number of birds (%)"],yt:"State"});
-  hbar(document.getElementById("c-markets"),MK,{max:80,step:10,stepn:20,R:124,Rn:58,aria:"Bar chart of each destination's share of Minnesota turkey export value, Mexico first at 71 percent",label:(r,n)=>n?r.s+"%":r.s+"% · "+fm(r.s*TOTAL/100),label2:r=>fm(r.s*TOTAL/100),xt:"Share of Minnesota turkey export value (%)",xtn:["Share of Minnesota turkey","export value (%)"],yt:"Destination"});
+  hbar(document.getElementById("c-states"),STATES,{max:20,step:5,src:SRC_STATES,R:56,Rn:44,aria:"Bar chart of each state's share of U.S. turkey production, Minnesota first at 18 percent",label:r=>r.s+"%",xt:"Share of U.S. turkeys raised, by number of birds (%)",xtn:["Share of U.S. turkeys raised,","by number of birds (%)"],yt:"State"});
+  hbar(document.getElementById("c-markets"),MK,{max:80,step:10,stepn:20,src:SRC_MARKETS,R:124,Rn:58,aria:"Bar chart of each destination's share of Minnesota turkey export value, Mexico first at 71 percent",label:(r,n)=>n?r.s+"%":r.s+"% · "+fm(r.s*TOTAL/100),label2:r=>fm(r.s*TOTAL/100),xt:"Share of Minnesota turkey export value (%)",xtn:["Share of Minnesota turkey","export value (%)"],yt:"Destination"});
 }
 
 /* Stress test: Sankey-style flow with particles */
@@ -423,7 +433,9 @@ function buildFlow(){
   const W=Math.max(260,host.clientWidth||700),narrow=W<560,H=narrow?520:470,k=narrow?.9:1.1;
   const labW=narrow?110:196,x0=18,bw=26,x1=W-labW-14,xm=(x0+bw+x1)/2;
   const widths=MK.map(m=>m.s*k),totalW=widths.reduce((a,b)=>a+b,0),top=(H-totalW)/2+6;
-  const svg=el("svg",{width:W,height:H,viewBox:`0 0 ${W} ${H}`},host);
+  const sl=wrapTxt(SRC_FLOW,W-8,11),HH=H+sl.length*14+14;
+  const svg=el("svg",{width:W,height:HH,viewBox:`0 0 ${W} ${HH}`},host);
+  sl.forEach((t,k)=>txt(svg,t,{x:2,y:H+6+k*14,class:"srcl"}));
   const ends=[64,160,210,248,286,324,362,418].map(v=>v*H/470);
   txt(svg,"Minnesota turkey exports, $104M a year",{x:x0,y:16,class:"axt"});
   el("rect",{x:x0,y:top,width:bw,height:totalW,rx:4,fill:"var(--stamp)",opacity:.9},svg);
