@@ -181,11 +181,13 @@ th { position: sticky; top: 0; background: var(--panel); font-weight: 600; }
     <div class="grid">
       <div class="card">
         <h3>Phone bans against students reporting no distraction</h3>
+        <ul class="legend" style="margin-bottom:6px"><li><span class="sw" style="background:var(--oe)"></span>OECD member</li><li><span class="sw" style="background:var(--pa)"></span>Partner country or economy</li><li><span class="sw hollow"></span>Sampling caution flagged by the OECD</li></ul>
         <div class="chart" id="c-bd"></div>
       <p class="chart-src"><b>Source:</b> OECD (2026), <a href="https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en.html" target="_blank" rel="noopener">PISA 2025 Results (Volume I)</a>, Tables I.1 and I.6 (CC BY 4.0), via the <a href="https://makeovermonday.vercel.app/dataset/pisa-2025" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
 </div>
       <div class="card">
         <h3>Phone bans against math score</h3>
+        <ul class="legend" style="margin-bottom:6px"><li><span class="sw" style="background:var(--oe)"></span>OECD member</li><li><span class="sw" style="background:var(--pa)"></span>Partner country or economy</li><li><span class="sw hollow"></span>Sampling caution flagged by the OECD</li></ul>
         <div class="chart" id="c-bm"></div>
       <p class="chart-src"><b>Source:</b> OECD (2026), <a href="https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en.html" target="_blank" rel="noopener">PISA 2025 Results (Volume I)</a>, Tables I.1 and I.6 (CC BY 4.0), via the <a href="https://makeovermonday.vercel.app/dataset/pisa-2025" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
 </div>
@@ -202,6 +204,7 @@ th { position: sticky; top: 0; background: var(--panel); font-weight: 600; }
     <p>Read it with care. The index is built from principals' reports, and the dataset notes warn that countries are not directly comparable in its raw units. A rank correlation uses only the ordering, which softens that problem without removing it. One plausible reading is that capacity travels with how well-resourced a school system is, but this dataset has no income measure to test that. Inside the OECD the link is weaker, at <b data-f="rCapO"></b> <span class="badge" data-b="capMathOecd"></span>.</p>
     <div class="card">
       <h3>Rank correlation of each digital measure with math score</h3>
+      <ul class="legend" style="margin-bottom:6px"><li><span class="sw" style="background:var(--s1)"></span>Clearly above zero</li><li><span class="sw" style="background:var(--ref)"></span>Cannot be told apart from zero</li></ul>
       <div class="chart" id="c-cor"></div>
       <p class="note">Spearman rank correlation across countries, with 95% bootstrap ranges. A range that crosses the zero line cannot be told apart from no relationship.</p>
     <p class="chart-src"><b>Source:</b> OECD (2026), <a href="https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en.html" target="_blank" rel="noopener">PISA 2025 Results (Volume I)</a>, Tables I.1 and I.6 (CC BY 4.0), via the <a href="https://makeovermonday.vercel.app/dataset/pisa-2025" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
@@ -216,6 +219,7 @@ th { position: sticky; top: 0; background: var(--panel); font-weight: 600; }
     <p>In all <b data-f="nAI"></b> countries with data, more students say they learned in class to assess AI-generated information than say they use AI weekly to learn: a median <b data-f="assessMed"></b> against <b data-f="aiMed"></b>. The two go together, at <b data-f="rAA"></b> <span class="badge" data-b="aiAssess"></span>. The closest call is <b data-f="closest"></b>. The questions measure different things (ever taught in class against weekly habit), so the gap is a description, not a ratio.</p>
     <div class="card">
       <h3>Weekly AI use against being taught to assess AI output</h3>
+      <ul class="legend" style="margin-bottom:6px"><li><span class="sw" style="background:var(--oe)"></span>OECD member</li><li><span class="sw" style="background:var(--pa)"></span>Partner country or economy</li><li><span class="sw hollow"></span>Sampling caution flagged by the OECD</li><li><span class="sw dash"></span>Equal share (taught = using)</li></ul>
       <div class="chart" id="c-aa"></div>
       <p class="note">Dots above the dashed line are countries where the share taught to assess AI is larger than the share using it weekly. Every country is above it.</p>
     <p class="chart-src"><b>Source:</b> OECD (2026), <a href="https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en.html" target="_blank" rel="noopener">PISA 2025 Results (Volume I)</a>, Tables I.1 and I.6 (CC BY 4.0), via the <a href="https://makeovermonday.vercel.app/dataset/pisa-2025" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
@@ -299,7 +303,7 @@ function scatter(id,o){
     [`M${X},${T}H${L}V${Y}`,`M${X},${T}H${R}V${Y}`,`M${X},${B}H${L}V${Y}`,`M${X},${B}H${R}V${Y}`].forEach((d,i)=>svg.append("path").attr("class","qb").attr("data-i",i).attr("d",d).attr("stroke",QC[i]));
     const q=o.quad,pad=10,nar=W<520;[[q[0],L+pad,T+17,"start",0],[q[1],R-pad,T+17,"end",0],[q[2],L+pad,B-10,"start",1],[q[3],R-pad,B-10,"end",1]].forEach(([t,qx,qy,an,bot],i)=>{const tx=svg.append("text").attr("class","quad qd").attr("data-i",i).attr("fill",QC[i]).attr("x",qx).attr("text-anchor",an);
       if(nar){tx.style("font-size","10.5px");const [a,b]=t.split(", ");tx.attr("y",bot?qy-11:qy);tx.append("tspan").attr("x",qx).text(a);tx.append("tspan").attr("x",qx).attr("dy",11).text(b)}else tx.attr("y",qy).text(t)})}
-    const col=o.quad?(d=>d.oecd==="Yes"?"var(--oe)":"var(--pa)"):(d=>d.oecd==="Yes"?"var(--s1)":"var(--s2)");
+    const col=d=>d.oecd==="Yes"?"var(--oe)":"var(--pa)";
   const g=svg.append("g");
   g.selectAll("circle").data(rows).join("circle").attr("cx",d=>x(d[o.x])).attr("cy",d=>y(d[o.y])).attr("r",5)
     .attr("fill",d=>d.caution==="Yes"?"var(--panel)":col(d)).attr("stroke",d=>d.caution==="Yes"?col(d):"var(--panel)").attr("stroke-width",2);
