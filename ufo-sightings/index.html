@@ -619,7 +619,7 @@ function drawFunnel() {
   const col = o => fl(o) > 0 ? 'var(--accent)' : fl(o) < 0 ? 'var(--accent-dim)' : 'var(--accent-soft)';
   const sz = small ? 1 : 1.2;
   D.forEach((o, i) => { s += `<g class="fd" data-i="${i}" transform="translate(${x(o.pop / 1e6).toFixed(1)},${y(rate(o)).toFixed(1)}) scale(${sz})"><use href="#saucer" style="color:${col(o)}"/><rect x="-10" y="-8" width="20" height="14" fill="transparent"/></g>`; });
-  const OFF = { NM: [9, -7, 's'], OR: [9, -6, 's'], AK: [-9, -6, 'e'], MT: [9, -8, 's'], SD: [-9, 10, 'e'], AZ: [10, -5, 's'], WA: [10, -7, 's'], UT: [-9, -6, 'e'], FL: [10, -7, 's'], CA: [-4, -13, 'm'], TX: [10, 17, 's'], NY: [-9, 5, 'e'], MA: [10, 4, 's'], MS: [-9, 4, 'e'], ME: [-9, 4, 'e'] };
+  const OFF = { NM: [9, -7, 's'], OR: [9, -6, 's'], AK: [-9, -6, 'e'], MT: [9, -8, 's'], SD: [-9, 10, 'e'], AZ: [10, -5, 's'], WA: [10, -7, 's'], UT: [-9, -6, 'e'], FL: [10, -7, 's'], CA: [-9, -13, 'e'], TX: [10, 17, 's'], NY: [-9, 5, 'e'], MA: [10, 4, 's'], MS: [-9, 4, 'e'], ME: [-9, 4, 'e'] };
   const names = lk.mode === 'real' ? (small ? ['NM', 'OR', 'AK', 'FL', 'CA', 'TX'] : Object.keys(OFF)) : D.filter(o => fl(o)).map(o => o.ab);
   names.forEach(ab => { const o = D.find(d => d.ab === ab); if (!o) return; let f = OFF[ab] || [9, -6, 's']; if (small && ab === 'TX') f = [-9, 17, 'e']; if (small && ab === 'CA') f = [-9, -12, 'e'];
     s += `<text class="halo ${lk.mode === 'real' ? 'lkb' : 'lkl'}" x="${x(o.pop / 1e6) + f[0]}" y="${y(rate(o)) + f[1] + 4}" text-anchor="${f[2] === 'e' ? 'end' : f[2] === 'm' ? 'middle' : 'start'}">${esc(o.n)}</text>`; });

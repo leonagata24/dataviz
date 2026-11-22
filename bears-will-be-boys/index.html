@@ -583,7 +583,8 @@ function drawFunnel() {
   });
   const labs = [["bear", 12, -9, "start"], ["bird", -10, -2, "end"], ["duck", -10, 4, "end"], ["frog", 10, -2, "start"], ["fox", 10, 5, "start"], ["dog", -9, -8, "end"], ["cat", 10, 12, "start"], ["rabbit", 10, -8, "start"], ["mouse", -9, 4, "end"], ["pig", -9, 16, "end"]];
   labs.forEach(([g, dx, dy, an]) => { const o = D.find(d => d.g === g); if (!o) return; if (small && g === "bear") { dx = -10; an = "end"; dy = -10; }
-    const t = el("text", {x: x(o.hs) + dx, y: y(o.h / o.hs) + dy + 4, "text-anchor": an, class: "halo " + (zcls(o) ? "lkb" : "lkl")}, svg); t.textContent = g + (zcls(o) ? " " + pc0(o.h / o.hs) : ""); });
+    const t = el("text", {x: x(o.hs) + dx, y: y(o.h / o.hs) + dy + 4, "text-anchor": an, class: "halo " + (zcls(o) ? "lkb" : "lkl")}, svg); t.textContent = g + (zcls(o) ? " " + pc0(o.h / o.hs) : "");
+    const bb = t.getBBox(); if (bb.x < M.l + 2) { t.setAttribute("text-anchor", "start"); t.setAttribute("x", x(o.hs) + Math.abs(dx)); } }); // keep labels off the y-axis ticks
   const xt = el("text", {x: (M.l + W - M.r) / 2, y: H - 8, "text-anchor": "middle", class: "axt"}, svg); xt.textContent = small ? "Characters with a he/him or she/her pronoun" : "Characters per animal, he/him or she/her (bigger casts sit further right)";
   const yt = el("text", {transform: `translate(13,${(M.t + H - M.b) / 2}) rotate(-90)`, "text-anchor": "middle", class: "axt"}, svg); yt.textContent = small ? "Share he/him" : "Share of characters who are he/him";
   box.innerHTML = ""; box.appendChild(svg);

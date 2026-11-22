@@ -286,10 +286,17 @@ function scatter(id,o){
   const g=svg.append("g");
   g.selectAll("circle").data(rows).join("circle").attr("cx",d=>x(d[o.x])).attr("cy",d=>y(d[o.y])).attr("r",5)
     .attr("fill",d=>d.caution==="Yes"?"var(--panel)":col(d)).attr("stroke",d=>d.caution==="Yes"?col(d):"var(--panel)").attr("stroke-width",2);
+  const labs=[],pre=svg.selectAll("text").nodes().map(n=>n.getBBox());
   (o.labels||[]).forEach(([c,dx,dy,anc,txt])=>{const d=rows.find(r=>r.country===c);if(!d)return;
     const t=svg.append("text").attr("class","lab").attr("x",x(d[o.x])+dx).attr("y",y(d[o.y])+dy).attr("text-anchor",anc||"start").text(txt||c),bb=t.node().getBBox();
     if(bb.x+bb.width>W-m.r-2){t.attr("text-anchor","end").attr("x",x(d[o.x])-Math.max(8,Math.abs(dx))).attr("y",y(d[o.y])+Math.max(dy,12))}
-    else if(bb.x<m.l-2){t.attr("text-anchor","start").attr("x",x(d[o.x])+Math.max(8,Math.abs(dx)))}});
+    else if(bb.x<m.l-2){t.attr("text-anchor","start").attr("x",x(d[o.x])+Math.max(8,Math.abs(dx)))}
+    labs.push(t.node())});
+  // labels never overlap: nudge a colliding label up or down; drop it if no nearby spot is free (earlier labels win)
+  {const placed=pre.slice();labs.forEach(n=>{const t=d3.select(n),y0=+t.attr("y");let ok=false;
+    for(const s of [0,-12,12,-24,24]){t.attr("y",y0+s);const b=n.getBBox();
+      if(!placed.some(q=>b.x<q.x+q.width+2&&b.x+b.width+2>q.x&&b.y<q.y+q.height+1&&b.y+b.height+1>q.y)){placed.push(b);ok=true;break}}
+    if(!ok)t.remove()})}
   if(o.stat){svg.append("text").attr("class","lab").style("fill","var(--fg)").style("font-weight",600).style("font-size","12.5px").attr("x",m.l+6).attr("y",m.t-32).text(o.stat[0]);svg.append("text").attr("class","lab").attr("x",m.l+6).attr("y",m.t-17).text(o.stat[1])}
   if(o.bracket){const a=rows.find(r=>r.country===o.bracket[0]),b=rows.find(r=>r.country===o.bracket[1]),bx=W-m.r+14,ya=y(a[o.y]),yb=y(b[o.y]),gap=Math.round(Math.abs(a[o.y]-b[o.y])),
       lines=W<560?[gap+" points","apart"]:[o.bracket[0]+" and "+o.bracket[1]+":","about the same AI use,",gap+" math points apart"];
