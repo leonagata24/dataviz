@@ -337,7 +337,8 @@ function scatter(id,o){
     el.__play=()=>play(false);
     const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
     if(rm)final();
-    else if(EMB)play(true);
+    else if(EMB){fl.forEach(n=>n.setAttribute("display","none"));qd.style("opacity",0);br.style("opacity",0);
+      const io=new IntersectionObserver(es=>{const v=es[es.length-1].isIntersecting;if(v)play(true);else{el.__run=(el.__run||0)+1}},{threshold:.5});io.observe(el)}
     else if(!el.__started){el.__started=true;final();fl.forEach(n=>n.setAttribute("display","none"));qd.style("opacity",0);qb.style("opacity",0);br.style("opacity",0);
       const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();play(false)}},{threshold:.5});io.observe(el)}
     else final();
