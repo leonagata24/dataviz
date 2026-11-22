@@ -41,6 +41,9 @@
     if (el && t[1]) el = el.closest(t[1]);
     if (!el) { post(-1); return; } // the home page keeps its snapshot image
     el.classList.add("pug-embed-target");
+    // the home page already shows this chart's insight headline beside it: drop the card's duplicate kicker and title
+    var dupes = { "cf-scatter": [".pq", "h2"] }[key] || [];
+    for (var d = 0; d < dupes.length; d++) { var x = el.querySelector(dupes[d]); if (x) x.style.setProperty("display", "none", "important"); }
     // the chart's source line may sit just outside the card (at the end of its section): bring it in
     if (!el.querySelector(".chart-src")) {
       for (var a = el.parentElement; a && a !== document.body; a = a.parentElement) {
