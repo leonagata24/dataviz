@@ -468,7 +468,7 @@ $("#stats").innerHTML = [
   let sel = { type: "decade", key: peak.key };
   const inSel = (s) => sel.type === "year" ? s.y === sel.y : sel.type === "decade" ? (s.y && String(decadeOf(s.y)) === sel.key) : (!s.y);
 
-  box.insertAdjacentHTML("beforeend", `<div class="chips" id="chips" role="group" aria-label="Pick a decade"></div><p class="hint">Hover a dot to see the song. Click a dot to list that year, or pick a decade above. The 23 songs with no year are under “No year”.</p>`);
+  box.insertAdjacentHTML("beforeend", `<ul class="clg" style="display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12px;color:var(--muted);margin:8px 0 0;padding:0;list-style:none"><li style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--hot)"></span>Selected decade</li><li style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--brass)"></span>Other decades</li></ul><div class="chips" id="chips" role="group" aria-label="Pick a decade"></div><p class="hint">Hover a dot to see the song. Click a dot to list that year, or pick a decade above. The 23 songs with no year are under “No year”.</p>`);
   $("#chips").innerHTML = cols.map((c) => `<button type="button" class="chip" data-key="${c.key}">${c.unk ? "No year" : c.label}<span> ${c.songs.length}</span></button>`).join("");
 
   function draw() {
