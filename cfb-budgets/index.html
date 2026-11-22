@@ -71,6 +71,11 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 .pq::before{content:"";flex:0 0 auto;width:24px;height:22px;background:url("../pug-head.png") center/contain no-repeat}
 .pq b{color:var(--ink);font-weight:600}
 .key svg.fb{display:inline-block;width:22px;height:16px;margin-right:6px;vertical-align:-5px;overflow:visible}
+.ii{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:1.5px solid var(--muted);border-radius:50%;font:italic 700 12px/1 Georgia,serif;color:var(--muted);cursor:help;vertical-align:1px;margin:0 1px 0 5px}
+.ii:hover,.ii[aria-expanded=true]{color:var(--bg);background:var(--ink);border-color:var(--ink)}.ii:focus-visible{outline:3px solid var(--b10);outline-offset:2px}
+.fxw{position:relative}
+.fx{box-sizing:border-box;position:absolute;left:0;top:calc(100% + 8px);width:min(460px,calc(100vw - 36px));z-index:15;background:var(--ink);color:var(--bg);border-radius:8px;padding:12px 14px;font:13.5px/1.5 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.fx[hidden]{display:none}.fx b{display:block;margin-top:9px}.fx b:first-child{margin-top:0}.fx span{display:block}
 .grp{font:14px/1.6 system-ui,sans-serif;color:var(--muted);margin:10px 0 0}.grp b{color:var(--ink);font-weight:600}
 .vd{font:16px/1.5 system-ui,sans-serif;padding-left:20px}.vd li{margin-bottom:9px}
 .chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); }
@@ -162,7 +167,14 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 <p>The pugs sorted the 68 teams by nickname: 4 teams with a dog-family nickname, 13 with a cat-family nickname and 51 with neither. The list under the chart names every team, and hovering over a team shows its nickname. One of the 4 dog teams is ranked (Georgia, #2), against 5 of the 13 cat teams and 19 of the other 51. The highest-ranked cat team is LSU, at #7. Average budgets are within $2.7M of each other: $26.8M for dog teams, $25.2M for cat teams and $27.8M for the rest. The tick marks each group’s average.</p>
 <div class="key ck"></div>
 <svg id="pt" role="img" aria-label="Budget by nickname family: dogs, cats and all other nicknames"></svg>
-<p class="rd">Fisher’s exact test: dog teams against cat teams, p = 1.0; cat teams against everyone else, p = 1.0. With four dog teams, only a very large gap could show up, and there isn’t one. The pugs are not sulking.</p>
+<div class="rd fxw">Fisher’s exact test<button type="button" class="ii" id="fxb" aria-label="What is Fisher’s exact test, and how do I read the result?" aria-expanded="false" aria-controls="fx">i</button>: dog teams against cat teams, p = 1.0; cat teams against everyone else, p = 1.0. With four dog teams, only a very large gap could show up, and there isn’t one. The pugs are not sulking.
+<div class="fx" id="fx" role="tooltip" hidden>
+<b>What it does</b><span>Fisher’s exact test asks whether two groups make the poll at different rates by more than luck would explain. It counts every way the ranked and unranked teams could have been split between the groups, so it stays valid for tiny groups like our four dog teams.</span>
+<b>How to read p</b><span>p is how often luck alone would produce a split at least this lopsided if a nickname had no effect. Near 1 means the split is about as ordinary as luck gets. Below about 0.05 is the usual bar for calling a difference real.</span>
+<b>p = 1.0 here</b><span>Dog teams: 1 of 4 ranked (25%). Cat teams: 5 of 13 (38%). A gap this size is just what luck produces, so there is no sign of a difference.</span>
+<b>p = 0.75</b><span>This is the cat result if Cincinnati is counted as neither: 5 of 12 cat teams ranked against 20 of 56 others. Luck alone would produce a gap this big or bigger about 3 times in 4. Still no sign of a difference.</span>
+<b>What it doesn’t say</b><span>A high p is not proof that nicknames don’t matter, and it is not the chance that they don’t. With only 4 dog teams the test can catch only a very large gap, so a small real effect could hide.</span>
+</div></div>
 <p class="grp" id="grp"></p>
 <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings. Nicknames: <a href="https://en.wikipedia.org/wiki/List_of_NCAA_Division_I_FBS_football_programs" target="_blank" rel="noopener">Wikipedia, List of NCAA Division I FBS football programs</a>, grouped by the pugs. The last section explains the grouping.</p>
 </section>
@@ -279,6 +291,11 @@ document.getElementById("chips").onclick=e=>{const b=e.target.closest("[data-c]"
 sl.onchange=()=>{FS.t=sl.value===""?-1:+sl.value;flip()};document.getElementById("fr").onclick=()=>{FS.t=-1;flip()};
 document.getElementById("fl").addEventListener("click",e=>{const t=e.target.closest("[data-i]");if(!t)return;FS.t=+t.dataset.i;flip()})})();
 document.getElementById("q").oninput=e=>{S.q=e.target.value.trim().toLowerCase();all()};
+(()=>{const b=document.getElementById("fxb"),f=document.getElementById("fx");let pin=false;const set=o=>{f.hidden=!o;b.setAttribute("aria-expanded",o)};
+b.onmouseenter=()=>set(true);b.onmouseleave=()=>{if(!pin)set(false)};b.onfocus=()=>set(true);b.onblur=()=>{if(!pin)set(false)};
+b.onclick=e=>{e.stopPropagation();pin=!pin;set(pin||true);if(!pin)set(false)};
+document.addEventListener("click",e=>{if(pin&&!f.contains(e.target)){pin=false;set(false)}});
+document.addEventListener("keydown",e=>{if(e.key=="Escape"){pin=false;set(false)}})})();
 document.getElementById("th").onclick=e=>{const b=e.target.closest("[data-s]");if(!b)return;const k=+b.dataset.s;so=so.k==k?{k,dir:-so.dir}:{k,dir:1};table()};
 const tip=document.getElementById("tip");
 document.addEventListener("pointermove",e=>{const t=e.target.closest("svg [data-i]");if(!t){tip.style.display="none";return}const d=D[+t.dataset.i];
