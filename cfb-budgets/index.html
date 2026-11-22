@@ -268,8 +268,7 @@ function flipPlay(loop){
 function flipAnim(){
   const svg=document.getElementById("fl"),EMB=!!window.PUG_EMBED;flipStop();
   if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  if(EMB){flipHold();if(FA.io)FA.io.disconnect();FA.io=new IntersectionObserver(es=>{if(es[es.length-1].isIntersecting)flipPlay(true);else{flipStop();flipHold()}},{threshold:.15});FA.io.observe(svg)}
-  else if(!FA.started){FA.started=true;flipHold();FA.io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){FA.io.disconnect();flipPlay(false)}},{threshold:.15});FA.io.observe(svg)}
+  if(!FA.started){FA.started=true;flipHold();FA.io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){FA.io.disconnect();flipPlay(false)}},{threshold:.15});FA.io.observe(svg)}
 }
 function gap(){const rk=D.filter(d=>d.ap).sort((a,b)=>b.g-a.g),W=cw("gp"),ph=W<600,rh=21,T=8,L=ph?134:150,R2=ph?34:40,n=rk.length,base=T+n*rh+4,H=base+50,x0=L+(W-L-R2)*22/38,X=v=>x0+v*(W-L-R2)/38;let s="";
 [-20,-10,0,10].forEach(v=>s+=`<line class="gl" x1="${X(v)}" x2="${X(v)}" y1="${T}" y2="${base}"/><text class="ax" x="${X(v)}" y="${base+16}" text-anchor="middle">${v>0?"+"+v:v}</text>`);
@@ -303,7 +302,7 @@ document.getElementById("tr").onchange=scatter;
 document.getElementById("chips").innerHTML=Object.keys(CN).map(c=>`<button class="chip" data-c="${c}" style="--c:${col(c)}" aria-pressed="false">${CN[c]}</button>`).join("");
 document.getElementById("chips").onclick=e=>{const b=e.target.closest("[data-c]");if(!b)return;const c=b.dataset.c;S.c.has(c)?S.c.delete(c):S.c.add(c);b.setAttribute("aria-pressed",S.c.has(c));all()};
 (()=>{const sl=document.getElementById("ft");sl.innerHTML='<option value="">Pick a team…</option>'+Object.keys(CN).map(c=>`<optgroup label="${CN[c]}">${D.filter(d=>d.c==c).sort((a,b)=>a.n.localeCompare(b.n)).map(d=>`<option value="${d.r-1}">${d.n}</option>`).join("")}</optgroup>`).join("");
-sl.onchange=()=>{FS.t=sl.value===""?-1:+sl.value;flip()};document.getElementById("freplay").onclick=()=>{if(FS.t>=0){FS.t=-1;flip()}flipPlay(false)};document.getElementById("fr").onclick=()=>{FS.t=-1;flip()};
+sl.onchange=()=>{FS.t=sl.value===""?-1:+sl.value;flip()};addEventListener("message",e=>{if(e.data&&e.data.type==="pug-replay")flipPlay(false)});document.getElementById("freplay").onclick=()=>{if(FS.t>=0){FS.t=-1;flip()}flipPlay(false)};document.getElementById("fr").onclick=()=>{FS.t=-1;flip()};
 document.getElementById("fl").addEventListener("click",e=>{const t=e.target.closest("[data-i]");if(!t)return;FS.t=+t.dataset.i;flip()})})();
 document.getElementById("q").oninput=e=>{S.q=e.target.value.trim().toLowerCase();all()};
 document.getElementById("th").onclick=e=>{const b=e.target.closest("[data-s]");if(!b)return;const k=+b.dataset.s;so=so.k==k?{k,dir:-so.dir}:{k,dir:1};table()};

@@ -341,8 +341,6 @@ function scatter(id,o){
     el.__play=()=>play(false);
     const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
     if(rm)final();
-    else if(EMB){fl.forEach(n=>n.setAttribute("display","none"));qd.style("opacity",0);br.style("opacity",0);
-      const io=new IntersectionObserver(es=>{const v=es[es.length-1].isIntersecting;if(v)play(true);else{el.__run=(el.__run||0)+1}},{threshold:.5});io.observe(el)}
     else if(!el.__started){el.__started=true;final();fl.forEach(n=>n.setAttribute("display","none"));qd.style("opacity",0);qb.style("opacity",0);br.style("opacity",0);
       const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();play(false)}},{threshold:.5});io.observe(el)}
     else final();
@@ -394,6 +392,7 @@ function draw(){
     aria:"Scatter of weekly AI use against share taught to assess AI output; every country sits above the equal line",
     labels:[["Japan",8,4],["Ireland",-8,4,"end"],["Albania",0,-10,"middle"],["United Arab Emirates",0,-10,"middle",n?"UAE":null],["Viet Nam",8,4],["B-S-J-Z (China)",8,4],["Brazil",8,10],["United Kingdom",-8,-6,"end",n?"UK":null]]});
 }
+addEventListener("message",e=>{if(e.data&&e.data.type==="pug-replay"){const x=document.getElementById("c-ai");if(x.__play)x.__play()}});
 document.getElementById("replay").onclick=()=>{const e=document.getElementById("c-ai");if(e.__play)e.__play()};
 draw();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(draw,120)});
 {const cols=[["country","Country"],["oecd","OECD"],["math","Math"],["read","Reading"],["sci","Science"],["dmath","Math change"],["ai","AI weekly"],["assess","Taught to assess AI"],["nodist","No distraction"],["ban","Phones not allowed"],["guide","Device guidelines"],["cap","Capacity index"]],P=new Set(["ai","assess","nodist","ban","guide"]);
