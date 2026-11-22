@@ -101,14 +101,19 @@ header p{color:var(--muted);margin:0}
 .cl.open{display:block;overflow:visible}
 .potd-more{font:inherit;font-size:12.5px;font-weight:600;color:var(--acc);background:none;border:0;padding:2px 0;cursor:pointer;align-self:flex-start;text-decoration:underline;text-underline-offset:3px}
 .potd-more:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.potd-mat{align-items:stretch;max-height:min(460px,62vh);overflow-x:hidden;overflow-y:auto;scrollbar-width:thin;border-radius:8px}
+.potd-mat:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.potd-pic{display:block;width:100%}.potd-mat img{width:100%;max-height:none}
+.potd-fig.scrolls::after{content:"Scroll inside the chart to see all of it ↓";display:block;margin-top:6px;font:12px var(--f-mono);color:var(--muted);text-align:right}
 .potd-fig{margin:0}.potd-left{display:flex;flex-direction:column;gap:clamp(10px,1.4vw,14px);min-width:0}
 @media (min-width:900px){.potd-body{display:grid;grid-template-columns:minmax(260px,34%) minmax(0,1fr);column-gap:clamp(20px,3vw,36px);align-items:start}
 .potd-src,.potd-box .pf{grid-column:1/-1}.potd-left{grid-column:1}.potd-fig{grid-column:2;grid-row:2}
 .potd-left .potd-obs{--cl:12}.potd-left h3{font-size:clamp(22px,2.4vw,28px)}
-.potd-mat img{max-height:min(600px,76vh)}.potd-mat{align-items:flex-start}}.potd-obs{--cl:3}@media (min-width:700px){.potd-obs{--cl:2}}
-.potd-mat{position:relative;display:flex;flex-direction:column;align-items:center;padding:0;overflow:hidden}
-.potd-live{position:absolute;left:0;top:0;width:100%;height:640px;border:0;opacity:0;pointer-events:none}
-.potd-live.on{position:static;align-self:stretch;opacity:1;pointer-events:auto;display:block}
+.potd-body{grid-template-columns:minmax(240px,28%) minmax(0,1fr)}
+}.potd-obs{--cl:3}@media (min-width:700px){.potd-obs{--cl:2}}
+.potd-mat{position:relative;display:flex;flex-direction:column;padding:0}
+.potd-live{position:absolute;left:0;top:0;width:100%;height:640px;border:0;opacity:0;pointer-events:none;transform:scale(0);transform-origin:0 0}
+.potd-live.on{flex:none;transform:none;position:static;align-self:stretch;opacity:1;pointer-events:auto;display:block}
 .potd-mat img{display:block;max-width:100%;width:auto;height:auto;max-height:min(320px,46vh)}
 .potd-go{flex:0 0 auto;font-weight:600;font-size:14px;color:var(--bg);background:var(--ink);text-decoration:none;border-radius:99px;padding:8px 16px;white-space:nowrap}
 .potd-go:hover{background:var(--acc)}
@@ -194,17 +199,17 @@ const alts=f.alt||null;let cur=0;const V=()=>alts?alts[cur]:f;
 /* the snapshot shows first; the live chart (an iframe of the study page, ?potd=key) replaces it once it reports its height */
 const pic=v=>`<picture class="potd-pic"><source media="(prefers-color-scheme: dark)" srcset="feature/${v.k}-dark.webp"><img src="feature/${v.k}-light.webp" width="${f.w}" height="${f.h}" alt="Chart: ${v.t}, from ${p.t}"></picture>`;
 el.innerHTML=`<div class="potd-src"><div class="potd-srct"><span class="potd-intro">The visualization of the day is from the following analysis:</span><p class="potd-from"><b>${p.t}</b><span class="m">${p.m}</span></p><p class="potd-d cl" style="--cl:2">${p.d}</p></div><a class="potd-go" href="${p.u}" target="_blank" rel="noopener">Open the full page →</a></div>`+`<div class="potd-left">`+(alts?`<div class="potd-tg" role="group" aria-label="Choose a view">${alts.map((a,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===cur}">${a.l}</button>`).join("")}</div>`:"")+`<div class="potd-lead"><h3></h3><p class="potd-obs cl"></p></div></div>
-<figure class="potd-fig"><div class="potd-mat">${pic(V())}</div></figure>`;
+<figure class="potd-fig"><div class="potd-mat" tabindex="0" role="region" aria-label="Chart, scrollable">${pic(V())}</div></figure>`;
 const BG={"bb-stops":["#F9FAF6","#111111"],"bw-animals":["#F6F6F2","#151716"],"cc-map":["#FCFBFC","#181C1F"],"cf-scatter":["#F6F6F2","#101719"],"hb-size":["#FEFDF9","#151E2D"],"hb-surv":["#FEFDF9","#151E2D"],"mc-trend":["#F8FAFB","#161E34"],"mn-dist":["#FFFAF0","#241B15"],"mn-who":["#FFFAF0","#241B15"],"pz-ai":["#FFFEFA","#111111"],"tn-offseason":["#FFFFFF","#121F26"],"uf-rate":["#10110C","#10110C"]};
 const box=document.getElementById("potd-box"),dk=matchMedia("(prefers-color-scheme: dark)"),tone=()=>{const c=BG[V().k]||BG[f.k];if(!c)return;const forced=document.documentElement.dataset.theme;const d=forced?forced==="dark":dk.matches;box.style.setProperty("--pb",c[d?1:0])};
 tone();dk.addEventListener&&dk.addEventListener("change",tone);
 /* long text collapses to a few lines with a Read more toggle */
 const clamp=()=>el.querySelectorAll(".cl").forEach(t=>{let b=t.nextElementSibling;if(b&&b.classList.contains("potd-more"))b.remove();t.classList.remove("open");if(t.scrollHeight>t.clientHeight+1){b=document.createElement("button");b.type="button";b.className="potd-more";b.textContent="Read more";b.setAttribute("aria-expanded","false");b.onclick=()=>{const o=t.classList.toggle("open");b.textContent=o?"Show less":"Read more";b.setAttribute("aria-expanded",o)};t.after(b)}});
-const mat=el.querySelector(".potd-mat");let live=false,shownK=V().k;
+const mat=el.querySelector(".potd-mat");const fg=el.querySelector(".potd-fig"),chk=()=>fg.classList.toggle("scrolls",mat.scrollHeight>mat.clientHeight+8);new ResizeObserver(chk).observe(mat);mat.addEventListener("load",chk,true);addEventListener("resize",chk);let live=false,shownK=V().k;
 const fr=document.createElement("iframe");fr.className="potd-live";fr.title="Interactive chart: "+f.t;fr.setAttribute("scrolling","no");fr.src=p.u+"?potd="+f.k;mat.appendChild(fr);
 const drop=()=>{if(!live&&fr.parentNode)fr.remove()};setTimeout(drop,12000);
 addEventListener("message",e=>{const d=e.data;if(e.source!==fr.contentWindow||!d||d.type!=="pug-embed"||d.key!==f.k)return;
-if(d.h<0){drop();return}fr.style.height=d.h+"px";if(!live){live=true;fr.classList.add("on");const pc=mat.querySelector(".potd-pic");if(pc)pc.remove()}});
+if(d.h<0){drop();return}fr.style.height=d.h+"px";setTimeout(chk,50);if(!live){live=true;fr.classList.add("on");const pc=mat.querySelector(".potd-pic");if(pc)pc.remove()}});
 const mount=()=>{if(!window.pugFeedback)return;const old=el.querySelector(".pf");if(old)old.remove();window.pugFeedback(el,"potd-"+f.k+(alts?"-"+alts[cur].k:""),"Did today’s visualization of the day earn a tail wag?")};
 const text=()=>{const v=V();el.querySelector(".potd-lead h3").textContent=v.t;el.querySelector(".potd-obs").textContent=v.o;
 if(!live&&v.k!==shownK){shownK=v.k;const pc=mat.querySelector(".potd-pic");if(pc)pc.outerHTML=pic(v)}tone();clamp()};
