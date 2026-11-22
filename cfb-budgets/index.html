@@ -71,11 +71,6 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 .pq::before{content:"";flex:0 0 auto;width:24px;height:22px;background:url("../pug-head.png") center/contain no-repeat}
 .pq b{color:var(--ink);font-weight:600}
 .key svg.fb{display:inline-block;width:22px;height:16px;margin-right:6px;vertical-align:-5px;overflow:visible}
-.ii{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:1.5px solid var(--muted);border-radius:50%;font:italic 700 12px/1 Georgia,serif;color:var(--muted);cursor:help;vertical-align:1px;margin:0 1px 0 5px}
-.ii:hover,.ii[aria-expanded=true]{color:var(--bg);background:var(--ink);border-color:var(--ink)}.ii:focus-visible{outline:3px solid var(--b10);outline-offset:2px}
-.fxw{position:relative}
-.fx{box-sizing:border-box;position:absolute;left:0;top:calc(100% + 8px);width:min(460px,calc(100vw - 36px));z-index:15;background:var(--ink);color:var(--bg);border-radius:8px;padding:12px 14px;font:13.5px/1.5 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.25)}
-.fx[hidden]{display:none}.fx b{display:block;margin-top:9px}.fx b:first-child{margin-top:0}.fx span{display:block}
 .grp{font:14px/1.6 system-ui,sans-serif;color:var(--muted);margin:10px 0 0}.grp b{color:var(--ink);font-weight:600}
 .vd{font:16px/1.5 system-ui,sans-serif;padding-left:20px}.vd li{margin-bottom:9px}
 .chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); }
@@ -83,7 +78,7 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 .chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 </style>
 <link rel="stylesheet" href="../pug-header.css">
-<script src="../embed.js"></script><script defer src="../analytics.js"></script><script defer src="../feedback.js?v=2"></script>
+<script src="../embed.js"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
 </head>
 <body>
 <aside class="cr"><div class="pug-hdr">
@@ -167,14 +162,7 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 <p>The pugs sorted the 68 teams by nickname: 4 teams with a dog-family nickname, 13 with a cat-family nickname and 51 with neither. The list under the chart names every team, and hovering over a team shows its nickname. One of the 4 dog teams is ranked (Georgia, #2), against 5 of the 13 cat teams and 19 of the other 51. The highest-ranked cat team is LSU, at #7. Average budgets are within $2.7M of each other: $26.8M for dog teams, $25.2M for cat teams and $27.8M for the rest. The tick marks each group’s average.</p>
 <div class="key ck"></div>
 <svg id="pt" role="img" aria-label="Budget by nickname family: dogs, cats and all other nicknames"></svg>
-<div class="rd fxw">Fisher’s exact test<button type="button" class="ii" id="fxb" aria-label="What is Fisher’s exact test, and how do I read the result?" aria-expanded="false" aria-controls="fx">i</button>: dog teams against cat teams, p = 1.0; cat teams against everyone else, p = 1.0. With four dog teams, only a very large gap could show up, and there isn’t one. The pugs are not sulking.
-<div class="fx" id="fx" role="tooltip" hidden>
-<b>What it does</b><span>Fisher’s exact test asks whether two groups make the poll at different rates by more than luck would explain. It counts every way the ranked and unranked teams could have been split between the groups, so it stays valid for tiny groups like our four dog teams.</span>
-<b>How to read p</b><span>p is how often luck alone would produce a split at least this lopsided if a nickname had no effect. Near 1 means the split is about as ordinary as luck gets. Below about 0.05 is the usual bar for calling a difference real.</span>
-<b>p = 1.0 here</b><span>Dog teams: 1 of 4 ranked (25%). Cat teams: 5 of 13 (38%). A gap this size is just what luck produces, so there is no sign of a difference.</span>
-<b>p = 0.75</b><span>This is the cat result if Cincinnati is counted as neither: 5 of 12 cat teams ranked against 20 of 56 others. Luck alone would produce a gap this big or bigger about 3 times in 4. Still no sign of a difference.</span>
-<b>What it doesn’t say</b><span>A high p is not proof that nicknames don’t matter, and it is not the chance that they don’t. With only 4 dog teams the test can catch only a very large gap, so a small real effect could hide.</span>
-</div></div>
+<p class="rd">Fisher’s exact test: dog teams against cat teams, p = 1.0; cat teams against everyone else, p = 1.0. With four dog teams, only a very large gap could show up, and there isn’t one. The pugs are not sulking.</p>
 <p class="grp" id="grp"></p>
 <p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings. Nicknames: <a href="https://en.wikipedia.org/wiki/List_of_NCAA_Division_I_FBS_football_programs" target="_blank" rel="noopener">Wikipedia, List of NCAA Division I FBS football programs</a>, grouped by the pugs. The last section explains the grouping.</p>
 </section>
@@ -200,6 +188,7 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 <footer>Source: cfb_roster_budgets_2026.xlsx. Team nicknames: Wikipedia, List of NCAA Division I FBS football programs. Budgets are estimated ranges in millions of dollars; midpoint is the average of low and high. Teams without an AP rank in the file are treated as unranked. A correlation between spending and ranking doesn’t show that spending causes it.</footer>
 <div id="tip"></div>
 <script>
+window.STAT_TIPS={fisher:{t:"Fisher’s exact test",s:[["What it does","Checks whether two groups differ in how often something happens (here, making the poll) by more than luck would explain. It counts every way the ranked and unranked teams could have been split between the groups, so it stays valid for tiny groups like our four dog teams."],["How to read p","p is how often luck alone would produce a split at least this lopsided if a nickname had no effect. Near 1 means the split is about as ordinary as luck gets. Below about 0.05 is the usual bar for calling a difference real."],["p = 1.0 here","Dog teams: 1 of 4 ranked (25%). Cat teams: 5 of 13 (38%). A gap this size is just what luck produces, so there is no sign of a difference."],["What it doesn’t say","A high p is not proof that nicknames don’t matter, and it is not the chance that they don’t. With only 4 dog teams the test can catch only a very large gap, so a small real effect could hide."]]}};
 const R="Ohio State|B10|49|54|6;Oregon|B10|48|54|21;Texas|SEC|45|55|1;LSU|SEC|47|50|7;Texas A&M|SEC|45|50|9;Miami|ACC|44|50|5;Notre Dame|Ind|41|48|3;Ole Miss|SEC|39|45|8;Tennessee|SEC|41|43|15;Alabama|SEC|38|42|10;Texas Tech|B12|38|42|13;USC|B10|37|40|12;Indiana|B10|36|40|4;Michigan|B10|36|40|19;Florida|SEC|31|41|;South Carolina|SEC|32|35|;Auburn|SEC|31|35|;Nebraska|B10|31|35|;Georgia|SEC|31|34|2;Oklahoma|SEC|28|34|24;Clemson|ACC|29|32|;Penn State|B10|29|32|14;Wisconsin|B10|27|31|;Missouri|SEC|27|30|20;UCLA|B10|26|30|;Mississippi State|SEC|25|30|;Virginia Tech|ACC|25|30|;Florida State|ACC|23|30|;Vanderbilt|SEC|25|28|;Georgia Tech|ACC|23|26|;Kentucky|SEC|23|26|;NC State|ACC|22|26|;Arkansas|SEC|22|25|;Louisville|ACC|22|25|23;TCU|B12|22|25|;Maryland|B10|21|25|;Michigan State|B10|21|25|;Northwestern|B10|21|25|;Washington|B10|21|25|;BYU|B12|20|25|11;North Carolina|ACC|20|25|;California|ACC|20|24|;SMU|ACC|21|23|16;Virginia|ACC|20|24|25;Baylor|B12|20|23|;Rutgers|B10|20|23|;Arizona State|B12|19|23|;Illinois|B10|19|23|;Kansas State|B12|19|22|;Minnesota|B10|18|22|;Utah|B12|18|22|17;West Virginia|B12|18|22|;Colorado|B12|18|21|;Syracuse|ACC|17|22|;Iowa|B10|17|21|18;Pitt|ACC|16|20|;Purdue|B10|16|20|;Stanford|ACC|16|20|;Wake Forest|ACC|16|20|;UCF|B12|15|20|;Houston|B12|15|19|22;Oklahoma State|B12|15|19|;Kansas|B12|15|17|;Arizona|B12|13|18|;Cincinnati|B12|14|16|;Iowa State|B12|13|17|;Duke|ACC|12|15|;Boston College|ACC|8|13|";
 const D=R.split(";").map((s,i)=>{const[n,c,l,h,p]=s.split("|");return{n,c,l:+l,h:+h,m:(+l+ +h)/2,r:i+1,ap:p?+p:0,g:null}});
 D.filter(d=>d.ap).forEach((d,k)=>d.g=k+1-d.ap);
@@ -219,7 +208,7 @@ document.querySelectorAll(".ck").forEach(e=>e.innerHTML=KEY);
 const bm=(c,a,L)=>{const h=L*.58,lc=a?"#fff":c;
 return `<path d="M${-L} 0Q0 ${-2*h} ${L} 0Q0 ${2*h} ${-L} 0Z" fill="${c}" fill-opacity="${a?.92:.14}" stroke="${c}" stroke-width="${a?1.2:1.5}" stroke-linejoin="round"/>`+(a?`<path d="M${-L*.64} ${-h*.5}V${h*.5}M${L*.64} ${-h*.5}V${h*.5}" stroke="#fff" stroke-width="1.2" fill="none" opacity=".85"/>`:"")+`<path d="M${-L*.34} 0H${L*.34}M${-L*.2} ${-h*.38}V${h*.38}M0 ${-h*.38}V${h*.38}M${L*.2} ${-h*.38}V${h*.38}" stroke="${lc}" stroke-width="1.15" stroke-linecap="round" fill="none" opacity="${a?.95:.8}"/>`};
 const fbi=(c,h)=>`<svg class="fb" viewBox="-11 -9 22 18" aria-hidden="true"><g transform="rotate(-35)">${bm(c,!h,8.5)}</g></svg>`;
-(()=>{const f=g=>Object.entries(g).map(([k,v])=>`${k} (${v.join(", ")})`).join(", ");document.getElementById("grp").innerHTML=`<b>Dog family, ${NK.dog.length} teams:</b> ${f(NN.dog)}.<br><b>Cat family, ${NK.cat.length} teams:</b> ${f(NN.cat)}.<br><b>Neither, ${D.length-NK.dog.length-NK.cat.length} teams:</b> every other nickname, including Aggies (Texas A&amp;M).<br><b>Two judgment calls.</b> Bearcats count as cats, although the real bearcat is the binturong, which is neither a bear nor a cat (<a href="https://www.uc.edu/news/articles/2025/09/what-is-a-bearcat.html" target="_blank" rel="noopener">University of Cincinnati</a>). Counting Cincinnati as neither changes nothing important: 5 of 12 cat teams ranked, and cat teams against everyone else gives p = 0.75. Aggies counts as neither because it is a school nickname, not an animal (the A&amp;M stands for Agricultural and Mechanical). Groups follow the nickname, not the live mascot.`})();
+(()=>{const f=g=>Object.entries(g).map(([k,v])=>`${k} (${v.join(", ")})`).join(", ");document.getElementById("grp").innerHTML=`<b>Dog family, ${NK.dog.length} teams:</b> ${f(NN.dog)}.<br><b>Cat family, ${NK.cat.length} teams:</b> ${f(NN.cat)}.<br><b>Neither, ${D.length-NK.dog.length-NK.cat.length} teams:</b> every other nickname, including Aggies (Texas A&amp;M).<br><b>Two judgment calls.</b> Bearcats count as cats, although the real bearcat is the binturong, which is neither a bear nor a cat (<a href="https://www.uc.edu/news/articles/2025/09/what-is-a-bearcat.html" target="_blank" rel="noopener">University of Cincinnati</a>). Aggies counts as neither because it is a school nickname, not an animal (the A&amp;M stands for Agricultural and Mechanical). Groups follow the nickname, not the live mascot.`})();
 document.getElementById("kf").innerHTML=["SEC","B10","ACC","B12","Ind"].map(c=>`<span>${fbi(col(c))}${c=="Ind"?"Independent (Notre Dame)":CN[c]}</span>`).join("")+`<span>${fbi("var(--muted)",1)}Hollow football: no AP rank</span>`;
 const ball=(d,x,y,ph)=>{const L=ph?7.5:11;return `<g data-i="${d.r-1}" transform="translate(${x} ${y}) rotate(-35)" opacity="${ok(d)?1:.12}"><circle r="${L}" fill="transparent"/>${bm(col(d.c),d.ap,L)}</g>`};
 const setv=(id,W,H,h)=>{const e=document.getElementById(id);e.setAttribute("viewBox",`0 0 ${W} ${H}`);e.innerHTML=h};
@@ -291,11 +280,6 @@ document.getElementById("chips").onclick=e=>{const b=e.target.closest("[data-c]"
 sl.onchange=()=>{FS.t=sl.value===""?-1:+sl.value;flip()};document.getElementById("fr").onclick=()=>{FS.t=-1;flip()};
 document.getElementById("fl").addEventListener("click",e=>{const t=e.target.closest("[data-i]");if(!t)return;FS.t=+t.dataset.i;flip()})})();
 document.getElementById("q").oninput=e=>{S.q=e.target.value.trim().toLowerCase();all()};
-(()=>{const b=document.getElementById("fxb"),f=document.getElementById("fx");let pin=false;const set=o=>{f.hidden=!o;b.setAttribute("aria-expanded",o)};
-b.onmouseenter=()=>set(true);b.onmouseleave=()=>{if(!pin)set(false)};b.onfocus=()=>set(true);b.onblur=()=>{if(!pin)set(false)};
-b.onclick=e=>{e.stopPropagation();pin=!pin;set(pin||true);if(!pin)set(false)};
-document.addEventListener("click",e=>{if(pin&&!f.contains(e.target)){pin=false;set(false)}});
-document.addEventListener("keydown",e=>{if(e.key=="Escape"){pin=false;set(false)}})})();
 document.getElementById("th").onclick=e=>{const b=e.target.closest("[data-s]");if(!b)return;const k=+b.dataset.s;so=so.k==k?{k,dir:-so.dir}:{k,dir:1};table()};
 const tip=document.getElementById("tip");
 document.addEventListener("pointermove",e=>{const t=e.target.closest("svg [data-i]");if(!t){tip.style.display="none";return}const d=D[+t.dataset.i];
