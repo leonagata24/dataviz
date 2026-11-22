@@ -52,6 +52,42 @@
         if (hit) { el.appendChild(hit.cloneNode(true)); break; }
       }
     }
+    // on the home page the chart is a preview: remove the simulation controls and selections (they live on the full page)
+    var CTRL = {
+      "mn-dist": [".ctrl"], "hb-surv": [".replay"], "mc-trend": [".chip"], "cc-map": [".slider", ".ticks"],
+      "bb-stops": [".bb-chips"], "bw-animals": [".controls", ".cstat"], "uf-rate": [".controls", ".cstat"], "cf-scatter": [".fp"]
+    }[key] || [];
+    for (var c = 0; c < CTRL.length; c++) {
+      var hits = el.querySelectorAll(CTRL[c]);
+      for (var h = 0; h < hits.length; h++) {
+        var hide = CTRL[c] === ".chip" ? hits[h].parentElement : hits[h];
+        if (hide) hide.style.setProperty("display", "none", "important");
+      }
+    }
+    // drop sentences that tell the reader to press, pick or click something that is no longer there
+    var STRIP = {
+      "mc-trend": [/Click a dot to list that year, or pick a decade above\.\s*/],
+      "cc-map": [/Press play or drag the slider: the dots thicken, the dark center of population moves west, and the two charts follow the same census\./, "The dark dot marks the center of population; the full page animates it from 1790 to 1900."],
+      "bb-stops": [/Pick the championships to stack\.\s*/],
+      "cf-scatter": [/\s*Pick a team you know, or click any line, to follow it\./]
+    }[key];
+    if (STRIP) {
+      var tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), tn;
+      while ((tn = tw.nextNode())) {
+        var rule = STRIP[0], rep = STRIP[1] || "";
+        if (rule.test(tn.nodeValue)) tn.nodeValue = tn.nodeValue.replace(rule, rep);
+      }
+    }
+    // clicks, taps and keys on the chart's buttons, inputs and marks do nothing here (hover tooltips and info icons still work)
+    var block = function (ev) {
+      var t = ev.target;
+      if (!el.contains(t) || !t.closest) return;
+      if (t.closest(".ii, a, .pf, [data-keep]")) return;
+      if (key === "uf-rate" && t.closest("svg")) return; // a saucer opens the full page on that state
+      if (ev.type === "keydown" && ev.key !== "Enter" && ev.key !== " ") return;
+      if (t.closest("button, input, select, svg, [role=button], [tabindex]")) { ev.stopPropagation(); ev.preventDefault(); }
+    };
+    ["click", "mousedown", "pointerdown", "touchstart", "keydown", "change", "input"].forEach(function (n) { document.addEventListener(n, block, true); });
     // hide everything that is not on the path from <body> to the chart's card
     for (var n = el; n && n !== document.body; n = n.parentElement) {
       var p = n.parentElement;
