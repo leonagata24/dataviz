@@ -23,14 +23,14 @@
   var msg = { wag: "Tail wag logged. The pugs thank you.", meh: "Noted. The pugs will try harder." };
   function get(k) { try { return localStorage.getItem("pugfb:" + k); } catch (e) { return null; } }
   function put(k, v) { try { localStorage.setItem("pugfb:" + k, v); } catch (e) {} }
-  function mount(host, key, inline) {
+  function mount(host, key, inline, q) {
     if (!host || host.querySelector(".pf")) return;
     if (!document.getElementById("pf-css")) { var s = document.createElement("style"); s.id = "pf-css"; s.textContent = css; document.head.appendChild(s); }
     var box = document.createElement("div");
     box.className = "pf" + (inline ? " pf-in" : "");
     box.setAttribute("role", "group");
     box.setAttribute("aria-label", "Feedback");
-    box.innerHTML = '<span class="pf-q">Did this one earn a tail wag?</span><span class="pf-b"><button type="button" data-v="wag" aria-pressed="false">' + paw + 'Wag wag</button><button type="button" data-v="meh" aria-pressed="false">' + flat + 'Meh</button></span><span class="pf-t" role="status" aria-live="polite"></span>';
+    box.innerHTML = '<span class="pf-q">' + (q || "Did this one earn a tail wag?") + '</span><span class="pf-b"><button type="button" data-v="wag" aria-pressed="false">' + paw + 'Wag wag</button><button type="button" data-v="meh" aria-pressed="false">' + flat + 'Meh</button></span><span class="pf-t" role="status" aria-live="polite"></span>';
     var note = box.querySelector(".pf-t");
     function show(v) {
       box.classList.toggle("pf-done", !!v);
@@ -56,7 +56,7 @@
     });
     host.appendChild(box);
   }
-  window.pugFeedback = function (host, key) { mount(host, key, true); };
+  window.pugFeedback = function (host, key, q) { mount(host, key, true, q); };
   var m = location.pathname.match(/\/dataviz\/([^\/]+)\/?(?:index\.html)?$/) || location.pathname.match(/^\/([^\/]+)\/?(?:index\.html)?$/);
   var slug = m && m[1] !== "dataviz" ? m[1] : null;
   if (slug && !document.getElementById("potd") && !/[?&]potd=/.test(location.search)) {

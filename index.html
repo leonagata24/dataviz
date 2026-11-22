@@ -81,27 +81,36 @@ header p{color:var(--muted);margin:0}
 @media (max-width:560px){.mc i{width:16px;height:18px}.tl{gap:10px}}
 
 /* Chart of the day */
-.potd{display:flex;flex-direction:column;gap:14px;padding:6px 0 30px}
-.potd-hd{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;border-top:1px solid var(--line);padding-top:18px}
+.potd{padding:6px 0 30px}
+.potd-box{--pb:var(--th);background:var(--pb);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,2.4vw,24px);display:flex;flex-direction:column;gap:clamp(10px,1.4vw,14px)}
+.potd-hd{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px}
 .potd-hd h2{margin:0;font-family:var(--f-mono);font-size:12px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 .potd-date{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
-.potd-fig{margin:0;display:flex;flex-direction:column;gap:16px}
-.potd-mat{position:relative;background:var(--th);border-radius:14px;padding:clamp(10px,2vw,16px);display:flex;flex-direction:column;align-items:center;box-shadow:inset 0 0 0 1px var(--line);overflow:hidden}
+.potd-body{display:flex;flex-direction:column;gap:clamp(10px,1.4vw,14px)}
+.potd-src{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px 24px;font-size:13.5px;color:var(--muted);padding-bottom:clamp(12px,1.8vw,18px);border-bottom:1px solid var(--line)}
+.potd-srct{flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:3px}
+.potd-srct p{margin:0}
+.potd-intro{font-family:var(--f-mono);font-size:12px;letter-spacing:.02em;color:var(--muted)}
+.potd-from{font-size:15px;color:var(--ink)}
+.potd-from b{font-weight:700}
+.potd-from .m::before{display:none}.potd-from .m{display:inline;font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-left:6px;white-space:nowrap}
+.potd-lead{display:flex;flex-direction:column;gap:8px}
+.potd-lead h3{margin:0;font-family:var(--f-disp);font-size:clamp(21px,3vw,30px);font-weight:700;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
+.potd-obs{margin:0;font-size:clamp(14.5px,1.6vw,17px);line-height:1.5}
+.cl{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--cl,3);overflow:hidden}
+.cl.open{display:block;overflow:visible}
+.potd-more{font:inherit;font-size:12.5px;font-weight:600;color:var(--acc);background:none;border:0;padding:2px 0;cursor:pointer;align-self:flex-start;text-decoration:underline;text-underline-offset:3px}
+.potd-more:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.potd-fig{margin:0}.potd-obs{--cl:3}@media (min-width:700px){.potd-obs{--cl:2}}
+.potd-mat{position:relative;display:flex;flex-direction:column;align-items:center;padding:0;overflow:hidden}
 .potd-live{position:absolute;left:0;top:0;width:100%;height:640px;border:0;opacity:0;pointer-events:none}
-.potd-live.on{position:static;align-self:stretch;opacity:1;pointer-events:auto;border-radius:6px;display:block}
-.potd-mat img{display:block;max-width:100%;width:auto;height:auto;max-height:min(480px,70vh);border-radius:6px;background:var(--card)}
-.potd-body{display:flex;flex-direction:column;gap:18px}
-.potd-lead{display:flex;flex-direction:column;gap:10px}
-.potd-lead h3{margin:0;font-family:var(--f-disp);font-size:clamp(23px,3.4vw,32px);font-weight:700;letter-spacing:-.03em;line-height:1.15;text-wrap:wrap}
-.potd-obs{margin:0;font-size:clamp(15.5px,1.8vw,18px);line-height:1.55}
-.potd-ctx{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;font-size:13.5px;color:var(--muted);border-left:3px solid var(--qc);padding-left:14px}
-.potd-src{display:flex;flex-direction:column;gap:5px;flex:1 1 320px;min-width:0}
-.potd-ctx p{margin:0}
-.potd-ctx .m{font-size:12px}
-.potd-go{flex:0 0 auto;font-weight:600;font-size:14px;color:var(--bg);background:var(--ink);text-decoration:none;border-radius:99px;padding:7px 16px}
-.potd-tg{display:flex;width:fit-content;border:1.5px solid var(--ink);border-radius:99px;overflow:hidden}.potd-tg button{font:600 13.5px var(--f-disp);background:transparent;color:var(--ink);border:0;padding:8px 16px;cursor:pointer;min-height:38px}.potd-tg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}.potd-tg button:focus-visible{outline:3px solid var(--acc);outline-offset:-3px}
+.potd-live.on{position:static;align-self:stretch;opacity:1;pointer-events:auto;display:block}
+.potd-mat img{display:block;max-width:100%;width:auto;height:auto;max-height:min(320px,46vh)}
+.potd-go{flex:0 0 auto;font-weight:600;font-size:14px;color:var(--bg);background:var(--ink);text-decoration:none;border-radius:99px;padding:8px 16px;white-space:nowrap}
 .potd-go:hover{background:var(--acc)}
 .potd-go:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.potd-box .pf{background:none;border:0;border-top:1px solid var(--line);border-radius:0;padding:12px 0 0;margin:0}
+.potd-tg{display:flex;width:fit-content;border:1.5px solid var(--ink);border-radius:99px;overflow:hidden}.potd-tg button{font:600 13.5px var(--f-disp);background:transparent;color:var(--ink);border:0;padding:8px 16px;cursor:pointer;min-height:38px}.potd-tg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}.potd-tg button:focus-visible{outline:3px solid var(--acc);outline-offset:-3px}
 .intro{container-type:inline-size;padding:4px 0 12px;border-top:1px solid var(--line);padding-top:20px}
 .intro .lede{margin:0;color:var(--muted)}
 .ctlr{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 18px}
@@ -111,7 +120,7 @@ header p{color:var(--muted);margin:0}
 footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:14px;color:var(--muted)}
 footer a{color:var(--ink)}
 </style>
-<script defer src="analytics.js"></script><script defer src="stat-info.js?v=1"></script><script defer src="feedback.js?v=2"></script>
+<script defer src="analytics.js"></script><script defer src="stat-info.js?v=1"></script><script defer src="feedback.js?v=3"></script>
 </head>
 <body>
 <div class="w">
@@ -119,10 +128,10 @@ footer a{color:var(--ink)}
 <div class="ttl"><img src="pug-rock.png" alt=""><div class="tt"><h1>The Pugs’ Data Viz Studies</h1><p class="tag"><b>The Pug factor:</b> the right amount of random thinking and creativity that makes life and data a lot more interesting.</p></div></div>
 <svg class="tail" viewBox="0 0 150 22" aria-hidden="true"><path d="M2 15 C40 15 70 16 104 12 C122 10 132 4 126 2 C119 0 114 9 121 13 C128 17 138 12 140 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
 </header>
-<section class="potd" aria-labelledby="potd-h">
+<section class="potd" aria-labelledby="potd-h"><div class="potd-box" id="potd-box">
 <div class="potd-hd"><h2 id="potd-h">Random visualization and observation of the day</h2><span class="potd-date" id="potd-date"></span></div>
 <div class="potd-body" id="potd"></div>
-</section>
+</div></section>
 <div class="intro"><p class="lede">Exercises and studies in data visualization, including MakeoverMonday projects and dashboards built in Tableau Public. Each card opens the full piece.</p></div>
 <div class="tlw"><div class="ctlr"><div class="tlr"><div class="tl" id="tl" role="group" aria-label="Filter by month: tap a month, then another to choose a range"></div><button id="clr" hidden>Clear dates</button></div><input id="q" type="search" placeholder="Search the work" aria-label="Search the work"></div><p class="tls" id="tls" aria-live="polite"></p><p class="lg" aria-label="Card colors by quarter"><span class="q1"><i></i>Jan–Mar</span><span class="q2"><i></i>Apr–Jun</span><span class="q3"><i></i>Jul–Sep</span><span class="q4"><i></i>Oct–Dec</span></p></div>
 <main id="g"></main>
@@ -180,18 +189,22 @@ document.getElementById("potd-date").textContent=now.toLocaleDateString("en-US",
 const alts=f.alt||null;let cur=0;const V=()=>alts?alts[cur]:f;
 /* the snapshot shows first; the live chart (an iframe of the study page, ?potd=key) replaces it once it reports its height */
 const pic=v=>`<picture class="potd-pic"><source media="(prefers-color-scheme: dark)" srcset="feature/${v.k}-dark.webp"><img src="feature/${v.k}-light.webp" width="${f.w}" height="${f.h}" alt="Chart: ${v.t}, from ${p.t}"></picture>`;
-el.innerHTML=(alts?`<div class="potd-tg" role="group" aria-label="Choose a view">${alts.map((a,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===cur}">${a.l}</button>`).join("")}</div>`:"")+`<div class="potd-lead"><h3></h3><p class="potd-obs"></p></div>
-<figure class="potd-fig"><div class="potd-mat">${pic(V())}</div>
-<figcaption class="potd-ctx"><div class="potd-src"><span class="m">${p.m}</span><p>From <b>${p.t}</b>. ${p.d}</p></div><a class="potd-go" href="${p.u}" target="_blank" rel="noopener">Open the full page →</a></figcaption></figure>`;
-const mat=el.querySelector(".potd-mat"),fig=el.querySelector(".potd-fig");let live=false,shownK=V().k;
+el.innerHTML=`<div class="potd-src"><div class="potd-srct"><span class="potd-intro">The visualization of the day is from the following analysis:</span><p class="potd-from"><b>${p.t}</b><span class="m">${p.m}</span></p><p class="potd-d cl" style="--cl:2">${p.d}</p></div><a class="potd-go" href="${p.u}" target="_blank" rel="noopener">Open the full page →</a></div>`+(alts?`<div class="potd-tg" role="group" aria-label="Choose a view">${alts.map((a,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===cur}">${a.l}</button>`).join("")}</div>`:"")+`<div class="potd-lead"><h3></h3><p class="potd-obs cl"></p></div>
+<figure class="potd-fig"><div class="potd-mat">${pic(V())}</div></figure>`;
+const BG={"bb-stops":["#F9FAF6","#111111"],"bw-animals":["#F6F6F2","#151716"],"cc-map":["#FCFBFC","#181C1F"],"cf-scatter":["#F6F6F2","#101719"],"hb-size":["#FEFDF9","#151E2D"],"hb-surv":["#FEFDF9","#151E2D"],"mc-trend":["#F8FAFB","#161E34"],"mn-dist":["#FFFAF0","#241B15"],"mn-who":["#FFFAF0","#241B15"],"pz-ai":["#FFFEFA","#111111"],"tn-offseason":["#FFFFFF","#121F26"],"uf-rate":["#10110C","#10110C"]};
+const box=document.getElementById("potd-box"),dk=matchMedia("(prefers-color-scheme: dark)"),tone=()=>{const c=BG[V().k]||BG[f.k];if(!c)return;const forced=document.documentElement.dataset.theme;const d=forced?forced==="dark":dk.matches;box.style.setProperty("--pb",c[d?1:0])};
+tone();dk.addEventListener&&dk.addEventListener("change",tone);
+/* long text collapses to a few lines with a Read more toggle */
+const clamp=()=>el.querySelectorAll(".cl").forEach(t=>{let b=t.nextElementSibling;if(b&&b.classList.contains("potd-more"))b.remove();t.classList.remove("open");if(t.scrollHeight>t.clientHeight+1){b=document.createElement("button");b.type="button";b.className="potd-more";b.textContent="Read more";b.setAttribute("aria-expanded","false");b.onclick=()=>{const o=t.classList.toggle("open");b.textContent=o?"Show less":"Read more";b.setAttribute("aria-expanded",o)};t.after(b)}});
+const mat=el.querySelector(".potd-mat");let live=false,shownK=V().k;
 const fr=document.createElement("iframe");fr.className="potd-live";fr.title="Interactive chart: "+f.t;fr.setAttribute("scrolling","no");fr.src=p.u+"?potd="+f.k;mat.appendChild(fr);
 const drop=()=>{if(!live&&fr.parentNode)fr.remove()};setTimeout(drop,12000);
 addEventListener("message",e=>{const d=e.data;if(e.source!==fr.contentWindow||!d||d.type!=="pug-embed"||d.key!==f.k)return;
 if(d.h<0){drop();return}fr.style.height=d.h+"px";if(!live){live=true;fr.classList.add("on");const pc=mat.querySelector(".potd-pic");if(pc)pc.remove()}});
-const mount=()=>{if(!window.pugFeedback)return;const old=fig.querySelector(".pf");if(old)old.remove();window.pugFeedback(fig,"potd-"+f.k+(alts?"-"+alts[cur].k:""))};
+const mount=()=>{if(!window.pugFeedback)return;const old=el.querySelector(".pf");if(old)old.remove();window.pugFeedback(el,"potd-"+f.k+(alts?"-"+alts[cur].k:""),"Did today’s visualization of the day earn a tail wag?")};
 const text=()=>{const v=V();el.querySelector(".potd-lead h3").textContent=v.t;el.querySelector(".potd-obs").textContent=v.o;
-if(!live&&v.k!==shownK){shownK=v.k;const pc=mat.querySelector(".potd-pic");if(pc)pc.outerHTML=pic(v)}};
-text();
+if(!live&&v.k!==shownK){shownK=v.k;const pc=mat.querySelector(".potd-pic");if(pc)pc.outerHTML=pic(v)}tone();clamp()};
+text();addEventListener("load",clamp);document.fonts&&document.fonts.ready.then(clamp);
 el.querySelectorAll(".potd-tg button").forEach(b=>b.addEventListener("click",()=>{cur=+b.dataset.i;el.querySelectorAll(".potd-tg button").forEach(x=>x.setAttribute("aria-pressed",x===b));text();mount()}));
 window.pugFeedback?mount():addEventListener("load",mount)})();
 {const t=document.getElementById("tl");t.scrollLeft=t.scrollWidth}
