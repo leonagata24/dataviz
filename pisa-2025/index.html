@@ -317,8 +317,8 @@ function scatter(id,o){
   if(o.stat){svg.append("text").attr("class","lab").style("fill","var(--fg)").style("font-weight",600).style("font-size","12.5px").attr("x",m.l+6).attr("y",m.t-32).text(o.stat[0]);svg.append("text").attr("class","lab").attr("x",m.l+6).attr("y",m.t-17).text(o.stat[1])}
   if(o.bracket){const a=rows.find(r=>r.country===o.bracket[0]),b=rows.find(r=>r.country===o.bracket[1]),bx=W-m.r+14,ya=y(a[o.y]),yb=y(b[o.y]),gap=Math.round(Math.abs(a[o.y]-b[o.y])),
       lines=W<560?[gap+" points","apart"]:[o.bracket[0]+" and "+o.bracket[1]+":","about the same AI use,",gap+" math points apart"];
-    svg.append("path").attr("class","br").attr("d",`M${bx-5},${ya}H${bx}V${yb}H${bx-5}`).attr("fill","none").attr("stroke","var(--pen)").attr("stroke-width",1.6);
-    lines.forEach((ln,i)=>svg.append("text").attr("class","lab br").style("fill","var(--pen)").style("font-weight",600).attr("x",bx+8).attr("y",(ya+yb)/2-(lines.length-1)*7+i*14+4).text(ln))}
+    svg.append("path").attr("class","br").attr("d",`M${bx-5},${ya}H${bx}V${yb}H${bx-5}`).attr("fill","none").attr("stroke","var(--muted)").attr("stroke-width",1.6);
+    lines.forEach((ln,i)=>svg.append("text").attr("class","lab br").style("fill","var(--muted)").style("font-weight",600).attr("x",bx+8).attr("y",(ya+yb)/2-(lines.length-1)*7+i*14+4).text(ln))}
   if(o.rep){
     const tok=el.__tok=(el.__tok||0)+1,live=()=>el.__tok===tok&&el.isConnected,fl=svg.selectAll("line.fl").nodes(),qd=svg.selectAll("text.qd"),qb=svg.selectAll("path.qb"),br=svg.selectAll(".br"),EMB=!!window.PUG_EMBED;
     const wait=(ms,f)=>setTimeout(()=>{if(live())f()},ms);
