@@ -67,6 +67,11 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 .dqa-t td:nth-child(2){width:84px}.dqa-t td:nth-child(3){width:44%}
 @media(max-width:700px){.dqa-t{min-width:0}.dqa-t thead{display:none}.dqa-t tr,.dqa-t th,.dqa-t td{display:block;width:auto!important}.dqa-t tr{border-top:1px solid var(--line);padding:10px 0}.dqa-t tbody th,.dqa-t td{border:0;padding:3px 0}.dqa-t tbody th{font-size:15px}.dqa-t td[data-l="Found"]::before,.dqa-t td[data-l="Done"]::before{content:attr(data-l) ": ";font-weight:700;color:var(--muted)}}
 .dqa-r{display:inline-block;border:1px solid var(--muted);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+.pq{margin:0 0 8px;font:13.5px/1.45 system-ui,sans-serif;color:var(--muted);display:flex;align-items:center;gap:9px}
+.pq::before{content:"";flex:0 0 auto;width:24px;height:22px;background:url("../pug-head.png") center/contain no-repeat}
+.pq b{color:var(--ink);font-weight:600}
+.key svg.fb{display:inline-block;width:22px;height:16px;margin-right:6px;vertical-align:-5px;overflow:visible}
+.vd{font:16px/1.5 system-ui,sans-serif;padding-left:20px}.vd li{margin-bottom:9px}
 .chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); }
 .chart-src b { font-weight: 600; }
 .chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
@@ -86,17 +91,19 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 </div></aside>
 <header class="hero"><div>
 <h1>Money gets you in the poll. It doesn’t decide where you land.</h1>
-<p>We compared estimated 2026 roster budgets for 68 programs with the AP Top 25. All ten of the biggest spenders are ranked, but seven of the biggest 25 are not. Houston, Iowa and Utah made the poll on the three smallest budgets of any ranked team. The last section audits the data.</p>
+<p>Seen from pug height, a roster budget is a very large bowl of kibble and the AP Top 25 is the treat jar. The pugs lined up estimated 2026 budgets for 68 programs against the poll. All ten of the biggest spenders are ranked, but seven of the biggest 25 are not. Houston, Iowa and Utah made the poll on the three smallest budgets of any ranked team. The pugs also asked whether a dog nickname helps. It doesn’t. The last section audits the data.</p>
 </div></header>
 <div class="bar"><div><div id="chips" role="group" aria-label="Filter by conference"></div><input id="q" type="search" placeholder="Find a team" aria-label="Find a team"></div></div>
 <main>
-<section><h2>Ranked teams spend about $13M more than everyone else</h2>
-<p>Each dot is a program: further right means a bigger budget, higher up means a better AP rank. Hollow dots are unranked and sit in the band at the bottom.</p>
-<div class="tg"><label><input type="checkbox" id="tr" checked> Show trendline</label><span>Line: least-squares fit among the 25 ranked teams. Dark band: 95% confidence interval for the line (13 of the 25 dots fall inside it). Light band: 95% prediction band, where a ranked team is expected to land (24 of 25 fall inside).</span></div>
-<div class="key ck"></div>
-<svg id="sc" viewBox="0 0 820 540" role="img" aria-label="Scatter plot of budget against AP rank"></svg><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
+<section><p class="pq"><span><b>Pug question:</b> Does the biggest bowl of kibble get the biggest treat?</span></p>
+<h2>Ranked teams spend about $13M more than everyone else</h2>
+<p>Each football is a program: further right means a bigger budget, higher up means a better AP rank. Hollow footballs are unranked and sit in the band at the bottom.</p>
+<div class="tg"><label><input type="checkbox" id="tr" checked> Show trendline</label><span>Line: least-squares fit among the 25 ranked teams. Dark band: 95% confidence interval for the line (13 of the 25 footballs fall inside it). Light band: 95% prediction band, where a ranked team is expected to land (24 of 25 fall inside).</span></div>
+<div class="key" id="kf"></div>
+<svg id="sc" viewBox="0 0 820 540" role="img" aria-label="Scatter plot of budget against AP rank, with each program drawn as a football"></svg><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
 </section>
-<section id="flip"><h2>Twenty-five teams spend the most. Seven of them are not in the poll</h2>
+<section id="flip"><p class="pq"><span><b>Pug question:</b> Who ate well and still got no treat?</span></p>
+<h2>Twenty-five teams spend the most. Seven of them are not in the poll</h2>
 <p>One line per team, from its spending rank on the left (1 = biggest budget, of 68) to its AP rank on the right. Of the 25 biggest spenders, 18 are ranked and 7 are not. Pick a team you know, or click any line, to follow it.</p>
 <div class="fp"><label for="ft">Follow a team</label><select id="ft"></select><button type="button" id="fr">Back to the seven</button></div>
 <div class="key"><span><i class="o" style="background:var(--up)"></i>Top-25 spender, ranked</span><span><i class="o" style="background:var(--dn)"></i>Top-25 spender, not ranked</span><span><i class="o" style="background:var(--muted);opacity:.5"></i>Everyone else</span><span><i class="h"></i>Hollow dot: no AP rank</span></div>
@@ -104,12 +111,14 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 <p class="rd" id="fread" aria-live="polite"></p>
 <p style="font-size:13px">Spending rank follows each team’s budget midpoint. Teams with the same midpoint are ranked in file order, so a rank can be off by a place or two. The last section has the details.</p><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
 </section>
-<section><h2>A $10M bigger budget goes with about five times the odds of being ranked</h2>
+<section><p class="pq"><span><b>Pug question:</b> How much does another $10M of kibble improve the odds of a treat?</span></p>
+<h2>A $10M bigger budget goes with about five times the odds of being ranked</h2>
 <p>The trendline above only covers teams that made the poll. This curve uses all 68 teams: ranked teams are the dots along the top, unranked teams along the bottom, and the line is the fitted chance of being ranked at each budget. Dots are nudged up or down so they don’t overlap. Houston, on about $17M, had a fitted chance of about 8% and made the poll. Florida, on about $36M, had about 70% and didn’t.</p>
 <div class="key ck"></div>
 <svg id="pr" viewBox="0 0 820 250" role="img" aria-label="Estimated chance of being ranked by budget"></svg><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
 </section>
-<section><h2>Budget and ranking are linked beyond chance, but budget alone says little about any one team</h2>
+<section><p class="pq"><span><b>Pug question:</b> Is this just luck? The pugs are easily fooled by squeaky toys, so they ran the tests.</span></p>
+<h2>Budget and ranking are linked beyond chance, but budget alone says little about any one team</h2>
 <p>These figures use all 68 teams and don’t change with the filters. Negative correlations mean a bigger budget goes with a lower, better rank number.</p>
 <div class="tw"><table class="st"><thead><tr><th>Measure</th><th>Estimate</th><th>95% interval</th><th>In plain terms</th></tr></thead><tbody>
 <tr class="gh"><td colspan="4">Among the 25 ranked teams: AP rank against budget</td></tr>
@@ -136,30 +145,53 @@ footer{padding:28px 18px 36px;color:var(--muted);font:14px/1.5 system-ui,sans-se
 <li><b>Not a random sample of programs.</b> These 68 teams are mostly power-conference schools, so the results don’t describe all of college football.</li>
 <li><b>Exploratory.</b> These checks were chosen after looking at the data, with no correction for multiple tests. They all ask the same question and the main p-values are far below 0.05, but treat the exact values loosely.</li>
 </ul></section>
-<section><h2>Georgia, Indiana and BYU ranked far above their budgets. Oregon ranked far below.</h2>
+<section><p class="pq"><span><b>Pug question:</b> Who got a treat on a small bowl, and who got nothing for a big one?</span></p>
+<h2>Georgia, Indiana and BYU ranked far above their budgets. Oregon ranked far below.</h2>
 <p>Each team’s gap is its rank by spending among the 25 ranked teams minus its AP rank, so the average gap is zero. Georgia is the 15th-biggest spender of the 25 and ranks 2nd. Oregon is the 2nd-biggest and ranks 21st.</p>
 <div class="key"><span><i style="background:var(--up)"></i>Ranked higher than spending suggests</span><span><i style="background:var(--dn)"></i>Ranked lower</span></div>
 <svg id="gp" role="img" aria-label="Gap between spend rank and AP rank"></svg><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
 </section>
-<section><h2>The SEC spends the most and puts the most teams in the poll</h2>
+<section><p class="pq"><span><b>Pug question:</b> Does the pack matter more than the bowl?</span></p>
+<h2>The SEC spends the most and puts the most teams in the poll</h2>
 <p>Nine of 16 SEC teams are ranked, against 7 of 18 in the Big Ten, and 4 each in the ACC and Big 12. The Big 12 ranks as often as the ACC on about $3M less per team. Solid dots are ranked; the tick marks the conference average.</p>
 <div class="key ck"></div>
 <svg id="cf" role="img" aria-label="Budget by conference"></svg><p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings.</p>
 </section>
-<section><h2>Budgets are estimates, so small gaps between teams don’t mean much</h2>
+<section id="pets"><p class="pq"><span><b>Pug question:</b> Do dogs beat cats?</span></p>
+<h2>Dogs, cats or neither, a nickname doesn’t put you in the poll</h2>
+<p>The pugs sorted the 68 teams by nickname. Four have a dog-family nickname (Bulldogs, Huskies, Wolfpack), 12 have a cat-family one (Tigers, Wildcats, Cougars, Panthers, Nittany Lions) and 52 have neither. One of the four dogs is ranked (Georgia, #2), against five of the 12 cats and 19 of the other 52. The highest-ranked cat is LSU, at #7. Average budgets are within $1.5M of each other: $26.8M for dogs, $26.0M for cats and $27.5M for the rest. The tick marks each group’s average.</p>
+<div class="key ck"></div>
+<svg id="pt" role="img" aria-label="Budget by nickname family: dogs, cats and all other nicknames"></svg>
+<p class="rd">Fisher’s exact test: dogs against cats, p = 1.0; cats against everyone else, p = 0.75. Four dogs can only reveal a very large gap, and there isn’t one. The pugs are not sulking.</p>
+<p class="chart-src"><b>Source:</b> <a href="https://makeovermonday.vercel.app/dataset/cfb-roster-spending-2026" target="_blank" rel="noopener">CFB roster spending 2026</a> (MakeoverMonday dataset): estimated 2026 roster budgets and AP Top 25 rankings. Nicknames: <a href="https://en.wikipedia.org/wiki/List_of_NCAA_Division_I_FBS_football_programs" target="_blank" rel="noopener">Wikipedia, List of NCAA Division I FBS football programs</a>, grouped by the pugs. The last section explains the grouping.</p>
+</section>
+<section><p class="pq"><span><b>Pug question:</b> Can the pugs tell a $26M bowl from a $28M one?</span></p>
+<h2>Budgets are estimates, so small gaps between teams don’t mean much</h2>
 <p>Bars show the low-to-high estimate on a $0–60M scale, with the midpoint marked. Texas and Florida have the widest ranges, at $10M. Click a column to sort.</p>
 <div class="tw"><table><thead><tr id="th"></tr></thead><tbody id="tb"></tbody></table></div></section>
 
+<section id="verdict"><p class="pq"><span><b>Pug question:</b> So what did the pugs learn?</span></p>
+<h2>A big bowl gets you to the treat jar, not to the top of it</h2>
+<ul class="vd">
+<li><b>The bowl matters.</b> Ranked teams’ budgets average $13.1M more than unranked teams’ (95% interval $8.5M to $17.6M), and each extra $10M multiplies the odds of being ranked by about 5.5 (2.4 to 12.4).</li>
+<li><b>The bowl isn’t destiny.</b> Among ranked teams, budget accounts for about a third of the differences in rank (R² 0.36), and seven of the 25 biggest spenders aren’t ranked.</li>
+<li><b>Some dogs punch above their weight.</b> Georgia, Indiana and BYU ranked far above their budgets, and Houston, Iowa and Utah made the poll on the three smallest budgets of any ranked team.</li>
+<li><b>A dog nickname doesn’t help.</b> One of four dog teams is ranked, against five of 12 cat teams and 19 of 52 others, and the difference is well within chance.</li>
+<li><b>The pugs can’t see over the rim.</b> Budgets are estimated ranges, so gaps of a few million between teams mean little.</li>
+</ul></section>
+
 <section id="dq"><h2>Data quality audit: a small, clean file with estimated budgets</h2>
-<p>Nothing is missing or repeated, and the 25 ranks are complete. The limits are in what the numbers are: estimated ranges, 68 programs and a single poll.</p>
-<div class="tw dqa-w"><table class="dqa-t"><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">What was found</th><th scope="col">What was done</th></tr></thead><tbody><tr><th scope="row">Structure</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">68 programs: 16 SEC, 18 Big Ten, 17 ACC, 16 Big 12 and Notre Dame. No program appears twice, and every low estimate is at or below its high estimate.</td><td data-l="Done">Kept.</td></tr><tr><th scope="row">Ranks</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">25 teams have an AP rank, numbered 1 to 25 with no ties and no gaps, and each of them has a budget. The other 43 have no rank in the file.</td><td data-l="Done">Treated as unranked, and drawn as hollow dots in the band at the bottom.</td></tr><tr><th scope="row">Budgets</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Each budget is an estimated range, from $2M to $10M wide (typically $4M).</td><td data-l="Done">The midpoint is used. A gap between two teams smaller than their ranges means little, as the last chart shows.</td></tr><tr><th scope="row">Ties</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">45 of the 68 teams share a budget midpoint with at least one other team, in 19 groups of two to four (for example Auburn and Nebraska, or Clemson and Penn State).</td><td data-l="Done">Spending ranks break ties by the order in the file, so a team’s rank can be off by up to three places within its group. The top 25 is unaffected: no tie crosses the line between 25th and 26th.</td></tr><tr><th scope="row">Who is in the file</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Only the four power conferences and Notre Dame. Other programs aren’t in it.</td><td data-l="Done">“Unranked” and “everyone else” mean the other 43 programs here, not every team in the country.</td></tr><tr><th scope="row">One poll</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">The file holds a single AP ranking and doesn’t say which week.</td><td data-l="Done">Treated as a snapshot.</td></tr><tr><th scope="row">Cause and effect</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Budgets and ranks move together here. Richer programs also recruit, coach and win more, so spending can’t be separated from those.</td><td data-l="Done">The page reports a link and its size, and doesn’t say money causes rankings.</td></tr></tbody></table></div></section>
+<p>Nothing is missing or repeated, and the 25 ranks are complete. The limits are in what the numbers are: estimated ranges, 68 programs and a single poll. The nickname groups come from outside the file.</p>
+<div class="tw dqa-w"><table class="dqa-t"><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">What was found</th><th scope="col">What was done</th></tr></thead><tbody><tr><th scope="row">Structure</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">68 programs: 16 SEC, 18 Big Ten, 17 ACC, 16 Big 12 and Notre Dame. No program appears twice, and every low estimate is at or below its high estimate.</td><td data-l="Done">Kept.</td></tr><tr><th scope="row">Ranks</th><td data-l="Result"><span class="dqa-r">Pass</span></td><td data-l="Found">25 teams have an AP rank, numbered 1 to 25 with no ties and no gaps, and each of them has a budget. The other 43 have no rank in the file.</td><td data-l="Done">Treated as unranked, and drawn as hollow dots in the band at the bottom.</td></tr><tr><th scope="row">Budgets</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Each budget is an estimated range, from $2M to $10M wide (typically $4M).</td><td data-l="Done">The midpoint is used. A gap between two teams smaller than their ranges means little, as the last chart shows.</td></tr><tr><th scope="row">Ties</th><td data-l="Result"><span class="dqa-r">Note</span></td><td data-l="Found">45 of the 68 teams share a budget midpoint with at least one other team, in 19 groups of two to four (for example Auburn and Nebraska, or Clemson and Penn State).</td><td data-l="Done">Spending ranks break ties by the order in the file, so a team’s rank can be off by up to three places within its group. The top 25 is unaffected: no tie crosses the line between 25th and 26th.</td></tr><tr><th scope="row">Who is in the file</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Only the four power conferences and Notre Dame. Other programs aren’t in it.</td><td data-l="Done">“Unranked” and “everyone else” mean the other 43 programs here, not every team in the country.</td></tr><tr><th scope="row">Nicknames</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">The dog and cat groups come from outside the file. The pugs read the nicknames from an archived copy of the Wikipedia list of FBS programs and grouped them: dog family (Bulldogs, Huskies, Wolfpack) and cat family (Tigers, Wildcats, Cougars, Panthers, Nittany Lions). Judgment calls: Wildcats count as cats and the Wolfpack as dogs, while Bearcats (Cincinnati) and Aggies (Texas A&amp;M) count as neither. The dog group has only four teams.</td><td data-l="Done">Reported as a for-fun check with exact tests, not as a finding about what drives rankings. Because the list is an archived copy, a recent nickname change could be missed.</td></tr><tr><th scope="row">One poll</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">The file holds a single AP ranking and doesn’t say which week.</td><td data-l="Done">Treated as a snapshot.</td></tr><tr><th scope="row">Cause and effect</th><td data-l="Result"><span class="dqa-r">Limit</span></td><td data-l="Found">Budgets and ranks move together here. Richer programs also recruit, coach and win more, so spending can’t be separated from those.</td><td data-l="Done">The page reports a link and its size, and doesn’t say money causes rankings.</td></tr></tbody></table></div></section>
 </main>
-<footer>Source: cfb_roster_budgets_2026.xlsx. Budgets are estimated ranges in millions of dollars; midpoint is the average of low and high. Teams without an AP rank in the file are treated as unranked. A correlation between spending and ranking doesn’t show that spending causes it.</footer>
+<footer>Source: cfb_roster_budgets_2026.xlsx. Team nicknames: Wikipedia, List of NCAA Division I FBS football programs. Budgets are estimated ranges in millions of dollars; midpoint is the average of low and high. Teams without an AP rank in the file are treated as unranked. A correlation between spending and ranking doesn’t show that spending causes it.</footer>
 <div id="tip"></div>
 <script>
 const R="Ohio State|B10|49|54|6;Oregon|B10|48|54|21;Texas|SEC|45|55|1;LSU|SEC|47|50|7;Texas A&M|SEC|45|50|9;Miami|ACC|44|50|5;Notre Dame|Ind|41|48|3;Ole Miss|SEC|39|45|8;Tennessee|SEC|41|43|15;Alabama|SEC|38|42|10;Texas Tech|B12|38|42|13;USC|B10|37|40|12;Indiana|B10|36|40|4;Michigan|B10|36|40|19;Florida|SEC|31|41|;South Carolina|SEC|32|35|;Auburn|SEC|31|35|;Nebraska|B10|31|35|;Georgia|SEC|31|34|2;Oklahoma|SEC|28|34|24;Clemson|ACC|29|32|;Penn State|B10|29|32|14;Wisconsin|B10|27|31|;Missouri|SEC|27|30|20;UCLA|B10|26|30|;Mississippi State|SEC|25|30|;Virginia Tech|ACC|25|30|;Florida State|ACC|23|30|;Vanderbilt|SEC|25|28|;Georgia Tech|ACC|23|26|;Kentucky|SEC|23|26|;NC State|ACC|22|26|;Arkansas|SEC|22|25|;Louisville|ACC|22|25|23;TCU|B12|22|25|;Maryland|B10|21|25|;Michigan State|B10|21|25|;Northwestern|B10|21|25|;Washington|B10|21|25|;BYU|B12|20|25|11;North Carolina|ACC|20|25|;California|ACC|20|24|;SMU|ACC|21|23|16;Virginia|ACC|20|24|25;Baylor|B12|20|23|;Rutgers|B10|20|23|;Arizona State|B12|19|23|;Illinois|B10|19|23|;Kansas State|B12|19|22|;Minnesota|B10|18|22|;Utah|B12|18|22|17;West Virginia|B12|18|22|;Colorado|B12|18|21|;Syracuse|ACC|17|22|;Iowa|B10|17|21|18;Pitt|ACC|16|20|;Purdue|B10|16|20|;Stanford|ACC|16|20|;Wake Forest|ACC|16|20|;UCF|B12|15|20|;Houston|B12|15|19|22;Oklahoma State|B12|15|19|;Kansas|B12|15|17|;Arizona|B12|13|18|;Cincinnati|B12|14|16|;Iowa State|B12|13|17|;Duke|ACC|12|15|;Boston College|ACC|8|13|";
 const D=R.split(";").map((s,i)=>{const[n,c,l,h,p]=s.split("|");return{n,c,l:+l,h:+h,m:(+l+ +h)/2,r:i+1,ap:p?+p:0,g:null}});
 D.filter(d=>d.ap).forEach((d,k)=>d.g=k+1-d.ap);
+const NK={dog:["Georgia","Mississippi State","Washington","NC State"],cat:["LSU","Auburn","Clemson","Missouri","Kentucky","Northwestern","Kansas State","Arizona","BYU","Houston","Pitt","Penn State"]};
+D.forEach(d=>d.k=NK.dog.includes(d.n)?"dog":NK.cat.includes(d.n)?"cat":"oth");
 const TR=(()=>{const r=D.filter(d=>d.ap),n=r.length,mx=r.reduce((a,d)=>a+d.m,0)/n,my=r.reduce((a,d)=>a+d.ap,0)/n;let sxx=0,sxy=0;r.forEach(d=>{sxx+=(d.m-mx)**2;sxy+=(d.m-mx)*(d.ap-my)});const b=sxy/sxx,a=my-b*mx,s=Math.sqrt(r.reduce((t,d)=>t+(d.ap-a-b*d.m)**2,0)/(n-2));return{n,mx,sxx,a,b,s}})();
 const CN={SEC:"SEC",B10:"Big Ten",ACC:"ACC",B12:"Big 12",Ind:"Independent"},CV={SEC:"--sec",B10:"--b10",ACC:"--acc",B12:"--b12",Ind:"--ind"},col=c=>`var(${CV[c]})`;
 const S={c:new Set(),q:""},ok=d=>(!S.c.size||S.c.has(d.c))&&(!S.q||d.n.toLowerCase().includes(S.q));
@@ -168,14 +200,19 @@ const ticks=(X,y,vs)=>vs.map(v=>`<line class="gl" x1="${X(v)}" x2="${X(v)}" y1="
 const cw=id=>{const e=document.getElementById(id);return Math.max(320,Math.min(e.parentNode.clientWidth||880,900))};
 const KEY=["SEC","B10","ACC","B12","Ind"].map(c=>`<span><i class="o" style="background:${col(c)}"></i>${c=="Ind"?"Independent (Notre Dame)":CN[c]}</span>`).join("")+`<span><i class="h"></i>Hollow dot: no AP rank</span>`;
 document.querySelectorAll(".ck").forEach(e=>e.innerHTML=KEY);
+const bm=(c,a,L)=>{const h=L*.58,lc=a?"#fff":c;
+return `<path d="M${-L} 0Q0 ${-2*h} ${L} 0Q0 ${2*h} ${-L} 0Z" fill="${c}" fill-opacity="${a?.92:.14}" stroke="${c}" stroke-width="${a?1.2:1.5}" stroke-linejoin="round"/>`+(a?`<path d="M${-L*.64} ${-h*.5}V${h*.5}M${L*.64} ${-h*.5}V${h*.5}" stroke="#fff" stroke-width="1.2" fill="none" opacity=".85"/>`:"")+`<path d="M${-L*.34} 0H${L*.34}M${-L*.2} ${-h*.38}V${h*.38}M0 ${-h*.38}V${h*.38}M${L*.2} ${-h*.38}V${h*.38}" stroke="${lc}" stroke-width="1.15" stroke-linecap="round" fill="none" opacity="${a?.95:.8}"/>`};
+const fbi=(c,h)=>`<svg class="fb" viewBox="-11 -9 22 18" aria-hidden="true"><g transform="rotate(-35)">${bm(c,!h,8.5)}</g></svg>`;
+document.getElementById("kf").innerHTML=["SEC","B10","ACC","B12","Ind"].map(c=>`<span>${fbi(col(c))}${c=="Ind"?"Independent (Notre Dame)":CN[c]}</span>`).join("")+`<span>${fbi("var(--muted)",1)}Hollow football: no AP rank</span>`;
+const ball=(d,x,y,ph)=>{const L=ph?7.5:11;return `<g data-i="${d.r-1}" transform="translate(${x} ${y}) rotate(-35)" opacity="${ok(d)?1:.12}"><circle r="${L}" fill="transparent"/>${bm(col(d.c),d.ap,L)}</g>`};
 const setv=(id,W,H,h)=>{const e=document.getElementById(id);e.setAttribute("viewBox",`0 0 ${W} ${H}`);e.innerHTML=h};
-function scatter(){const W=cw("sc"),ph=W<600,H=ph?Math.round(W*1.2):Math.round(W*.62),L=ph?50:60,Rm=ph?10:16,T=12,B=ph?56:54,X=v=>L+(v-8)/46*(W-L-Rm),Y=v=>T+v/31*(H-T-B),lab=ph?["Oregon","Georgia","Houston","Texas","Florida"]:["Oregon","Georgia","Houston","Iowa","Utah","Indiana","BYU","Texas","Florida"];
+function scatter(){const W=cw("sc"),ph=W<600,H=ph?Math.round(W*1.2):Math.round(W*.62),L=ph?50:60,Rm=ph?10:16,T=12,B=ph?56:54,X=v=>L+(v-8)/46*(W-L-Rm),Y=v=>T+v/(ph?33:31)*(H-T-B),lab=ph?["Oregon","Georgia","Houston","Texas","Florida"]:["Oregon","Georgia","Houston","Iowa","Utah","Indiana","BYU","Texas","Florida"];
 let s=ticks(X,H-B,[10,20,30,40,50]);[1,5,10,15,20,25].forEach(v=>s+=`<line class="gl" x1="${L}" x2="${W-Rm}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${L-8}" y="${Y(v)+4}" text-anchor="end">#${v}</text>`);
 if(document.getElementById("tr").checked){const t=2.0687,f=v=>TR.a+TR.b*v,cse=v=>TR.s*Math.sqrt(1/TR.n+(v-TR.mx)**2/TR.sxx),pse=v=>TR.s*Math.sqrt(1+1/TR.n+(v-TR.mx)**2/TR.sxx),xs=[];for(let v=17;v<=51.5;v+=.5)xs.push(v);
 const band=(se,fo)=>{const up=xs.map(v=>`${X(v)},${Y(Math.max(.4,f(v)-t*se(v)))}`),dn=xs.map(v=>`${X(v)},${Y(Math.min(26.3,f(v)+t*se(v)))}`).reverse();return `<polygon points="${up.concat(dn).join(" ")}" fill="var(--ink)" fill-opacity="${fo}" pointer-events="none"/>`};
 s+=band(pse,.07)+band(cse,.13)+`<line x1="${X(17)}" y1="${Y(f(17))}" x2="${X(51.5)}" y2="${Y(f(51.5))}" stroke="var(--ink)" stroke-width="2.5" pointer-events="none"/>`}
 s+=`<line x1="${L}" x2="${W-Rm}" y1="${Y(26.6)}" y2="${Y(26.6)}" stroke="var(--muted)" stroke-dasharray="4 4"/><text class="ax" x="${L+4}" y="${Y(27.6)}">Unranked</text>`;
-D.forEach((d,i)=>{const y=d.ap?Y(d.ap):Y(28+(i*5%7)/7*2.6);s+=dot(d,X(d.m),y,ph?5.5:6.5);if(lab.includes(d.n)){const e=X(d.m)>W*.79;s+=`<text class="lb halo" x="${X(d.m)+(e?-10:10)}" y="${y+4}" text-anchor="${e?"end":"start"}" opacity="${ok(d)?1:.12}">${d.n}</text>`}});
+D.forEach((d,i)=>{const y=d.ap?Y(d.ap):Y(28+(i*5%7)/7*(ph?4.4:2.6));s+=ball(d,X(d.m),y,ph);if(lab.includes(d.n)){const e=X(d.m)>W*.79;s+=`<text class="lb halo" x="${X(d.m)+(e?-17:17)}" y="${y+4}" text-anchor="${e?"end":"start"}" opacity="${ok(d)?1:.12}">${d.n}</text>`}});
 s+=`<text class="axt" x="${(L+W-Rm)/2}" y="${H-8}" text-anchor="middle">${ph?"Estimated roster budget, midpoint ($M)":"Estimated roster budget, midpoint of the low and high estimates ($M)"}</text><text class="axt" transform="translate(13,${(T+H-B)/2}) rotate(-90)" text-anchor="middle">AP rank (1 = best)</text>`;
 setv("sc",W,H,s)}
 const FS={t:-1};
@@ -211,8 +248,14 @@ function conf(){const cs=["SEC","B10","ACC","B12","Ind"],W=cw("cf"),ph=W<600,L=p
 cs.forEach((c,k)=>{const t=D.filter(d=>d.c==c),y0=k*rh+rh/2,av=t.reduce((a,d)=>a+d.m,0)/t.length,rn=t.filter(d=>d.ap).length;
 s+=`<line class="gl" x1="${L}" x2="${W-16}" y1="${y0}" y2="${y0}"/><text class="lb" x="22" y="${y0-6}" style="fill:${col(c)}">${CN[c]}</text><text class="ax" x="22" y="${y0+10}">avg $${av.toFixed(1)}M</text><text class="ax" x="22" y="${y0+24}">${rn} of ${t.length} ranked</text><line x1="${X(av)}" x2="${X(av)}" y1="${y0-30}" y2="${y0+30}" stroke="var(--ink)" stroke-width="2.5"/>`;
 t.forEach(d=>s+=dot(d,X(d.m),y0+((d.r*37)%9-4)*(ph?4:5),ph?5.5:6))});
-s+=`<text class="axt" x="${(L+W-16)/2}" y="${base+38}" text-anchor="middle">${ph?"Estimated roster budget, midpoint ($M)":"Estimated roster budget, midpoint of the low and high estimates ($M)"}</text><text class="axt" transform="translate(8,${base/2}) rotate(-90)" text-anchor="middle">Conference</text>`;
+s+=`<text class="axt" x="${(L+W-16)/2}" y="${base+38}" text-anchor="middle">${ph?"Estimated roster budget, midpoint ($M)":"Estimated roster budget, midpoint of the low and high estimates ($M)"}</text><text class="axt" transform="translate(13,${base/2}) rotate(-90)" text-anchor="middle">Conference</text>`;
 setv("cf",W,H,s)}
+function pets(){const rows=[["dog","Dogs",72],["cat","Cats",96],["oth","All others",150]],W=cw("pt"),ph=W<600,L=ph?124:176,base=rows.reduce((a,r)=>a+r[2],0),H=base+52,X=v=>L+(v-8)/46*(W-L-16);let s=ticks(X,base,[10,20,30,40,50]),y=0;
+rows.forEach(([k,nm,rh])=>{const t=D.filter(d=>d.k==k),y0=y+rh/2,av=t.reduce((a,d)=>a+d.m,0)/t.length,rn=t.filter(d=>d.ap).length;
+s+=`<line class="gl" x1="${L}" x2="${W-16}" y1="${y0}" y2="${y0}"/><text class="lb" x="22" y="${y0-14}">${nm}</text><text class="ax" x="22" y="${y0+2}">${rn} of ${t.length} ranked</text><text class="ax" x="22" y="${y0+18}">avg $${av.toFixed(1)}M</text><line x1="${X(av)}" x2="${X(av)}" y1="${y0-rh/2+8}" y2="${y0+rh/2-8}" stroke="var(--ink)" stroke-width="2.5"/>`;
+t.forEach((d,j)=>{const yy=y0+(k=="oth"?((d.r*37)%13-6)*(rh/15):((j*53)%7-3)*(rh/9)),r=ph?5.5:6;s+=dot(d,X(d.m),yy,r);if((ph?["Georgia","LSU"]:["Georgia","LSU","Houston"]).includes(d.n)){const e=X(d.m)>W*.79;s+=`<text class="lb halo" x="${X(d.m)+(e?-10:10)}" y="${yy+4}" text-anchor="${e?"end":"start"}" opacity="${ok(d)?1:.12}">${d.n}</text>`}});y+=rh});
+s+=`<text class="axt" x="${(L+W-16)/2}" y="${base+38}" text-anchor="middle">${ph?"Estimated roster budget, midpoint ($M)":"Estimated roster budget, midpoint of the low and high estimates ($M)"}</text><text class="axt" transform="translate(13,${base/2}) rotate(-90)" text-anchor="middle">Team nickname</text>`;
+setv("pt",W,H,s)}
 const COLS=[["r","Spend rank",d=>d.r],["n","Team",d=>d.n],["c","Conf.",d=>CN[d.c]],["m","Budget range ($M)",d=>d.m],["m2","Mid",d=>d.m],["ap","AP",d=>d.ap||null],["g","Gap vs. ranked peers",d=>d.g]];
 let so={k:0,dir:1};
 function table(){document.getElementById("th").innerHTML=COLS.map((c,i)=>`<th ${so.k==i?`aria-sort="${so.dir>0?"ascending":"descending"}"`:""}><button data-s="${i}">${c[1]}${so.k==i?(so.dir>0?" ▲":" ▼"):""}</button></th>`).join("");
@@ -223,7 +266,7 @@ function prob(){const W=cw("pr"),ph=W<600,H=270,L=ph?50:60,T=12,B=52,X=v=>L+(v-8
 D.forEach((d,i)=>{const j=(i*5%7)*3,y=d.ap?Y(1)+6+j:Y(0)-6-j;s+=dot(d,X(d.m),y,ph?4.5:5);if(d.n=="Houston"||d.n=="Florida")s+=`<text class="lb halo" x="${X(d.m)+9}" y="${y+4}" opacity="${ok(d)?1:.12}">${d.n}</text>`});
 const pts=[];for(let v=8;v<=54;v++)pts.push(`${X(v)},${Y(1/(1+Math.exp(5.277-.17016*v)))}`);
 s+=`<polyline points="${pts.join(" ")}" fill="none" stroke="var(--ink)" stroke-width="2.5" pointer-events="none"/><text class="axt" x="${(L+W-16)/2}" y="${H-8}" text-anchor="middle">${ph?"Estimated roster budget, midpoint ($M)":"Estimated roster budget, midpoint of the low and high estimates ($M)"}</text><text class="axt" transform="translate(13,${(T+H-B)/2}) rotate(-90)" text-anchor="middle">${ph?"Fitted chance of being ranked":"Fitted chance of being in the AP Top 25"}</text>`;setv("pr",W,H,s)}
-function all(){scatter();flip();prob();gap();conf();table()}
+function all(){scatter();flip();prob();gap();conf();pets();table()}
 document.getElementById("tr").onchange=scatter;
 document.getElementById("chips").innerHTML=Object.keys(CN).map(c=>`<button class="chip" data-c="${c}" style="--c:${col(c)}" aria-pressed="false">${CN[c]}</button>`).join("");
 document.getElementById("chips").onclick=e=>{const b=e.target.closest("[data-c]");if(!b)return;const c=b.dataset.c;S.c.has(c)?S.c.delete(c):S.c.add(c);b.setAttribute("aria-pressed",S.c.has(c));all()};
