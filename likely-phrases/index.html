@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Pug Oracle reads “likely” · Probability phrases</title>
+<meta name="description" content="MakeoverMonday 2026 Week 47: what does “likely” actually mean? 5,174 quiz-takers ranked 19 probability phrases in 51,740 head-to-head comparisons. Likely and probable are a statistical tie, highly does heavy lifting, and the pugs audit the data.">
+<style>
+:root {
+  color-scheme: light;
+  --disp: "Sora", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --fg: #231a3a; --muted: #5d5278; --second: #3a2f5c; --bg: #ece6f6; --panel: #fffdf9; --line: #d9cfec;
+  --grid: #ece6f6; --axis: #b5a8d2; --ref: #6f6490;
+  --up: #c4661a; --down: #2b6f9e; --mid: #6b5fa0; --gold: #d9a21b; --teal: #1f8a7a; --indigo: #4a3a99;
+  --night-a: #2a1f5c; --night-b: #4a3a99; --star: #f3d37a; --hero-ink: #f6f1ff; --hero-muted: #d6cbf0;
+  --ok: #1f6b2f; --warn: #8a5800; --bad: #a3262a; --shadow: 0 6px 20px rgba(40,25,90,.16);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --fg: #f1ecfb; --muted: #bdb2dc; --second: #dcd3f2; --bg: #15102b; --panel: #1f1840; --line: #38305f;
+  --grid: #2a2350; --axis: #5a4f8c; --ref: #a99ed0;
+  --up: #f0a35c; --down: #6fb1de; --mid: #a99ae6; --gold: #e8b93d; --teal: #4fc2af; --indigo: #a99ae6;
+  --night-a: #120d2b; --night-b: #2b2163; --ok: #6fd07f; --warn: #e0a020; --bad: #f08a8d; --shadow: 0 6px 20px rgba(0,0,0,.55);
+} }
+[hidden] { display: none !important; }
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--disp); font-size: 14.5px; line-height: 1.55; }
+b, strong { font-weight: 600; }
+a { color: inherit; }
+.wrap { max-width: 70rem; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.top { padding-top: 16px; display: grid; gap: 10px; }
+.credits { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; align-items: center; }
+.disclaimer { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+.hero { position: relative; margin-top: 14px; border-radius: 22px; overflow: hidden; color: var(--hero-ink); background:
+  radial-gradient(2px 2px at 62% 14%, var(--star) 99%, transparent), radial-gradient(1.5px 1.5px at 74% 64%, var(--star) 99%, transparent),
+  radial-gradient(1.5px 1.5px at 90% 30%, var(--star) 99%, transparent),
+  linear-gradient(160deg, var(--night-a), var(--night-b)); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); border: 2px solid var(--gold); }
+.hero-t { padding: clamp(22px, 4vw, 44px); display: grid; gap: 14px; align-content: start; }
+.eyebrow { font: 500 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; margin: 0; color: var(--star); }
+.title { font-family: var(--disp); font-weight: 700; font-size: clamp(2rem, 5.4vw, 3.5rem); line-height: 1.05; letter-spacing: -.035em; margin: 0; text-wrap: balance; }
+.lede { line-height: 1.6; margin: 0; font-size: 15px; color: var(--hero-ink); }
+.lede a { font-weight: 600; }
+.reading { display: grid; grid-template-columns: auto 1fr; gap: 3px 14px; font: 500 12px var(--mono); max-width: 36rem; border-top: 1.5px dashed rgba(243,211,122,.5); padding-top: 10px; color: var(--hero-muted); }
+.reading dt { text-transform: uppercase; letter-spacing: .08em; color: var(--star); } .reading dd { margin: 0; color: var(--hero-ink); }
+.hero-art { display: grid; place-items: center; padding: 24px 18px; }
+.hero-art svg { width: 100%; max-width: 360px; height: auto; overflow: visible; }
+@media (prefers-reduced-motion: no-preference) { .float { animation: bob 5s ease-in-out infinite alternate; } }
+@keyframes bob { from { transform: translateY(0); } to { transform: translateY(-7px); } }
+@media (max-width: 760px) { .hero { grid-template-columns: minmax(0, 1fr); } .hero-art { order: -1; padding-bottom: 0; } .hero-art svg { max-width: 230px; } }
+
+main { display: grid; gap: 22px; padding-block: 22px 64px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr)); gap: 12px; }
+.tile { display: grid; align-content: start; gap: 4px; background: var(--panel); border-radius: 16px; padding: 16px 16px 14px; border-top: 5px solid var(--tc, var(--gold)); }
+.tile-l, .tile-s { font-size: 12.5px; color: var(--muted); }
+.tile-v { font-weight: 700; letter-spacing: -.03em; font-size: 1.9rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+
+.sec { position: relative; background: var(--panel); border-radius: 20px; padding: clamp(16px, 3vw, 28px); display: grid; gap: 14px; box-shadow: 0 1px 0 var(--line); border: 1px solid var(--line); }
+.fh { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: center; }
+.fb { grid-row: span 2; width: 56px; height: 76px; border-radius: 10px; background: linear-gradient(160deg, var(--night-a), var(--night-b)); color: var(--star); border: 2px solid var(--gold); display: grid; place-items: center; text-align: center; font: 600 11px/1.15 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.fb b { display: block; font: 700 22px var(--disp); letter-spacing: 0; color: var(--hero-ink); }
+.qn { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); align-self: end; }
+.fh h2 { margin: 0; font-weight: 700; font-size: clamp(1.15rem, 2.6vw, 1.6rem); line-height: 1.2; letter-spacing: -.02em; align-self: start; text-wrap: balance; }
+.sec p { margin: 0; }
+.ans { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; background: var(--bg); border-radius: 12px; padding: 10px 14px; }
+.stamp { font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; border: 1.5px solid var(--indigo); color: var(--indigo); padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+.pen { font-style: italic; color: var(--muted); font-size: 13.5px; border-left: 3px solid var(--gold); padding-left: 10px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px 12px 10px; position: relative; }
+.card svg { width: 100%; height: auto; display: block; overflow: visible; }
+.cap { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--second); margin: 2px 0 8px; align-items: center; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.sw.sq { border-radius: 3px; }
+.sw.ln { width: 18px; height: 3px; border-radius: 2px; }
+.replay { position: absolute; right: 12px; bottom: 10px; font: 600 12px var(--disp); background: var(--panel); color: var(--fg); border: 1.5px solid var(--axis); border-radius: 99px; padding: 4px 12px; cursor: pointer; }
+.replay:hover, .replay:focus-visible { border-color: var(--gold); outline: none; }
+.mini { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 12px; }
+.mini .tile { border-top-color: var(--indigo); }
+.cav { margin: 0; padding-left: 1.1rem; display: grid; gap: 8px; }
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; min-width: 760px; }
+th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+th { background: var(--bg); font: 600 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--second); }
+tr:last-child td { border-bottom: 0; }
+.v { font: 600 11px var(--mono); padding: 2px 7px; border-radius: 6px; white-space: nowrap; border: 1.5px solid currentColor; }
+.v.ok { color: var(--ok); } .v.warn { color: var(--warn); } .v.bad { color: var(--bad); }
+.pug-note { display: flex; gap: 14px; align-items: center; background: var(--panel); border: 1px dashed var(--gold); border-radius: 16px; padding: 14px 18px; }
+.pug-note img { width: 56px; height: auto; flex: none; }
+.pug-note b { display: block; font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.foot { display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: space-between; font-size: 12px; color: var(--muted); }
+.mx-scroll { overflow-x: auto; }
+.mx-scroll svg { min-width: 620px; }
+html.pug-embed .mx-scroll svg { min-width: 0; }
+svg text { font-family: var(--disp); }
+svg .mono { font-family: var(--mono); }
+html.pug-embed .replay { display: none; }
+.tip { position: fixed; z-index: 20; pointer-events: none; background: var(--fg); color: var(--bg); font: 500 12px/1.4 var(--disp); padding: 6px 9px; border-radius: 8px; max-width: 18rem; box-shadow: var(--shadow); opacity: 0; transition: opacity .1s; }
+.tip.on { opacity: 1; }
+</style>
+<link rel="stylesheet" href="../pug-header.css">
+<script src="../embed.js?v=6"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="credits pug-hdr">
+      <a class="home pug-home" href="https://leonagata24.github.io/dataviz/">The Pugs’ Data Viz Studies</a>
+      <span class="pug-ai">Pugs do use AI assistants for science.</span>
+      <span><b>MakeoverMonday 2026 · Week 47</b></span>
+      <span>Project: <a href="https://makeovermonday.vercel.app/dataset/what-does-likely-actually-mean" target="_blank" rel="noopener">MakeoverMonday</a></span>
+      <span>Article: <a href="https://adamkucharski.github.io/CAPphrase/" target="_blank" rel="noopener">CAPphrase, Adam Kucharski</a></span>
+      <span>Data: <a href="https://zenodo.org/records/18750055" target="_blank" rel="noopener">Zenodo record 18750055</a></span>
+    </div>
+    <p class="disclaimer">Every figure on this page is computed from the pairwise comparisons file and was recomputed a second time with separately written code. The quiz and its design belong to the article’s author; this page is not affiliated with him.</p>
+  </div>
+
+  <header class="hero">
+    <div class="hero-t">
+      <p class="eyebrow">Fortune booth · 19 phrases · 5,174 quiz-takers</p>
+      <h1 class="title">The Pug Oracle reads “likely”</h1>
+      <p class="lede">Ask a hundred people what “likely” means and you get a hundred answers. This quiz asked a smaller question: of two phrases, <b>which sounds more probable?</b> About 5,000 people answered ten of those each, 51,740 answers in all. The pugs turned them into a ranking of 19 phrases, with error bars. The file has no percentages, so it cannot say what “likely” is worth in numbers; it can say <b>where “likely” stands in the line</b>, and who it stands next to. The full <a href="#audit">data quality audit</a> is at the bottom.</p>
+      <dl class="reading">
+        <dt>Question</dt><dd>Which phrase conveys the higher probability?</dd>
+        <dt>Crowd</dt><dd>5,174 people, ten comparisons each</dd>
+        <dt>Oracle</dt><dd>Three pugs, one crystal ball, no treats in the budget</dd>
+      </dl>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 320 320" role="img" aria-label="Illustration of a crystal ball on a stand with a pug inside and floating stars">
+        <g class="float">
+          <circle cx="160" cy="150" r="108" fill="rgba(243,211,122,.12)" stroke="#f3d37a" stroke-width="3"/>
+          <circle cx="160" cy="150" r="96" fill="#3a2d85" stroke="#f3d37a" stroke-width="1.5" stroke-dasharray="3 6"/>
+          <image href="../pug-head.png" x="108" y="100" width="104" height="96" preserveAspectRatio="xMidYMid meet"/>
+          <path d="M104 98 q22 -34 62 -30" stroke="#fff" stroke-opacity=".5" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M92 252 h136 l-18 -34 h-100 z" fill="#f3d37a" stroke="#c99a1a" stroke-width="2"/>
+          <rect x="84" y="252" width="152" height="16" rx="6" fill="#c99a1a"/>
+          <text x="40" y="60" font-size="26" fill="#f3d37a" text-anchor="middle">✦</text>
+          <text x="280" y="96" font-size="20" fill="#f3d37a" text-anchor="middle">✦</text>
+          <text x="262" y="224" font-size="26" fill="#f3d37a" text-anchor="middle">✦</text>
+          <text x="52" y="210" font-size="18" fill="#f3d37a" text-anchor="middle">✦</text>
+        </g>
+      </svg>
+    </div>
+  </header>
+
+  <main>
+  <section class="tiles" aria-label="Key numbers">
+    <div class="tile" style="--tc:var(--gold)"><span class="tile-l">Head-to-head answers</span><span class="tile-v">51,740</span><span class="tile-s">5,174 people × 10 pairs</span></div>
+    <div class="tile" style="--tc:var(--indigo)"><span class="tile-l">Phrases ranked</span><span class="tile-v">19</span><span class="tile-s">171 possible pairings</span></div>
+    <div class="tile" style="--tc:var(--teal)"><span class="tile-l">Gave the same answer twice</span><span class="tile-v">96.6%</span><span class="tile-s">on a repeated pair, order swapped</span></div>
+    <div class="tile" style="--tc:var(--up)"><span class="tile-l">“Likely” beats “Probable”</span><span class="tile-v">53%</span><span class="tile-s">95% range 49% to 58%: a tie</span></div>
+  </section>
+
+  <section class="sec" id="s1">
+    <div class="fh"><span class="fb">Card<b>I</b></span><span class="qn">The reframe</span><h2>Is “likely” just “probable” in a nicer collar?</h2></div>
+    <div class="ans"><span class="stamp">Statistically, yes</span><span><b>251 of 473</b> people (53.1%) picked “Likely” over “Probable”; the 95% range runs from 48.6% to 57.5%, so a fair coin fits. Both phrases beat everything below “Very Good Chance”, and both lose to it.</span></div>
+    <p>The chart pits “Likely” against each of the other 18 phrases. Where the dot and its whisker sit entirely right of the 50% line, “Likely” wins that matchup; entirely left, it loses; spanning the line, the data cannot call it. Only <b>Probable</b> lands in the tie. “Very Good Chance” beats “Likely” 64% of the time (145 of 403 picked “Likely”), and “Probable” loses to it by a similar margin (74 of 256 picked “Probable”), so the two travel as a pair.</p>
+    <div class="card">
+      <div class="legend" id="lg1"></div>
+      <svg id="c1" role="img" aria-label="Dot plot of the share of people who picked Likely over each of the other 18 phrases, with 95 percent ranges"></svg>
+      <p class="cap">Source: pairwise comparisons file (Zenodo 18750055, article by Adam Kucharski). Share of respondents choosing “Likely” as the higher probability, per matchup, with 95% Wilson ranges. Each matchup has 127 to 573 answers; n is printed on the right.</p>
+    </div>
+    <p class="pen">The pugs would like it noted that “Likely” and “Probable” have never once been seen sharing a treat.</p>
+  </section>
+
+  <section class="sec" id="s2">
+    <div class="fh"><span class="fb">Card<b>II</b></span><span class="qn">Wait, really?</span><h2>When the crowd splits 53 to 47, is everyone flipping coins?</h2></div>
+    <div class="ans"><span class="stamp">No, mostly two camps</span><span>Everyone saw one pair twice, with the order swapped. For “Likely” vs “Probable”, <b>20%</b> (23 of 116) changed their answer. A coin flip would change it about half the time; across all pairs, 3.4% did.</span></div>
+    <p>A 53/47 split can mean one of two things: everyone is unsure and guessing, or people hold firm but different views. Repeat answers tell them apart. The less lopsided the crowd on a pair, the more people changed their answer, but even in the closest pairs only about one in seven did. So most of the disagreement is <b>between</b> people, not inside them. “Likely” vs “Probable” is the pair with the most changed answers in the whole quiz (23), at 20%, above every grouped bar.</p>
+    <div class="card">
+      <div class="legend" id="lg2"></div>
+      <svg id="c2" role="img" aria-label="Bar chart of the share of people who changed their answer on a repeated pair, by how lopsided the crowd was on that pair"></svg>
+      <p class="cap">Source: pairwise comparisons file. Each of 5,174 respondents saw their first pair again as their tenth, with the phrases swapped. Bars: share who picked the other phrase the second time, with 95% Wilson ranges. Crowd split measured on all answers to that pair.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s3">
+    <div class="fh"><span class="fb">Card<b>III</b></span><span class="qn">Wait, really?</span><h2>How many different things can a pug actually say?</h2></div>
+    <div class="ans"><span class="stamp">About eight</span><span>19 phrases, but the crowd separates them into <b>about eight groups</b>. Within a group, neighbors are hard to tell apart; between groups there are clear gaps.</span></div>
+    <p>The ladder shows each phrase’s strength score, estimated from all its matchups at once, with a 95% range from 1,000 resamples of respondents. Scores are on a relative scale: 0 is the average phrase, and a gap of 1 means the higher phrase wins about three of four comparisons. It is a ranking, not a percentage. The ranges say where the order is solid (ranks 1 to 4, and 18 and 19) and where it is not: <b>Likely and Probable</b> share ranks 5 and 6, <b>Might Happen and Could Happen</b> share 11 and 12, <b>Chances are Slight and Little Chance</b> share 14 and 15, and <b>Improbable and Remote Chance</b> share 16 and 17.</p>
+    <div class="card" id="ladder-card">
+      <div class="legend" id="lg3"></div>
+      <svg id="c3" role="img" aria-label="Ranked ladder of 19 probability phrases with strength scores and 95 percent ranges, grouped into about eight bands"></svg>
+      <p class="cap">Source: pairwise comparisons file. Bradley–Terry strength scores fitted to all 51,740 answers; ranges are the 2.5th to 97.5th percentiles of 1,000 bootstrap resamples of respondents. Shaded bands group neighbors less than 0.9 score units apart, a judgment call.</p>
+    </div>
+    <p>Two details from the pairs behind the ladder. <b>“Realistic Possibility”</b> sits above “About Even”: 57.8% of people picked it as the higher one (107 of 185; range 50.6% to 64.7%), and “Better than Even” beats it only 58.8% of the time (218 of 371). And <b>“Remote Chance”</b> loses to “Little Chance” 80% of the time (189 of 235) yet is a statistical tie with “Improbable” (50.8%, 163 of 321).</p>
+  </section>
+
+  <section class="sec" id="s4">
+    <div class="fh"><span class="fb">Card<b>IV</b></span><span class="qn">Exaggerate it</span><h2>Does “highly” get paid overtime?</h2></div>
+    <div class="ans"><span class="stamp">Generously</span><span>Adding “highly” moves a phrase about <b>1.6 to 1.8 score units</b>, more than the entire distance from “Likely” to “Better than Even” (1.4).</span></div>
+    <div class="mini">
+      <div class="tile" style="--tc:var(--up)"><span class="tile-l">“Highly Likely” over “Likely”</span><span class="tile-v">98.5%</span><span class="tile-s">262 of 266 people; range 96.2% to 99.4%. Score gap 1.8.</span></div>
+      <div class="tile" style="--tc:var(--down)"><span class="tile-l">“Unlikely” over “Highly Unlikely”</span><span class="tile-v">95.8%</span><span class="tile-s">205 of 214 people; range 92.2% to 97.8%. Score gap 1.6.</span></div>
+      <div class="tile" style="--tc:var(--gold)"><span class="tile-l">“Almost Certain” over “Highly Likely”</span><span class="tile-v">95.1%</span><span class="tile-s">234 of 246 people; range 91.7% to 97.2%. Score gap 1.4.</span></div>
+    </div>
+    <p>“Highly” is not decoration: nearly everyone treats “Highly Likely” as a different, stronger claim than “Likely”. Note that “Will Happen” beats “Almost Certain” 87% of the time (394 of 452), so people also hear the hedge in “almost”. Score gaps are differences between fitted scores; each score’s 95% range is about ±0.15 to ±0.3 wide at these levels.</p>
+  </section>
+
+  <section class="sec" id="s5">
+    <div class="fh"><span class="fb">Card<b>V</b></span><span class="qn">The crystal ball</span><h2>Can the pugs draw a clean line from “almost no chance” to “will happen”?</h2></div>
+    <div class="ans"><span class="stamp">Nearly</span><span>Of 171 pairings, <b>136</b> are settled by 90% or more of the people who saw them, and <b>5</b> sit within 45% to 55%. No three phrases form a loop (A beats B beats C beats A).</span></div>
+    <p>Each cell shows how often the row phrase was picked over the column phrase. Order the phrases by rank and the table sorts itself into two clean triangles, orange (row wins) above the diagonal and blue below, with all the doubt in a fuzzy band along the diagonal. That band is where the vocabulary is crowded. The five pairings between 45% and 55%, outlined in gold, are Likely/Probable, Might Happen/Could Happen, Unlikely/Chances are Slight, Chances are Slight/Little Chance and Improbable/Remote Chance.</p>
+    <div class="card">
+      <div class="legend" id="lg4"></div>
+      <div class="mx-scroll"><svg id="c4" role="img" aria-label="Heat map matrix of head-to-head results between all 19 phrases, ordered by rank"></svg></div>
+      <button class="replay" id="replay" type="button" aria-label="Replay the matrix animation">↻ Replay</button>
+      <p class="cap" style="padding-right:96px">Source: pairwise comparisons file. Cell = share of people who picked the row phrase as higher than the column phrase; numbers shown within three ranks of the diagonal. Hover or focus a cell for the count. Each pairing has 127 to 634 answers.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="fh"><span class="fb">Fine<br>print</span><span class="qn">Before you quote any of this</span><h2>What this can and can’t tell you</h2></div>
+    <ul class="cav">
+      <li><b>It ranks words; it does not convert them to percentages.</b> The article’s second quiz part asked for 0 to 100% estimates, but that data is not in this file. So “Likely” has a place in line, not a probability.</li>
+      <li><b>The sample is a self-selected online quiz.</b> No demographics, country or timestamps are in the file, so nothing here describes any population, and differences between groups cannot be tested.</li>
+      <li><b>Scores are relative.</b> A strength score of 2.7 is not 2.7 times anything useful; only differences and order mean something.</li>
+      <li><b>The grouping into “about eight” is a rule of thumb.</b> A gap threshold of 0.9 score units gives eight groups; a looser one gives fewer. The ranges, not the bands, carry the evidence.</li>
+      <li><b>Phrases appeared in uneven pairings.</b> Matchups range from 127 to 634 answers, so raw win rates mislead (see the audit); the scores and head-to-head shares account for that.</li>
+      <li><b>One answer per person is repeated.</b> Each respondent’s tenth answer repeats their first pair. It is counted in the ranking; dropping it leaves the order identical.</li>
+    </ul>
+  </section>
+
+  <section class="sec" id="audit">
+    <div class="fh"><span class="fb">Audit<br>✓</span><span class="qn">Data quality audit · one file, 51,740 rows</span><h2>Does this data smell right?</h2></div>
+    <div class="ans"><span class="stamp">Edible, with care</span><span>The file is complete and tidy, and the crowd is remarkably consistent. Its limits are what it leaves out (numbers, demographics, time) and an uneven pairing design.</span></div>
+    <p class="pen">Smells like a very well-run quiz. The pugs would still like to see the other half of it.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Check</th><th>Result</th><th>What was found</th><th>What was done</th></tr></thead>
+      <tbody>
+      <tr><td>Structure</td><td><span class="v ok">Clean</span></td><td>One CSV, 51,740 rows, five columns (response_id, pair_id, term1, term2, selected). No missing values, no blank or padded text, no duplicate rows.</td><td>Read as is.</td></tr>
+      <tr><td>Respondents</td><td><span class="v ok">Complete</span></td><td>5,174 respondents, each with exactly 10 answers (pair_id 1 to 10); IDs run 4 to 5,177 with no gaps. The article says “over 5,000”.</td><td>No respondents dropped.</td></tr>
+      <tr><td>Design integrity</td><td><span class="v ok">As described</span></td><td>Each person saw 18 of the 19 phrases in nine different pairs, and a tenth pair that repeats the first with the phrases swapped: true for all 5,174. Every answer is one of the two phrases shown; no phrase is paired with itself; 19 phrase names, no spelling variants.</td><td>None needed.</td></tr>
+      <tr><td>Self-consistency</td><td><span class="v ok">High</span></td><td>96.6% gave the same answer on the repeat (5,000 of 5,174). Consistency was steady across the response ID range (95.8% to 97.5% in five equal bands).</td><td>Used as a quality signal, and for Card II.</td></tr>
+      <tr><td>Transitivity</td><td><span class="v ok">Strong</span></td><td>No majority loops among 171 pairings; 98.8% of pairings have the majority favoring the higher-ranked phrase; 92.3% of individual first-nine answers agree with the final order.</td><td>A single ranking is a fair summary.</td></tr>
+      <tr><td>Pairing balance</td><td><span class="v warn">Uneven</span></td><td>Pairings were not equally common: 127 answers for Likely vs Better than Even up to 634 for About Even vs Very Good Chance (median 286; an even split would be about 303). Raw win rates are therefore misleading: “Likely” wins 68.5% of its matchups and “Probable” 77.7%, yet “Likely” faced tougher opponents (average opponent score 0.37 vs −0.44) and the two phrases fit as a tie.</td><td>Ranked with a model that adjusts for who each phrase faced, not with raw win rates. Every head-to-head share uses only its own pairing.</td></tr>
+      <tr><td>Left/right order</td><td><span class="v warn">Small bias</span></td><td>The phrase shown first won 49.0% of the time (p ≈ 0.00001), and phrases were not equally often shown first or second. Fitting a position effect gives about 0.45 percentage points; the order of phrases is unchanged.</td><td>Reported and left uncorrected; the effect is far smaller than any gap discussed.</td></tr>
+      <tr><td>Repeat answer</td><td><span class="v warn">Double counted</span></td><td>The repeated pair gives that person’s views on one pair twice.</td><td>Kept in the ranking; dropping every respondent’s tenth answer gives the same order (largest score change 0.09).</td></tr>
+      <tr><td>What is missing</td><td><span class="v bad">Material</span></td><td>No numerical estimates (the article’s second quiz part), no demographics, no timestamps, no country. The article’s outlier filter applies to the numerical part, which this file does not contain.</td><td>No claims about what “likely” means in percent, or about who reads it how.</td></tr>
+      <tr><td>Sample</td><td><span class="v warn">Self-selected</span></td><td>An open online quiz that people chose to take; the article describes no sampling frame. Respondents may not represent any population, and the 95% ranges describe sampling noise only, not that bias.</td><td>No population claims; ranges labeled as sampling ranges.</td></tr>
+      <tr><td>Provenance</td><td><span class="v ok">Documented</span></td><td>Data on Zenodo (record 18750055), study described on the author’s CAPphrase page, which the page header links. The MakeoverMonday portal page for the dataset did not load for the pugs, so the original visualization could not be reviewed.</td><td>Only the file and the article were used.</td></tr>
+      <tr><td>Second opinion</td><td><span class="v ok">Matches</span></td><td>Scores were fitted two ways (a fixed-point method and a direct likelihood search) and agree to within 0.0005. Every headline count and share was recomputed from the raw CSV with separate code.</td><td>Both computations agree on every number shown.</td></tr>
+      </tbody></table></div>
+  </section>
+
+  <div class="pug-note"><img src="../pug-head.png" alt=""><p><b>Closing entry</b>The Oracle’s final reading: “Likely” and “Probable” are the same dog in two coats, “highly” is a promotion, and the pugs notice that “Will Happen” has still not delivered the treat.</p></div>
+
+  <footer class="foot">
+    <span>Source: <a href="https://zenodo.org/records/18750055" target="_blank" rel="noopener">pairwise comparisons, Zenodo 18750055</a>; article <a href="https://adamkucharski.github.io/CAPphrase/" target="_blank" rel="noopener">CAPphrase</a> by Adam Kucharski, for <a href="https://makeovermonday.vercel.app/dataset/what-does-likely-actually-mean" target="_blank" rel="noopener">MakeoverMonday</a> 2026 Week 47.</span>
+    <span>Pug art by the daughter of the human we own.</span>
+  </footer>
+  </main>
+</div>
+<div class="tip" id="tip" role="status"></div>
+<script>
+const D = {"rank":[{"term":"Will Happen","bt":7.24,"lo":6.903,"hi":7.65,"rlo":1,"rhi":1,"wr":0.9763,"n":5402},{"term":"Almost Certain","bt":5.913,"lo":5.655,"hi":6.242,"rlo":2,"rhi":2,"wr":0.9119,"n":5154},{"term":"Highly Likely","bt":4.528,"lo":4.324,"hi":4.757,"rlo":3,"rhi":3,"wr":0.885,"n":5391},{"term":"Very Good Chance","bt":3.265,"lo":3.118,"hi":3.411,"rlo":4,"rhi":4,"wr":0.8137,"n":5479},{"term":"Likely","bt":2.745,"lo":2.601,"hi":2.897,"rlo":5,"rhi":6,"wr":0.6853,"n":5707},{"term":"Probable","bt":2.651,"lo":2.51,"hi":2.79,"rlo":5,"rhi":6,"wr":0.7773,"n":5311},{"term":"Better than Even","bt":1.38,"lo":1.278,"hi":1.482,"rlo":7,"rhi":7,"wr":0.6624,"n":5485},{"term":"Realistic Possibility","bt":1.003,"lo":0.894,"hi":1.118,"rlo":8,"rhi":8,"wr":0.6174,"n":5645},{"term":"About Even","bt":0.023,"lo":-0.084,"hi":0.115,"rlo":9,"rhi":9,"wr":0.5056,"n":5318},{"term":"May Happen","bt":-0.432,"lo":-0.537,"hi":-0.334,"rlo":10,"rhi":10,"wr":0.503,"n":5251},{"term":"Might Happen","bt":-0.728,"lo":-0.832,"hi":-0.636,"rlo":11,"rhi":12,"wr":0.4469,"n":5413},{"term":"Could Happen","bt":-0.762,"lo":-0.869,"hi":-0.664,"rlo":11,"rhi":12,"wr":0.4592,"n":5521},{"term":"Unlikely","bt":-2.765,"lo":-2.911,"hi":-2.64,"rlo":13,"rhi":13,"wr":0.2703,"n":5497},{"term":"Chances are Slight","bt":-3.021,"lo":-3.175,"hi":-2.882,"rlo":14,"rhi":15,"wr":0.226,"n":5566},{"term":"Little Chance","bt":-3.13,"lo":-3.276,"hi":-2.988,"rlo":14,"rhi":15,"wr":0.2669,"n":5372},{"term":"Improbable","bt":-3.838,"lo":-4.01,"hi":-3.688,"rlo":16,"rhi":17,"wr":0.1874,"n":5495},{"term":"Remote Chance","bt":-3.893,"lo":-4.068,"hi":-3.738,"rlo":16,"rhi":17,"wr":0.1446,"n":5393},{"term":"Highly Unlikely","bt":-4.332,"lo":-4.528,"hi":-4.143,"rlo":18,"rhi":18,"wr":0.1611,"n":5495},{"term":"Almost No Chance","bt":-5.846,"lo":-6.1,"hi":-5.615,"rlo":19,"rhi":19,"wr":0.0399,"n":5585}],"likely":[{"term":"Will Happen","n":573,"k":16,"p":0.0279,"lo":0.0173,"hi":0.0449},{"term":"Almost Certain","n":437,"k":7,"p":0.016,"lo":0.0078,"hi":0.0327},{"term":"Highly Likely","n":266,"k":4,"p":0.015,"lo":0.0059,"hi":0.038},{"term":"Very Good Chance","n":403,"k":145,"p":0.3598,"lo":0.3145,"hi":0.4078},{"term":"Probable","n":473,"k":251,"p":0.5307,"lo":0.4856,"hi":0.5752},{"term":"Better than Even","n":127,"k":120,"p":0.9449,"lo":0.8906,"hi":0.973},{"term":"Realistic Possibility","n":244,"k":214,"p":0.877,"lo":0.8299,"hi":0.9125},{"term":"About Even","n":197,"k":196,"p":0.9949,"lo":0.9718,"hi":0.9991},{"term":"May Happen","n":272,"k":268,"p":0.9853,"lo":0.9628,"hi":0.9943},{"term":"Might Happen","n":236,"k":234,"p":0.9915,"lo":0.9696,"hi":0.9977},{"term":"Could Happen","n":238,"k":234,"p":0.9832,"lo":0.9576,"hi":0.9934},{"term":"Unlikely","n":276,"k":274,"p":0.9928,"lo":0.974,"hi":0.998},{"term":"Chances are Slight","n":455,"k":450,"p":0.989,"lo":0.9745,"hi":0.9953},{"term":"Little Chance","n":342,"k":341,"p":0.9971,"lo":0.9836,"hi":0.9995},{"term":"Improbable","n":364,"k":363,"p":0.9973,"lo":0.9846,"hi":0.9995},{"term":"Remote Chance","n":305,"k":304,"p":0.9967,"lo":0.9817,"hi":0.9994},{"term":"Highly Unlikely","n":225,"k":218,"p":0.9689,"lo":0.9372,"hi":0.9848},{"term":"Almost No Chance","n":274,"k":272,"p":0.9927,"lo":0.9738,"hi":0.998}],"mat":[[null,0.8717,0.9276,0.9836,0.9721,0.9874,0.9873,0.9751,0.9944,0.976,0.9887,1.0,1.0,1.0,0.9957,0.9922,0.9937,0.9964,0.9967],[0.1283,null,0.9512,0.9805,0.984,0.9689,0.9805,0.9907,0.9923,0.9922,0.9955,0.9961,0.9965,1.0,0.9925,0.9873,0.9892,0.9961,0.9795],[0.0724,0.0488,null,0.919,0.985,0.8765,0.985,0.9542,0.9913,0.9876,0.9916,0.995,0.9839,0.9925,0.9969,0.9844,1.0,0.9492,0.9838],[0.0164,0.0195,0.081,null,0.6402,0.7109,0.9364,0.8927,0.9779,0.9968,0.9939,0.9821,1.0,1.0,1.0,0.9819,0.9873,0.9802,0.9814],[0.0279,0.016,0.015,0.3598,null,0.5307,0.9449,0.877,0.9949,0.9853,0.9915,0.9832,0.9928,0.989,0.9971,0.9973,0.9967,0.9689,0.9927],[0.0126,0.0311,0.1235,0.2891,0.4693,null,0.8516,0.8629,0.9643,0.9602,0.9747,0.9839,0.9773,0.997,0.9845,0.9933,0.9932,0.9889,0.978],[0.0127,0.0195,0.015,0.0636,0.0551,0.1484,null,0.5876,0.9849,0.919,0.9301,0.9083,0.9883,0.9799,0.9792,0.9946,0.982,0.9667,0.9911],[0.0249,0.0093,0.0458,0.1073,0.123,0.1371,0.4124,null,0.5784,0.8567,0.9017,0.8825,0.9401,0.9888,0.9906,0.9843,0.9872,0.978,0.9928],[0.0056,0.0077,0.0087,0.0221,0.0051,0.0357,0.0151,0.4216,null,0.6872,0.7229,0.7034,0.9909,0.9697,0.9963,0.9836,0.9723,0.976,0.9727],[0.024,0.0078,0.0124,0.0032,0.0147,0.0398,0.081,0.1433,0.3128,null,0.6104,0.6127,0.9248,0.9739,0.9779,0.9808,0.9763,0.9652,0.9911],[0.0113,0.0045,0.0084,0.0061,0.0085,0.0253,0.0699,0.0983,0.2771,0.3896,null,0.4917,0.9617,0.9663,0.9755,0.9611,0.9636,0.988,0.988],[0.0,0.0039,0.005,0.0179,0.0168,0.0161,0.0917,0.1175,0.2966,0.3873,0.5083,null,0.9198,0.9269,0.9579,0.9627,0.9594,0.9649,0.9856],[0.0,0.0035,0.0161,0.0,0.0072,0.0227,0.0117,0.0599,0.0091,0.0752,0.0383,0.0802,null,0.5437,0.6434,0.8044,0.7026,0.9579,0.9318],[0.0,0.0,0.0075,0.0,0.011,0.003,0.0201,0.0112,0.0303,0.0261,0.0337,0.0731,0.4563,null,0.4545,0.7006,0.8235,0.8743,0.9689],[0.0043,0.0075,0.0031,0.0,0.0029,0.0155,0.0208,0.0094,0.0037,0.0221,0.0245,0.0421,0.3566,0.5455,null,0.6113,0.8043,0.8701,0.965],[0.0078,0.0127,0.0156,0.0181,0.0027,0.0067,0.0054,0.0157,0.0164,0.0192,0.0389,0.0373,0.1956,0.2994,0.3887,null,0.5078,0.6752,0.8302],[0.0063,0.0108,0.0,0.0127,0.0033,0.0068,0.018,0.0128,0.0277,0.0237,0.0364,0.0406,0.2974,0.1765,0.1957,0.4922,null,0.6314,0.9167],[0.0036,0.0039,0.0508,0.0198,0.0311,0.0111,0.0333,0.022,0.024,0.0348,0.012,0.0351,0.0421,0.1257,0.1299,0.3248,0.3686,null,0.8792],[0.0033,0.0205,0.0162,0.0186,0.0073,0.022,0.0089,0.0072,0.0273,0.0089,0.012,0.0144,0.0682,0.0311,0.035,0.1698,0.0833,0.1208,null]],"nn":[[0,452,290,244,573,238,316,241,358,167,354,323,176,406,233,128,317,280,306],[452,0,246,205,437,225,257,430,260,386,221,254,285,307,267,236,186,256,244],[290,246,0,284,266,170,266,240,346,323,238,404,311,265,322,384,256,472,308],[244,205,284,0,403,256,440,289,634,313,327,224,244,223,252,166,236,202,537],[573,437,266,403,0,473,127,244,197,272,236,238,276,455,342,364,305,225,274],[238,225,170,256,473,0,256,394,224,201,356,310,309,333,193,297,444,359,273],[316,257,266,440,127,256,0,371,265,284,429,349,341,298,288,370,222,270,336],[241,430,240,289,244,394,371,0,185,307,356,349,284,534,212,191,469,273,276],[358,260,346,634,197,224,265,185,0,211,314,263,331,198,272,183,289,458,330],[167,386,323,313,272,201,284,307,211,0,249,346,412,345,317,312,295,287,224],[354,221,238,327,236,356,429,356,314,249,0,240,287,208,490,360,330,251,167],[323,254,404,224,238,310,349,349,263,346,240,0,424,301,261,322,419,285,209],[176,285,311,244,276,309,341,284,331,412,287,424,0,252,286,455,390,214,220],[406,307,265,223,455,333,298,534,198,345,208,301,252,0,286,471,187,175,322],[233,267,322,252,342,193,288,212,272,317,490,261,286,286,0,319,235,254,543],[128,236,384,166,364,297,370,191,183,312,360,322,455,471,319,0,321,351,265],[317,186,256,236,305,444,222,469,289,295,330,419,390,187,235,321,0,312,180],[280,256,472,202,225,359,270,273,458,287,251,285,214,175,254,351,312,0,571],[306,244,308,537,274,273,336,276,330,224,167,209,220,322,543,265,180,571,0]],"order":["Will Happen","Almost Certain","Highly Likely","Very Good Chance","Likely","Probable","Better than Even","Realistic Possibility","About Even","May Happen","Might Happen","Could Happen","Unlikely","Chances are Slight","Little Chance","Improbable","Remote Chance","Highly Unlikely","Almost No Chance"],"flips":[{"bin":"50\u201360%","n":235,"k":33,"p":0.1404,"lo":0.1018,"hi":0.1906},{"bin":"60\u201370%","n":239,"k":30,"p":0.1255,"lo":0.0894,"hi":0.1735},{"bin":"70\u201380%","n":174,"k":19,"p":0.1092,"lo":0.071,"hi":0.1642},{"bin":"80\u201390%","n":461,"k":30,"p":0.0651,"lo":0.046,"hi":0.0914},{"bin":"90\u2013100%","n":4065,"k":62,"p":0.0153,"lo":0.0119,"hi":0.0195}],"lp":{"n":116,"k":23,"p":0.1983,"lo":0.1359,"hi":0.28},"pairs":[{"a":"Highly Likely","b":"Likely","n":266,"k":262,"p":0.985,"lo":0.962,"hi":0.9941},{"a":"Unlikely","b":"Highly Unlikely","n":214,"k":205,"p":0.9579,"lo":0.922,"hi":0.9777},{"a":"Almost Certain","b":"Highly Likely","n":246,"k":234,"p":0.9512,"lo":0.9167,"hi":0.9719},{"a":"Highly Unlikely","b":"Almost No Chance","n":571,"k":502,"p":0.8792,"lo":0.8499,"hi":0.9034},{"a":"Realistic Possibility","b":"About Even","n":185,"k":107,"p":0.5784,"lo":0.5063,"hi":0.6472},{"a":"Better than Even","b":"Realistic Possibility","n":371,"k":218,"p":0.5876,"lo":0.5369,"hi":0.6365},{"a":"Likely","b":"Probable","n":473,"k":251,"p":0.5307,"lo":0.4856,"hi":0.5752},{"a":"Little Chance","b":"Remote Chance","n":235,"k":189,"p":0.8043,"lo":0.7488,"hi":0.8499},{"a":"Will Happen","b":"Almost Certain","n":452,"k":394,"p":0.8717,"lo":0.8377,"hi":0.8994},{"a":"Could Happen","b":"Might Happen","n":240,"k":122,"p":0.5083,"lo":0.4455,"hi":0.571},{"a":"Improbable","b":"Remote Chance","n":321,"k":163,"p":0.5078,"lo":0.4533,"hi":0.5621},{"a":"Likely","b":"Very Good Chance","n":403,"k":145,"p":0.3598,"lo":0.3145,"hi":0.4078},{"a":"Probable","b":"Very Good Chance","n":256,"k":74,"p":0.2891,"lo":0.237,"hi":0.3474},{"a":"Probable","b":"Better than Even","n":256,"k":218,"p":0.8516,"lo":0.8028,"hi":0.8899},{"a":"Unlikely","b":"Improbable","n":455,"k":366,"p":0.8044,"lo":0.7655,"hi":0.8382}],"totals":{"rows":51740,"resp":5174,"terms":19,"repeat_agree":0.9664,"repeat_n":5174,"consensus_agree":0.9225},"pairstats":{"min_n":127,"med_n":286.0,"close":5,"clear":136}};
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a = {}, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const txt = (p, s, a) => { const e = el("text", Object.assign({ fill: getComputedStyle(document.documentElement).getPropertyValue("--fg").trim() }, a), p); e.textContent = s; return e; };
+const RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const pct = (v, d = 0) => (v * 100).toFixed(d) + "%";
+const tip = document.getElementById("tip");
+function bindTip(node, html) {
+  node.setAttribute("tabindex", "0");
+  const show = e => { tip.innerHTML = html; tip.classList.add("on"); const r = node.getBoundingClientRect(); const x = e.clientX || (r.left + r.width / 2), y = e.clientY || r.top; tip.style.left = Math.min(innerWidth - tip.offsetWidth - 8, Math.max(8, x + 12)) + "px"; tip.style.top = Math.max(8, y - tip.offsetHeight - 10) + "px"; };
+  node.addEventListener("mousemove", show); node.addEventListener("focus", show);
+  node.addEventListener("mouseleave", () => tip.classList.remove("on")); node.addEventListener("blur", () => tip.classList.remove("on"));
+}
+function legendItem(host, cls, color, label) { const s = document.createElement("span"); s.innerHTML = `<i class="sw ${cls}" style="background:${color}"></i>${label}`; host.appendChild(s); }
+
+/* ---------- Card I: Likely vs everybody ---------- */
+function chart1() {
+  const svg = document.getElementById("c1"); svg.innerHTML = "";
+  const rows = D.likely, W = 860, left = 170, right = 92, top = 34, rowH = 25, H = top + rows.length * rowH + 62;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const sx = v => left + v * (W - left - right);
+  const cLose = css("--indigo"), cTie = css("--gold"), cWin = css("--teal"), grid = css("--grid"), axis = css("--axis"), ref = css("--ref");
+  for (let t = 0; t <= 100; t += 20) {
+    el("line", { x1: sx(t / 100), x2: sx(t / 100), y1: top - 6, y2: top + rows.length * rowH, stroke: t === 50 ? ref : grid, "stroke-width": t === 50 ? 1.6 : 1, "stroke-dasharray": t === 50 ? "5 4" : "" }, svg);
+    txt(svg, t + "%", { x: sx(t / 100), y: top + rows.length * rowH + 18, "text-anchor": "middle", "font-size": 12, fill: css("--muted") });
+  }
+  txt(svg, "even odds", { x: sx(.5), y: top - 14, "text-anchor": "middle", "font-size": 11.5, fill: ref });
+  txt(svg, "← Likely loses", { x: sx(.5) - 46, y: top - 14, "text-anchor": "end", "font-size": 11.5, fill: css("--muted") });
+  txt(svg, "Likely wins →", { x: sx(.5) + 46, y: top - 14, "text-anchor": "start", "font-size": 11.5, fill: css("--muted") });
+  rows.forEach((r, i) => {
+    const y = top + i * rowH + rowH / 2, c = r.hi < .5 ? cLose : r.lo > .5 ? cWin : cTie;
+    if (i % 2 === 0) el("rect", { x: 0, y: y - rowH / 2, width: W, height: rowH, fill: grid, opacity: .45 }, svg);
+    txt(svg, r.term, { x: left - 12, y: y + 4, "text-anchor": "end", "font-size": 12.5, "font-weight": r.term === "Probable" ? 700 : 400 });
+    el("line", { x1: sx(r.lo), x2: sx(r.hi), y1: y, y2: y, stroke: c, "stroke-width": 2.4, "stroke-linecap": "round" }, svg);
+    const d = el("circle", { cx: sx(r.p), cy: y, r: 5.5, fill: c, stroke: css("--panel"), "stroke-width": 1.5 }, svg);
+    bindTip(d, `<b>Likely</b> vs <b>${r.term}</b><br>${r.k} of ${r.n} picked Likely: ${pct(r.p, 1)}<br>95% range ${pct(r.lo, 1)} to ${pct(r.hi, 1)}`);
+    txt(svg, "n = " + r.n, { x: W - right + 14, y: y + 4, "font-size": 11, class: "mono", fill: css("--muted") });
+  });
+  txt(svg, "Share of people who picked “Likely” as the higher probability (%)", { x: left + (W - left - right) / 2, y: H - 10, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  const yt = txt(svg, "Rival phrase, ranked high to low", { x: 0, y: 0, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  yt.setAttribute("transform", `translate(13 ${top + rows.length * rowH / 2}) rotate(-90)`);
+  txt(svg, "n = answers", { x: W - right + 14, y: top - 14, "font-size": 11, class: "mono", fill: css("--muted") });
+}
+
+/* ---------- Card II: flips ---------- */
+function chart2() {
+  const svg = document.getElementById("c2"); svg.innerHTML = "";
+  const bars = D.flips.map(f => ({ lab: f.bin, n: f.n, p: f.p, lo: f.lo, hi: f.hi, k: f.k, lp: false })).concat([{ lab: "Likely vs Probable", n: D.lp.n, p: D.lp.p, lo: D.lp.lo, hi: D.lp.hi, k: D.lp.k, lp: true }]);
+  const W = 860, H = 380, left = 76, right = 20, top = 22, bot = 96, pw = W - left - right, ph = H - top - bot, ymax = .32;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const sy = v => top + ph - v / ymax * ph, grid = css("--grid"), axis = css("--axis"), cb = css("--indigo"), cg = css("--gold");
+  for (let t = 0; t <= 30; t += 5) { el("line", { x1: left, x2: W - right, y1: sy(t / 100), y2: sy(t / 100), stroke: t === 0 ? axis : grid, "stroke-width": t === 0 ? 1.5 : 1 }, svg); txt(svg, t + "%", { x: left - 8, y: sy(t / 100) + 4, "text-anchor": "end", "font-size": 12, fill: css("--muted") }); }
+  const slot = pw / bars.length, bw = Math.min(70, slot * .56);
+  bars.forEach((b, i) => {
+    const cx = left + slot * (i + .5) + (i === bars.length - 1 ? 18 : 0), c = b.lp ? cg : cb;
+    const r = el("rect", { x: cx - bw / 2, y: sy(b.p), width: bw, height: sy(0) - sy(b.p), fill: c, rx: 4 }, svg);
+    bindTip(r, `<b>${b.lp ? "Likely vs Probable" : "Crowd " + b.lab + " on the majority side"}</b><br>${b.k} of ${b.n} changed their answer: ${pct(b.p, 1)}<br>95% range ${pct(b.lo, 1)} to ${pct(b.hi, 1)}`);
+    el("line", { x1: cx, x2: cx, y1: sy(b.lo), y2: sy(b.hi), stroke: css("--fg"), "stroke-width": 1.6 }, svg);
+    [b.lo, b.hi].forEach(v => el("line", { x1: cx - 6, x2: cx + 6, y1: sy(v), y2: sy(v), stroke: css("--fg"), "stroke-width": 1.6 }, svg));
+    txt(svg, pct(b.p, 1), { x: cx, y: sy(b.hi) - 7, "text-anchor": "middle", "font-size": 12.5, "font-weight": 700 });
+    const l1 = b.lp ? "Likely vs" : b.lab, l2 = b.lp ? "Probable" : "";
+    txt(svg, l1, { x: cx, y: sy(0) + 20, "text-anchor": "middle", "font-size": 12.5 });
+    if (l2) txt(svg, l2, { x: cx, y: sy(0) + 36, "text-anchor": "middle", "font-size": 12.5 });
+    txt(svg, "n = " + b.n.toLocaleString("en-US"), { x: cx, y: sy(0) + (b.lp ? 54 : 40), "text-anchor": "middle", "font-size": 11, class: "mono", fill: css("--muted") });
+  });
+  el("line", { x1: left + slot * 5 + 8, x2: left + slot * 5 + 8, y1: top, y2: sy(0) + 60, stroke: css("--axis"), "stroke-dasharray": "3 4" }, svg);
+  txt(svg, "Pairs grouped by how lopsided the crowd was (share choosing the majority side) → more agreement", { x: left + slot * 2.5, y: H - 12, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  const yt = txt(svg, "Changed answer on the repeat (%)", { x: 0, y: 0, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  yt.setAttribute("transform", `translate(14 ${top + ph / 2}) rotate(-90)`);
+}
+
+/* ---------- Card III: ladder ---------- */
+function chart3() {
+  const svg = document.getElementById("c3"); svg.innerHTML = "";
+  const R = D.rank, n = R.length, W = 860, left = 176, right = 28, top = 14, rowH = 27, bot = 66, H = top + n * rowH + bot;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const xmin = -6.8, xmax = 8.2, sx = v => left + (v - xmin) / (xmax - xmin) * (W - left - right);
+  const grid = css("--grid"), axis = css("--axis"), up = css("--up"), down = css("--down"), mid = css("--mid");
+  const ae = R.find(r => r.term === "About Even");
+  // bands: consecutive phrases whose score gap is below 0.9
+  const groups = []; R.forEach((r, i) => { if (i === 0 || R[i - 1].bt - r.bt >= 0.9) groups.push([]); groups[groups.length - 1].push(i); });
+  groups.forEach((g, gi) => { if (gi % 2 === 0) el("rect", { x: 0, y: top + g[0] * rowH, width: W, height: g.length * rowH, fill: grid, opacity: .7 }, svg); });
+  for (let t = -6; t <= 8; t += 2) {
+    el("line", { x1: sx(t), x2: sx(t), y1: top, y2: top + n * rowH, stroke: t === 0 ? css("--ref") : axis, "stroke-width": t === 0 ? 1.4 : .8, "stroke-dasharray": t === 0 ? "5 4" : "2 5", opacity: t === 0 ? 1 : .6 }, svg);
+    txt(svg, t, { x: sx(t), y: top + n * rowH + 18, "text-anchor": "middle", "font-size": 12, fill: css("--muted") });
+  }
+  txt(svg, "0 = average phrase", { x: sx(0) + 6, y: top + n * rowH + 34, "font-size": 11, fill: css("--ref") });
+  R.forEach((r, i) => {
+    const c = r.term === "About Even" ? mid : r.lo > ae.hi ? up : r.hi < ae.lo ? down : mid;
+    const g = el("g", { class: "row", transform: `translate(0 ${top + i * rowH + rowH / 2})` }, svg);
+    const isL = r.term === "Likely" || r.term === "Probable";
+    txt(g, r.term, { x: left - 12, y: 4, "text-anchor": "end", "font-size": 12.5, "font-weight": isL ? 700 : 400 });
+    el("line", { x1: sx(r.lo), x2: sx(r.hi), y1: 0, y2: 0, stroke: c, "stroke-width": 2.6, "stroke-linecap": "round" }, g);
+    const d = el("circle", { cx: sx(r.bt), cy: 0, r: isL ? 6.8 : 5.6, fill: c, stroke: isL ? css("--fg") : css("--panel"), "stroke-width": isL ? 2 : 1.5 }, g);
+    bindTip(g, `<b>#${i + 1} ${r.term}</b><br>Score ${r.bt.toFixed(2)} (95% range ${r.lo.toFixed(2)} to ${r.hi.toFixed(2)})<br>Rank range ${r.rlo === r.rhi ? r.rlo : r.rlo + " to " + r.rhi}<br>${r.n.toLocaleString("en-US")} answers`);
+  });
+  const lk = R.findIndex(r => r.term === "Likely");
+  const ann = txt(svg, "Likely and Probable: a statistical tie", { x: sx(3.6), y: top + (lk + .5) * rowH + 5, "font-size": 12, "font-weight": 600, fill: css("--fg") });
+  txt(svg, "(53% pick Likely, range 49% to 58%)", { x: sx(3.6), y: top + (lk + 1.5) * rowH + 5, "font-size": 11.5, fill: css("--muted") });
+  txt(svg, "Strength score from all head-to-head answers (relative scale, higher = sounds more probable)", { x: left + (W - left - right) / 2, y: H - 8, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  const yt = txt(svg, "Phrase, ranked high to low", { x: 0, y: 0, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  yt.setAttribute("transform", `translate(13 ${top + n * rowH / 2}) rotate(-90)`);
+}
+
+/* ---------- Card V: matrix ---------- */
+const MX = { n: 0, played: false, timer: 0 };
+function chart4() {
+  const svg = document.getElementById("c4"); svg.innerHTML = "";
+  const names = D.order, n = names.length, cell = 30, W = 860, left = 172, top = 150, H = top + n * cell + 40;
+  MX.n = n;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const cUp = css("--up"), cDn = css("--down");
+  function hexrgb(c) { if (c.startsWith("#")) { const h = c.slice(1); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); } return c.match(/\d+/g).slice(0, 3).map(Number); }
+  function mixc(a, b, t) { const pa = hexrgb(a), pb = hexrgb(b); return `rgb(${pa.map((v, i) => Math.round(v + (pb[i] - v) * t)).join(",")})`; }
+  const light = !window.matchMedia("(prefers-color-scheme: dark)").matches || document.documentElement.dataset.theme === "light";
+  const mid = light ? "#f6f2ea" : "#2c2552";
+  const col = p => p >= .5 ? mixc(mid, cUp, Math.min(1, (p - .5) / .5)) : mixc(mid, cDn, Math.min(1, (.5 - p) / .5));
+  const ax = el("g", { class: "ax" }, svg), cells = el("g", { class: "cells" }, svg);
+  names.forEach((nm, j) => { const t = txt(ax, nm, { x: left + j * cell + cell / 2 + 3, y: top - 8, "font-size": 12, "text-anchor": "start" }); t.setAttribute("transform", `rotate(-55 ${left + j * cell + cell / 2 + 3} ${top - 8})`); });
+  names.forEach((nm, i) => {
+    txt(ax, nm, { x: left - 8, y: top + i * cell + cell / 2 + 4, "text-anchor": "end", "font-size": 12, "font-weight": nm === "Likely" || nm === "Probable" ? 700 : 400 });
+    names.forEach((m, j) => {
+      const x = left + j * cell, y = top + i * cell, p = D.mat[i][j];
+      const g = el("g", { class: "cl" }, cells); g.dataset.d = Math.abs(i - j);
+      if (p === null) { el("rect", { x, y, width: cell, height: cell, fill: css("--grid") }, g); el("line", { x1: x + 5, y1: y + cell - 5, x2: x + cell - 5, y2: y + 5, stroke: css("--axis"), "stroke-width": 1.2 }, g); return; }
+      const r = el("rect", { x: x + .5, y: y + .5, width: cell - 1, height: cell - 1, fill: col(p), rx: 3 }, g);
+      if (Math.abs(p - .5) < .05) el("rect", { x: x + 1.5, y: y + 1.5, width: cell - 3, height: cell - 3, fill: "none", stroke: css("--gold"), "stroke-width": 2.4, rx: 3 }, g);
+      bindTip(r, `<b>${nm}</b> over <b>${m}</b><br>${Math.round(p * D.nn[i][j])} of ${D.nn[i][j]} picked ${nm}: ${pct(p, 1)}`);
+      if (Math.abs(i - j) <= 3) txt(g, Math.round(p * 100), { x: x + cell / 2, y: y + cell / 2 + 4, "text-anchor": "middle", "font-size": 10.5, class: "mono", fill: Math.abs(p - .5) > .3 ? "#fff" : "#231a3a" });
+    });
+  });
+  txt(ax, "Column phrase (the one it is compared with)", { x: left + n * cell / 2, y: 18, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  const yt = txt(ax, "Row phrase (the one being picked), ranked high to low", { x: 0, y: 0, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  yt.setAttribute("transform", `translate(14 ${top + n * cell / 2}) rotate(-90)`);
+  const bx = left + n * cell + 30, by = top, bh = 190, id = "cbgrad";
+  const defs = el("defs", {}, ax), lg = el("linearGradient", { id, x1: 0, x2: 0, y1: 0, y2: 1 }, defs);
+  [0, .25, .5, .75, 1].forEach(s => el("stop", { offset: s, "stop-color": col(1 - s) }, lg));
+  el("rect", { x: bx, y: by, width: 14, height: bh, fill: `url(#${id})`, rx: 3, stroke: css("--axis") }, ax);
+  [[0, "100%"], [.5, "50%"], [1, "0%"]].forEach(([s, l]) => txt(ax, l, { x: bx + 20, y: by + s * bh + 4, "font-size": 11.5, fill: css("--muted") }));
+  txt(ax, "Row picked", { x: bx, y: by - 22, "font-size": 11.5, "font-weight": 600 }); txt(ax, "over column", { x: bx, y: by - 8, "font-size": 11.5, "font-weight": 600 });
+  if (!RM && !MX.played) { ax.style.opacity = 0; cells.querySelectorAll(".cl").forEach(g => { g.style.opacity = 0; }); }
+}
+/* Axes fade in together over the first 0.9 s; the colored boxes build in from the top-right and lower-left corners toward the diagonal, both sides at once; about 5 s in total. */
+function playMatrix() {
+  if (RM) return;
+  const svg = document.getElementById("c4"), ax = svg.querySelector(".ax"), cl = [...svg.querySelectorAll(".cl")], n = MX.n;
+  MX.played = true;
+  [ax, ...cl].forEach(g => { g.style.transition = "none"; g.style.opacity = 0; });
+  cl.forEach(g => { g.style.transformBox = "fill-box"; g.style.transformOrigin = "center"; g.style.transform = "scale(.55)"; });
+  void svg.getBoundingClientRect();
+  ax.style.transition = "opacity 900ms ease"; ax.style.opacity = 1;
+  cl.forEach(g => {
+    const delay = 400 + (1 - (+g.dataset.d) / (n - 1)) * 3900;
+    g.style.transition = `opacity 700ms ease ${delay}ms, transform 700ms cubic-bezier(.2,.8,.3,1) ${delay}ms`;
+    g.style.opacity = 1; g.style.transform = "scale(1)";
+  });
+}
+
+function legends() {
+  const a = document.getElementById("lg1"); a.innerHTML = "";
+  legendItem(a, "", css("--indigo"), "Likely loses (whole range below 50%)"); legendItem(a, "", css("--gold"), "Too close to call (range spans 50%)"); legendItem(a, "", css("--teal"), "Likely wins (whole range above 50%)");
+  const b = document.getElementById("lg2"); b.innerHTML = "";
+  legendItem(b, "sq", css("--indigo"), "All pairs, grouped by crowd split"); legendItem(b, "sq", css("--gold"), "The Likely vs Probable pair"); legendItem(b, "ln", css("--fg"), "95% range");
+  const c = document.getElementById("lg3"); c.innerHTML = "";
+  legendItem(c, "", css("--up"), "Ranked above About Even"); legendItem(c, "", css("--mid"), "About Even (the middle)"); legendItem(c, "", css("--down"), "Ranked below About Even"); legendItem(c, "ln", css("--fg"), "95% range");
+  const d = document.getElementById("lg4"); d.innerHTML = "";
+  legendItem(d, "sq", css("--up"), "Row phrase picked more often"); legendItem(d, "sq", css("--down"), "Column phrase picked more often"); const g = document.createElement("span"); g.innerHTML = `<i class="sw sq" style="background:none;border:2.4px solid ${css("--gold")}"></i>Within 45% to 55%`; d.appendChild(g);
+}
+function drawAll() { legends(); chart1(); chart2(); chart3(); chart4(); }
+drawAll();
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawAll);
+document.getElementById("replay").addEventListener("click", playMatrix);
+addEventListener("message", e => { if (e.data && e.data.type === "pug-replay") playMatrix(); });
+if (!RM && "IntersectionObserver" in window) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { playMatrix(); io.disconnect(); } }), { threshold: .3 });
+  io.observe(document.getElementById("c4"));
+} else if (!RM) { MX.played = true; chart4(); }
+if (RM) document.getElementById("replay").hidden = true;
+</script>
+</body>
+</html>

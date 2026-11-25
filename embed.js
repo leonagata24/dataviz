@@ -21,7 +21,8 @@
     "bw-animals": ["#c1c", ".card"],
     "tn-offseason": ["#offseason .panel"],
     "uf-rate": ["#cFun", ".card"],
-    "cf-scatter": ["#flip"]
+    "cf-scatter": ["#flip"],
+    "lk-matrix": ["#s5 .card"]
   };
 
   var css = document.createElement("style");
