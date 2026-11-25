@@ -35,9 +35,10 @@ a { color: inherit; }
 .disclaimer { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 
 .hero { position: relative; margin-top: 14px; border-radius: 22px; overflow: hidden; color: var(--hero-ink); background:
-  radial-gradient(2px 2px at 62% 14%, var(--star) 99%, transparent), radial-gradient(1.5px 1.5px at 74% 64%, var(--star) 99%, transparent),
-  radial-gradient(1.5px 1.5px at 90% 30%, var(--star) 99%, transparent),
+  radial-gradient(circle at var(--cx, 78%) var(--cy, 48%), rgba(120,90,255,.38), transparent 46%),
   linear-gradient(160deg, var(--night-a), var(--night-b)); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); border: 2px solid var(--gold); }
+.hero > canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.hero-t, .hero-art { position: relative; z-index: 1; }
 .hero-t { padding: clamp(22px, 4vw, 44px); display: grid; gap: 14px; align-content: start; }
 .eyebrow { font: 500 11.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; margin: 0; color: var(--star); }
 .title { font-family: var(--disp); font-weight: 700; font-size: clamp(2rem, 5.4vw, 3.5rem); line-height: 1.05; letter-spacing: -.035em; margin: 0; text-wrap: balance; }
@@ -46,6 +47,10 @@ a { color: inherit; }
 .reading { display: grid; grid-template-columns: auto 1fr; gap: 3px 14px; font: 500 12px var(--mono); max-width: 36rem; border-top: 1.5px dashed rgba(243,211,122,.5); padding-top: 10px; color: var(--hero-muted); }
 .reading dt { text-transform: uppercase; letter-spacing: .08em; color: var(--star); } .reading dd { margin: 0; color: var(--hero-ink); }
 .hero-art { display: grid; place-items: center; padding: 24px 18px; }
+.spin { transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) { .spin { animation: spin var(--d, 12s) linear infinite; } .twk { animation: twk var(--t, 3s) ease-in-out infinite alternate; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes twk { from { opacity: .35; } to { opacity: 1; } }
 .hero-art svg { width: 100%; max-width: 360px; height: auto; overflow: visible; }
 @media (prefers-reduced-motion: no-preference) { .float { animation: bob 5s ease-in-out infinite alternate; } }
 @keyframes bob { from { transform: translateY(0); } to { transform: translateY(-7px); } }
@@ -57,7 +62,7 @@ main { display: grid; gap: 22px; padding-block: 22px 64px; }
 .tile-l, .tile-s { font-size: 12.5px; color: var(--muted); }
 .tile-v { font-weight: 700; letter-spacing: -.03em; font-size: 1.9rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
 
-.sec { position: relative; background: var(--panel); border-radius: 20px; padding: clamp(16px, 3vw, 28px); display: grid; gap: 14px; box-shadow: 0 1px 0 var(--line); border: 1px solid var(--line); }
+.sec { position: relative; background: var(--panel); border-radius: 20px; padding: clamp(16px, 3vw, 28px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; box-shadow: 0 1px 0 var(--line); border: 1px solid var(--line); }
 .fh { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: center; }
 .fb { grid-row: span 2; width: 56px; height: 76px; border-radius: 10px; background: linear-gradient(160deg, var(--night-a), var(--night-b)); color: var(--star); border: 2px solid var(--gold); display: grid; place-items: center; text-align: center; font: 600 11px/1.15 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .fb b { display: block; font: 700 22px var(--disp); letter-spacing: 0; color: var(--hero-ink); }
@@ -91,9 +96,13 @@ tr:last-child td { border-bottom: 0; }
 .pug-note img { width: 56px; height: auto; flex: none; }
 .pug-note b { display: block; font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
 .foot { display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: space-between; font-size: 12px; color: var(--muted); }
-.mx-scroll { overflow-x: auto; }
+.sec > *, .card, .tile { min-width: 0; }
+main, .hero { min-width: 0; max-width: 100%; }
+html, body { overflow-x: hidden; }
+.mx-scroll { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
 .mx-scroll svg { min-width: 620px; }
-html.pug-embed .mx-scroll svg { min-width: 0; }
+.mx-scroll svg#c5 { min-width: 600px; }
+html.pug-embed .mx-scroll svg, html.pug-embed .mx-scroll svg#c5 { min-width: 0; }
 svg text { font-family: var(--disp); }
 svg .mono { font-family: var(--mono); }
 html.pug-embed .replay { display: none; }
@@ -118,6 +127,7 @@ html.pug-embed .replay { display: none; }
   </div>
 
   <header class="hero">
+    <canvas id="warp" aria-hidden="true"></canvas>
     <div class="hero-t">
       <p class="eyebrow">Fortune booth · 19 phrases · 5,174 quiz-takers</p>
       <h1 class="title">The Pug Oracle reads “likely”</h1>
@@ -133,14 +143,11 @@ html.pug-embed .replay { display: none; }
         <g class="float">
           <circle cx="160" cy="150" r="108" fill="rgba(243,211,122,.12)" stroke="#f3d37a" stroke-width="3"/>
           <circle cx="160" cy="150" r="96" fill="#3a2d85" stroke="#f3d37a" stroke-width="1.5" stroke-dasharray="3 6"/>
-          <image href="../pug-head.png" x="108" y="100" width="104" height="96" preserveAspectRatio="xMidYMid meet"/>
+          <image id="pugpic" href="../pug-head.png" x="108" y="100" width="104" height="96" preserveAspectRatio="xMidYMid meet"/>
           <path d="M104 98 q22 -34 62 -30" stroke="#fff" stroke-opacity=".5" stroke-width="5" fill="none" stroke-linecap="round"/>
           <path d="M92 252 h136 l-18 -34 h-100 z" fill="#f3d37a" stroke="#c99a1a" stroke-width="2"/>
           <rect x="84" y="252" width="152" height="16" rx="6" fill="#c99a1a"/>
-          <text x="40" y="60" font-size="26" fill="#f3d37a" text-anchor="middle">✦</text>
-          <text x="280" y="96" font-size="20" fill="#f3d37a" text-anchor="middle">✦</text>
-          <text x="262" y="224" font-size="26" fill="#f3d37a" text-anchor="middle">✦</text>
-          <text x="52" y="210" font-size="18" fill="#f3d37a" text-anchor="middle">✦</text>
+          <g id="stars"></g>
         </g>
       </svg>
     </div>
@@ -156,8 +163,8 @@ html.pug-embed .replay { display: none; }
 
   <section class="sec" id="s1">
     <div class="fh"><span class="fb">Card<b>I</b></span><span class="qn">The reframe</span><h2>Is “likely” just “probable” in a nicer collar?</h2></div>
-    <div class="ans"><span class="stamp">Statistically, yes</span><span><b>251 of 473</b> people (53.1%) picked “Likely” over “Probable”; the 95% range runs from 48.6% to 57.5%, so a fair coin fits. Both phrases beat everything below “Very Good Chance”, and both lose to it.</span></div>
-    <p>The chart pits “Likely” against each of the other 18 phrases. Where the dot and its whisker sit entirely right of the 50% line, “Likely” wins that matchup; entirely left, it loses; spanning the line, the data cannot call it. Only <b>Probable</b> lands in the tie. “Very Good Chance” beats “Likely” 64% of the time (145 of 403 picked “Likely”), and “Probable” loses to it by a similar margin (74 of 256 picked “Probable”), so the two travel as a pair.</p>
+    <div class="ans"><span class="stamp">Statistically, yes</span><span><b>251 of 473</b> people (53.1%) picked “Likely” over “Probable”; the 95% range runs from 48.6% to 57.5%, so a fair coin fits. Apart from each other, both beat every phrase below “Very Good Chance” and lose to every phrase above it.</span></div>
+    <p>The chart pits “Likely” against each of the other 18 phrases. Where the dot and its whisker sit entirely right of the 50% line, “Likely” wins that matchup; entirely left, it loses; spanning the line, the data cannot call it. Only <b>Probable</b> lands in the tie. “Very Good Chance” beats “Likely” 64% of the time (145 of 403 picked “Likely”), and “Probable” loses to it even more often (182 of 256 picked “Very Good Chance”, 71%), so the two sit side by side.</p>
     <div class="card">
       <div class="legend" id="lg1"></div>
       <svg id="c1" role="img" aria-label="Dot plot of the share of people who picked Likely over each of the other 18 phrases, with 95 percent ranges"></svg>
@@ -168,8 +175,8 @@ html.pug-embed .replay { display: none; }
 
   <section class="sec" id="s2">
     <div class="fh"><span class="fb">Card<b>II</b></span><span class="qn">Wait, really?</span><h2>When the crowd splits 53 to 47, is everyone flipping coins?</h2></div>
-    <div class="ans"><span class="stamp">No, mostly two camps</span><span>Everyone saw one pair twice, with the order swapped. For “Likely” vs “Probable”, <b>20%</b> (23 of 116) changed their answer. A coin flip would change it about half the time; across all pairs, 3.4% did.</span></div>
-    <p>A 53/47 split can mean one of two things: everyone is unsure and guessing, or people hold firm but different views. Repeat answers tell them apart. The less lopsided the crowd on a pair, the more people changed their answer, but even in the closest pairs only about one in seven did. So most of the disagreement is <b>between</b> people, not inside them. “Likely” vs “Probable” is the pair with the most changed answers in the whole quiz (23), at 20%, above every grouped bar.</p>
+    <div class="ans"><span class="stamp">No, mostly steady views</span><span>Everyone saw one pair twice, with the order swapped. For “Likely” vs “Probable”, <b>20%</b> (23 of 116) changed their answer. A coin flip would change it about half the time; across all pairs, 3.4% did.</span></div>
+    <p>A 53/47 split can mean one of two things: everyone is unsure and guessing, or people hold firm but different views. Repeat answers tell them apart. Comparing each person’s two answers with the crowd split, roughly <b>60%</b> of the variation on “Likely” vs “Probable” is steady differences between people (95% range 46% to 74%), and across the 15 pairings with the closest splits it is about <b>72%</b> (66% to 79%). The rest is wavering. The less lopsided the crowd on a pair, the more people changed their answer, but even in the closest pairs only about one in seven did. “Likely” vs “Probable” has the most changed answers of any pair (23 of 116) and the highest rate among pairs repeated at least 40 times, 20%, above every grouped bar. Two cautions: the repeat came nine questions later, so some people may have remembered their first answer, which inflates the between-people share (read both figures as upper limits); and the repeated pair was not drawn evenly across pairings (see the audit), so the grouped bars lean on the pairings repeated most.</p>
     <div class="card">
       <div class="legend" id="lg2"></div>
       <svg id="c2" role="img" aria-label="Bar chart of the share of people who changed their answer on a repeated pair, by how lopsided the crowd was on that pair"></svg>
@@ -179,13 +186,14 @@ html.pug-embed .replay { display: none; }
 
   <section class="sec" id="s3">
     <div class="fh"><span class="fb">Card<b>III</b></span><span class="qn">Wait, really?</span><h2>How many different things can a pug actually say?</h2></div>
-    <div class="ans"><span class="stamp">About eight</span><span>19 phrases, but the crowd separates them into <b>about eight groups</b>. Within a group, neighbors are hard to tell apart; between groups there are clear gaps.</span></div>
+    <div class="ans"><span class="stamp">Seven or eight</span><span>19 phrases, but the crowd separates them into <b>seven or eight groups</b>. Within a group, neighbors are hard to tell apart; between groups there are clear gaps.</span></div>
     <p>The ladder shows each phrase’s strength score, estimated from all its matchups at once, with a 95% range from 1,000 resamples of respondents. Scores are on a relative scale: 0 is the average phrase, and a gap of 1 means the higher phrase wins about three of four comparisons. It is a ranking, not a percentage. The ranges say where the order is solid (ranks 1 to 4, and 18 and 19) and where it is not: <b>Likely and Probable</b> share ranks 5 and 6, <b>Might Happen and Could Happen</b> share 11 and 12, <b>Chances are Slight and Little Chance</b> share 14 and 15, and <b>Improbable and Remote Chance</b> share 16 and 17.</p>
     <div class="card" id="ladder-card">
       <div class="legend" id="lg3"></div>
-      <svg id="c3" role="img" aria-label="Ranked ladder of 19 probability phrases with strength scores and 95 percent ranges, grouped into about eight bands"></svg>
-      <p class="cap">Source: pairwise comparisons file. Bradley–Terry strength scores fitted to all 51,740 answers; ranges are the 2.5th to 97.5th percentiles of 1,000 bootstrap resamples of respondents. Shaded bands group neighbors less than 0.9 score units apart, a judgment call.</p>
+      <svg id="c3" role="img" aria-label="Ranked ladder of 19 probability phrases with strength scores and 95 percent ranges, grouped into seven or eight bands"></svg>
+      <p class="cap">Source: pairwise comparisons file. Bradley–Terry strength scores fitted to all 51,740 answers; ranges are the 2.5th to 97.5th percentiles of 1,000 bootstrap resamples of respondents. Shaded bands group neighbors less than 0.9 score units apart (eight groups); a rule based on 85% agreement between neighbors gives seven. Both are judgment calls.</p>
     </div>
+    <p>The count depends on the rule. Splitting wherever neighboring phrases are ordered the same way by 85% or more of people gives <b>seven</b> groups. The shaded bands use a gap of 0.9 score units, which gives <b>eight</b>, because it also separates “Realistic Possibility” from “About Even”, who are ordered the same way by only 58%.</p>
     <p>Two details from the pairs behind the ladder. <b>“Realistic Possibility”</b> sits above “About Even”: 57.8% of people picked it as the higher one (107 of 185; range 50.6% to 64.7%), and “Better than Even” beats it only 58.8% of the time (218 of 371). And <b>“Remote Chance”</b> loses to “Little Chance” 80% of the time (189 of 235) yet is a statistical tie with “Improbable” (50.8%, 163 of 321).</p>
   </section>
 
@@ -197,19 +205,27 @@ html.pug-embed .replay { display: none; }
       <div class="tile" style="--tc:var(--down)"><span class="tile-l">“Unlikely” over “Highly Unlikely”</span><span class="tile-v">95.8%</span><span class="tile-s">205 of 214 people; range 92.2% to 97.8%. Score gap 1.6.</span></div>
       <div class="tile" style="--tc:var(--gold)"><span class="tile-l">“Almost Certain” over “Highly Likely”</span><span class="tile-v">95.1%</span><span class="tile-s">234 of 246 people; range 91.7% to 97.2%. Score gap 1.4.</span></div>
     </div>
-    <p>“Highly” is not decoration: nearly everyone treats “Highly Likely” as a different, stronger claim than “Likely”. Note that “Will Happen” beats “Almost Certain” 87% of the time (394 of 452), so people also hear the hedge in “almost”. Score gaps are differences between fitted scores; each score’s 95% range is about ±0.15 to ±0.3 wide at these levels.</p>
+    <p>“Highly” is not decoration: nearly everyone treats “Highly Likely” as a different, stronger claim than “Likely”. Note that “Will Happen” beats “Almost Certain” 87% of the time (394 of 452), so people also hear the hedge in “almost”. Score gaps are differences between fitted scores; each score’s 95% range is about ±0.15 to ±0.4 wide.</p>
   </section>
 
   <section class="sec" id="s5">
     <div class="fh"><span class="fb">Card<b>V</b></span><span class="qn">The crystal ball</span><h2>Can the pugs draw a clean line from “almost no chance” to “will happen”?</h2></div>
-    <div class="ans"><span class="stamp">Nearly</span><span>Of 171 pairings, <b>136</b> are settled by 90% or more of the people who saw them, and <b>5</b> sit within 45% to 55%. No three phrases form a loop (A beats B beats C beats A).</span></div>
-    <p>Each cell shows how often the row phrase was picked over the column phrase. Order the phrases by rank and the table sorts itself into two clean triangles, orange (row wins) above the diagonal and blue below, with all the doubt in a fuzzy band along the diagonal. That band is where the vocabulary is crowded. The five pairings between 45% and 55%, outlined in gold, are Likely/Probable, Might Happen/Could Happen, Unlikely/Chances are Slight, Chances are Slight/Little Chance and Improbable/Remote Chance.</p>
+    <div class="ans"><span class="stamp">Nearly</span><span>Of 171 pairings, <b>136</b> are settled by 90% or more of the people who saw them, and <b>5</b> sit within 45% to 55%. No three phrases form a loop (A beats B beats C beats A). The doubt sits in a band about four places wide beside the diagonal.</span></div>
+    <p>Each cell shows how often the row phrase was picked over the column phrase. The two triangles are mirror images by construction (a pairing’s two cells add to 100%), so the information is in the gradient: with phrases ordered by rank, agreement rises with distance from the diagonal, with some wobble inside the band. The diagonal itself is empty because a phrase was never compared with itself. The five pairings between 45% and 55%, outlined in gold, are Likely/Probable, Might Happen/Could Happen, Unlikely/Chances are Slight, Chances are Slight/Little Chance and Improbable/Remote Chance.</p>
     <div class="card">
       <div class="legend" id="lg4"></div>
       <div class="mx-scroll"><svg id="c4" role="img" aria-label="Heat map matrix of head-to-head results between all 19 phrases, ordered by rank"></svg></div>
       <button class="replay" id="replay" type="button" aria-label="Replay the matrix animation">↻ Replay</button>
       <p class="cap" style="padding-right:96px">Source: pairwise comparisons file. Cell = share of people who picked the row phrase as higher than the column phrase; numbers shown within three ranks of the diagonal. Hover or focus a cell for the count. Each pairing has 127 to 634 answers.</p>
     </div>
+    <p>Seen by distance, the band is easy to measure. Neighbors on the ladder are ordered the same way by <b>69%</b> of people on average, phrases two places apart by 84%, three places by 90%, four by 94%, and from <b>five places apart every pairing is at least 90%</b>. The band is uneven: “Will Happen”, “Almost Certain”, “Highly Likely” and “Almost No Chance” have no rival that fewer than 75% of people can order against them, while “Realistic Possibility” is ordered by fewer than 90% against 7 other phrases.</p>
+    <div class="card">
+      <div class="legend" id="lg5"></div>
+      <div class="mx-scroll"><svg id="c5" role="img" aria-label="Dot plot of crowd agreement on which phrase is higher, for each of 171 pairings, by how many places apart the two phrases are on the ladder"></svg></div>
+      <p class="cap">Source: pairwise comparisons file. Each dot is one of the 171 pairings: the share of people who ordered the two phrases the way most people did, plotted by how many places apart they are on the ladder in Card III. Dots are nudged sideways slightly so they do not overlap. Averages are shown under the axis.</p>
+    </div>
+    <p>For anyone choosing words, that means a word picks out a place within roughly four ranks, not a point. Swapping “likely” for “probable” signals nothing the audience will reliably read, while moving across bands (adding “highly”, or switching to “better than even”) does. Where the difference matters, a number says it better.</p>
+
   </section>
 
   <section class="sec">
@@ -218,7 +234,8 @@ html.pug-embed .replay { display: none; }
       <li><b>It ranks words; it does not convert them to percentages.</b> The article’s second quiz part asked for 0 to 100% estimates, but that data is not in this file. So “Likely” has a place in line, not a probability.</li>
       <li><b>The sample is a self-selected online quiz.</b> No demographics, country or timestamps are in the file, so nothing here describes any population, and differences between groups cannot be tested.</li>
       <li><b>Scores are relative.</b> A strength score of 2.7 is not 2.7 times anything useful; only differences and order mean something.</li>
-      <li><b>The grouping into “about eight” is a rule of thumb.</b> A gap threshold of 0.9 score units gives eight groups; a looser one gives fewer. The ranges, not the bands, carry the evidence.</li>
+      <li><b>The grouping into “seven or eight” is a rule of thumb.</b> A gap threshold of 0.9 score units gives eight groups; splitting where neighbors agree 85% or more gives seven. The ranges, not the bands, carry the evidence.</li>
+      <li><b>The “steady personal views” shares are upper limits.</b> They treat each person’s two answers as independent given their own tendency. Remembering the first answer nine questions later would make people look steadier than they are.</li>
       <li><b>Phrases appeared in uneven pairings.</b> Matchups range from 127 to 634 answers, so raw win rates mislead (see the audit); the scores and head-to-head shares account for that.</li>
       <li><b>One answer per person is repeated.</b> Each respondent’s tenth answer repeats their first pair. It is counted in the ranking; dropping it leaves the order identical.</li>
     </ul>
@@ -235,11 +252,12 @@ html.pug-embed .replay { display: none; }
       <tr><td>Respondents</td><td><span class="v ok">Complete</span></td><td>5,174 respondents, each with exactly 10 answers (pair_id 1 to 10); IDs run 4 to 5,177 with no gaps. The article says “over 5,000”.</td><td>No respondents dropped.</td></tr>
       <tr><td>Design integrity</td><td><span class="v ok">As described</span></td><td>Each person saw 18 of the 19 phrases in nine different pairs, and a tenth pair that repeats the first with the phrases swapped: true for all 5,174. Every answer is one of the two phrases shown; no phrase is paired with itself; 19 phrase names, no spelling variants.</td><td>None needed.</td></tr>
       <tr><td>Self-consistency</td><td><span class="v ok">High</span></td><td>96.6% gave the same answer on the repeat (5,000 of 5,174). Consistency was steady across the response ID range (95.8% to 97.5% in five equal bands).</td><td>Used as a quality signal, and for Card II.</td></tr>
-      <tr><td>Transitivity</td><td><span class="v ok">Strong</span></td><td>No majority loops among 171 pairings; 98.8% of pairings have the majority favoring the higher-ranked phrase; 92.3% of individual first-nine answers agree with the final order.</td><td>A single ranking is a fair summary.</td></tr>
+      <tr><td>Transitivity</td><td><span class="v ok">Strong</span></td><td>No majority loops among 171 pairings; 98.8% of pairings have the majority favoring the higher-ranked phrase; 92.3% of individual first-nine answers agree with the final order. Agreement rises with rank distance: 69% on average for neighbors, 96% or more from five places apart.</td><td>A single ranking is a fair summary.</td></tr>
       <tr><td>Pairing balance</td><td><span class="v warn">Uneven</span></td><td>Pairings were not equally common: 127 answers for Likely vs Better than Even up to 634 for About Even vs Very Good Chance (median 286; an even split would be about 303). Raw win rates are therefore misleading: “Likely” wins 68.5% of its matchups and “Probable” 77.7%, yet “Likely” faced tougher opponents (average opponent score 0.37 vs −0.44) and the two phrases fit as a tie.</td><td>Ranked with a model that adjusts for who each phrase faced, not with raw win rates. Every head-to-head share uses only its own pairing.</td></tr>
-      <tr><td>Left/right order</td><td><span class="v warn">Small bias</span></td><td>The phrase shown first won 49.0% of the time (p ≈ 0.00001), and phrases were not equally often shown first or second. Fitting a position effect gives about 0.45 percentage points; the order of phrases is unchanged.</td><td>Reported and left uncorrected; the effect is far smaller than any gap discussed.</td></tr>
+      <tr><td>Left/right order</td><td><span class="v warn">Small bias</span></td><td>The phrase listed first (term1) won 49.0% of the time (p ≈ 0.00001), and phrases were not equally often listed first or second. Fitting a position effect gives about 0.45 percentage points; the order of phrases is unchanged (largest score change 0.004).</td><td>Reported and left uncorrected; the effect is far smaller than any gap discussed.</td></tr>
+      <tr><td>Repeat pair selection</td><td><span class="v warn">Not even</span></td><td>The pair repeated at the end was not spread evenly over the 171 pairings: from 4 to 197 respondents per pairing (median 21), for example 116 each for Likely vs Probable and Likely vs Very Good Chance.</td><td>Flip rates are shown with their group sizes and 95% ranges; no claim is made about pairings with few repeats.</td></tr>
       <tr><td>Repeat answer</td><td><span class="v warn">Double counted</span></td><td>The repeated pair gives that person’s views on one pair twice.</td><td>Kept in the ranking; dropping every respondent’s tenth answer gives the same order (largest score change 0.09).</td></tr>
-      <tr><td>What is missing</td><td><span class="v bad">Material</span></td><td>No numerical estimates (the article’s second quiz part), no demographics, no timestamps, no country. The article’s outlier filter applies to the numerical part, which this file does not contain.</td><td>No claims about what “likely” means in percent, or about who reads it how.</td></tr>
+      <tr><td>What is missing</td><td><span class="v bad">Material</span></td><td>No numerical estimates (the article’s second quiz part), no demographics, no timestamps, no country. The article’s outlier filter (answers more than 4 standard deviations from a phrase’s mean) presumably concerns the numerical part, which this file does not contain.</td><td>No claims about what “likely” means in percent, or about who reads it how.</td></tr>
       <tr><td>Sample</td><td><span class="v warn">Self-selected</span></td><td>An open online quiz that people chose to take; the article describes no sampling frame. Respondents may not represent any population, and the 95% ranges describe sampling noise only, not that bias.</td><td>No population claims; ranges labeled as sampling ranges.</td></tr>
       <tr><td>Provenance</td><td><span class="v ok">Documented</span></td><td>Data on Zenodo (record 18750055), study described on the author’s CAPphrase page, which the page header links. The MakeoverMonday portal page for the dataset did not load for the pugs, so the original visualization could not be reviewed.</td><td>Only the file and the article were used.</td></tr>
       <tr><td>Second opinion</td><td><span class="v ok">Matches</span></td><td>Scores were fitted two ways (a fixed-point method and a direct likelihood search) and agree to within 0.0005. Every headline count and share was recomputed from the raw CSV with separate code.</td><td>Both computations agree on every number shown.</td></tr>
@@ -375,9 +393,10 @@ function chart4() {
   const mid = light ? "#f6f2ea" : "#2c2552";
   const col = p => p >= .5 ? mixc(mid, cUp, Math.min(1, (p - .5) / .5)) : mixc(mid, cDn, Math.min(1, (.5 - p) / .5));
   const ax = el("g", { class: "ax" }, svg), cells = el("g", { class: "cells" }, svg);
-  names.forEach((nm, j) => { const t = txt(ax, nm, { x: left + j * cell + cell / 2 + 3, y: top - 8, "font-size": 12, "text-anchor": "start" }); t.setAttribute("transform", `rotate(-55 ${left + j * cell + cell / 2 + 3} ${top - 8})`); });
+  const pairs = names.map((nm, k) => { const g = el("g", { class: "axp" }, ax); g.dataset.k = k; return g; });
+  names.forEach((nm, j) => { const t = txt(pairs[j], nm, { x: left + j * cell + cell / 2 + 3, y: top - 8, "font-size": 12, "text-anchor": "start" }); t.setAttribute("transform", `rotate(-55 ${left + j * cell + cell / 2 + 3} ${top - 8})`); });
   names.forEach((nm, i) => {
-    txt(ax, nm, { x: left - 8, y: top + i * cell + cell / 2 + 4, "text-anchor": "end", "font-size": 12, "font-weight": nm === "Likely" || nm === "Probable" ? 700 : 400 });
+    txt(pairs[i], nm, { x: left - 8, y: top + i * cell + cell / 2 + 4, "text-anchor": "end", "font-size": 12, "font-weight": nm === "Likely" || nm === "Probable" ? 700 : 400 });
     names.forEach((m, j) => {
       const x = left + j * cell, y = top + i * cell, p = D.mat[i][j];
       const g = el("g", { class: "cl" }, cells); g.dataset.d = Math.abs(i - j);
@@ -388,31 +407,68 @@ function chart4() {
       if (Math.abs(i - j) <= 3) txt(g, Math.round(p * 100), { x: x + cell / 2, y: y + cell / 2 + 4, "text-anchor": "middle", "font-size": 10.5, class: "mono", fill: Math.abs(p - .5) > .3 ? "#fff" : "#231a3a" });
     });
   });
-  txt(ax, "Column phrase (the one it is compared with)", { x: left + n * cell / 2, y: 18, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
-  const yt = txt(ax, "Row phrase (the one being picked), ranked high to low", { x: 0, y: 0, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  const axt = el("g", { class: "axt" }, ax);
+  txt(axt, "Column phrase (the one it is compared with)", { x: left + n * cell / 2, y: 18, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  const yt = txt(axt, "Row phrase (the one being picked), ranked high to low", { x: 0, y: 0, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
   yt.setAttribute("transform", `translate(14 ${top + n * cell / 2}) rotate(-90)`);
-  const bx = left + n * cell + 30, by = top, bh = 190, id = "cbgrad";
-  const defs = el("defs", {}, ax), lg = el("linearGradient", { id, x1: 0, x2: 0, y1: 0, y2: 1 }, defs);
+  const bh = 190, bx = left + n * cell + 30, by = top + n * cell / 2 - bh / 2, id = "cbgrad";   // centered on the y axis
+  const defs = el("defs", {}, axt), lg = el("linearGradient", { id, x1: 0, x2: 0, y1: 0, y2: 1 }, defs);
   [0, .25, .5, .75, 1].forEach(s => el("stop", { offset: s, "stop-color": col(1 - s) }, lg));
-  el("rect", { x: bx, y: by, width: 14, height: bh, fill: `url(#${id})`, rx: 3, stroke: css("--axis") }, ax);
-  [[0, "100%"], [.5, "50%"], [1, "0%"]].forEach(([s, l]) => txt(ax, l, { x: bx + 20, y: by + s * bh + 4, "font-size": 11.5, fill: css("--muted") }));
-  txt(ax, "Row picked", { x: bx, y: by - 22, "font-size": 11.5, "font-weight": 600 }); txt(ax, "over column", { x: bx, y: by - 8, "font-size": 11.5, "font-weight": 600 });
-  if (!RM && !MX.played) { ax.style.opacity = 0; cells.querySelectorAll(".cl").forEach(g => { g.style.opacity = 0; }); }
+  el("rect", { x: bx, y: by, width: 14, height: bh, fill: `url(#${id})`, rx: 3, stroke: css("--axis") }, axt);
+  [[0, "100%"], [.5, "50%"], [1, "0%"]].forEach(([s, l]) => txt(axt, l, { x: bx + 20, y: by + s * bh + 4, "font-size": 11.5, fill: css("--muted") }));
+  txt(axt, "Row picked", { x: bx, y: by - 22, "font-size": 11.5, "font-weight": 600 }); txt(axt, "over column", { x: bx, y: by - 8, "font-size": 11.5, "font-weight": 600 });
+  if (!RM && !MX.played) { ax.querySelectorAll(".axp, .axt").forEach(g => { g.style.opacity = 0; }); cells.querySelectorAll(".cl").forEach(g => { g.style.opacity = 0; }); }
 }
-/* Axes fade in together over the first 0.9 s; the colored boxes build in from the top-right and lower-left corners toward the diagonal, both sides at once; about 5 s in total. */
+/* Timeline (about 6 s): the axis titles and color bar fade in; then each phrase's column label and row label appear together, one phrase at a time, down the ranking (19 pairs in 3 s); then the colored boxes build in from the top-right and lower-left corners toward the diagonal, both sides at once. */
 function playMatrix() {
   if (RM) return;
-  const svg = document.getElementById("c4"), ax = svg.querySelector(".ax"), cl = [...svg.querySelectorAll(".cl")], n = MX.n;
+  const svg = document.getElementById("c4"), pr = [...svg.querySelectorAll(".axp")], axt = svg.querySelector(".axt"), cl = [...svg.querySelectorAll(".cl")], n = MX.n;
   MX.played = true;
-  [ax, ...cl].forEach(g => { g.style.transition = "none"; g.style.opacity = 0; });
+  [axt, ...pr, ...cl].forEach(g => { g.style.transition = "none"; g.style.opacity = 0; });
   cl.forEach(g => { g.style.transformBox = "fill-box"; g.style.transformOrigin = "center"; g.style.transform = "scale(.55)"; });
   void svg.getBoundingClientRect();
-  ax.style.transition = "opacity 900ms ease"; ax.style.opacity = 1;
+  axt.style.transition = "opacity 500ms ease"; axt.style.opacity = 1;
+  const STEP = 150, FADE = 300, AXES_END = (n - 1) * STEP + FADE;      // 3.0 s for 19 pairs
+  pr.forEach(g => { g.style.transition = `opacity ${FADE}ms ease ${(+g.dataset.k) * STEP}ms`; g.style.opacity = 1; });
   cl.forEach(g => {
-    const delay = 400 + (1 - (+g.dataset.d) / (n - 1)) * 3900;
-    g.style.transition = `opacity 700ms ease ${delay}ms, transform 700ms cubic-bezier(.2,.8,.3,1) ${delay}ms`;
+    const delay = AXES_END + (1 - (+g.dataset.d) / (n - 1)) * 2400;
+    g.style.transition = `opacity 600ms ease ${delay}ms, transform 600ms cubic-bezier(.2,.8,.3,1) ${delay}ms`;
     g.style.opacity = 1; g.style.transform = "scale(1)";
   });
+}
+
+
+/* ---------- Card V (b): agreement by rank distance ---------- */
+function chart5() {
+  const svg = document.getElementById("c5"); svg.innerHTML = "";
+  const names = D.order, n = names.length, W = 860, H = 450, left = 76, right = 24, top = 22, bot = 96, pw = W - left - right, ph = H - top - bot;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const ymin = 45, ymax = 100, sx = k => left + (k - .5) / (n - 1) * pw, sy = v => top + ph - (v - ymin) / (ymax - ymin) * ph;
+  const grid = css("--grid"), axis = css("--axis"), ind = css("--indigo"), gold = css("--gold"), fg = css("--fg"), muted = css("--muted");
+  const byK = [];
+  for (let k = 1; k < n; k++) { const pts = []; for (let i = 0; i + k < n; i++) { const p = D.mat[i][i + k], m = Math.max(p, 1 - p) * 100; pts.push({ m, a: names[i], b: names[i + k], pa: p }); } byK.push(pts); }
+  el("rect", { x: sx(.5), y: top, width: sx(4.5) - sx(.5), height: ph, fill: gold, opacity: .16, rx: 4 }, svg);
+  txt(svg, "Murky zone: 1 to 4 places apart", { x: (sx(.5) + sx(4.5)) / 2, y: sy(47.5) + 4, "text-anchor": "middle", "font-size": 12, "font-weight": 600 });
+  for (let v = 50; v <= 100; v += 10) { el("line", { x1: left, x2: W - right, y1: sy(v), y2: sy(v), stroke: v === 50 ? axis : grid, "stroke-width": v === 50 ? 1.4 : 1 }, svg); txt(svg, v + "%", { x: left - 8, y: sy(v) + 4, "text-anchor": "end", "font-size": 12, fill: muted }); }
+  el("line", { x1: left, x2: W - right, y1: sy(90), y2: sy(90), stroke: css("--ref"), "stroke-width": 1.5, "stroke-dasharray": "6 4" }, svg);
+  txt(svg, "90% agree", { x: W - right, y: sy(90) - 6, "text-anchor": "end", "font-size": 11.5, fill: css("--ref") });
+  const means = byK.map(pts => pts.reduce((s, p) => s + p.m, 0) / pts.length);
+  el("polyline", { points: means.map((m, i) => `${sx(i + 1)},${sy(m)}`).join(" "), fill: "none", stroke: fg, "stroke-width": 1.8 }, svg);
+  byK.forEach((pts, i) => {
+    const k = i + 1;
+    pts.forEach((p, j) => {
+      const jx = ((j * 37 % 11) - 5) / 5 * 0.2, c = el("circle", { cx: sx(k + jx), cy: sy(p.m), r: 3.6, fill: ind, opacity: .45 }, svg);
+      bindTip(c, `<b>${p.a}</b> vs <b>${p.b}</b><br>${k} place${k > 1 ? "s" : ""} apart<br>${p.m.toFixed(1)}% ordered them the same way`);
+    });
+    el("circle", { cx: sx(k), cy: sy(means[i]), r: 6, fill: css("--panel"), stroke: fg, "stroke-width": 2.2 }, svg);
+    txt(svg, k, { x: sx(k), y: top + ph + 18, "text-anchor": "middle", "font-size": 12, fill: muted });
+    txt(svg, Math.round(means[i]) + "%", { x: sx(k), y: top + ph + 44, "text-anchor": "middle", "font-size": 11, class: "mono", fill: fg });
+  });
+  txt(svg, "Average", { x: left - 10, y: top + ph + 44, "text-anchor": "end", "font-size": 11, class: "mono", fill: muted });
+  txt(svg, "From 5 places apart, every pairing is at least 90%", { x: sx(6.4), y: sy(62), "font-size": 12, "font-weight": 600 });
+  txt(svg, "How many places apart the two phrases are on the ladder", { x: left + pw / 2, y: H - 12, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  const yt = txt(svg, "People ordering the pair the same way (%)", { x: 0, y: 0, "text-anchor": "middle", "font-size": 12.5, "font-weight": 600 });
+  yt.setAttribute("transform", `translate(14 ${top + ph / 2}) rotate(-90)`);
 }
 
 function legends() {
@@ -422,11 +478,76 @@ function legends() {
   legendItem(b, "sq", css("--indigo"), "All pairs, grouped by crowd split"); legendItem(b, "sq", css("--gold"), "The Likely vs Probable pair"); legendItem(b, "ln", css("--fg"), "95% range");
   const c = document.getElementById("lg3"); c.innerHTML = "";
   legendItem(c, "", css("--up"), "Ranked above About Even"); legendItem(c, "", css("--mid"), "About Even (the middle)"); legendItem(c, "", css("--down"), "Ranked below About Even"); legendItem(c, "ln", css("--fg"), "95% range");
+  const e = document.getElementById("lg5"); e.innerHTML = "";
+  legendItem(e, "", css("--indigo"), "One pairing (171)"); const r = document.createElement("span"); r.innerHTML = `<i class="sw" style="background:var(--panel);border:2px solid ${css("--fg")}"></i>Average for that distance`; e.appendChild(r);
+  const z = document.createElement("span"); z.innerHTML = `<i class="sw sq" style="background:${css("--gold")};opacity:.35"></i>Murky zone`; e.appendChild(z);
   const d = document.getElementById("lg4"); d.innerHTML = "";
   legendItem(d, "sq", css("--up"), "Row phrase picked more often"); legendItem(d, "sq", css("--down"), "Column phrase picked more often"); const g = document.createElement("span"); g.innerHTML = `<i class="sw sq" style="background:none;border:2.4px solid ${css("--gold")}"></i>Within 45% to 55%`; d.appendChild(g);
 }
-function drawAll() { legends(); chart1(); chart2(); chart3(); chart4(); }
+function drawAll() { legends(); chart1(); chart2(); chart3(); chart4(); chart5(); }
 drawAll();
+
+/* ---------- Hero: crystal-ball stars (40, mixed sizes, each rotating) ---------- */
+(function () {
+  const g = document.getElementById("stars"); if (!g) return;
+  let seed = 47; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const shape = "M0,-1 L.26,-.26 L1,0 L.26,.26 L0,1 L-.26,.26 L-1,0 L-.26,-.26Z";
+  let made = 0, guard = 0;
+  while (made < 40 && guard++ < 4000) {
+    const x = -30 + rnd() * 380, y = -20 + rnd() * 350;
+    if (Math.hypot(x - 160, y - 150) < 122) continue;           // keep clear of the ball
+    if (y > 200 && x > 70 && x < 250) continue;                // and of the stand
+    const big = rnd(), r = 2.5 + Math.pow(big, 2.2) * 13;       // radius 2.5 to 15.5, mostly small
+    const a = el("g", { transform: `translate(${x.toFixed(1)} ${y.toFixed(1)})` }, g);
+    const sp = el("g", { class: "spin" }, a);
+    sp.style.setProperty("--d", (5 + rnd() * 14).toFixed(1) + "s"); if (rnd() < .4) sp.style.animationDirection = "reverse";
+    const p = el("path", { d: shape, transform: `scale(${r.toFixed(2)})`, fill: rnd() < .78 ? "#f3d37a" : "#ffffff", opacity: (.55 + rnd() * .45).toFixed(2), class: "twk" }, sp);
+    p.style.setProperty("--t", (1.6 + rnd() * 3).toFixed(1) + "s"); p.style.animationDelay = (-rnd() * 3).toFixed(1) + "s";
+    made++;
+  }
+})();
+
+/* ---------- Hero: hyperspace background, centered on the pug ---------- */
+(function () {
+  const cv = document.getElementById("warp"), hero = cv && cv.parentElement; if (!cv) return;
+  const ctx = cv.getContext("2d"), pic = document.getElementById("pugpic");
+  let tx0 = 0, ty0 = 0, tx1 = 0, ty1 = 0, w = 0, h = 0, cx = 0, cy = 0, dpr = 1, run = false, raf = 0, last = 0;
+  const N = 340, S = [];
+  function reset(s, init) { s.a = Math.random() * Math.PI * 2; s.p = init ? Math.random() : .01 + Math.random() * .03; s.sp = .5 + Math.random() * .9; s.hue = Math.random() < .7 ? 0 : 1; return s; }
+  for (let i = 0; i < N; i++) S.push(reset({}, true));
+  function size() {
+    const r = hero.getBoundingClientRect(); dpr = Math.min(2, window.devicePixelRatio || 1);
+    w = r.width; h = r.height; cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    const pr = pic.getBoundingClientRect(); cx = pr.left + pr.width / 2 - r.left; cy = pr.top + pr.height / 2 - r.top;
+    const tr = hero.querySelector(".hero-t").getBoundingClientRect(); tx0 = tr.left - r.left - 20; tx1 = tr.right - r.left + 20; ty0 = tr.top - r.top - 20; ty1 = tr.bottom - r.top + 20;
+    hero.style.setProperty("--cx", cx + "px"); hero.style.setProperty("--cy", cy + "px");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  const R = () => Math.hypot(Math.max(cx, w - cx), Math.max(cy, h - cy)) * 1.05;
+  function frame(t, still) {
+    const dt = Math.min(.05, (t - last) / 1000 || .016); last = t;
+    ctx.clearRect(0, 0, w, h);
+    const far = R(); ctx.lineCap = "round";
+    for (const s of S) {
+      if (!still) s.p += dt * s.sp * (.08 + 1.5 * s.p);       // accelerates as it flies outward
+      if (s.p > 1) { reset(s, false); continue; }
+      const rr = far * Math.pow(s.p, 1.35), trail = .015 + .16 * s.p, r0 = far * Math.pow(Math.max(0, s.p - trail), 1.35);
+      if (rr < 12) continue;
+      const ca = Math.cos(s.a), sa = Math.sin(s.a), k = Math.min(1, s.p * 1.25);
+      const ex = cx + ca * rr, ey = cy + sa * rr, dim = ex > tx0 && ex < tx1 && ey > ty0 && ey < ty1 ? .16 : 1;   // keep the copy readable
+      ctx.strokeStyle = `rgba(${s.hue ? "255,255,255" : "243,211,122"},${((.1 + .8 * k) * dim).toFixed(3)})`; ctx.lineWidth = (.5 + 2.2 * k) * (dim < 1 ? .6 : 1);
+      ctx.beginPath(); ctx.moveTo(cx + ca * r0, cy + sa * r0); ctx.lineTo(cx + ca * rr, cy + sa * rr); ctx.stroke();
+    }
+  }
+  function loop(t) { if (!run) return; frame(t, false); raf = requestAnimationFrame(loop); }
+  function start() { if (!run && !document.hidden) { run = true; last = performance.now(); raf = requestAnimationFrame(loop); } }
+  function stop() { run = false; cancelAnimationFrame(raf); }
+  size(); addEventListener("resize", () => { size(); if (!run) frame(performance.now(), true); });
+  if (typeof ResizeObserver !== "undefined") new ResizeObserver(() => size()).observe(hero);
+  if (RM) { frame(performance.now(), true); return; }
+  new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? start() : stop()), { threshold: 0 }).observe(hero);
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+})();
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawAll);
 document.getElementById("replay").addEventListener("click", playMatrix);
 addEventListener("message", e => { if (e.data && e.data.type === "pug-replay") playMatrix(); });
