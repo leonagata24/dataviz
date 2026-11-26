@@ -601,13 +601,19 @@ $("#stats").innerHTML = [
   }
   function frame(now) {
     if (!anim) return;
+    if (anim.media) {
+      const M = anim.media, el = M.el;
+      if (!el.paused && el.currentTime > 0) { M.started = true; anim.t0 = now - el.currentTime * 1000; } // lock the lights to the file
+      else if (!M.started && now - M.asked > 1500) { dbg("audio file did not start, playing silently"); anim.media = null; anim.t0 = now; tell(false); }
+      if (anim.media && !M.started) { raf = requestAnimationFrame(frame); return; } // wait for the first sound
+    }
     if (anim.audio) {
       const A = anim.audio, ct = A.ctx.currentTime;
       if (ct !== A.lastCt) { A.lastCt = ct; A.movedAt = now; } else if (A.movedAt == null) A.movedAt = now;
       // audio stopped, interrupted, or its clock is not moving (seen on iPhone): carry on silently on the screen clock
       if (A.ctx.state !== "running" || now - A.movedAt > 350 || (ct < A.a0 && now - anim.t0 > 700)) {
         dbg("audio clock stalled (" + A.ctx.state + ", t=" + ct.toFixed(2) + "), playing silently");
-        anim.t0 = now - Math.max(0, anim.lastT || 0); anim.audio = null; stopSound();
+        anim.t0 = now - Math.max(0, anim.lastT || 0); anim.audio = null; stopSound(); useMedia = true;
       }
     }
     const t = anim.audio ? (anim.audio.ctx.currentTime - anim.audio.a0) * 1000 : now - anim.t0;
@@ -621,6 +627,11 @@ $("#stats").innerHTML = [
   function dbg(msg) { if (!DBG) return; let el = document.getElementById("snd-dbg"); if (!el) { el = document.createElement("pre"); el.id = "snd-dbg"; el.style.cssText = "font:11px/1.4 monospace;white-space:pre-wrap;margin:8px 0 0;color:var(--muted)"; box.appendChild(el); } const c = window.pugAudioCtx; el.textContent += new Date().toISOString().slice(17, 23) + " " + msg + (c ? " [ctx " + c.state + " " + c.currentTime.toFixed(2) + "s]" : "") + "\n"; }
   /* Sound: off until the reader asks for it (browsers only allow sound after a click). */
   let soundOn = false, bus = null;
+  // Browsers on iPhone other than Safari run inside an app's web view, where Web Audio's clock can stay frozen.
+  // There the same beat plays from a pre-rendered audio file instead (beat.wav, made from beat.js), and the lights follow the file's clock.
+  let useMedia = /CriOS|EdgiOS|FxiOS|OPiOS|GSA\//.test(navigator.userAgent), mediaEl = null;
+  function media() { if (!mediaEl) { mediaEl = new Audio("beat.wav?v=1"); mediaEl.preload = "auto"; mediaEl.setAttribute("playsinline", ""); } return mediaEl; }
+  if (useMedia && !RM) media();
   function audioCtx() {
     try { if (window.parent !== window && window.parent.pugAudioCtx) return window.parent.pugAudioCtx; } catch (e) {} // home page: its click unlocked the parent's audio
     if (!window.pugAudioCtx) { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; window.pugAudioCtx = new AC(); }
@@ -638,6 +649,7 @@ $("#stats").innerHTML = [
     return { ctx, a0 };
   }
   function stopSound() {
+    if (mediaEl && !mediaEl.paused) { mediaEl.pause(); tell(false); }
     if (!bus) return;
     const g = bus, ctx = g.context; bus = null;
     g.gain.setTargetAtTime(0, ctx.currentTime, 0.03); setTimeout(() => g.disconnect(), 400);
@@ -649,6 +661,13 @@ $("#stats").innerHTML = [
   const unpress = () => document.querySelectorAll("#chips .chip").forEach((b) => b.setAttribute("aria-pressed", "false")); // no decade is picked during the beat
   function play() {
     if (RM) return; stopAnim(); tip.hidden = true; playing(true); unpress();
+    if (soundOn && useMedia) { // must start inside the tap, so no waiting before play()
+      const el = media(); el.pause(); try { el.currentTime = 0; } catch (e) {}
+      anim = { t0: performance.now(), step: -1, audio: null, media: { el, asked: performance.now(), started: false } };
+      const pr = el.play(); dbg("audio file: play()");
+      if (pr && pr.catch) pr.catch((e) => { dbg("audio file blocked: " + e.name); if (anim) { anim.media = null; anim.t0 = performance.now(); } tell(false); });
+      tell(true); raf = requestAnimationFrame(frame); return;
+    }
     const go = (withSound) => { let audio = null; if (withSound) { try { audio = startSound(); } catch (e) { dbg("sound error: " + e.message); } } anim = { t0: performance.now(), step: -1, audio }; raf = requestAnimationFrame(frame); };
     const ctx = soundOn ? audioCtx() : null;
     if (!ctx || ctx.state === "running") { go(!!ctx); return; }
@@ -661,15 +680,21 @@ $("#stats").innerHTML = [
 
   document.querySelectorAll("#chips .chip").forEach((b) => b.addEventListener("click", () => { stopAnim(); select(b.dataset.key === "unk" ? { type: "unk" } : { type: "decade", key: b.dataset.key }); }));
   replay.addEventListener("click", play);
+  function soundTap() {
+    soundOn = true; waiting = false; dbg("tap: Play with sound" + (useMedia ? " (audio file)" : ""));
+    if (!useMedia) { try { if (window.PugBeat) PugBeat.unlock(audioCtx()); } catch (e) { dbg("unlock error: " + e.message); } }
+    play();
+  }
+  window.__pugSoundTap = soundTap; // the home page calls this inside its own tap, so the sound may start
   // Play with sound restarts the animation with the beat; while the beat plays, the same button mutes it
   snd.addEventListener("click", () => {
-    if (bus) { soundOn = false; stopSound(); if (anim) anim.audio = null, anim.t0 = performance.now() - (anim.lastT || 0); return; }
-    soundOn = true; waiting = false; dbg("tap: Play with sound"); try { if (window.PugBeat) PugBeat.unlock(audioCtx()); } catch (e) { dbg("unlock error: " + e.message); } play();
+    if (bus || (mediaEl && !mediaEl.paused)) { soundOn = false; stopSound(); if (anim) { anim.audio = null; anim.media = null; anim.t0 = performance.now() - (anim.lastT || 0); } return; }
+    soundTap();
   });
   addEventListener("message", (e) => {
     if (!e.data) return;
     if (e.data.type === "pug-replay") { if ("sound" in e.data) soundOn = !!e.data.sound; play(); }
-    if (e.data.type === "pug-mute") { soundOn = false; if (anim && anim.audio) { anim.t0 = performance.now() - (anim.lastT || 0); anim.audio = null; } stopSound(); }
+    if (e.data.type === "pug-mute") { soundOn = false; if (anim && (anim.audio || anim.media)) { anim.t0 = performance.now() - (anim.lastT || 0); anim.audio = null; anim.media = null; } stopSound(); }
   });
   draw(); select(sel);
   let waiting = false; // drawn silent, waiting for the chart to scroll into view
