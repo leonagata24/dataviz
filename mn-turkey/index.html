@@ -346,7 +346,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
         <div id="w4"><span class="rv" id="r4">1,910 mi</span><span class="rn" id="rn4">average distance of a mapped export dollar</span></div>
         <div id="w5"><span class="rv" id="r5">75%</span><span class="rn" id="rn5">of export dollars go to markets within 2,000 mi</span></div>
       </div>
-      <p class="note" id="slnote">How to read it: streams run in a straight line from Minnesota, and their width is proportional to estimated dollars. The number of little turkeys is only for show, so small markets still get a few. Rings show true distance from Minneapolis, because this map is centered there. The little turkeys move at the same speed everywhere, so a farther market takes longer to reach: that shows distance, not real transit times. <b>Distances are straight lines from Minneapolis to each country's capital,</b> not shipping routes; the fact sheet does not say where the turkey is shipped from or which ports it uses, and Minnesota's farms are spread across the state. “All other” (15% of dollars, many countries) cannot be placed, so the average distance and the within-2,000-miles share cover the named markets only. The other markets together are about $30.2 million today (29% of the total); replacing Mexico entirely takes about +245% growth from them (90% of the simulated roundings fall between +234% and +256%). The ranges on the readouts come from 3,000 simulated roundings, each share varied by up to ±0.5 point and rescaled to 100%; they show the 5th to 95th percentile. The fact sheet gives no price, volume or time dimension, so none of this says how likely a shift is or how quickly other markets could grow. Trade-agreement reviews, tariffs and avian flu are outside this dataset.</p>
+      <p class="note" id="slnote">How to read it: streams run in a straight line from Minnesota, and their width is proportional to estimated dollars. Turkeys leave in proportion to dollars: when a market buys three times as much, three times as many turkeys head its way, at the same speed. Rings show true distance from Minneapolis, because this map is centered there. The little turkeys move at the same speed everywhere, so a farther market takes longer to reach: that shows distance, not real transit times. <b>Distances are straight lines from Minneapolis to each country's capital,</b> not shipping routes; the fact sheet does not say where the turkey is shipped from or which ports it uses, and Minnesota's farms are spread across the state. “All other” (15% of dollars, many countries) cannot be placed, so the average distance and the within-2,000-miles share cover the named markets only. The other markets together are about $30.2 million today (29% of the total); replacing Mexico entirely takes about +245% growth from them (90% of the simulated roundings fall between +234% and +256%). The ranges on the readouts come from 3,000 simulated roundings, each share varied by up to ±0.5 point and rescaled to 100%; they show the 5th to 95th percentile. The fact sheet gives no price, volume or time dimension, so none of this says how likely a shift is or how quickly other markets could grow. Trade-agreement reviews, tariffs and avian flu are outside this dataset.</p>
     </div>
   </section>
 
@@ -480,7 +480,7 @@ function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a
 const MC=(()=>{const r=mulberry(46),out=[];for(let n=0;n<3000;n++){const s=SH0.map(b=>b+(r()-.5)),t=s.reduce((a,b)=>a+b,0);out.push(s.map(a=>a*100/t))}return out})();
 function rng(x,key){const a=MC.map(s=>scen(s,x,true)[key]).sort((p,q)=>p-q);return [a[Math.floor(a.length*.05)],a[Math.floor(a.length*.95)]]}
 const FL={lens:"dist",x:0,refill:true,range:false,run:false,parts:[],acc:[],last:0,S:null};
-const RATE=0.028; // turkeys per second per $M, with a floor so small markets stay visible
+const RATE=0.1; // turkeys leaving per second per $M, strictly proportional to dollars
 const SRC_MAP="Sources: Minnesota Dept. of Agriculture, Minnesota Turkey Fact Sheet (2023): export shares and the $104M total; year not labeled, 2023-era data, about three years old. Dollars = share × $104M (pug estimate). Distances: straight line from Minneapolis to each country's capital, not shipping routes. Map: Natural Earth land (via world-atlas), azimuthal equidistant projection centered on Minneapolis. The stress test is arithmetic by the pugs, not a forecast.";
 function buildFlow(){
   const host=document.getElementById("c-flow");host.innerHTML="";
@@ -548,7 +548,7 @@ function setX(v){FL.x=v;applyFlow()}
 function tick(t){
   if(!FL.run){FL.last=0;return}
   if(!FL.last)FL.last=t;const dt=Math.min(.1,(t-FL.last)/1000);FL.last=t;
-  DEST.forEach((d,i)=>{FL.acc[i]+=(FL.S.w[i]>0.05?Math.max(RATE*FL.S.w[i],0.2):0)*dt;
+  DEST.forEach((d,i)=>{FL.acc[i]+=(FL.S.w[i]>0.01?RATE*FL.S.w[i]:0)*dt;
     while(FL.acc[i]>=1){FL.acc[i]-=1;if(FL.parts.length<260){const w=i===0?15:13,c=el("use",{href:"#tk",x:-w/2,y:-w*11/24,width:w,height:w*22/24,opacity:0},FL.dots);FL.parts.push({i,d:0,c,o:(Math.random()-.5)*.7})}}});
   for(let n=FL.parts.length-1;n>=0;n--){
     const p=FL.parts[n];p.d+=FL.pxs*dt;const L=FL.len[p.i];
