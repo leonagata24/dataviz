@@ -77,5 +77,24 @@
     return e + 1.2;
   }
 
-  window.PugBeat = { schedule };
+  /* iPhone/iPad: call inside the click. Safari keeps Web Audio silent when the ring/silent switch is on
+     unless the page asks for "playback" audio (or, on older iOS, an HTML audio element is playing), and
+     only starts a context from a user gesture. */
+  let keepAlive = null;
+  function silentWav() {
+    const n = 4410, dv = new DataView(new ArrayBuffer(44 + n * 2)); let o = 0;
+    const s = (x) => { for (const c of x) dv.setUint8(o++, c.charCodeAt(0)); }, u32 = (x) => { dv.setUint32(o, x, true); o += 4; }, u16 = (x) => { dv.setUint16(o, x, true); o += 2; };
+    s("RIFF"); u32(36 + n * 2); s("WAVE"); s("fmt "); u32(16); u16(1); u16(1); u32(44100); u32(88200); u16(2); u16(16); s("data"); u32(n * 2);
+    return URL.createObjectURL(new Blob([dv.buffer], { type: "audio/wav" }));
+  }
+  function unlock(ctx) {
+    try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
+    try { if (!keepAlive) { keepAlive = new Audio(silentWav()); keepAlive.loop = true; keepAlive.setAttribute("playsinline", ""); } const p = keepAlive.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+    if (!ctx) return;
+    try { const src = ctx.createBufferSource(); src.buffer = ctx.createBuffer(1, 1, 22050); src.connect(ctx.destination); src.start(0); } catch (e) {}
+    try { if (ctx.state !== "running") ctx.resume(); } catch (e) {}
+  }
+  function release() { try { if (keepAlive) keepAlive.pause(); } catch (e) {} }
+
+  window.PugBeat = { schedule, unlock, release };
 })();

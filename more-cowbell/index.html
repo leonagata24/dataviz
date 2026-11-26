@@ -233,7 +233,7 @@ footer p { margin: 0; }
 </style>
 
 <link rel="stylesheet" href="../pug-header.css">
-<script src="../embed.js?v=6"></script><script src="beat.js?v=1"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
+<script src="../embed.js?v=6"></script><script src="beat.js?v=2"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
 </head>
 <body>
 <div class="wrap">
@@ -601,6 +601,7 @@ $("#stats").innerHTML = [
   }
   function frame(now) {
     if (!anim) return;
+    if (anim.audio && anim.audio.ctx.state !== "running") { anim.t0 = now - (anim.lastT || 0); anim.audio = null; } // audio interrupted: carry on silently
     const t = anim.audio ? (anim.audio.ctx.currentTime - anim.audio.a0) * 1000 : now - anim.t0;
     if (t < 0) { raf = requestAnimationFrame(frame); return; }
     anim.lastT = t;
@@ -630,12 +631,21 @@ $("#stats").innerHTML = [
     if (!bus) return;
     const g = bus, ctx = g.context; bus = null;
     g.gain.setTargetAtTime(0, ctx.currentTime, 0.03); setTimeout(() => g.disconnect(), 400);
+    if (window.PugBeat && PugBeat.release) PugBeat.release();
     tell(false);
   }
   function tell(on) { sndLabel(on); try { if (window.parent !== window) window.parent.postMessage({ type: "pug-sound", on }, "*"); } catch (e) {} }
   const playing = (on) => { const sv = box.querySelector("svg.dots"); if (sv) sv.classList.toggle("playing", on); };
   const unpress = () => document.querySelectorAll("#chips .chip").forEach((b) => b.setAttribute("aria-pressed", "false")); // no decade is picked during the beat
-  function play() { if (RM) return; stopAnim(); tip.hidden = true; playing(true); unpress(); anim = { t0: performance.now(), step: -1, audio: soundOn ? startSound() : null }; raf = requestAnimationFrame(frame); }
+  function play() {
+    if (RM) return; stopAnim(); tip.hidden = true; playing(true); unpress();
+    const go = (withSound) => { anim = { t0: performance.now(), step: -1, audio: withSound ? startSound() : null }; raf = requestAnimationFrame(frame); };
+    const ctx = soundOn ? audioCtx() : null;
+    if (!ctx || ctx.state === "running") { go(!!ctx); return; }
+    // the audio is still waking up (iPhone): start lights and beat together once it runs, or go silent after a moment
+    let done = false; const fin = () => { if (done) return; done = true; go(ctx.state === "running"); };
+    ctx.resume().then(fin, fin); setTimeout(fin, 900);
+  }
   function stopAnim() { playing(false); stopSound(); if (!anim) return; anim = null; cancelAnimationFrame(raf); paintStatic(); }
   function finish() { anim = null; playing(false); setTimeout(() => { if (!anim) tell(false); }, 1200); select({ type: "decade", key: peak.key }); }
 
@@ -644,7 +654,7 @@ $("#stats").innerHTML = [
   // Play with sound restarts the animation with the beat; while the beat plays, the same button mutes it
   snd.addEventListener("click", () => {
     if (bus) { soundOn = false; stopSound(); if (anim) anim.audio = null, anim.t0 = performance.now() - (anim.lastT || 0); return; }
-    soundOn = true; waiting = false; play();
+    soundOn = true; waiting = false; if (window.PugBeat) PugBeat.unlock(audioCtx()); play();
   });
   addEventListener("message", (e) => {
     if (!e.data) return;
