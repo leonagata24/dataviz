@@ -6,6 +6,19 @@
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}.chart-src { grid-column: 1 / -1; margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); }
 .chart-src b { font-weight: 600; }
 .chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+/* observation of the day (embedded preview): map first, region legend right under the readout */
+html.pug-embed #map .dg>div:first-child{gap:6px}
+html.pug-embed #map .read{order:-2;gap:2px 16px;align-items:baseline}
+html.pug-embed #map #dLeg{order:-1;gap:4px 12px;font-size:.78rem}
+html.pug-embed #map .yearbig{font-size:2.1rem}
+html.pug-embed #map .read .s{display:inline-flex;gap:6px;align-items:baseline}
+html.pug-embed #map .read .s b{font-size:1rem}
+html.pug-embed #map .plate-head p{font-size:.82rem;margin-top:4px}
+html.pug-embed #map #dLeg>*:nth-last-child(-n+2){display:none}
+html.pug-embed #map .read .s b{white-space:nowrap}
+html.pug-embed #map .plate-head p{display:none}
+html.pug-embed #map #usmap{max-height:290px;width:100%}
+@media (max-width:600px){html.pug-embed #map .read .s span{font-size:.75rem}}
 </style>
 <title>The Census Century</title>
 <meta name="claude:viewport-fit-sides" content="cover">
