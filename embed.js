@@ -30,8 +30,9 @@
     "html.pug-embed,html.pug-embed body{margin:0!important;padding:0!important;min-height:0!important;height:auto!important;overflow:hidden!important}" +
     "html.pug-embed .pug-embed-path{margin:0!important;padding:0!important;gap:0!important;border:0!important;max-width:none!important;min-height:0!important;box-shadow:none!important;transform:none!important}" +
     "html.pug-embed .pug-embed-target{margin:0!important;max-width:none!important}" +
+    (key === "cc-map" ? "" :
     "html.pug-embed .pug-embed-target{border:0!important;border-image:none!important;box-shadow:none!important;background-image:none!important;border-radius:0!important}" +
-    "html.pug-embed .pug-embed-path::before,html.pug-embed .pug-embed-path::after,html.pug-embed .pug-embed-target::before,html.pug-embed .pug-embed-target::after{content:none!important;display:none!important}" +
+    "html.pug-embed .pug-embed-path::before,html.pug-embed .pug-embed-path::after,html.pug-embed .pug-embed-target::before,html.pug-embed .pug-embed-target::after{content:none!important;display:none!important}") +
     "html.pug-embed .pf{display:none!important}" +
     // one typeface family on the home page: the studies keep their own type on their own pages, but the preview speaks the site's Sora
     "html.pug-embed,html.pug-embed *{font-family:\"Sora\",system-ui,sans-serif!important}";

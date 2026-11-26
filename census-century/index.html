@@ -22,15 +22,18 @@ html.pug-embed #map #usmap{max-height:290px;width:100%}
 @media (max-width:600px){html.pug-embed #map .read .s span{font-size:.75rem}}
 /* scanned old paper: grain, stains, darker uneven edges, and a ragged dark rule, like the 1883 plate. White in the charts is the paper itself. */
 .plate{position:relative;isolation:isolate;--surface:var(--plate);border:0;
-  box-shadow:inset 0 0 90px rgba(140,88,28,.34),inset 0 0 26px rgba(105,62,18,.42),inset 0 0 3px rgba(60,35,10,.6)}
+  box-shadow:inset 0 0 70px rgba(140,88,28,.28),inset 0 0 16px rgba(105,62,18,.3),inset 0 0 2px rgba(60,35,10,.5)}
 .plate::before,.plate::after{content:"";position:absolute;inset:0;pointer-events:none}
 .plate::before{z-index:-1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42  0 0 0 0 .27  0 0 0 0 .08  0 0 0 .55 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='b' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006 .009' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55  0 0 0 0 .34  0 0 0 0 .1  0 0 0 1.1 -.42'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E");background-size:360px 360px,900px 900px;mix-blend-mode:multiply;opacity:.55}
-.plate::after{z-index:2;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cfilter id='d' x='-5%25' y='-5%25' width='110%25' height='110%25'%3E%3CfeTurbulence baseFrequency='.09 .09' numOctaves='3' seed='4' result='t'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='t' scale='1.1'/%3E%3C/filter%3E%3Crect x='.5' y='.5' width='99' height='99' fill='none' stroke='%23251a10' stroke-width='3.4' stroke-opacity='.88' vector-effect='non-scaling-stroke' filter='url(%23d)'/%3E%3C/svg%3E");background-size:100% 100%}
-.plate .map path.state{fill:transparent}
+.plate::after{z-index:2;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cfilter id='d' x='-5%25' y='-5%25' width='110%25' height='110%25'%3E%3CfeTurbulence baseFrequency='.09 .09' numOctaves='3' seed='4' result='t'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='t' scale='1.1'/%3E%3C/filter%3E%3Crect x='.5' y='.5' width='99' height='99' fill='none' stroke='%23251a10' stroke-width='1.3' stroke-opacity='.85' vector-effect='non-scaling-stroke' filter='url(%23d)'/%3E%3C/svg%3E");background-size:100% 100%}
+.plate .map path.state{fill:transparent;stroke:none}
+.map .bord-st{fill:none;stroke:#6b645a;stroke-width:.55}
+.map .bord-us{fill:none;stroke:#4a443b;stroke-width:1}
+:root[data-theme="dark"] .map .bord-st{stroke:#a39a88}:root[data-theme="dark"] .map .bord-us{stroke:#c4bba6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .map .bord-st{stroke:#a39a88}:root:not([data-theme="light"]) .map .bord-us{stroke:#c4bba6}}
 .plate button:not([aria-pressed="true"]),.plate select{background:transparent}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .plate::before{opacity:.35}:root:not([data-theme="light"]) .plate::after{filter:invert(.7) sepia(.4)}}
 :root[data-theme="dark"] .plate::before{opacity:.35}:root[data-theme="dark"] .plate::after{filter:invert(.7) sepia(.4)}
-html.pug-embed .plate::before,html.pug-embed .plate::after{content:none}
 </style>
 <title>The Census Century</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -242,7 +245,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
 </style>
 
 <link rel="stylesheet" href="../pug-header.css">
-<script src="../embed.js?v=6"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
+<script src="../embed.js?v=7"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
 </head>
 <body>
 <div class="wrap">
@@ -601,8 +604,10 @@ function stateTip(s, y){
   const paths = gS.selectAll("path").data(feats).join("path").attr("class","state").attr("d",path);
   const gH = svg.append("g").attr("pointer-events","none");
   const hatches = gH.selectAll("path").data(feats).join("path").attr("d",path).style("fill","url(#hatchL)");
-  svg.append("path").style("fill","none").style("stroke","var(--rule)").attr("stroke-width",.6).attr("pointer-events","none")
-    .attr("d", path(topojson.mesh(TOPO, TOPO.objects.states, (a,b)=>a!==b)));
+  svg.append("path").attr("class","bord-st").attr("pointer-events","none")
+    .attr("d", path(topojson.mesh(TOPO, TOPO.objects.states, (a,b)=>a!==b && !["02","15"].includes(a.id) && !["02","15"].includes(b.id))));
+  svg.append("path").attr("class","bord-us").attr("pointer-events","none")
+    .attr("d", path(topojson.mesh(TOPO, TOPO.objects.states, (a,b)=>a===b && !["02","15"].includes(a.id))));
   const polys = f => f.geometry.type==="Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
   const info = new Map(feats.map(f=>[f.id, polys(f).map(r=>({rings:r, area:Math.abs(d3.polygonArea(r[0])), bb:[d3.extent(r[0],p=>p[0]), d3.extent(r[0],p=>p[1])]}))]));
   const inside = (P,pt) => d3.polygonContains(P.rings[0],pt) && !P.rings.slice(1).some(h=>d3.polygonContains(h,pt));
