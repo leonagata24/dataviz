@@ -168,10 +168,11 @@ h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(28px, 4.2
 .chart-box .led.lit { fill: #e3ad2f; filter: drop-shadow(0 0 2px rgba(227,173,47,.55)); }
 .chart-box .led.on { fill: #ff4b36; filter: drop-shadow(0 0 3px rgba(255,75,54,.7)); }
 .chart-box .yr:hover .led.lit { fill: #ff4b36; }
-.chart-box .replay { position: absolute; right: 6px; bottom: 6px; font: 600 12px var(--f-data); background: var(--paper); color: var(--ink); border: 1.5px solid var(--rule); border-radius: 99px; padding: 4px 12px; cursor: pointer; z-index: 3; }
+.chart-box .replay { display: block; margin: 8px 0 0 auto; font: 600 12px var(--f-data); background: var(--paper); color: var(--ink); border: 1.5px solid var(--rule); border-radius: 99px; padding: 4px 12px; cursor: pointer; z-index: 3; }
 .chart-box .replay:hover, .chart-box .replay:focus-visible { border-color: var(--hot); outline: none; }
 html.pug-embed .chart-box .replay { display: none; }
-@media (max-width: 640px) { .chart-box .replay { position: static; display: block; margin: 8px 0 0 auto; } }
+.chart-box svg.dots .ann { transition: opacity .5s ease; }
+.chart-box svg.dots.playing .ann { opacity: 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; }
 .chip { font-family: var(--f-data); font-size: 12px; border: 1px solid var(--rule); background: transparent; color: var(--ink-2); padding: 4px 10px; border-radius: 99px; cursor: pointer; }
 .chip span { color: var(--muted); }
@@ -228,7 +229,7 @@ footer p { margin: 0; }
 </style>
 
 <link rel="stylesheet" href="../pug-header.css">
-<script src="../embed.js?v=5"></script><script defer src="../stat-info.js?v=1"></script>
+<script src="../embed-preview.js?v=1"></script><script defer src="../stat-info.js?v=1"></script>
 </head>
 <body>
 <div class="wrap">
@@ -523,11 +524,11 @@ $("#stats").innerHTML = [
       CH.push({ y, n: arr.length, segs, cls: new Array(NSEG).fill("led") });
     }
     // annotations on top of the meter
-    tx(svg, small ? `${late} songs, 2004 on` : `2004 to 2025: only ${late} songs in 22 years`, small ? { x: W - R - 4, y: T + 28, "text-anchor": "end", class: "lab s in", style: "font-size:10.5px" } : { x: X(2004) - band / 2 + 4, y: T + 40, class: "lab s in" });
-    if (!small) tx(svg, `(1999 to 2002: ${known.filter((s) => s.y >= 1999 && s.y <= 2002).length} songs in 4 years)`, { x: X(2004) - band / 2 + 4, y: T + 56, class: "lab in" });
+    tx(svg, small ? `${late} songs, 2004 on` : `2004 to 2025: only ${late} songs in 22 years`, small ? { x: W - R - 4, y: T + 28, "text-anchor": "end", class: "lab s in ann", style: "font-size:10.5px" } : { x: X(2004) - band / 2 + 4, y: T + 40, class: "lab s in ann" });
+    if (!small) tx(svg, `(1999 to 2002: ${known.filter((s) => s.y >= 1999 && s.y <= 2002).length} songs in 4 years)`, { x: X(2004) - band / 2 + 4, y: T + 56, class: "lab in ann" });
     mk("line", { x1: X(2000), x2: X(2000), y1: T - 4, y2: base, class: "snl" }, svg);
     tx(svg, small ? "Apr 2000: SNL sketch" : "April 2000: the SNL sketch", { x: X(2000) - 5, y: T - (small ? 14 : 18), "text-anchor": "end", class: "lab h" });
-    tx(svg, small ? `${peakYear[0]}: ${peakYear[1].length}` : `${peakYear[0]} peak: ${peakYear[1].length} songs`, small ? { x: X(peakYear[0]) + band, y: base - peakYear[1].length * d + 8, class: "lab h in", style: "font-size:10.5px" } : { x: X(peakYear[0]), y: base - peakYear[1].length * d - 10, "text-anchor": "middle", class: "lab h in" });
+    tx(svg, small ? `${peakYear[0]}: ${peakYear[1].length}` : `${peakYear[0]} peak: ${peakYear[1].length} songs`, small ? { x: X(peakYear[0]) + band, y: base - peakYear[1].length * d + 8, class: "lab h in ann", style: "font-size:10.5px" } : { x: X(peakYear[0]), y: base - peakYear[1].length * d - 10, "text-anchor": "middle", class: "lab h in ann" });
     if (!replay.isConnected) box.appendChild(replay);
   }
 
@@ -547,8 +548,8 @@ $("#stats").innerHTML = [
     songs.forEach((x) => { if (!groups.has(x.a)) groups.set(x.a, []); groups.get(x.a).push(x); });
     const ordered = [...groups.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
     const title = s.type === "year" ? String(s.y) : unkSel ? "No year found" : cols.find((k) => k.key === s.key).label;
-    const share = unkSel ? "" : ` · ${Math.round((songs.length / known.length) * 100)}% of dated songs`;
-    $("#detail").innerHTML = `<h3>${title}<small>${songs.length} songs · ${groups.size} artists${share}</small></h3>
+    const pc = (songs.length / known.length) * 100, share = unkSel ? "" : ` · ${pc > 0 && pc < 1 ? "under 1" : Math.round(pc)}% of dated songs`;
+    $("#detail").innerHTML = `<h3>${title}<small>${songs.length} song${songs.length === 1 ? "" : "s"} · ${groups.size} artist${groups.size === 1 ? "" : "s"}${share}</small></h3>
       <div class="dlist">${ordered.map(([a, v]) => `<div class="ga"><b>${esc(a)}${v.length > 1 ? `<span>×${v.length}</span>` : ""}</b><ul>${v.sort((p, q) => (p.y || 0) - (q.y || 0)).map((x) => `<li><span>${songLink(x)}</span><span class="y">${x.y || ""}</span></li>`).join("")}</ul></div>`).join("")}</div>`;
   }
 
@@ -586,20 +587,30 @@ $("#stats").innerHTML = [
     }
     raf = requestAnimationFrame(frame);
   }
-  function play() { if (RM) return; stopAnim(); tip.hidden = true; anim = { t0: performance.now(), step: -1 }; raf = requestAnimationFrame(frame); }
-  function stopAnim() { if (!anim) return; anim = null; cancelAnimationFrame(raf); paintStatic(); }
-  function finish() { anim = null; select({ type: "decade", key: peak.key }); }
+  const playing = (on) => { const sv = box.querySelector("svg.dots"); if (sv) sv.classList.toggle("playing", on); };
+  const unpress = () => document.querySelectorAll("#chips .chip").forEach((b) => b.setAttribute("aria-pressed", "false")); // no decade is picked during the beat
+  function play() { if (RM) return; stopAnim(); tip.hidden = true; playing(true); unpress(); anim = { t0: performance.now(), step: -1 }; raf = requestAnimationFrame(frame); }
+  function stopAnim() { playing(false); if (!anim) return; anim = null; cancelAnimationFrame(raf); paintStatic(); }
+  function finish() { anim = null; playing(false); select({ type: "decade", key: peak.key }); }
 
   document.querySelectorAll("#chips .chip").forEach((b) => b.addEventListener("click", () => { stopAnim(); select(b.dataset.key === "unk" ? { type: "unk" } : { type: "decade", key: b.dataset.key }); }));
   replay.addEventListener("click", play);
   addEventListener("message", (e) => { if (e.data && e.data.type === "pug-replay") play(); });
   draw(); select(sel);
+  let waiting = false; // drawn silent, waiting for the chart to scroll into view
+  const silent = () => { CH.forEach((c) => setLevel(c, 0, false)); playing(true); unpress(); };
   if (!RM && "IntersectionObserver" in window) {
-    CH.forEach((c) => setLevel(c, 0, false)); // start silent, so the beat has somewhere to come from
-    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { play(); io.disconnect(); } }), { threshold: .35 });
+    waiting = true; silent(); // start silent with labels hidden, so the beat has somewhere to come from
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { waiting = false; play(); io.disconnect(); } }), { threshold: .35 });
     io.observe(box);
   }
-  let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { const was = !!anim; stopAnim(); draw(); select(sel); if (was) finish(); }, 120); });
+  // redraw only when the width really changes; a running animation carries on with the new layout
+  let rt, lastW = box.clientWidth;
+  addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => {
+    if (box.clientWidth === lastW) return;
+    lastW = box.clientWidth; tip.hidden = true; draw();
+    if (anim) playing(true); else if (waiting) silent(); else select(sel);
+  }, 120); });
 })();
 
 /* 03 Odd places */
