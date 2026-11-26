@@ -69,11 +69,7 @@
         if (hide) hide.style.setProperty("display", "none", "important");
       }
     }
-    // cowbell: the decade buttons stay visible as indicators that follow the animation, but cannot be clicked
-    if (key === "mc-trend") {
-      var cb = el.querySelectorAll(".chip");
-      for (var q = 0; q < cb.length; q++) { cb[q].disabled = true; cb[q].tabIndex = -1; cb[q].style.setProperty("pointer-events", "none"); cb[q].style.setProperty("cursor", "default"); }
-    }
+    // cowbell: the decade buttons stay visible and clickable on the home page (clicking one stops the animation and lights that decade)
     // drop sentences that tell the reader to press, pick or click something that is no longer there
     var STRIP = {
       "mc-trend": [/Click a (dot|channel) to list that year, or pick a decade above\.\s*/],
@@ -94,6 +90,7 @@
       if (!el.contains(t) || !t.closest) return;
       if (t.closest(".ii, a, .pf, [data-keep]")) return;
       if (key === "uf-rate" && t.closest("svg")) return; // a saucer opens the full page on that state
+      if (key === "mc-trend" && t.closest(".chip")) return; // cowbell: the decade buttons work on the home page
       if (ev.type === "keydown" && ev.key !== "Enter" && ev.key !== " ") return;
       if (t.closest("button, input, select, svg, [role=button], [tabindex]")) { ev.stopPropagation(); ev.preventDefault(); }
     };
