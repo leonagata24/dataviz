@@ -34,6 +34,15 @@ html.pug-embed #map #usmap{max-height:290px;width:100%}
 .plate button:not([aria-pressed="true"]),.plate select{background:transparent}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .plate::before{opacity:.35}:root:not([data-theme="light"]) .plate::after{border-color:rgba(214,196,160,.55)}}
 :root[data-theme="dark"] .plate::before{opacity:.35}:root[data-theme="dark"] .plate::after{border-color:rgba(214,196,160,.55)}
+/* sepia palette for the plates: growth ramp, decline, no-count, and rules all in paper tones */
+.plate{--rule:#c4a46b;--rule-2:#dcc490;--nodata:rgba(95,78,50,.2);
+  --seq1:#e8c78a;--seq2:#d6a665;--seq3:#c28543;--seq4:#a2672d;--seq5:#7f4a21;--seq6:#5a3217;--seq7:#37200e;
+  --neg1:#d9967e;--neg2:#a3301f}
+.plate .map path.state.nd{fill:var(--nodata)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .plate{--rule:#5d4c2d;--rule-2:#43371f;--nodata:rgba(215,195,150,.17);
+  --seq1:#4a3a20;--seq2:#6e5430;--seq3:#94733f;--seq4:#b8924f;--seq5:#d3ae70;--seq6:#e6c995;--seq7:#f5e2b8;--neg1:#7d3a2b;--neg2:#e0775f}}
+:root[data-theme="dark"] .plate{--rule:#5d4c2d;--rule-2:#43371f;--nodata:rgba(215,195,150,.17);
+  --seq1:#4a3a20;--seq2:#6e5430;--seq3:#94733f;--seq4:#b8924f;--seq5:#d3ae70;--seq6:#e6c995;--seq7:#f5e2b8;--neg1:#7d3a2b;--neg2:#e0775f}
 </style>
 <title>The Census Century</title>
 <meta name="claude:viewport-fit-sides" content="cover">
