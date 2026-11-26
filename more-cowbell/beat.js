@@ -89,7 +89,9 @@
   }
   function unlock(ctx) {
     try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
-    try { if (!keepAlive) { keepAlive = new Audio(silentWav()); keepAlive.loop = true; keepAlive.setAttribute("playsinline", ""); } const p = keepAlive.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+    if (!navigator.audioSession) { // older iOS only: a playing (silent) audio element lifts the silent-switch mute
+      try { if (!keepAlive) { keepAlive = new Audio(silentWav()); keepAlive.loop = true; keepAlive.setAttribute("playsinline", ""); } const p = keepAlive.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {}
+    }
     if (!ctx) return;
     try { const src = ctx.createBufferSource(); src.buffer = ctx.createBuffer(1, 1, 22050); src.connect(ctx.destination); src.start(0); } catch (e) {}
     try { if (ctx.state !== "running") ctx.resume(); } catch (e) {}

@@ -233,7 +233,7 @@ footer p { margin: 0; }
 </style>
 
 <link rel="stylesheet" href="../pug-header.css">
-<script src="../embed.js?v=6"></script><script src="beat.js?v=2"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
+<script src="../embed.js?v=6"></script><script src="beat.js?v=3"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
 </head>
 <body>
 <div class="wrap">
@@ -601,7 +601,15 @@ $("#stats").innerHTML = [
   }
   function frame(now) {
     if (!anim) return;
-    if (anim.audio && anim.audio.ctx.state !== "running") { anim.t0 = now - (anim.lastT || 0); anim.audio = null; } // audio interrupted: carry on silently
+    if (anim.audio) {
+      const A = anim.audio, ct = A.ctx.currentTime;
+      if (ct !== A.lastCt) { A.lastCt = ct; A.movedAt = now; } else if (A.movedAt == null) A.movedAt = now;
+      // audio stopped, interrupted, or its clock is not moving (seen on iPhone): carry on silently on the screen clock
+      if (A.ctx.state !== "running" || now - A.movedAt > 350 || (ct < A.a0 && now - anim.t0 > 700)) {
+        dbg("audio clock stalled (" + A.ctx.state + ", t=" + ct.toFixed(2) + "), playing silently");
+        anim.t0 = now - Math.max(0, anim.lastT || 0); anim.audio = null; stopSound();
+      }
+    }
     const t = anim.audio ? (anim.audio.ctx.currentTime - anim.audio.a0) * 1000 : now - anim.t0;
     if (t < 0) { raf = requestAnimationFrame(frame); return; }
     anim.lastT = t;
@@ -609,6 +617,8 @@ $("#stats").innerHTML = [
     raf = requestAnimationFrame(frame);
   }
 
+  const DBG = /[?&]sounddebug\b/.test(location.search);
+  function dbg(msg) { if (!DBG) return; let el = document.getElementById("snd-dbg"); if (!el) { el = document.createElement("pre"); el.id = "snd-dbg"; el.style.cssText = "font:11px/1.4 monospace;white-space:pre-wrap;margin:8px 0 0;color:var(--muted)"; box.appendChild(el); } const c = window.pugAudioCtx; el.textContent += new Date().toISOString().slice(17, 23) + " " + msg + (c ? " [ctx " + c.state + " " + c.currentTime.toFixed(2) + "s]" : "") + "\n"; }
   /* Sound: off until the reader asks for it (browsers only allow sound after a click). */
   let soundOn = false, bus = null;
   function audioCtx() {
@@ -639,11 +649,11 @@ $("#stats").innerHTML = [
   const unpress = () => document.querySelectorAll("#chips .chip").forEach((b) => b.setAttribute("aria-pressed", "false")); // no decade is picked during the beat
   function play() {
     if (RM) return; stopAnim(); tip.hidden = true; playing(true); unpress();
-    const go = (withSound) => { anim = { t0: performance.now(), step: -1, audio: withSound ? startSound() : null }; raf = requestAnimationFrame(frame); };
+    const go = (withSound) => { let audio = null; if (withSound) { try { audio = startSound(); } catch (e) { dbg("sound error: " + e.message); } } anim = { t0: performance.now(), step: -1, audio }; raf = requestAnimationFrame(frame); };
     const ctx = soundOn ? audioCtx() : null;
     if (!ctx || ctx.state === "running") { go(!!ctx); return; }
     // the audio is still waking up (iPhone): start lights and beat together once it runs, or go silent after a moment
-    let done = false; const fin = () => { if (done) return; done = true; go(ctx.state === "running"); };
+    let done = false; const fin = () => { if (done) return; done = true; dbg("start after resume"); go(ctx.state === "running"); };
     ctx.resume().then(fin, fin); setTimeout(fin, 900);
   }
   function stopAnim() { playing(false); stopSound(); if (!anim) return; anim = null; cancelAnimationFrame(raf); paintStatic(); }
@@ -654,7 +664,7 @@ $("#stats").innerHTML = [
   // Play with sound restarts the animation with the beat; while the beat plays, the same button mutes it
   snd.addEventListener("click", () => {
     if (bus) { soundOn = false; stopSound(); if (anim) anim.audio = null, anim.t0 = performance.now() - (anim.lastT || 0); return; }
-    soundOn = true; waiting = false; if (window.PugBeat) PugBeat.unlock(audioCtx()); play();
+    soundOn = true; waiting = false; dbg("tap: Play with sound"); try { if (window.PugBeat) PugBeat.unlock(audioCtx()); } catch (e) { dbg("unlock error: " + e.message); } play();
   });
   addEventListener("message", (e) => {
     if (!e.data) return;
