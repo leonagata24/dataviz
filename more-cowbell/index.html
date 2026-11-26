@@ -157,9 +157,21 @@ h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(28px, 4.2
 .chart-box svg.dots rect.thin { fill: var(--brass); fill-opacity: .08; }
 .chart-box svg.dots line.snl { stroke: var(--hot); stroke-width: 1.4; stroke-dasharray: 4 3; }
 .chart-box .yr { cursor: pointer; }
-.chart-box .dot { fill: var(--brass); fill-opacity: .92; }
-.chart-box .dot.on { fill: var(--hot); fill-opacity: 1; }
-.chart-box .yr:hover .dot { fill: var(--hot); }
+/* Mixer meter: each year is a channel strip, each song one LED. The meter bed stays dark in both themes, like hardware. */
+.chart-box svg.dots .bed { fill: #0b1019; }
+.chart-box svg.dots .bedline { stroke: #ffffff; stroke-opacity: .07; stroke-width: 1; }
+.chart-box svg.dots text.lab.in { fill: #e7ebf3; stroke: #0b1019; }
+.chart-box svg.dots text.lab.in.h { fill: #ff7a63; }
+.chart-box svg.dots rect.thin { fill: #ffffff; fill-opacity: .05; }
+.chart-box .led { fill: #1c2433; }
+.chart-box .led.lit { fill: #e3ad2f; filter: drop-shadow(0 0 2px rgba(227,173,47,.55)); }
+.chart-box .led.on { fill: #ff4b36; filter: drop-shadow(0 0 3px rgba(255,75,54,.7)); }
+.chart-box .yr:hover .led.lit { fill: #ff4b36; }
+.chart-box .replay { display: block; margin: 8px 0 0 auto; font: 600 12px var(--f-data); background: var(--paper); color: var(--ink); border: 1.5px solid var(--rule); border-radius: 99px; padding: 4px 12px; cursor: pointer; z-index: 3; }
+.chart-box .replay:hover, .chart-box .replay:focus-visible { border-color: var(--hot); outline: none; }
+html.pug-embed .chart-box .replay { display: none; }
+.chart-box svg.dots .ann { transition: opacity .5s ease; }
+.chart-box svg.dots.playing .ann { opacity: 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; }
 .chip { font-family: var(--f-data); font-size: 12px; border: 1px solid var(--rule); background: transparent; color: var(--ink-2); padding: 4px 10px; border-radius: 99px; cursor: pointer; }
 .chip span { color: var(--muted); }
@@ -216,7 +228,7 @@ footer p { margin: 0; }
 </style>
 
 <link rel="stylesheet" href="../pug-header.css">
-<script src="../embed.js?v=5"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
+<script src="../embed.js?v=6"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
 </head>
 <body>
 <div class="wrap">
@@ -259,7 +271,7 @@ footer p { margin: 0; }
     <div class="sec-head">
       <span class="tag">02 · Cowbell Rizz Trend</span>
       <h2 id="h-trend">When the cowbell had rizz</h2>
-      <p>Every dot is one song on the list, stacked by the year its recording was first released. Pick a decade or click a dot to see its artists and songs.</p>
+      <p>A mixing desk for the list: each year is a channel, and every lit light is one song, stacked by the year its recording was first released. Pick a decade or click a channel to see its artists and songs.</p>
       <p class="caveat">The list is fan-built, so these counts show what got listed, not how often cowbell was used. The drop-off after 2003 is more a quirk of the list than of cowbell.</p>
     </div>
     <div class="panel trend">
@@ -452,7 +464,7 @@ $("#stats").innerHTML = [
   }).join("");
 })();
 
-/* 02 Trend: one dot per song, by release year */
+/* 02 Trend: a mixer meter, one LED per song, one channel per release year */
 (function () {
   const cols = decades.concat(unknown ? [{ key: "unk", label: "No year", songs: SONGS.filter((s) => !s.y), unk: true }] : []);
   const byYear = new Map();
@@ -460,65 +472,147 @@ $("#stats").innerHTML = [
   byYear.forEach((v) => v.sort((p, q) => p.a.localeCompare(q.a)));
   const peakYear = [...byYear.entries()].reduce((a, b) => (b[1].length > a[1].length ? b : a));
   const late = known.filter((s) => s.y >= 2004).length;
-  const Y0 = 1955, Y1 = 2026, NY = Y1 - Y0 + 1;
+  const Y0 = 1955, Y1 = 2026, NY = Y1 - Y0 + 1, NSEG = 40;
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const box = $("#chart"), tip = $("#tip");
   const NS = "http://www.w3.org/2000/svg";
   const mk = (t, a = {}, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
   const tx = (p, s, a) => { const e = mk("text", a, p); e.textContent = s; return e; };
   let sel = { type: "decade", key: peak.key };
-  const inSel = (s) => sel.type === "year" ? s.y === sel.y : sel.type === "decade" ? (s.y && String(decadeOf(s.y)) === sel.key) : (!s.y);
+  const inSel = (y) => sel.type === "year" ? y === sel.y : sel.type === "decade" && String(decadeOf(y)) === sel.key;
+  const sw = (c) => `<span style="display:inline-block;width:12px;height:9px;border-radius:2px;background:${c};box-shadow:inset 0 0 0 1px rgba(128,138,160,.55)"></span>`;
 
-  box.insertAdjacentHTML("beforeend", `<ul class="clg" style="display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12px;color:var(--muted);margin:8px 0 0;padding:0;list-style:none"><li style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--hot)"></span>Selected decade</li><li style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--brass)"></span>Other decades</li></ul><div class="chips" id="chips" role="group" aria-label="Pick a decade"></div><p class="hint">Hover a dot to see the song. Click a dot to list that year, or pick a decade above. The 23 songs with no year are under “No year”.</p>`);
+  box.insertAdjacentHTML("beforeend", `<ul class="clg" style="display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12px;color:var(--muted);margin:8px 0 0;padding:0;list-style:none"><li style="display:inline-flex;align-items:center;gap:6px">${sw("#ff4b36")}Selected decade</li><li style="display:inline-flex;align-items:center;gap:6px">${sw("#e3ad2f")}Other decades</li><li style="display:inline-flex;align-items:center;gap:6px">${sw("#1c2433")}Unlit: no song</li></ul><div class="chips" id="chips" role="group" aria-label="Pick a decade"></div><p class="hint">Hover a light to see the song. Click a channel to list that year, or pick a decade above. The 23 songs with no year are under “No year”.</p>`);
   $("#chips").innerHTML = cols.map((c) => `<button type="button" class="chip" data-key="${c.key}">${c.unk ? "No year" : c.label}<span> ${c.songs.length}</span></button>`).join("");
+  const replay = document.createElement("button");
+  replay.type = "button"; replay.className = "replay"; replay.textContent = "↻ Replay"; replay.setAttribute("aria-label", "Replay the mixer animation");
+  if (RM) replay.hidden = true;
 
+  let CH = []; // one channel per year: { y, n, segs, cls[] }
   function draw() {
     box.querySelectorAll("svg.dots").forEach((n) => n.remove());
     const W = Math.max(300, box.clientWidth), small = W < 640;
     const L = small ? 52 : 58, R = small ? 8 : 14, T = small ? 34 : 44, B = 58, iw = W - L - R, band = iw / NY;
     const d = Math.min(band, 12), H = Math.round(T + B + 40.6 * d);
-    const r = Math.max(1.3, d / 2 - (small ? .4 : .9)), base = H - B, X = (y) => L + (y - Y0 + .5) * band;
-    const svg = mk("svg", { class: "dots", width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `Dot chart: one dot per song by release year. The list peaks in ${peakYear[0]} with ${peakYear[1].length} songs and nearly runs dry after 2003, with ${late} songs from 2004 on.` });
-    box.insertBefore(svg, $("#chips"));
-    tx(svg, small ? "Songs (one dot each)" : "Songs on the list (one dot = one song)", { transform: `translate(12,${(T + base) / 2}) rotate(-90)`, "text-anchor": "middle", class: "axt" });
+    const base = H - B, X = (y) => L + (y - Y0 + .5) * band;
+    const gap = Math.max(1, Math.min(2.4, d * .22)), lw = Math.max(1.2, band - gap), lh = Math.max(1.2, d - gap);
+    const svg = mk("svg", { class: "dots", width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `Mixer-style meter: one light per song by release year. The list peaks in ${peakYear[0]} with ${peakYear[1].length} songs and nearly runs dry after 2003, with ${late} songs from 2004 on.` });
+    box.insertBefore(svg, box.querySelector(".clg"));
+    mk("rect", { class: "bed", x: L - 4, y: T - 6, width: iw + 8, height: base - T + 10, rx: 6 }, svg);
+    tx(svg, small ? "Songs (one light each)" : "Songs on the list (one lit light = one song)", { transform: `translate(12,${(T + base) / 2}) rotate(-90)`, "text-anchor": "middle", class: "axt" });
     tx(svg, "Year of first release", { x: (L + W - R) / 2, y: H - 8, "text-anchor": "middle", class: "axt" });
-    [0, 10, 20, 30, 40].forEach((t) => { mk("line", { class: "grid", x1: L, x2: W - R, y1: base - t * d, y2: base - t * d }, svg); tx(svg, t, { x: L - 8, y: base - t * d + 4, "text-anchor": "end" }); });
-    for (let y = 1960; y <= 2020; y += small ? 20 : 10) tx(svg, y, { x: X(y), y: base + 18, "text-anchor": "middle" });
-    mk("line", { class: "base", x1: L, x2: W - R, y1: base, y2: base }, svg);
+    [10, 20, 30, 40].forEach((t) => { mk("line", { class: "bedline", x1: L, x2: W - R, y1: base - t * d, y2: base - t * d }, svg); });
+    [0, 10, 20, 30, 40].forEach((t) => tx(svg, t, { x: L - 10, y: base - t * d + 4, "text-anchor": "end" }));
+    for (let y = 1960; y <= 2020; y += small ? 20 : 10) tx(svg, y, { x: X(y), y: base + 22, "text-anchor": "middle" });
     mk("rect", { x: X(2004) - band / 2, y: T - 4, width: (Y1 - 2004 + 1) * band, height: base - T + 4, class: "thin" }, svg);
-    tx(svg, small ? `${late} songs, 2004 on` : `2004 to 2025: only ${late} songs in 22 years`, { x: X(2004) - band / 2 + 4, y: T + (small ? 28 : 40), class: "lab s", style: small ? "font-size:10.5px" : "" });
-    if (!small) tx(svg, `(1999 to 2002: ${known.filter((s) => s.y >= 1999 && s.y <= 2002).length} songs in 4 years)`, { x: X(2004) - band / 2 + 4, y: T + 56, class: "lab" });
+    CH = [];
+    for (let y = Y0; y <= Y1; y++) {
+      const arr = byYear.get(y) || [], g = mk("g", { class: "yr", "data-y": y }, svg);
+      mk("rect", { x: L + (y - Y0) * band, y: T - 6, width: band, height: base - T + 10, fill: "transparent" }, g);
+      const segs = [];
+      for (let k = 0; k < NSEG; k++) {
+        const r = mk("rect", { x: X(y) - lw / 2, y: base - (k + 1) * d + gap / 2, width: lw, height: lh, rx: Math.min(1.6, lh / 3), class: "led" }, g);
+        if (k < arr.length) {
+          const s = arr[k];
+          r.addEventListener("mousemove", (e) => { const bb = box.getBoundingClientRect(); tip.hidden = false; tip.innerHTML = `<b>${esc(s.t)}</b><br>${esc(s.a)} · ${s.y}`; tip.style.left = Math.min(Math.max(e.clientX - bb.left, 80), bb.width - 80) + "px"; tip.style.top = e.clientY - bb.top + "px"; });
+          r.addEventListener("mouseleave", () => (tip.hidden = true));
+        }
+        segs.push(r);
+      }
+      if (arr.length) g.addEventListener("click", () => { stopAnim(); select({ type: "year", y }); });
+      CH.push({ y, n: arr.length, segs, cls: new Array(NSEG).fill("led") });
+    }
+    // annotations on top of the meter
+    if (small) { // two short lines, so the note stays clear of the SNL line on phones
+      const t2 = mk("text", { x: W - R - 4, y: T + 24, "text-anchor": "end", class: "lab s in ann", style: "font-size:10.5px" }, svg);
+      [`${late} songs`, "2004 on"].forEach((line, i) => { const ts = mk("tspan", { x: W - R - 4, dy: i ? 13 : 0 }, t2); ts.textContent = line; });
+    } else tx(svg, `2004 to 2025: only ${late} songs in 22 years`, { x: X(2004) - band / 2 + 4, y: T + 40, class: "lab s in ann" });
+    if (!small) tx(svg, `(1999 to 2002: ${known.filter((s) => s.y >= 1999 && s.y <= 2002).length} songs in 4 years)`, { x: X(2004) - band / 2 + 4, y: T + 56, class: "lab in ann" });
     mk("line", { x1: X(2000), x2: X(2000), y1: T - 4, y2: base, class: "snl" }, svg);
     tx(svg, small ? "Apr 2000: SNL sketch" : "April 2000: the SNL sketch", { x: X(2000) - 5, y: T - (small ? 14 : 18), "text-anchor": "end", class: "lab h" });
-    byYear.forEach((arr, y) => {
-      const g = mk("g", { class: "yr", "data-y": y }, svg);
-      mk("rect", { x: L + (y - Y0) * band, y: T, width: band, height: base - T, fill: "transparent" }, g);
-      arr.forEach((s, k) => {
-        const c = mk("circle", { cx: X(y), cy: base - (k + .5) * d, r, class: "dot" + (inSel(s) ? " on" : "") }, g);
-        c.addEventListener("mousemove", (e) => { const bb = box.getBoundingClientRect(); tip.hidden = false; tip.innerHTML = `<b>${esc(s.t)}</b><br>${esc(s.a)} · ${s.y}`; tip.style.left = Math.min(Math.max(e.clientX - bb.left, 80), bb.width - 80) + "px"; tip.style.top = e.clientY - bb.top + "px"; });
-        c.addEventListener("mouseleave", () => (tip.hidden = true));
-      });
-      g.addEventListener("click", () => select({ type: "year", y }));
-    });
-    tx(svg, small ? `${peakYear[0]}: ${peakYear[1].length}` : `${peakYear[0]} peak: ${peakYear[1].length} songs`, { x: X(peakYear[0]), y: base - peakYear[1].length * d - 10, "text-anchor": "middle", class: "lab h" });
+    tx(svg, small ? `${peakYear[0]}: ${peakYear[1].length}` : `${peakYear[0]} peak: ${peakYear[1].length} songs`, small ? { x: X(peakYear[0]) + band, y: base - peakYear[1].length * d + 8, class: "lab h in ann", style: "font-size:10.5px" } : { x: X(peakYear[0]), y: base - peakYear[1].length * d - 10, "text-anchor": "middle", class: "lab h in ann" });
+    if (!replay.isConnected) box.appendChild(replay);
   }
+
+  // light the bottom L lights of a channel; hot = red
+  function setLevel(c, L, hot) {
+    const on = hot ? "led on" : "led lit";
+    for (let k = 0; k < NSEG; k++) { const v = k < L ? on : "led"; if (c.cls[k] !== v) { c.cls[k] = v; c.segs[k].setAttribute("class", v); } }
+  }
+  const paintStatic = () => CH.forEach((c) => setLevel(c, c.n, inSel(c.y)));
 
   function select(s) {
     sel = s;
     const unkSel = s.type === "unk", songs = s.type === "year" ? byYear.get(s.y) : s.type === "decade" ? cols.find((k) => k.key === s.key).songs : cols.find((k) => k.unk).songs;
     document.querySelectorAll("#chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(s.type !== "year" && b.dataset.key === (s.type === "unk" ? "unk" : s.key))));
-    box.querySelectorAll(".dot").forEach((n) => n.classList.remove("on"));
-    box.querySelectorAll(".yr").forEach((g) => { const y = +g.dataset.y; if (s.type === "year" ? y === s.y : s.type === "decade" && String(decadeOf(y)) === s.key) g.querySelectorAll(".dot").forEach((n) => n.classList.add("on")); });
+    if (!anim) paintStatic();
     const groups = new Map();
     songs.forEach((x) => { if (!groups.has(x.a)) groups.set(x.a, []); groups.get(x.a).push(x); });
     const ordered = [...groups.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
     const title = s.type === "year" ? String(s.y) : unkSel ? "No year found" : cols.find((k) => k.key === s.key).label;
-    const share = unkSel ? "" : ` · ${Math.round((songs.length / known.length) * 100)}% of dated songs`;
-    $("#detail").innerHTML = `<h3>${title}<small>${songs.length} songs · ${groups.size} artists${share}</small></h3>
+    const pc = (songs.length / known.length) * 100, share = unkSel ? "" : ` · ${pc > 0 && pc < 1 ? "under 1" : Math.round(pc)}% of dated songs`;
+    $("#detail").innerHTML = `<h3>${title}<small>${songs.length} song${songs.length === 1 ? "" : "s"} · ${groups.size} artist${groups.size === 1 ? "" : "s"}${share}</small></h3>
       <div class="dlist">${ordered.map(([a, v]) => `<div class="ga"><b>${esc(a)}${v.length > 1 ? `<span>×${v.length}</span>` : ""}</b><ul>${v.sort((p, q) => (p.y || 0) - (q.y || 0)).map((x) => `<li><span>${songLink(x)}</span><span class="y">${x.y || ""}</span></li>`).join("")}</ul></div>`).join("")}</div>`;
   }
-  document.querySelectorAll("#chips .chip").forEach((b) => b.addEventListener("click", () => select(b.dataset.key === "unk" ? { type: "unk" } : { type: "decade", key: b.dataset.key })));
+
+  /* Animation: 5 seconds of beat (120 bpm), then one decade at a time pulses red, ending on the peak decade. */
+  const BEAT = 500, INTRO = 5000, STEP = 950, DECS = decades.filter((c) => c.songs.length);
+  let anim = null, raf = 0;
+  const rnd = (i, j) => { const x = Math.sin(i * 127.1 + j * 311.7) * 43758.5453; return x - Math.floor(x); }; // repeatable noise
+  function frame(now) {
+    if (!anim) return;
+    const t = now - anim.t0;
+    if (t < INTRO) {
+      const b = Math.floor(t / BEAT);
+      CH.forEach((c, ci) => {
+        const p = ((t + ci * 9) % BEAT) / BEAT;            // a small ripple across the desk
+        const kick = b % 2 === 0 ? 1.15 : .85;               // stronger downbeats
+        const hit = c.n ? Math.min(NSEG, c.n * (.45 + .75 * rnd(b, ci)) * kick + 3 * rnd(ci, b)) : (rnd(b, ci) < .3 ? 1 + 2 * rnd(ci, b) : 0);
+        const env = p < .1 ? p / .1 : Math.exp(-(p - .1) * 2.6);   // fast attack, slow release, like a VU needle
+        let L = hit * env;
+        const tail = t - (INTRO - BEAT);
+        if (tail > 0) { const e = tail / BEAT; L = L * (1 - e) + c.n * e; } // settle onto the real counts
+        setLevel(c, Math.round(L), false);
+      });
+    } else {
+      const t2 = t - INTRO, i = Math.floor(t2 / STEP);
+      if (i >= DECS.length) { finish(); return; }
+      const dk = DECS[i];
+      if (anim.step !== i) { anim.step = i; select({ type: "decade", key: dk.key }); }
+      const ph = (t2 % STEP) / STEP;
+      CH.forEach((c) => {
+        if (String(decadeOf(c.y)) === dk.key && c.n) {
+          const amp = Math.max(1, Math.min(4, Math.round(c.n * .2)));
+          setLevel(c, Math.max(1, c.n + Math.round(amp * Math.sin(ph * Math.PI * 4))), true); // two bounces per decade
+        } else setLevel(c, c.n, false);
+      });
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  const playing = (on) => { const sv = box.querySelector("svg.dots"); if (sv) sv.classList.toggle("playing", on); };
+  const unpress = () => document.querySelectorAll("#chips .chip").forEach((b) => b.setAttribute("aria-pressed", "false")); // no decade is picked during the beat
+  function play() { if (RM) return; stopAnim(); tip.hidden = true; playing(true); unpress(); anim = { t0: performance.now(), step: -1 }; raf = requestAnimationFrame(frame); }
+  function stopAnim() { playing(false); if (!anim) return; anim = null; cancelAnimationFrame(raf); paintStatic(); }
+  function finish() { anim = null; playing(false); select({ type: "decade", key: peak.key }); }
+
+  document.querySelectorAll("#chips .chip").forEach((b) => b.addEventListener("click", () => { stopAnim(); select(b.dataset.key === "unk" ? { type: "unk" } : { type: "decade", key: b.dataset.key }); }));
+  replay.addEventListener("click", play);
+  addEventListener("message", (e) => { if (e.data && e.data.type === "pug-replay") play(); });
   draw(); select(sel);
-  let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { draw(); select(sel); }, 120); });
+  let waiting = false; // drawn silent, waiting for the chart to scroll into view
+  const silent = () => { CH.forEach((c) => setLevel(c, 0, false)); playing(true); unpress(); };
+  if (!RM && "IntersectionObserver" in window) {
+    waiting = true; silent(); // start silent with labels hidden, so the beat has somewhere to come from
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { waiting = false; play(); io.disconnect(); } }), { threshold: .35 });
+    io.observe(box);
+  }
+  // redraw only when the width really changes; a running animation carries on with the new layout
+  let rt, lastW = box.clientWidth;
+  addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => {
+    if (box.clientWidth === lastW) return;
+    lastW = box.clientWidth; tip.hidden = true; draw();
+    if (anim) playing(true); else if (waiting) silent(); else select(sel);
+  }, 120); });
 })();
 
 /* 03 Odd places */

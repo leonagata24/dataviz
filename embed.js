@@ -59,7 +59,7 @@
     }
     // on the home page the chart is a preview: remove the simulation controls and selections (they live on the full page)
     var CTRL = {
-      "mn-dist": [".ctrl"], "hb-surv": [".replay"], "mc-trend": [".chip"], "cc-map": [".slider", ".ticks"],
+      "mn-dist": [".ctrl"], "hb-surv": [".replay"], "cc-map": [".slider", ".ticks"],
       "bb-stops": [".bb-chips"], "bw-animals": [".controls", ".cstat"], "uf-rate": [".controls", ".cstat"], "cf-scatter": [".fp"]
     }[key] || [];
     for (var c = 0; c < CTRL.length; c++) {
@@ -69,9 +69,10 @@
         if (hide) hide.style.setProperty("display", "none", "important");
       }
     }
+    // cowbell: the decade buttons stay visible and clickable on the home page (clicking one stops the animation and lights that decade)
     // drop sentences that tell the reader to press, pick or click something that is no longer there
     var STRIP = {
-      "mc-trend": [/Click a dot to list that year, or pick a decade above\.\s*/],
+      "mc-trend": [/Click a (dot|channel) to list that year, or pick a decade above\.\s*/],
       "cc-map": [/Press play or drag the slider: the dots thicken, the dark center of population moves west, and the two charts follow the same census\./, "The dark dot marks the center of population; the full page animates it from 1790 to 1900."],
       "bb-stops": [/Pick the championships to stack\.\s*/],
       "cf-scatter": [/\s*Pick a team you know, or click any line, to follow it\./]
@@ -89,6 +90,7 @@
       if (!el.contains(t) || !t.closest) return;
       if (t.closest(".ii, a, .pf, [data-keep]")) return;
       if (key === "uf-rate" && t.closest("svg")) return; // a saucer opens the full page on that state
+      if (key === "mc-trend" && t.closest(".chip")) return; // cowbell: the decade buttons work on the home page
       if (ev.type === "keydown" && ev.key !== "Enter" && ev.key !== " ") return;
       if (t.closest("button, input, select, svg, [role=button], [tabindex]")) { ev.stopPropagation(); ev.preventDefault(); }
     };
