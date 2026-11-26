@@ -154,7 +154,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .chart-src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 </style>
 <link rel="stylesheet" href="../pug-header.css">
-<script src="../embed.js?v=5"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
+<script src="../embed.js?v=6"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
 </head>
 <body>
 <div class="wrap">
@@ -200,6 +200,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
     <p>This is a snapshot, not a true survival curve. An old balloon scrapped decades ago is less likely to have been entered at all, which would make old balloons look more durable than they were, and "in service" is the archive's label with no date attached. The result does not hinge on the oddities in the file: leaving out rebuilt envelopes gives 50% for 1990 to 1994, and US-based balloons alone give 54%.</p>
     <div class="card" id="card-surv">
       <h3>Share of balloons still listed as in service, by year built</h3>
+<ul class="clg" style="display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--muted);margin:0 0 6px;padding:0;list-style:none"><li style="display:inline-flex;align-items:center;gap:6px"><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" fill="#0b3a82"/></svg>Build year with 80 or more balloons</li><li style="display:inline-flex;align-items:center;gap:6px"><svg width="12" height="12"><circle cx="6" cy="6" r="4" fill="#fff" stroke="#0b3a82" stroke-width="1.8"/></svg>Fewer than 80 balloons (bounces around)</li></ul>
       <div class="skywrap" id="skywrap"><div class="skyph" aria-hidden="true"><img class="sk1" src="sky-clouds.webp" alt=""><img class="sk2" src="sky-clouds.webp" alt=""></div><p class="sky-credit">Photo: <a href="https://unsplash.com/@iccup?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noopener">iccup</a> on <a href="https://unsplash.com/photos/white-clouds-and-blue-sky-during-daytime-xNtwmcRP-gw?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noopener">Unsplash</a></p><div class="chart" id="c-surv"></div><button type="button" class="replay" id="replay" aria-label="Replay the line build-up">&#8635; Replay</button></div>
       <p class="note">Each point is one build year, 1970 to 2026. Hollow points are build years with fewer than 80 balloons, which bounce around accordingly. Dashed line: half in service.</p>
     <p class="chart-src"><b>Source:</b> <a href="https://thehabdatabase.com/" target="_blank" rel="noopener">The Hot Air Balloon Database</a>, via the <a href="https://www.kaggle.com/datasets/matthuff4/hot-air-balloon" target="_blank" rel="noopener">Hot Air Balloon dataset on Kaggle</a> (MakeoverMonday 2026 Week 45).</p>

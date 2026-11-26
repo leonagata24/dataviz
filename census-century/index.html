@@ -16,6 +16,7 @@ html.pug-embed #map .read .s b{font-size:1rem}
 html.pug-embed #map .plate-head p{font-size:.82rem;margin-top:4px}
 html.pug-embed #map #dLeg>*:nth-last-child(-n+2){display:none}
 html.pug-embed #map .read .s b{white-space:nowrap}
+html.pug-embed .plate-no{display:none}
 html.pug-embed #map .plate-head p{display:none}
 html.pug-embed #map #usmap{max-height:290px;width:100%}
 @media (max-width:600px){html.pug-embed #map .read .s span{font-size:.75rem}}
@@ -28,7 +29,7 @@ html.pug-embed #map #usmap{max-height:290px;width:100%}
 <style>
 /* Layout: a single reading column (~68ch) for prose; charts break out to a wider plate (1120px) like the folio plates of an 1880s statistical atlas. */
 :root{
-  --paper:#f4f5f1; --surface:#fcfcfb; --ink:#14202a; --ink-2:#47525c; --muted:#6f7a83; --rule:#d7dbd3; --rule-2:#e7eae3;
+  --paper:#f4f5f1; --plate:#F7E1B3; --surface:#fcfcfb; --ink:#14202a; --ink-2:#47525c; --muted:#6f7a83; --rule:#d7dbd3; --rule-2:#e7eae3;
   --accent:#b8402c; --accent-ink:#9c3221;
   --s-ne:#2a78d6; --s-s:#eb6834; --s-mw:#1baf7a; --s-w:#eda100;
   --seq1:#cde2fb; --seq2:#9ec5f4; --seq3:#6da7ec; --seq4:#3987e5; --seq5:#256abf; --seq6:#184f95; --seq7:#0d366b;
@@ -39,14 +40,14 @@ html.pug-embed #map #usmap{max-height:290px;width:100%}
   --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#111417; --surface:#181c20; --ink:#edf0ec; --ink-2:#b8c0c5; --muted:#8a949b; --rule:#2d3338; --rule-2:#22272c;
+  --paper:#111417; --plate:#2A2418; --surface:#181c20; --ink:#edf0ec; --ink-2:#b8c0c5; --muted:#8a949b; --rule:#2d3338; --rule-2:#22272c;
   --accent:#e2664f; --accent-ink:#f08572;
   --s-ne:#3987e5; --s-s:#d95926; --s-mw:#199e70; --s-w:#c98500;
   --seq1:#0d366b; --seq2:#184f95; --seq3:#256abf; --seq4:#3987e5; --seq5:#6da7ec; --seq6:#9ec5f4; --seq7:#cde2fb;
   --neg1:#7a2a27; --neg2:#e66767; --nodata:#262b30; --hatch:rgba(237,240,236,.42);
   --good:#2fc02f; --note:#e0a020; --fix:#6da7ec; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --paper:#111417; --surface:#181c20; --ink:#edf0ec; --ink-2:#b8c0c5; --muted:#8a949b; --rule:#2d3338; --rule-2:#22272c;
+  --paper:#111417; --plate:#2A2418; --surface:#181c20; --ink:#edf0ec; --ink-2:#b8c0c5; --muted:#8a949b; --rule:#2d3338; --rule-2:#22272c;
   --accent:#e2664f; --accent-ink:#f08572;
   --s-ne:#3987e5; --s-s:#d95926; --s-mw:#199e70; --s-w:#c98500;
   --seq1:#0d366b; --seq2:#184f95; --seq3:#256abf; --seq4:#3987e5; --seq5:#6da7ec; --seq6:#9ec5f4; --seq7:#cde2fb;
@@ -126,7 +127,7 @@ figcaption{font-size:.82rem;color:var(--muted);line-height:1.45}
 .lightbox button{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px))}
 
 /* Chart plates */
-.plate{background:var(--surface);border:1px solid var(--rule);padding:20px 20px 16px;display:grid;gap:14px;min-width:0}
+.plate{background:var(--plate);border:1px solid var(--rule);padding:20px 20px 16px;display:grid;gap:14px;min-width:0}
 .plate-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:12px}
 .plate-head .t{display:grid;gap:4px;}
 .plate-head p{color:var(--ink-2);font-size:.95rem}
@@ -230,7 +231,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
 </style>
 
 <link rel="stylesheet" href="../pug-header.css">
-<script src="../embed.js?v=5"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
+<script src="../embed.js?v=6"></script><script defer src="../analytics.js"></script><script defer src="../stat-info.js?v=1"></script><script defer src="../feedback.js?v=2"></script>
 </head>
 <body>
 <div class="wrap">
@@ -370,6 +371,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
       <div class="controls"><div class="seg" role="group" aria-label="Row order"><button id="oFirst" aria-pressed="true">First counted</button><button id="oRegion" aria-pressed="false">By region</button></div></div>
     </div>
     <div class="ramp" id="heatRamp"></div>
+    <div class="legend" id="heatLeg" style="margin-top:-4px"></div>
     <div class="chart-scroll"><svg id="heat" class="heat" role="img" aria-label="Heatmap of decade growth rates per state"></svg></div>
     <p class="why"><b>Why it evolves the original:</b> the plate shows position; this shows speed. The diagonal staircase is the frontier. Each new group of states arrives with very fast growth, then cools to the 10–25% pace of the older East.</p>
   <p class="chart-src"><b>Source:</b> U.S. Census Bureau decennial counts, 1790–1900, via the <a href="https://makeovermonday.vercel.app/dataset/the-first-century-of-the-u-s-census" target="_blank" rel="noopener">MakeoverMonday dataset</a>.</p>
@@ -762,6 +764,7 @@ function stateTip(s, y){
   const ramp=d3.select("#heatRamp");
   CL.forEach((c,i)=>{const s=ramp.append("span"); s.append("i").attr("class",c); s.append("b").style("font-weight",400).text(LB[i]);});
   const sF=ramp.append("span"); sF.append("i").attr("class","nd"); sF.append("b").style("font-weight",400).text("first count");
+  const hl=d3.select("#heatLeg"); hl.append("span").style("color","var(--muted)").text("Tick beside each state, by region:"); REGS.forEach(r=>{const q=hl.append("span").attr("class","sw"); q.append("i").style("background",rc(r)).style("width","4px").style("height","12px"); q.append("span").text(REG[r]);});
   const x=d3.scaleBand(dec,[M.l,M.l+cw*dec.length]);
   dec.forEach(y=>svg.append("text").attr("x",x(y)+cw/2).attr("y",14).attr("text-anchor","middle").style("font-family","var(--f-mono)").style("font-size","10px").style("fill","var(--muted)").text(`${String(y-10).slice(2)}–${String(y).slice(2)}`));
   svg.append("text").attr("x",M.l+cw*dec.length/2).attr("y",28).attr("text-anchor","middle").style("font-size","10.5px").style("fill","var(--muted)").text("Decade (17xx–19xx)");

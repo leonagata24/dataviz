@@ -59,8 +59,9 @@
     }
     // on the home page the chart is a preview: remove the simulation controls and selections (they live on the full page)
     var CTRL = {
-      "mn-dist": [".ctrl"], "hb-surv": [".replay"], "cc-map": [".slider", ".ticks"],
-      "bb-stops": [".bb-chips"], "bw-animals": [".controls", ".cstat"], "uf-rate": [".controls", ".cstat"], "cf-scatter": [".fp"]
+      "mn-dist": [".ctrl", ".note"], "hb-surv": [".replay", ".note", ".chart-src"], "cc-map": [".slider", ".ticks", ".note-s", ".why", ".chart-src"],
+      "lk-matrix": [".cap"], "pz-ai": [".chart-src"], "mc-trend": [".hint", ".chart-src"], "tn-offseason": [".chart-src"],
+      "bb-stops": [".bb-chips", ".bb-note", ".chart-src"], "bw-animals": [".controls", ".cstat", ".sec-p", ".chart-src"], "uf-rate": [".controls", ".cstat", ".sec-p", ".chart-src"], "cf-scatter": [".fp", ".chart-src"]
     }[key] || [];
     for (var c = 0; c < CTRL.length; c++) {
       var hits = el.querySelectorAll(CTRL[c]);
