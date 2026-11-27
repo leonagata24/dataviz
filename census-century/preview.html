@@ -208,6 +208,7 @@ svg text.halo{paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-l
 .map .dot{transition:opacity .45s}
 @media (prefers-reduced-motion:reduce){.map .dot{transition:none}}
 .yearbig{font-family:var(--f-display);font-weight:700;font-size:4rem;line-height:.9;font-variant-numeric:tabular-nums}
+.read .yr .yearbig{color:var(--ink)}
 .side{display:grid;gap:14px;align-content:start}
 .side .stat{display:grid;gap:2px;border-top:1px solid var(--rule);padding-top:10px}
 .side .stat b{font-family:var(--f-display);font-size:1.6rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
@@ -349,7 +350,7 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
     <div class="ticks" aria-hidden="true"><span>1790</span><span>1820</span><span>1850</span><span>1880</span><span>1900</span></div>
     <div class="dg">
       <div style="display:grid;gap:10px;min-width:0">
-        <div class="read"><div class="yearbig" id="mYear">1900</div>
+        <div class="read"><div class="s yr"><div class="yearbig" id="mYear">1900</div><span>Year</span></div>
           <div class="s"><b id="mTot">75,994,575</b><span>people counted</span></div>
           <div class="s"><b id="mLon">86.1° W</b><span id="mCen">Estimated center of population</span></div></div>
         <svg id="usmap" class="map" viewBox="0 0 975 610" role="img" aria-label="Dot map of US population by region, one dot per 100,000 people, with the center of population track"></svg>
