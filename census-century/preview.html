@@ -209,6 +209,12 @@ svg text.halo{paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-l
 @media (prefers-reduced-motion:reduce){.map .dot{transition:none}}
 .yearbig{font-family:var(--f-display);font-weight:700;font-size:4rem;line-height:.9;font-variant-numeric:tabular-nums}
 .read .yr .yearbig{color:var(--ink)}
+.mus{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.mplay{font:600 12px var(--f-mono);letter-spacing:.04em;background:var(--ink);color:var(--plate);border:0;border-radius:99px;padding:5px 12px;cursor:pointer;min-height:0}
+.plate .mplay,.plate .mplay[aria-pressed="true"]{background:var(--ink);color:var(--plate)}
+.mplay:hover{background:#2c3a46}
+.music-credit{margin:0;font:500 11px var(--f-mono);color:var(--muted)}
+.music-credit a{color:inherit}
 .side{display:grid;gap:14px;align-content:start}
 .side .stat{display:grid;gap:2px;border-top:1px solid var(--rule);padding-top:10px}
 .side .stat b{font-family:var(--f-display);font-size:1.6rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
@@ -355,6 +361,8 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
           <div class="s"><b id="mLon">86.1° W</b><span id="mCen">Estimated center of population</span></div></div>
         <svg id="usmap" class="map" viewBox="0 0 975 610" role="img" aria-label="Dot map of US population by region, one dot per 100,000 people, with the center of population track"></svg>
         <div class="legend" id="dLeg"></div>
+        <div class="mus"><button type="button" class="mplay" id="mplay" data-keep aria-pressed="false" aria-label="Play the map animation with music"><span class="pi" aria-hidden="true">&#9654;</span> <span class="pt">Play with music</span></button>
+          <p class="music-credit">Music by <a href="https://pixabay.com/users/atlasaudio-54514918/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=519642" target="_blank" rel="noopener">AtlasAudio</a> from <a href="https://pixabay.com/" target="_blank" rel="noopener">Pixabay</a>, sped up 25%. Starts only when you press play.</p></div>
       </div>
       <div class="col2">
         <div><p class="ct">Who the people were: share of the count, by region</p><div id="dShare"></div></div>
@@ -747,6 +755,28 @@ function stateTip(s, y){
   plate.__play = () => run(1790);
   addEventListener("message",e=>{ if(e.data && e.data.type==="pug-replay") run(1790); });
   window.__setYear = setYear;
+  /* music: starts only on click, restarts the animation, fades in and out, pauses when the chart scrolls away */
+  (function(){
+    const b = document.getElementById("mplay"); if (!b) return;
+    const MU = {a:null, on:false, fade:0, tail:0};
+    const ui = (on, txt) => { b.setAttribute("aria-pressed", String(on)); b.querySelector(".pi").innerHTML = on ? "&#10074;&#10074;" : "&#9654;"; b.querySelector(".pt").textContent = txt; };
+    const fade = (to, ms, done) => { const a=MU.a; if(!a) return; cancelAnimationFrame(MU.fade); const from=a.volume, t0=performance.now();
+      const f = now => { const k=Math.min(1,(now-t0)/ms); a.volume=Math.max(0,Math.min(1,from+(to-from)*k)); if(k<1) MU.fade=requestAnimationFrame(f); else if(done) done(); }; MU.fade=requestAnimationFrame(f); };
+    const stopMusic = ms => { if(!MU.on) return; MU.on=false; ui(false, MU.a && MU.a.currentTime>1 ? "Resume music" : "Play with music"); fade(0, ms||500, ()=>MU.a.pause()); };
+    b.addEventListener("click", () => {
+      if (MU.on) { stopMusic(400); return; }
+      if (!MU.a) { MU.a = new Audio("census-western.mp3"); MU.a.preload = "auto";
+        MU.a.addEventListener("ended", () => { MU.on=false; MU.a.currentTime=0; ui(false,"Play with music"); });
+        MU.a.addEventListener("timeupdate", () => { if (MU.on && MU.a.duration && MU.a.duration-MU.a.currentTime<3 && !MU.tail) { MU.tail=1; fade(0,2800); } }); }
+      const fresh = !MU.a.currentTime || MU.a.currentTime < 1; MU.tail = 0;
+      if (fresh) run(1790);
+      MU.a.volume = 0; const pr = MU.a.play();
+      const ok = () => { MU.on = true; ui(true, "Pause music"); fade(.7, 1800); };
+      if (pr && pr.then) pr.then(ok).catch(() => { b.querySelector(".pt").textContent = "Sound blocked, try again"; }); else ok();
+    });
+    document.addEventListener("visibilitychange", () => { if (document.hidden) stopMusic(100); });
+    if ("IntersectionObserver" in window) new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting && MU.on) stopMusic(600); }), {threshold:.05}).observe(plate);
+  })();
   if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) { setT(1900); label(); }
   else {
     setT(1790); label();
