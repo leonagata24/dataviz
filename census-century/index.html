@@ -29,20 +29,15 @@ html.pug-embed #map #usmap{max-height:290px;width:100%}
 .plate .map path.state{fill:transparent;stroke:none}
 .map .bord-st{fill:none;stroke:#6b645a;stroke-width:.55}
 .map .bord-us{fill:none;stroke:#4a443b;stroke-width:1}
-:root[data-theme="dark"] .map .bord-st{stroke:#a39a88}:root[data-theme="dark"] .map .bord-us{stroke:#c4bba6}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .map .bord-st{stroke:#a39a88}:root:not([data-theme="light"]) .map .bord-us{stroke:#c4bba6}}
 .plate button:not([aria-pressed="true"]),.plate select{background:transparent}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .plate::before{opacity:.35}:root:not([data-theme="light"]) .plate::after{border-color:rgba(214,196,160,.55)}}
-:root[data-theme="dark"] .plate::before{opacity:.35}:root[data-theme="dark"] .plate::after{border-color:rgba(214,196,160,.55)}
 /* sepia palette for the plates: growth ramp, decline, no-count, and rules all in paper tones */
 .plate{--rule:#c4a46b;--rule-2:#dcc490;--nodata:rgba(95,78,50,.2);
   --seq1:#e8c78a;--seq2:#d6a665;--seq3:#c28543;--seq4:#a2672d;--seq5:#7f4a21;--seq6:#5a3217;--seq7:#37200e;
   --neg1:#d9967e;--neg2:#a3301f}
 .plate .map path.state.nd{fill:var(--nodata)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .plate{--rule:#5d4c2d;--rule-2:#43371f;--nodata:rgba(215,195,150,.17);
-  --seq1:#4a3a20;--seq2:#6e5430;--seq3:#94733f;--seq4:#b8924f;--seq5:#d3ae70;--seq6:#e6c995;--seq7:#f5e2b8;--neg1:#7d3a2b;--neg2:#e0775f}}
-:root[data-theme="dark"] .plate{--rule:#5d4c2d;--rule-2:#43371f;--nodata:rgba(215,195,150,.17);
-  --seq1:#4a3a20;--seq2:#6e5430;--seq3:#94733f;--seq4:#b8924f;--seq5:#d3ae70;--seq6:#e6c995;--seq7:#f5e2b8;--neg1:#7d3a2b;--neg2:#e0775f}
+/* the plates are old paper in every theme: in dark mode they keep the sepia sheet and its dark ink, like a scan laid on a dark desk */
+.plate{color-scheme:light;color:var(--ink);--plate:#F7E1B3;--ink:#14202a;--ink-2:#47525c;--muted:#6f7a83;--accent:#b8402c;--accent-ink:#9c3221;
+  --s-ne:#2a78d6;--s-s:#eb6834;--s-mw:#1baf7a;--s-w:#eda100;--hatch:rgba(20,32,42,.38);--good:#0ca30c;--note:#c98500;--fix:#2a78d6}
 </style>
 <title>The Census Century</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -212,6 +207,14 @@ svg text.halo{paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-l
 .map .dot{transition:opacity .45s}
 @media (prefers-reduced-motion:reduce){.map .dot{transition:none}}
 .yearbig{font-family:var(--f-display);font-weight:700;font-size:4rem;line-height:.9;font-variant-numeric:tabular-nums}
+.read .yr .yearbig{color:var(--ink)}
+.mus{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.mplay{font:600 12px var(--f-mono);letter-spacing:.04em;background:var(--ink);color:var(--plate);border:0;border-radius:99px;padding:5px 12px;cursor:pointer;min-height:0}
+.plate #mplay{background:#0f1820;color:#fbecc8;box-shadow:0 1px 2px rgba(40,25,8,.35)}
+.plate #mplay:hover{background:#000}
+.plate #mplay:focus-visible{outline:2px solid #0f1820;outline-offset:2px}
+.music-credit{margin:0;font:500 11px var(--f-mono);color:var(--muted)}
+.music-credit a{color:inherit}
 .side{display:grid;gap:14px;align-content:start}
 .side .stat{display:grid;gap:2px;border-top:1px solid var(--rule);padding-top:10px}
 .side .stat b{font-family:var(--f-display);font-size:1.6rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
@@ -353,11 +356,13 @@ footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:16px;font-siz
     <div class="ticks" aria-hidden="true"><span>1790</span><span>1820</span><span>1850</span><span>1880</span><span>1900</span></div>
     <div class="dg">
       <div style="display:grid;gap:10px;min-width:0">
-        <div class="read"><div class="yearbig" id="mYear">1900</div>
+        <div class="read"><div class="s yr"><div class="yearbig" id="mYear">1900</div><span>Year</span></div>
           <div class="s"><b id="mTot">75,994,575</b><span>people counted</span></div>
           <div class="s"><b id="mLon">86.1° W</b><span id="mCen">Estimated center of population</span></div></div>
         <svg id="usmap" class="map" viewBox="0 0 975 610" role="img" aria-label="Dot map of US population by region, one dot per 100,000 people, with the center of population track"></svg>
         <div class="legend" id="dLeg"></div>
+        <div class="mus"><button type="button" class="mplay" id="mplay" data-keep aria-pressed="false" aria-label="Play the map animation with music"><span class="pi" aria-hidden="true">&#9654;</span> <span class="pt">Play with music</span></button>
+          <p class="music-credit">Music by <a href="https://pixabay.com/users/atlasaudio-54514918/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=519642" target="_blank" rel="noopener">AtlasAudio</a> from <a href="https://pixabay.com/" target="_blank" rel="noopener">Pixabay</a>, sped up 25%. Starts only when you press play.</p></div>
       </div>
       <div class="col2">
         <div><p class="ct">Who the people were: share of the count, by region</p><div id="dShare"></div></div>
@@ -601,7 +606,10 @@ function stateTip(s, y){
   const seg=[]; for(let k=0;k<C.length-1;k++){const mi=hav([C[k].lat,C[k].lon],[C[k+1].lat,C[k+1].lon]); seg.push({y0:C[k].y,y1:C[k+1].y,mi,ft:mi*5280/3652.5});}
   const AVG = d3.sum(seg,d=>d.mi)*5280/(110*365.25);
   const shares = YEARS.map(y=>{const o={y}; REGS.forEach(r=>o[r]=0); let t=0; states.forEach(s=>{const d=s.byY.get(y); if(d){o[s.r]+=d.p; t+=d.p;}}); REGS.forEach(r=>o[r]/=t); return o;});
-  let year = 1900; const listeners = [];
+  let year = 1900, T = 1900; const listeners = [];
+  // continuous time: T runs smoothly from 1790 to 1900; "year" is the census T currently sits in
+  const cyOf = t => Math.min(1900, Math.floor((t+1e-6)/10)*10);
+  const popAt = (st,t) => { const y0=cyOf(t), a=st.byY.get(y0); if(!a) return 0; if(y0>=1900) return a.p; const b=st.byY.get(y0+10); return b ? a.p+(b.p-a.p)*((t-y0)/10) : a.p; };
   const rngf = seed => () => {seed|=0; seed=seed+0x6D2B79F5|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296;};
 
   document.getElementById("dLeg").innerHTML = REGS.map(r=>`<span class="sw"><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" style="fill:${rc(r)}"/></svg>${REG[r]}</span>`).join("")
@@ -649,15 +657,20 @@ function stateTip(s, y){
   listeners.push(()=>{
     paths.attr("class", f=>{ const d=byFips.get(f.id).byY.get(year); return "state " + (d? "" : "nd"); });
     hatches.attr("display", f=>{ const d=byFips.get(f.id).byY.get(year); return d && d.t!=="S" ? null : "none"; });
-    dsel.style("opacity", d=>{ const v=byFips.get(d.f).byY.get(year); return v && d.i<Math.round(v.p/1e5) ? .9 : 0; });
-    const up = C.filter(c=>c.y<=year), c = up[up.length-1];
-    track.attr("d", d3.line().x(o=>o.xy[0]).y(o=>o.xy[1])(up));
-    ptsG.selectAll("circle").data(up.slice(0,-1)).join("circle").attr("class","cpt").attr("r",4.6).attr("cx",o=>o.xy[0]).attr("cy",o=>o.xy[1]);
-    now.attr("cx",c.xy[0]).attr("cy",c.xy[1]); nowL.attr("x",c.xy[0]).attr("y",c.xy[1]);
-    const mi = Math.round(hav([C[0].lat,C[0].lon],[c.lat,c.lon])/10)*10;
-    d3.select("#mYear").text(year); d3.select("#mTot").text(fmt(c.tot));
-    d3.select("#mLon").text(`${Math.abs(c.lon).toFixed(1)}° W`);
-    d3.select("#mCen").text(year===1790 ? "Estimated center of population" : `Estimated center, ~${mi} miles west of 1790`);
+    const exact = Math.abs(T-Math.round(T/10)*10) < 1e-6, nOf = new Map();
+    dsel.style("opacity", d=>{ let n=nOf.get(d.f); if(n===undefined){ n=popAt(byFips.get(d.f),T)/1e5; nOf.set(d.f,n); }
+      return exact ? (d.i<Math.round(n) ? .9 : 0) : .9*Math.max(0,Math.min(1,(n-d.i-.5)*6)); });
+    const k=Math.min(C.length-2,Math.floor((T-1790)/10)), fr=Math.max(0,Math.min(1,(T-C[k].y)/10)), A=C[k], B=C[k+1];
+    const lat=A.lat+(B.lat-A.lat)*fr, lon=A.lon+(B.lon-A.lon)*fr, cxy=proj([lon,lat]);
+    const past = C.filter(c=>c.y<T-1e-6);
+    track.attr("d", d3.line()([...past.map(o=>o.xy), cxy]));
+    ptsG.selectAll("circle").data(past).join("circle").attr("class","cpt").attr("r",4.6).attr("cx",o=>o.xy[0]).attr("cy",o=>o.xy[1]);
+    now.attr("cx",cxy[0]).attr("cy",cxy[1]); nowL.attr("x",cxy[0]).attr("y",cxy[1]);
+    const mi = Math.round(hav([C[0].lat,C[0].lon],[lat,lon])/10)*10;
+    const tot = exact ? C.find(c=>c.y===year).tot : Math.round(d3.sum(states,s=>popAt(s,T)));
+    d3.select("#mYear").text(Math.floor(T+1e-6)); d3.select("#mTot").text(fmt(tot));
+    d3.select("#mLon").text(`${Math.abs(lon).toFixed(1)}° W`);
+    d3.select("#mCen").text(T<1790.5 ? "Estimated center of population" : `Estimated center, ~${mi} miles west of 1790`);
   });
 
   /* share chart */
@@ -679,9 +692,9 @@ function stateTip(s, y){
       const cur = s.append("line").attr("y1",M.t).attr("y2",H-M.b).style("stroke","var(--ink)").attr("stroke-width",1.5);
       const lg = s.append("g");
       upd = ()=>{
-        const xx=x(year); s.select("#dcpr").attr("width",xx-M.l); s.select("#dcfr").attr("x",xx).attr("width",W-M.r-xx); cur.attr("x1",xx).attr("x2",xx);
-        const row=shares.find(o=>o.y===year), i=YEARS.indexOf(year);
-        const ys=stack.map(sr=>{const d=sr[i]; return {k:sr.key,m:y((d[0]+d[1])/2),v:row[sr.key]};}).sort((p,q)=>p.m-q.m);
+        const xx=x(T); s.select("#dcpr").attr("width",xx-M.l); s.select("#dcfr").attr("x",xx).attr("width",W-M.r-xx); cur.attr("x1",xx).attr("x2",xx);
+        const sum={}; REGS.forEach(r=>sum[r]=0); states.forEach(st=>sum[st.r]+=popAt(st,T)); const tt=d3.sum(REGS,r=>sum[r])||1;
+        let acc=0; const ys=REGS.map(r=>{const v=sum[r]/tt, lo=acc; acc+=v; return {k:r,m:y((lo+acc)/2),v};}).sort((p,q)=>p.m-q.m);
         const G=sm?24:15; ys[0].m=Math.max(ys[0].m,M.t+8); for(let j=1;j<ys.length;j++) ys[j].m=Math.max(ys[j].m,ys[j-1].m+G);
         lg.selectAll("g").data(ys).join("g").attr("transform",d=>`translate(${W-M.r+8},${d.m})`).html(d=>{
           const pc=(d.v*100).toFixed(d.v<.1?1:0)+"%";
@@ -703,6 +716,7 @@ function stateTip(s, y){
       y.ticks(5).forEach(t=>{ s.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",y(t)).attr("y2",y(t)).style("stroke","var(--rule-2)");
         s.append("text").attr("x",M.l-7).attr("y",y(t)+4).attr("text-anchor","end").style("font-family","var(--f-mono)").style("font-size","11px").style("fill","var(--muted)").text(t); });
       s.append("line").attr("x1",M.l).attr("x2",W-M.r).attr("y1",y(0)).attr("y2",y(0)).style("stroke","var(--ink-2)");
+      s.selectAll("rect.g").data(seg).join("rect").attr("class","g").attr("x",d=>x(d.y0)).attr("y",d=>y(d.ft)).attr("width",x.bandwidth()).attr("height",d=>y(0)-y(d.ft)).attr("rx",2).style("fill","var(--ink)").style("opacity",.12).attr("pointer-events","none");
       const bars = s.selectAll("rect.b").data(seg).join("rect").attr("class","b").attr("x",d=>x(d.y0)).attr("y",d=>y(d.ft)).attr("width",x.bandwidth()).attr("height",d=>y(0)-y(d.ft)).attr("rx",2)
         .on("pointermove",(ev,d)=>showTip(`<b>${d.y0} to ${d.y1}</b>`+row("Distance",`${Math.round(d.mi)} miles`)+row("Pace",`${Math.round(d.ft)} ft a day`),ev)).on("pointerleave",hideTip);
       s.selectAll("text.t").data(W<420?seg.filter((_,i)=>i%2===0):seg).join("text").attr("class","t").attr("x",d=>x(d.y0)+x.bandwidth()/2).attr("y",y(0)+14).attr("text-anchor","middle").style("font-family","var(--f-mono)").style("font-size","8.5px").style("fill","var(--muted)").text(d=>d.y0+"s");
@@ -712,28 +726,63 @@ function stateTip(s, y){
       s.append("text").attr("class","axt").attr("transform",`translate(13,${(M.t+H-M.b)/2}) rotate(-90)`).attr("text-anchor","middle").text("Feet per day");
       const val = s.append("text").attr("class","halo").attr("text-anchor","middle").style("font-size","11px").style("font-weight",700);
       upd = ()=>{
-        bars.style("fill","var(--ink)").style("opacity",d=>d.y1<year?.5:d.y1===year?1:.12);
-        const cur = seg.find(d=>d.y1===year);
-        if (cur) val.attr("x",x(cur.y0)+x.bandwidth()/2).attr("y",y(cur.ft)-6).text(`${Math.round(cur.mi)} mi`).attr("display",null); else val.attr("display","none");
-        d3.select("#dPaceT").text(cur ? `Pace of the center, ${cur.y0} to ${cur.y1}: ${Math.round(cur.mi)} miles (${Math.round(cur.ft)} ft a day)` : "Pace of the center, decade by decade");
+        const cur = seg.find(d=>d.y0<T-1e-6 && T<=d.y1+1e-6), f = cur ? Math.min(1,(T-cur.y0)/10) : 0;
+        bars.style("fill","var(--ink)").style("opacity",d=>d===cur?1:d.y1<T?.5:0)
+          .attr("y",d=>y(d===cur?d.ft*f:d.ft)).attr("height",d=>y(0)-y(d===cur?d.ft*f:d.ft));
+        if (cur) val.attr("x",x(cur.y0)+x.bandwidth()/2).attr("y",y(cur.ft*f)-6).text(`${Math.round(cur.mi*f)} mi`).attr("display",null); else val.attr("display","none");
+        d3.select("#dPaceT").text(cur ? `Pace of the center, ${cur.y0} to ${cur.y1}: ${Math.round(cur.mi*f)} miles (${Math.round(cur.ft)} ft a day)` : "Pace of the center, decade by decade");
       };
       upd();
     }
     draw(); listeners.push(()=>upd()); let rt; addEventListener("resize",()=>{clearTimeout(rt); rt=setTimeout(draw,120);});
   })();
 
-  function setYear(y){ year=y; document.getElementById("yr").value=y; listeners.forEach(f=>f()); }
-  const yr = document.getElementById("yr");
-  yr.addEventListener("input",()=>setYear(+yr.value));
-  let timer=null; const play=document.getElementById("play");
-  play.addEventListener("click",()=>{
-    if (timer){ clearInterval(timer); timer=null; play.textContent="▶ Play"; return; }
-    if (year>=1900) setYear(1790);
-    play.textContent="❚❚ Pause";
-    timer=setInterval(()=>{ setYear(year+10); if(year>=1900){clearInterval(timer);timer=null;play.textContent="▶ Play";} }, 1000);
-  });
+  function setT(v){ T=Math.max(1790,Math.min(1900,v)); year=cyOf(T); yr.value=Math.round(T); listeners.forEach(f=>f()); }
+  const setYear = y => { stop(); setT(y); };
+  const yr = document.getElementById("yr"); yr.step = "1";
+  yr.addEventListener("input",()=>{ stop(); setT(+yr.value); });
+  // one smooth pass, 1790 to 1900: dots, center, readouts, shares and pace all move together
+  const DUR = 10700, play = document.getElementById("play"); let raf = null;
+  const label = () => { play.textContent = raf ? "❚❚ Pause" : T>=1900 ? "↻ Replay" : "▶ Play"; };
+  function stop(){ if(raf){ cancelAnimationFrame(raf); raf=null; } label(); }
+  function run(from){
+    stop(); const t0 = performance.now() - (from-1790)/110*DUR;
+    const step = now => { const v = 1790 + Math.min(1,(now-t0)/DUR)*110; setT(v); if(v<1900){ raf=requestAnimationFrame(step); } else { raf=null; label(); } };
+    raf = requestAnimationFrame(step); label();
+  }
+  play.addEventListener("click",()=>{ if(raf){ stop(); return; } run(T>=1900 ? 1790 : T); });
+  const plate = document.getElementById("map").querySelector(".plate");
+  plate.__play = () => run(1790);
+  addEventListener("message",e=>{ if(e.data && e.data.type==="pug-replay") run(1790); });
   window.__setYear = setYear;
-  setYear(1900);
+  /* music: starts only on click, restarts the animation, fades in and out, pauses when the chart scrolls away */
+  (function(){
+    const b = document.getElementById("mplay"); if (!b) return;
+    const MU = {a:null, on:false, fade:0, tail:0};
+    const ui = (on, txt) => { b.setAttribute("aria-pressed", String(on)); b.querySelector(".pi").innerHTML = on ? "&#10074;&#10074;" : "&#9654;"; b.querySelector(".pt").textContent = txt; };
+    const fade = (to, ms, done) => { const a=MU.a; if(!a) return; cancelAnimationFrame(MU.fade); const from=a.volume, t0=performance.now();
+      const f = now => { const k=Math.min(1,(now-t0)/ms); a.volume=Math.max(0,Math.min(1,from+(to-from)*k)); if(k<1) MU.fade=requestAnimationFrame(f); else if(done) done(); }; MU.fade=requestAnimationFrame(f); };
+    const stopMusic = ms => { if(!MU.on) return; MU.on=false; ui(false, MU.a && MU.a.currentTime>1 ? "Resume music" : "Play with music"); fade(0, ms||500, ()=>MU.a.pause()); };
+    b.addEventListener("click", () => {
+      if (MU.on) { stopMusic(400); return; }
+      if (!MU.a) { MU.a = new Audio("census-western.mp3"); MU.a.preload = "auto";
+        MU.a.addEventListener("ended", () => { MU.on=false; MU.a.currentTime=0; ui(false,"Play with music"); });
+        MU.a.addEventListener("timeupdate", () => { if (MU.on && MU.a.duration && MU.a.duration-MU.a.currentTime<3 && !MU.tail) { MU.tail=1; fade(0,2800); } }); }
+      const fresh = !MU.a.currentTime || MU.a.currentTime < 1; MU.tail = 0;
+      if (fresh) run(1790);
+      MU.a.volume = 0; const pr = MU.a.play();
+      const ok = () => { MU.on = true; ui(true, "Pause music"); fade(.7, 1800); };
+      if (pr && pr.then) pr.then(ok).catch(() => { b.querySelector(".pt").textContent = "Sound blocked, try again"; }); else ok();
+    });
+    document.addEventListener("visibilitychange", () => { if (document.hidden) stopMusic(100); });
+    if ("IntersectionObserver" in window) new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting && MU.on) stopMusic(600); }), {threshold:.05}).observe(plate);
+  })();
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) { setT(1900); label(); }
+  else {
+    setT(1790); label();
+    const io = new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); run(1790); } },{threshold:.35});
+    io.observe(document.getElementById("usmap"));
+  }
 })();
 
 /* ---------- C: area ---------- */
