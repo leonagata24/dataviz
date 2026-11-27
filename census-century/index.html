@@ -19,6 +19,7 @@ html.pug-embed #map .read .s b{white-space:nowrap}
 html.pug-embed .plate-no{display:none}
 html.pug-embed #map .plate-head p{display:none}
 html.pug-embed #map #usmap{max-height:290px;width:100%}
+html.pug-embed #map #mplay{display:none}
 @media (max-width:600px){html.pug-embed #map .read .s span{font-size:.75rem}}
 /* scanned old paper: grain, stains, darker uneven edges, and a ragged dark rule, like the 1883 plate. White in the charts is the paper itself. */
 .plate{position:relative;isolation:isolate;--surface:var(--plate);border:0;
@@ -758,11 +759,12 @@ function stateTip(s, y){
   (function(){
     const b = document.getElementById("mplay"); if (!b) return;
     const MU = {a:null, on:false, fade:0, tail:0};
-    const ui = (on, txt) => { b.setAttribute("aria-pressed", String(on)); b.querySelector(".pi").innerHTML = on ? "&#10074;&#10074;" : "&#9654;"; b.querySelector(".pt").textContent = txt; };
+    const ui = (on, txt) => { b.setAttribute("aria-pressed", String(on)); b.querySelector(".pi").innerHTML = on ? "&#10074;&#10074;" : "&#9654;"; b.querySelector(".pt").textContent = txt;
+      if (window.PUG_EMBED) try { parent.postMessage({type:"pug-music-state", on, label:txt}, "*"); } catch (e) {} };
     const fade = (to, ms, done) => { const a=MU.a; if(!a) return; cancelAnimationFrame(MU.fade); const from=a.volume, t0=performance.now();
       const f = now => { const k=Math.min(1,(now-t0)/ms); a.volume=Math.max(0,Math.min(1,from+(to-from)*k)); if(k<1) MU.fade=requestAnimationFrame(f); else if(done) done(); }; MU.fade=requestAnimationFrame(f); };
     const stopMusic = ms => { if(!MU.on) return; MU.on=false; ui(false, MU.a && MU.a.currentTime>1 ? "Resume music" : "Play with music"); fade(0, ms||500, ()=>MU.a.pause()); };
-    b.addEventListener("click", () => {
+    const toggle = () => {
       if (MU.on) { stopMusic(400); return; }
       if (!MU.a) { MU.a = new Audio("census-western.mp3"); MU.a.preload = "auto";
         MU.a.addEventListener("ended", () => { MU.on=false; MU.a.currentTime=0; ui(false,"Play with music"); });
@@ -771,8 +773,12 @@ function stateTip(s, y){
       if (fresh) run(1790);
       MU.a.volume = 0; const pr = MU.a.play();
       const ok = () => { MU.on = true; ui(true, "Pause music"); fade(.7, 1800); };
-      if (pr && pr.then) pr.then(ok).catch(() => { b.querySelector(".pt").textContent = "Sound blocked, try again"; }); else ok();
-    });
+      if (pr && pr.then) pr.then(ok).catch(() => ui(false, "Sound blocked, try again")); else ok();
+    };
+    b.addEventListener("click", toggle);
+    // the home page shows its own music button beside Replay and calls this inside its tap, so the sound may start
+    window.__pugMusicTap = toggle;
+    addEventListener("message", e => { if (e.data && e.data.type === "pug-music") toggle(); });
     document.addEventListener("visibilitychange", () => { if (document.hidden) stopMusic(100); });
     if ("IntersectionObserver" in window) new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting && MU.on) stopMusic(600); }), {threshold:.05}).observe(plate);
   })();
