@@ -69,6 +69,7 @@ a { color: inherit; }
 .sky-ctl { position: absolute; right: 10px; bottom: 4px; z-index: 3; display: flex; gap: 6px; }
 .skywrap .play { font: 600 12px var(--mono); letter-spacing: .04em; background: #0b3a82; color: #fff; border: 0; border-radius: 99px; padding: 4px 12px; cursor: pointer; }
 .skywrap .play:hover { background: #0e4aa6; }
+html.pug-embed .skywrap .play { display: none; }
 .skywrap .play:focus-visible { outline: 2px solid #0b2947; outline-offset: 2px; }
 .music-credit { margin: 8px 2px 0; font: 500 11px var(--mono); color: var(--second); }
 .music-credit a { color: inherit; }
@@ -408,19 +409,23 @@ function surv(){const d=D.surv,{svg,w,h,hit,small}=stage("c-surv",432,"Animated 
 const MU={a:null,on:false,fade:0};
 function musicFade(to,ms,done){const a=MU.a;if(!a)return;cancelAnimationFrame(MU.fade);const from=a.volume,t0=performance.now();
   const f=now=>{const k=Math.min(1,(now-t0)/ms);a.volume=Math.max(0,Math.min(1,from+(to-from)*k));if(k<1)MU.fade=requestAnimationFrame(f);else if(done)done()};MU.fade=requestAnimationFrame(f)}
-function musicStop(fadeMs){const b=document.getElementById("play");if(!MU.on)return;MU.on=false;
-  b.setAttribute("aria-pressed","false");b.querySelector(".pi").innerHTML="&#9654;";b.querySelector(".pt").textContent=(MU.a&&MU.a.currentTime>1?"Resume music":"Play with music");
-  musicFade(0,fadeMs||500,()=>MU.a.pause())}
+function musicUi(on,txt){const b=document.getElementById("play");b.setAttribute("aria-pressed",String(on));b.querySelector(".pi").innerHTML=on?"&#10074;&#10074;":"&#9654;";b.querySelector(".pt").textContent=txt;
+  if(window.PUG_EMBED)try{parent.postMessage({type:"pug-music-state",on:on,label:txt},"*")}catch(e){}}
+function musicStop(fadeMs){if(!MU.on)return;MU.on=false;musicUi(false,MU.a&&MU.a.currentTime>1?"Resume music":"Play with music");musicFade(0,fadeMs||500,()=>MU.a.pause())}
 (function musicInit(){const b=document.getElementById("play");if(!b)return;
-  b.addEventListener("click",()=>{
+  const toggle=()=>{
     if(MU.on){musicStop(400);return}
-    if(!MU.a){MU.a=new Audio("balloon-waltz.mp3");MU.a.preload="auto";MU.a.loop=false;MU.a.addEventListener("ended",()=>{MU.on=false;b.setAttribute("aria-pressed","false");b.querySelector(".pi").innerHTML="&#9654;";b.querySelector(".pt").textContent="Play with music";MU.a.currentTime=0});
+    if(!MU.a){MU.a=new Audio("balloon-waltz.mp3");MU.a.preload="auto";MU.a.loop=false;MU.a.addEventListener("ended",()=>{MU.on=false;MU.a.currentTime=0;musicUi(false,"Play with music")});
       MU.a.addEventListener("timeupdate",()=>{if(MU.on&&MU.a.duration&&MU.a.duration-MU.a.currentTime<3&&MU.a.volume>.05&&!MU.tail){MU.tail=1;musicFade(0,2800)}})}
     const fresh=!MU.a.currentTime||MU.a.currentTime<1;MU.tail=0;
     if(fresh){SV.reduced=false;SV.t0=performance.now();SV.vis=true;document.dispatchEvent(new Event("visibilitychange"))}
     MU.a.volume=0;const pr=MU.a.play();
-    const ok=()=>{MU.on=true;b.setAttribute("aria-pressed","true");b.querySelector(".pi").innerHTML="&#10074;&#10074;";b.querySelector(".pt").textContent="Pause music";musicFade(.7,1800)};
-    if(pr&&pr.then)pr.then(ok).catch(()=>{b.querySelector(".pt").textContent="Sound blocked, try again"});else ok()});
+    const ok=()=>{MU.on=true;musicUi(true,"Pause music");musicFade(.7,1800)};
+    if(pr&&pr.then)pr.then(ok).catch(()=>musicUi(false,"Sound blocked, try again"));else ok()};
+  b.addEventListener("click",toggle);
+  // the home page shows its own music button beside Replay and calls this inside its tap, so the sound may start
+  window.__pugMusicTap=toggle;
+  addEventListener("message",e=>{if(e.data&&e.data.type==="pug-music")toggle()});
   document.addEventListener("visibilitychange",()=>{if(document.hidden)musicStop(100)});
   if("IntersectionObserver"in window)new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting&&MU.on)musicStop(600)}),{threshold:.05}).observe(document.getElementById("skywrap"))})();
 (function skyInit(){
@@ -432,6 +437,7 @@ function musicStop(fadeMs){const b=document.getElementById("play");if(!MU.on)ret
     if(SV.sway)SV.sway(now);
     if(!SV.reduced)SV.raf=requestAnimationFrame(loop)};
   rep.addEventListener("click",()=>{SV.t0=performance.now();SV.reduced=false;SV.vis=true;loop0()});
+  addEventListener("message",e=>{if(e.data&&e.data.type==="pug-replay"){SV.t0=performance.now();SV.reduced=false;SV.vis=true;loop0()}});
   document.addEventListener("visibilitychange",loop0);
   const go=()=>{SV.vis=true;if(SV.t0==null)SV.t0=performance.now()+(SV.reduced?-SV.DUR:350);loop0()};
   if("IntersectionObserver"in window)new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)go();else SV.vis=false}),{threshold:.3}).observe(wrap);else go();
